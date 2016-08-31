@@ -1,4 +1,4 @@
-package member_model;
+package _9_41_member_model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import _00_initial_servise.GlobalService;
+import _00_initial_service.GlobalService;
 
 public class MemberDAO implements MemberDAO_interface
 {

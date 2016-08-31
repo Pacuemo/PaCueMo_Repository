@@ -1,4 +1,4 @@
-package member_model;
+package _9_41_member_model;
 
 import java.util.List;
 
