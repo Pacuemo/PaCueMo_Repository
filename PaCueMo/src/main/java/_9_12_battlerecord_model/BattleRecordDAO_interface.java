@@ -1,4 +1,4 @@
-package _12_battlerecord_model;
+package _9_12_battlerecord_model;
 
 import java.util.List;
 import java.util.Set;

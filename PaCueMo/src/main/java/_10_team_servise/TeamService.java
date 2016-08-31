@@ -3,10 +3,10 @@ package _10_team_servise;
 import java.sql.Date;
 import java.util.List;
 
-import _10_team_model.TeamDAO;
-import _10_team_model.TeamDAO_interface;
-import _10_team_model.TeamVO;
 import _11_teammember_servise.TeamMemberService;
+import _9_10_team_model.TeamDAO;
+import _9_10_team_model.TeamDAO_interface;
+import _9_10_team_model.TeamVO;
 
 public class TeamService
 {

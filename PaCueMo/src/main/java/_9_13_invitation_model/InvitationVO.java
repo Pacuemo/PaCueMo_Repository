@@ -1,4 +1,4 @@
-package _13_invitation_model;
+package _9_13_invitation_model;
 
 public class InvitationVO implements java.io.Serializable
 {
