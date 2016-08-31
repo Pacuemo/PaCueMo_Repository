@@ -1,10 +1,10 @@
-package battlerecord_model;
+package _12_battlerecord_model;
 
 import java.sql.*;
 import java.util.List;
 
 import _00_initial_servise.GlobalService;
-import team_model.TeamVO;
+import _10_team_model.TeamVO;
 
 public class BattleRecordDAO implements BattleRecordDAO_interface {
 

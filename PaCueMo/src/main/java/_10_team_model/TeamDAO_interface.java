@@ -1,9 +1,9 @@
-package team_model;
+package _10_team_model;
 
 import java.util.List;
 import java.util.Set;
 
-import teammember_model.TeamMemberVO;
+import _11_teammember_model.TeamMemberVO;
 
 public interface TeamDAO_interface
 {

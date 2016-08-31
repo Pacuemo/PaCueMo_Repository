@@ -1,4 +1,4 @@
-package team_model;
+package _10_team_model;
 
 import java.sql.Date;
 

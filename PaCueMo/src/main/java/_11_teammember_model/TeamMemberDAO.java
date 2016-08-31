@@ -1,10 +1,10 @@
-package teammember_model;
+package _11_teammember_model;
 
 import java.sql.*;
 import java.util.*;
 
 import _00_initial_servise.GlobalService;
-import teammember_model.TeamMemberVO;
+import _11_teammember_model.TeamMemberVO;
 
 public class TeamMemberDAO implements TeamMemberDAO_interface {
 

@@ -1,11 +1,11 @@
-package _10_team_servise;
+package _11_teammember_servise;
 
 import java.sql.Date;
 import java.util.List;
 
-import teammember_model.TeamMemberDAO;
-import teammember_model.TeamMemberDAO_interface;
-import teammember_model.TeamMemberVO;
+import _11_teammember_model.TeamMemberDAO;
+import _11_teammember_model.TeamMemberDAO_interface;
+import _11_teammember_model.TeamMemberVO;
 
 
 public class TeamMemberService {
