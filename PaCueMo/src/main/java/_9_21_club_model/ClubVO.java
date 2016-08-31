@@ -1,9 +1,9 @@
-package club_model;
+package _9_21_club_model;
 
 import java.sql.Date;
 import java.util.List;
 
-import clubMember_model.ClubMemberVO;
+import _9_22_clubMember_model.ClubMemberVO;
 
 public class ClubVO
 {

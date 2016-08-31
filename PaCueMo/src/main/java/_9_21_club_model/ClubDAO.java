@@ -1,4 +1,4 @@
-package club_model;
+package _9_21_club_model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import _00_initial_service.GlobalService;
+import _00_initial_servise.GlobalService;
 
 public class ClubDAO implements ClubDAO_I
 {
