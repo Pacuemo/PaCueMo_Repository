@@ -2,7 +2,7 @@ package _9_22_clubMember_model;
 
 import java.sql.Date;
 
-import member_model.MemberVO;
+import _9_41_member_model.MemberVO;
 
 public class ClubMemberVO
 {

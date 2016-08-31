@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import _9_21_club_model.ClubDAO;
 import _9_21_club_model.ClubVO;
 import _9_22_clubMember_model.ClubMemberVO;
-import member_model.MemberDAO;
+import _9_41_member_model.MemberDAO;
 
 public class ClubService
 {

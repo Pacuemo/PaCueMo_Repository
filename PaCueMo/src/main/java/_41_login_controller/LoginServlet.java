@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import _41_login_service.LoginService;
-import member_model.MemberVO;
+import _9_41_member_model.MemberVO;
 
 @WebServlet("/login.do")
 public class LoginServlet extends HttpServlet
