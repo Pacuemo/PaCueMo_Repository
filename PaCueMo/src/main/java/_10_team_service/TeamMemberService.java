@@ -1,4 +1,4 @@
-package _10_team_servise;
+package _10_team_service;
 
 import java.sql.Date;
 import java.util.List;

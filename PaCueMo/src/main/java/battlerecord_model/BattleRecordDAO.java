@@ -3,7 +3,7 @@ package battlerecord_model;
 import java.sql.*;
 import java.util.List;
 
-import _00_initial_servise.GlobalService;
+import _00_initial_service.GlobalService;
 import team_model.TeamVO;
 
 public class BattleRecordDAO implements BattleRecordDAO_interface {

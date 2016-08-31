@@ -1,4 +1,4 @@
-﻿package _00_initial_servise;
+﻿package _00_initial_service;
 
 import java.io.File;
 import java.io.FileInputStream;

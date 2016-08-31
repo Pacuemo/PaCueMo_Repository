@@ -3,7 +3,7 @@ package team_model;
 import java.sql.*;
 import java.util.*;
 
-import _00_initial_servise.GlobalService;
+import _00_initial_service.GlobalService;
 import teammember_model.TeamMemberVO;
 
 public class TeamDAO implements TeamDAO_interface {
