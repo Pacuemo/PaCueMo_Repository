@@ -1,12 +1,20 @@
-package team_model;
+package _9_10_team_model;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import _00_initial_service.GlobalService;
-import teammember_model.TeamMemberVO;
+import _9_11_teammember_model.TeamMemberVO;
 
-public class TeamDAO implements TeamDAO_interface {
+public class TeamDAO implements TeamDAO_interface
+{
 
 	private static final String INSERT = "INSERT INTO Team (teamName,createDate,teamProp,avgRank,content) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,content FROM Team order by teamId";
@@ -17,14 +25,16 @@ public class TeamDAO implements TeamDAO_interface {
 	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate,isCaptain FROM TeamMember where teamId = ?";
 
 	@Override
-	public void insert(TeamVO teamVO) {
+	public void insert(TeamVO teamVO)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(INSERT);
-			
+
 			pstmt.setString(1, teamVO.getTeamName());
 			pstmt.setDate(2, teamVO.getCreateDate());
 			pstmt.setInt(3, teamVO.getTeamProp());
@@ -32,20 +42,32 @@ public class TeamDAO implements TeamDAO_interface {
 			pstmt.setString(5, teamVO.getContent());
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -53,14 +75,16 @@ public class TeamDAO implements TeamDAO_interface {
 	}
 
 	@Override
-	public void update(TeamVO teamVO) {
+	public void update(TeamVO teamVO)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
-			
+
 			pstmt.setString(1, teamVO.getTeamName());
 			pstmt.setDate(2, teamVO.getCreateDate());
 			pstmt.setInt(3, teamVO.getTeamProp());
@@ -69,20 +93,32 @@ public class TeamDAO implements TeamDAO_interface {
 			pstmt.setInt(6, teamVO.getTeamId());
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -91,12 +127,14 @@ public class TeamDAO implements TeamDAO_interface {
 
 	@SuppressWarnings("resource")
 	@Override
-	public void delete(Integer teamId) {
+	public void delete(Integer teamId)
+	{
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 
@@ -112,29 +150,47 @@ public class TeamDAO implements TeamDAO_interface {
 
 			con.commit();
 			con.setAutoCommit(true);
-		} catch (SQLException e) {
-			if (con != null) {
-				try {
+		}
+		catch (SQLException e)
+		{
+			if (con != null)
+			{
+				try
+				{
 					con.rollback();
-				} catch (SQLException excep) {
+				}
+				catch (SQLException excep)
+				{
 					throw new RuntimeException("rollback error occured. " + excep.getMessage());
 				}
 			}
 			throw new RuntimeException("A database error occured. " + e.getMessage());
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -142,13 +198,15 @@ public class TeamDAO implements TeamDAO_interface {
 	}
 
 	@Override
-	public TeamVO findByPrimaryKey(Integer teamId) {
+	public TeamVO findByPrimaryKey(Integer teamId)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		TeamVO teamVO = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(GET_ONE);
@@ -156,7 +214,8 @@ public class TeamDAO implements TeamDAO_interface {
 
 			rs = pstmt.executeQuery();
 			teamVO = new TeamVO();
-			while (rs.next()) {
+			while (rs.next())
+			{
 				teamVO.setTeamId(rs.getInt("teamId"));
 				teamVO.setTeamName(rs.getString("teamName"));
 				teamVO.setCreateDate(rs.getDate("createDate"));
@@ -164,29 +223,47 @@ public class TeamDAO implements TeamDAO_interface {
 				teamVO.setAvgRank(rs.getDouble("avgRank"));
 				teamVO.setContent(rs.getString("content"));
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace();
 				}
 			}
-			if (pstmt != null) {
-				try {
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -195,20 +272,23 @@ public class TeamDAO implements TeamDAO_interface {
 	}
 
 	@Override
-	public List<TeamVO> getAll() {
+	public List<TeamVO> getAll()
+	{
 		List<TeamVO> list = new ArrayList<TeamVO>();
 		TeamVO teamVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 
-			while (rs.next()) {
+			while (rs.next())
+			{
 				teamVO = new TeamVO();
 				teamVO.setTeamId(rs.getInt("teamId"));
 				teamVO.setTeamName(rs.getString("teamName"));
@@ -218,29 +298,47 @@ public class TeamDAO implements TeamDAO_interface {
 				teamVO.setContent(rs.getString("content"));
 				list.add(teamVO);
 			}
-		} catch (SQLException se) {
+		}
+		catch (SQLException se)
+		{
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
 					rs.close();
-				} catch (SQLException se) {
+				}
+				catch (SQLException se)
+				{
 					se.printStackTrace(System.err);
 				}
 			}
-			if (pstmt != null) {
-				try {
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException se) {
+				}
+				catch (SQLException se)
+				{
 					se.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -249,7 +347,8 @@ public class TeamDAO implements TeamDAO_interface {
 	}
 
 	@Override
-	public Set<TeamMemberVO> getMemsByTeamId(Integer teamId) {
+	public Set<TeamMemberVO> getMemsByTeamId(Integer teamId)
+	{
 		Set<TeamMemberVO> set = new LinkedHashSet<TeamMemberVO>();
 		TeamMemberVO teamMemVO = null;
 
@@ -257,14 +356,16 @@ public class TeamDAO implements TeamDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(GET_TEAM_MEMBERS);
 			pstmt.setInt(1, teamId);
 			rs = pstmt.executeQuery();
 
-			while (rs.next()) {
+			while (rs.next())
+			{
 				teamMemVO = new TeamMemberVO();
 				teamMemVO.setTeamId(rs.getInt("teamId"));
 				teamMemVO.setTeamMemberId(rs.getInt("teamMemberId"));
@@ -272,29 +373,47 @@ public class TeamDAO implements TeamDAO_interface {
 				teamMemVO.setIsCaptain(rs.getBoolean("isCaptain"));
 				set.add(teamMemVO);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			throw new RuntimeException("A database error occured. " + e.getMessage());
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
 					rs.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (pstmt != null) {
-				try {
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}

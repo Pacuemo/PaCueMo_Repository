@@ -1,12 +1,17 @@
-package battlerecord_model;
+package _9_12_battlerecord_model;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import _00_initial_service.GlobalService;
-import team_model.TeamVO;
 
-public class BattleRecordDAO implements BattleRecordDAO_interface {
+public class BattleRecordDAO implements BattleRecordDAO_interface
+{
 
 	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,courtId,battleMode,battleBet,battleDateTime) "
 			+ "VALUES (?, ?, ?, ?, ?, ?)";
@@ -26,11 +31,13 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 			+ "ON m.memberId = tm.teamMemberId" + "WHERE tm.teamId = 1";
 
 	@Override
-	public void insert(BattleRecordVO battleRecordVO) {
+	public void insert(BattleRecordVO battleRecordVO)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(INSERT);
@@ -43,20 +50,32 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 			pstmt.setTimestamp(6, battleRecordVO.getBattleDateTime());
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -64,11 +83,13 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 	}
 
 	@Override
-	public void update(BattleRecordVO battleRecordVO) {
+	public void update(BattleRecordVO battleRecordVO)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
@@ -86,31 +107,45 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 			pstmt.setInt(11, battleRecordVO.getBattleId());
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
 		}
 	}
 
-	public void reportA(BattleRecordVO battleRecordVO) {
+	public void reportA(BattleRecordVO battleRecordVO)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(REPORT_A);
@@ -119,31 +154,45 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 			pstmt.setInt(3, battleRecordVO.getTeamIdA());
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
 		}
 	}
 
-	public void reportB(BattleRecordVO battleRecordVO) {
+	public void reportB(BattleRecordVO battleRecordVO)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(REPORT_B);
@@ -152,31 +201,45 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 			pstmt.setInt(3, battleRecordVO.getTeamIdB());
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
 		}
 	}
 
-	public void updateResult(Integer battleId, Integer result) {
+	public void updateResult(Integer battleId, Integer result)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_RESULT);
@@ -184,20 +247,32 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 			pstmt.setInt(2, battleId);
 
 			pstmt.executeUpdate();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
 					pstmt.close();
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
-				try {
+			if (con != null)
+			{
+				try
+				{
 					con.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace(System.err);
 				}
 			}
@@ -205,48 +280,57 @@ public class BattleRecordDAO implements BattleRecordDAO_interface {
 	}
 
 	@Override
-	public void delete(Integer batteleRecordId) {
+	public void delete(Integer batteleRecordId)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
-		try {
+		try
+		{
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			pstmt = con.prepareStatement(DELETE_TEAM);
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public BattleRecordVO findByPrimaryKey(Integer battleId) {
+	public BattleRecordVO findByPrimaryKey(Integer battleId)
+	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		return null;
 	}
 
 	@Override
-	public BattleRecordVO findByTeamIdA(Integer teamIdA) {
+	public BattleRecordVO findByTeamIdA(Integer teamIdA)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public BattleRecordVO findByTeamIdB(Integer teamIdB) {
+	public BattleRecordVO findByTeamIdB(Integer teamIdB)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<BattleRecordVO> getAll() {
+	public List<BattleRecordVO> getAll()
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static void main(String arg[]) {
+	public static void main(String arg[])
+	{
 		BattleRecordVO battleRecordVO = new BattleRecordVO();
 		battleRecordVO.setTeamIdA(1);
 		battleRecordVO.setTeamIdB(2);

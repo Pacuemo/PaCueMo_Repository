@@ -1,4 +1,4 @@
-package battlerecord_model;
+package _9_12_battlerecord_model;
 
 import java.sql.*;
 

@@ -1,4 +1,4 @@
-package _10_team_service;
+package _11_teammember_servise;
 
 import java.sql.Date;
 import java.util.List;
@@ -7,22 +7,19 @@ import _9_11_teammember_model.TeamMemberDAO;
 import _9_11_teammember_model.TeamMemberDAO_interface;
 import _9_11_teammember_model.TeamMemberVO;
 
-public class TeamMemberService
-{
+
+public class TeamMemberService {
 	private TeamMemberDAO_interface dao;
 
-	TeamMemberService()
-	{
+	TeamMemberService() {
 		dao = new TeamMemberDAO();
 	}
-
-	public void add(TeamMemberVO teamMemberVO)
-	{
+	
+	public void add(TeamMemberVO teamMemberVO){
 		dao.insert(teamMemberVO);
 	}
-
-	public void add(Integer teamId, Integer teamMemberId, Date joinDate, Boolean isCaptain)
-	{
+	
+	public void add(Integer teamId,Integer teamMemberId,Date joinDate,Boolean isCaptain){
 		TeamMemberVO teamMemberVO = new TeamMemberVO();
 		teamMemberVO.setTeamId(teamId);
 		teamMemberVO.setTeamMemberId(teamMemberId);
@@ -30,14 +27,12 @@ public class TeamMemberService
 		teamMemberVO.setIsCaptain(isCaptain);
 		dao.insert(teamMemberVO);
 	}
-
-	public void update(TeamMemberVO teamMemberVO)
-	{
+	
+	public void update(TeamMemberVO teamMemberVO){
 		dao.update(teamMemberVO);
 	}
-
-	public void update(Integer teamId, Integer teamMemberId, Date joinDate, Boolean isCaptain)
-	{
+	
+	public void update(Integer teamId,Integer teamMemberId,Date joinDate,Boolean isCaptain){
 		TeamMemberVO teamMemberVO = new TeamMemberVO();
 		teamMemberVO.setTeamId(teamId);
 		teamMemberVO.setTeamMemberId(teamMemberId);
@@ -45,20 +40,17 @@ public class TeamMemberService
 		teamMemberVO.setIsCaptain(isCaptain);
 		dao.update(teamMemberVO);
 	}
-
-	public void delete(Integer teamMemberId)
-	{
+	
+	public void delete(Integer teamMemberId) {
 		dao.delete(teamMemberId);
 	}
-
-	public TeamMemberVO getOne(Integer teamMemberId)
-	{
+	
+	public TeamMemberVO getOne(Integer teamMemberId) {	 
 		return dao.findByPrimaryKey(teamMemberId);
 	}
-
-	public List<TeamMemberVO> getAll()
-	{
+	
+	public List<TeamMemberVO> getAll() {
 		return dao.getAll();
 	}
-
+	
 }
