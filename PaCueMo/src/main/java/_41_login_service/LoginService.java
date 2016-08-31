@@ -5,11 +5,11 @@ import member_model.MemberDAO;
 import member_model.MemberDAO_interface;
 import member_model.MemberVO;
 
-public class MemberService
+public class LoginService
 {
 	private MemberDAO_interface dao;
 
-	public MemberService()
+	public LoginService()
 	{
 		dao = new MemberDAO();
 	}

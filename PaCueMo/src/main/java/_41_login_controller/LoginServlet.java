@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import _41_login_service.MemberService;
+import _41_login_service.LoginService;
 import member_model.MemberVO;
 
 @WebServlet("/login.do")
@@ -35,8 +35,8 @@ public class LoginServlet extends HttpServlet
 			session.setMaxInactiveInterval(12 * 60 * 60);
 		}
 
-		MemberService ms;
-		ms = new MemberService();
+		LoginService ms;
+		ms = new LoginService();
 
 		MemberVO mv = ms.checkMailPwd(mail, pwd);
 
