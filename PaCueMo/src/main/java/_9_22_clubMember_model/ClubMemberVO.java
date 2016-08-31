@@ -1,6 +1,8 @@
-package clubMember_model;
+package _9_22_clubMember_model;
 
 import java.sql.Date;
+
+import member_model.MemberVO;
 
 public class ClubMemberVO
 {
@@ -9,7 +11,8 @@ public class ClubMemberVO
 	private int clubMemberId;
 	private Date joinDate;
 
-//    private MemberVO member;
+	private MemberVO member;
+
 	public int getClubId()
 	{
 		return clubId;
@@ -39,13 +42,15 @@ public class ClubMemberVO
 	{
 		this.joinDate = joinDate;
 	}
-//	public MemberVO getMember()
-//	{
-//		return member;
-//	}
-//	public void setMember(MemberVO member)
-//	{
-//		this.member = member;
-//	}
+
+	public MemberVO getMember()
+	{
+		return member;
+	}
+
+	public void setMember(MemberVO member)
+	{
+		this.member = member;
+	}
 
 }

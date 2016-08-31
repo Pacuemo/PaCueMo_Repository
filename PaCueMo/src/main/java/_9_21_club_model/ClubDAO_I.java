@@ -1,4 +1,4 @@
-package club_model;
+package _9_21_club_model;
 
 import java.util.List;
 
