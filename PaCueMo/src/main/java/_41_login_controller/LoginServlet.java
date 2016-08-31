@@ -1,4 +1,4 @@
-﻿package com.login.controller;
+﻿package _41_login_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.member.model.MemberService;
-import com.member.model.MemberVO;
+import _41_login_service.MemberService;
+import member_model.MemberVO;
 
 @WebServlet("/login.do")
 public class LoginServlet extends HttpServlet
@@ -30,14 +30,10 @@ public class LoginServlet extends HttpServlet
 		String rm = request.getParameter("rememberMe");
 		String requestURI = (String) session.getAttribute("requestURI");
 
-		System.out.println(rm);
-
 		if (rm != null)
 		{
 			session.setMaxInactiveInterval(12 * 60 * 60);
 		}
-
-		System.out.println(session.getMaxInactiveInterval());
 
 		MemberService ms;
 		ms = new MemberService();

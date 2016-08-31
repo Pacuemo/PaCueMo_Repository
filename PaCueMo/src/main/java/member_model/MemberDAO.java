@@ -1,4 +1,4 @@
-package com.member.model;
+package member_model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
