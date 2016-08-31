@@ -1,4 +1,4 @@
-package member_model;
+package _4_member_model;
 
 import java.io.Serializable;
 import java.sql.Blob;

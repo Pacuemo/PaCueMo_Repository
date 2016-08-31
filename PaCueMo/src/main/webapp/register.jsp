@@ -31,12 +31,10 @@
         <section class="signup-select">
           <form id="js-register-with-facebook" method="post" role="form" action="/tw/xhr/json/sign-up-for-spotify-fb.php" novalidate>
             <div class="hidden ajax-spinner"></div>
-            <input type="hidden" name="sp_csrf" value="dWRzkx7-IVVNktbbdD0ETzGEHVCr5_0EtWxngbBbpsg">
-            <input id="creation_flow" name="creation_flow" type="hidden" value="">
             <div class="content">
               <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=&quot;/help/&quot;>說明中心</a>"></div>
               <a href="#" class="btn btn-facebook btn-sm btn-block js-signup-fb" id="select-button-signup-fb"> 以 Facebook 帳戶註冊 </a> <strong class="line-thru">或</strong> <a href="/tw/signup/" class="primary js-link" data-section="register" id="select-link-signup-email"> 以你的電郵地址註冊 </a>
-              <p class="primary"> 已經擁有帳戶？ <a id="select-link-login" data-section="login" href="https://www.spotify.com/tw/login/?continue=https%3A//www.spotify.com/tw/account/overview/">登入</a> </p>
+              <p class="primary"> 已經擁有帳戶？ <a id="select-link-login" data-section="login" href="">登入</a> </p>
             </div>
           </form>
         </section>
@@ -45,11 +43,7 @@
             <h2 class="center hdr-l"> 以你的電郵地址註冊 </h2>
             <form id="js-register-with-email" method="post" action="/tw/xhr/json/sign-up-for-spotify.php" novalidate>
               <div class="hidden ajax-spinner"></div>
-              <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=&quot;/help/&quot;>說明中心</a>"></div>
-              <input type="hidden" name="sp_csrf" value="dWRzkx7-IVVNktbbdD0ETzGEHVCr5_0EtWxngbBbpsg">
-              <input id="creation_flow" name="creation_flow" type="hidden" value="">
-              <input type="hidden" id="register-forward-url" name="forward_url" value="https://www.spotify.com/tw/account/overview/">
-              <input type="hidden" id="register-pre-tick-eula" name="signup_pre_tick_eula" value="true">
+              <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=''>說明中心</a>"></div>
               <fieldset>
                 <ul>
                   <li>
@@ -70,7 +64,7 @@
                   </li>
                   <li>
                     <label class="sr-only" for="register-email">Email:</label>
-                    <input type="email" id="register-email" name="email" value="" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="/tw/xhr/json/isEmailAvailable.php" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
+                    <input type="email" id="register-email" name="email" value="" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="checkMail.do?model=checkMail" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
                   </li>
                   <li>
                     <label class="sr-only" for="register-confirm-email">確認電郵:</label>
@@ -83,6 +77,11 @@
                   <li id="li-dob" class="controls-dob" data-error-age="很抱歉，你的年齡並不符合 Pacuemo 的規定。">
                     <label for="register-age">出生日期：</label>
                     <div id="register-dob" class="register-dob">
+                      <div class="controls controls-year">
+						<select id="register-dob-year" class="dob" name="dob_year" max="2003" data-msg-max="很抱歉，你的年齡並不符合 Pacuemo 的規定。" required data-msg-required="你的出生日期？">
+                          <option value="" selected="" disabled="">年</option>
+                          </select>
+                      </div>
                       <div class="controls controls-month">
                         <select id="register-dob-month" class="dob" name="dob_month" required data-msg-required="你的出生日期？">
                           <option value="" selected="" disabled="">月份</option>
@@ -100,11 +99,10 @@
                           <option value="12">十二月</option>
                         </select>
                       </div>
-                      <div class="controls controls-day">
-                        <input type="number" id="register-dob-day" class="dob" name="dob_day" placeholder="日" pattern="[0-9]*" maxlength="2" min="1" max="31" required="" data-msg-required="請輸入日期？" data-msg-number="請輸入該月份有效的日期。" data-msg-min="請輸入該月份有效的日期。" data-msg-max="請輸入該月份有效的日期。" data-msg-maxlength="請輸入該月份有效的日期。">
-                      </div>
-                      <div class="controls controls-year">
-                        <input type="number" id="register-dob-year" class="dob" name="dob_year" placeholder="年" pattern="[0-9]*" maxlength="4" min="1900" max="2003" required="" data-msg-required="請輸入年份？" data-msg-number="請輸入有效的年份。" data-msg-min="請輸入有效的年份。" data-msg-maxlength="請輸入有效的年份。" data-msg-max="很抱歉，你的年齡並不符合 Pacuemo 的規定。">
+                       <div class="controls controls-day">
+						<select id="register-dob-day" class="dob" name="dob_day" required data-msg-required="你的出生日期？">
+                          <option value="" selected="" disabled="">日</option>
+                          </select>
                       </div>
                     </div>
                   </li>
@@ -140,8 +138,48 @@ $(function(){
 							}else{
 								error.insertAfter(element);
 							};
-						},
+						}
 	});		
+	var date = new Date();
+	var year = date.getFullYear();
+	
+	for(var y = year ; y>=1900; y--){
+		var option = $("<option></option>").val(y).text(y);
+		$("#register-dob-year").append(option);
+	};
+	
+	for(var d = 1; d<=30; d++){
+		var option = $("<option></option>").val(d).text(d);
+		$("#register-dob-day").append(option);
+	};
+	
+	$("#register-dob-year").bind("change",function(){
+		var y = $("#register-dob-year").val();;
+		var m = $("#register-dob-month").val();
+		if( m != null){
+			date = new Date(y,m,0);
+			var day = date.getDate();
+			$("#register-dob-day>option:gt(0)").remove();
+			for(var d = 1; d<=day; d++){
+				var option = $("<option></option>").val(d).text(d);
+				$("#register-dob-day").append(option);
+			};
+		} 	
+	});
+	
+	$("#register-dob-month").bind("change",function(){
+		var y = $("#register-dob-year").val();;
+		var m = $("#register-dob-month").val();
+		if( y != null){
+			date = new Date(y,m,0);
+			var day = date.getDate();
+			$("#register-dob-day>option:gt(0)").remove();
+			for(var d = 1; d<=day; d++){
+				var option = $("<option></option>").val(d).text(d);
+				$("#register-dob-day").append(option);
+			};
+		} 	
+	});
 });
 </script>
 </body>

@@ -1,9 +1,9 @@
 package _41_login_service;
 
 import _00_initial_Servise.GlobalService;
-import member_model.MemberDAO;
-import member_model.MemberDAO_interface;
-import member_model.MemberVO;
+import _4_member_model.MemberDAO;
+import _4_member_model.MemberDAO_interface;
+import _4_member_model.MemberVO;
 
 public class LoginService
 {
