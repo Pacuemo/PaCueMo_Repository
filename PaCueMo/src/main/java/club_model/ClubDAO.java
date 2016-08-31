@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import _00_initial_Servise.GlobalService;
+import _00_initial_servise.GlobalService;
 
 public class ClubDAO implements ClubDAO_I
 {

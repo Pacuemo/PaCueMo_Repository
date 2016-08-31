@@ -1,6 +1,6 @@
 package _41_login_service;
 
-import _00_initial_Servise.GlobalService;
+import _00_initial_servise.GlobalService;
 import _9_41_member_model.MemberDAO;
 import _9_41_member_model.MemberDAO_interface;
 import _9_41_member_model.MemberVO;
