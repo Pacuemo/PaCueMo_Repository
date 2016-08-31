@@ -21,7 +21,7 @@ public class GlobalService
 	public static final String USERID = "sa";
 	public static final String PASSWORD = "sa123456";
 	public static final String SYSTEM_NAME = "PaCueMo";
-	public static final String JNDI_DB_NAME = "java:comp/env/jdbc/DB_Jack";
+	public static final String JNDI_DB_NAME = "java:comp/env/jdbc/MagicJackDS";
 	public static final int IMAGE_FILENAME_LENGTH = 20;
 	public static final String DB_URL = "jdbc:sqlserver://" + GlobalService.HOST + ":1433;databaseName=MagicJack";
 	public static final String KEY = "KittySnoopyMicky";  //decryptString()用的Key :  16, 24, 32 個字元的Key(預設只能用16位元，若要用24、32，要去Oracle發誓)
