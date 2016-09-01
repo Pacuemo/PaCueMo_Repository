@@ -53,13 +53,13 @@ public class FightRecordVO implements Serializable
 		this.minPlay = minPlay;
 		this.trePA = trePA;
 		this.trePM = trePM;
-		this.trePP = (double) trePM / (double) trePA;
+		this.trePP = (double) trePM * 100 / (double) trePA;
 		this.twoPA = twoPA;
 		this.twoPM = twoPM;
-		this.twoPP = (double) twoPM / (double) twoPA;
+		this.twoPP = (double) twoPM * 100 / (double) twoPA;
 		this.fta = fta;
 		this.ftm = ftm;
-		this.ftp = (double) ftm / (double) fta;
+		this.ftp = (double) ftm * 100 / (double) fta;
 		this.ofRep = ofRep;
 		this.deRep = deRep;
 		this.totalRep = totalRep;

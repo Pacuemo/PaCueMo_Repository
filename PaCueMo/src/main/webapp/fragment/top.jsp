@@ -37,7 +37,7 @@
       <ul class="nav">
       <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
-        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOk.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
+        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
         </c:when>
         <c:when test="${not empty LoginOK.memberFileName }">
         <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}"></a></li>
@@ -61,8 +61,8 @@
         <li> <a href="" id="nav-link-report" > 問題回報 </a> </li>       
         <li role="separator" class="divider"></li>
         <c:if test="${empty LoginOK }">
-        <li class="alternate sidepanel-item-small"> <a href="" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
-        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_02_register/register.jsp" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_01_login/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="" id="nav-link-account" > 帳戶 </a> </li>
@@ -86,7 +86,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li> <a href="">帳戶</a> </li>
-            <li> <a href="">登出</a> </li>
+            <li> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do">登出</a> </li>
           </ul>
         </li>
         </c:if>
