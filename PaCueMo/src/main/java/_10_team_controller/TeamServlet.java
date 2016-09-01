@@ -46,7 +46,7 @@ public class TeamServlet extends HttpServlet {
 			teamVO.setTeamProp(Integer.valueOf(teamProp));
 
 			MemberVO memberVO = (MemberVO) context.getAttribute("LoginOK");
-			Integer teamMemberId = memberVO.getMemberId();
+			Integer teamMemberId = Integer.valueOf(memberVO.getMemberId());
 			if (null != teamMemberId && teamMemberId != 0) {
 				teamVO.setTeamHead(teamMemberId);
 			} else {
