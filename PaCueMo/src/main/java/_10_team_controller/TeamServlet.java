@@ -2,6 +2,7 @@ package _10_team_controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +26,20 @@ public class TeamServlet extends HttpServlet
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		req.setCharacterEncoding("UTF-8");
+		ServletContext context = req.getServletContext();
+		String teamName = "";
+
+		try
+		{
+			if (null != teamName || teamName.trim().length() != 0)
+
+				context.getAttribute("LoginOK");
+
+		}
+		catch (Exception e)
+		{
+
+		}
 
 	}
 

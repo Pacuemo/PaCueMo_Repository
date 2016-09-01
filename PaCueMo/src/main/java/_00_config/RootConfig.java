@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
-import _00_initial_servise.GlobalService;
+import _00_initial_service.GlobalService;
 
 @Configuration
 @ComponentScan({ "_9_23_league_model" })
