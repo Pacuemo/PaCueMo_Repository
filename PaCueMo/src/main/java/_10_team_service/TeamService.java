@@ -1,41 +1,37 @@
 package _10_team_service;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
-import _11_teammember_service.TeamMemberService;
 import _9_10_team_model.TeamDAO;
 import _9_10_team_model.TeamDAO_interface;
 import _9_10_team_model.TeamVO;
 
-public class TeamService
-{
+public class TeamService {
 	private TeamDAO_interface teamDAO;
-	private TeamMemberService teamMemService;
 
-	TeamService()
-	{
+	public TeamService() {
 		teamDAO = new TeamDAO();
 	}
 
-	public void add(Integer teamId, String teamName, Date createDate, Integer teamProp)
-	{
-		TeamVO teamVO = new TeamVO();
-		teamVO.setTeamId(teamId);
-		teamVO.setTeamName(teamName);
-		teamVO.setCreateDate(createDate);
-		teamVO.setTeamProp(teamProp);
+	// public void add(String teamName, Integer teamProp) {
+	// TeamVO teamVO = new TeamVO();
+	// teamVO.setTeamName(teamName);
+	// teamVO.setTeamProp(teamProp);
+	//
+	// teamDAO.insert(teamVO);
+	// }
+	//
+	// public void add(TeamVO teamVO) {
+	// teamDAO.insert(teamVO);
+	// }
 
-		teamDAO.insert(teamVO);
+	public void createTeam(TeamVO teamVO) throws SQLException {
+		teamDAO.createTeam(teamVO);
 	}
 
-	public void add(TeamVO teamVO)
-	{
-		teamDAO.insert(teamVO);
-	}
-
-	public void update(Integer teamId, String teamName, Date createDate, Integer teamProp, Double avgRank)
-	{
+	public void update(Integer teamId, String teamName, Date createDate, Integer teamProp, Double avgRank) {
 		TeamVO teamVO = new TeamVO();
 		teamVO.setTeamId(teamId);
 		teamVO.setTeamName(teamName);
@@ -46,23 +42,19 @@ public class TeamService
 		teamDAO.update(teamVO);
 	}
 
-	public void update(TeamVO teamVO)
-	{
+	public void update(TeamVO teamVO) {
 		teamDAO.update(teamVO);
 	}
 
-	public void delete(Integer teamId)
-	{
+	public void delete(Integer teamId) {
 		teamDAO.delete(teamId);
 	}
 
-	public TeamVO getOne(Integer teamId)
-	{
+	public TeamVO getOne(Integer teamId) {
 		return teamDAO.findByPrimaryKey(teamId);
 	}
 
-	public List<TeamVO> getAll()
-	{
+	public List<TeamVO> getAll() {
 		return teamDAO.getAll();
 	}
 }
