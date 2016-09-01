@@ -1,12 +1,22 @@
 package _9_41_member_model;
 
+import java.sql.Date;
 import java.util.List;
 
-public interface MemberDAO_interface {
-	public void insert(MemberVO memberVO);
-    public void update(MemberVO memberVO);
-    public MemberVO findByPrimaryKey(Integer memberId);
-    public MemberVO findByUserMail(String memberMail);
-    public MemberVO findByUserFBID(Integer memberFBId);
-    public List<MemberVO> getAll();
+public interface MemberDAO_interface
+{
+	public MemberVO insert(String memberFirstName, String memberLastName, String memberPassword, Date memberBirthday, String memberPhone, String memberMail);
+
+	public MemberVO insert_fb(String memberFirstName, String memberLastName, Date memberBirthday, String memberPhone, String memberMail, String memberFBId);
+
+	public MemberVO update();
+
+	public MemberVO findByPrimaryKey(String memberId);
+
+	public MemberVO findByUserMail(String memberMail);
+
+	public MemberVO findByUserFBID(String fbId);
+
+	public List<MemberVO> getAll();
+
 }
