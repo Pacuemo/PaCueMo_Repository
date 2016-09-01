@@ -1,0 +1,148 @@
+package _9_25_leagueRecord_model;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component("LeagueRecordVO")
+public class LeagueRecordVO implements Serializable
+{
+
+	private static final long serialVersionUID = 1L;
+
+	private int fightId;
+	private int leagueId;
+	private int clubIdA;
+	private int clubIdB;
+	private Date fightDateTime;
+	private int rounds;
+	private int scoreA;
+	private int scoreB;
+	private String totalTime;
+
+	public LeagueRecordVO()
+	{
+	}
+
+	public LeagueRecordVO(int leagueId, int clubIdA, int clubIdB, Date fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
+	{
+		this.leagueId = leagueId;
+		this.clubIdA = clubIdA;
+		this.clubIdB = clubIdB;
+		this.fightDateTime = fightDateTime;
+		this.rounds = rounds;
+		this.scoreA = scoreA;
+		this.scoreB = scoreB;
+		this.totalTime = totalTime;
+	}
+
+	public LeagueRecordVO(int fightId, int leagueId, int clubIdA, int clubIdB, Date fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
+	{
+		this.fightId = fightId;
+		this.leagueId = leagueId;
+		this.clubIdA = clubIdA;
+		this.clubIdB = clubIdB;
+		this.fightDateTime = fightDateTime;
+		this.rounds = rounds;
+		this.scoreA = scoreA;
+		this.scoreB = scoreB;
+		this.totalTime = totalTime;
+	}
+
+	public int getFightId()
+	{
+		return fightId;
+	}
+
+	public void setFightId(int fightId)
+	{
+		this.fightId = fightId;
+	}
+
+	public int getLeagueId()
+	{
+		return leagueId;
+	}
+
+	public void setLeagueId(int leagueId)
+	{
+		this.leagueId = leagueId;
+	}
+
+	public int getClubIdA()
+	{
+		return clubIdA;
+	}
+
+	public void setClubIdA(int clubIdA)
+	{
+		this.clubIdA = clubIdA;
+	}
+
+	public int getClubIdB()
+	{
+		return clubIdB;
+	}
+
+	public void setClubIdB(int clubIdB)
+	{
+		this.clubIdB = clubIdB;
+	}
+
+	public Date getFightDateTime()
+	{
+		return fightDateTime;
+	}
+
+	public void setFightDateTime(Date fightDateTime)
+	{
+		this.fightDateTime = fightDateTime;
+	}
+
+	public int getRounds()
+	{
+		return rounds;
+	}
+
+	public void setRounds(int rounds)
+	{
+		this.rounds = rounds;
+	}
+
+	public int getScoreA()
+	{
+		return scoreA;
+	}
+
+	public void setScoreA(int scoreA)
+	{
+		this.scoreA = scoreA;
+	}
+
+	public int getScoreB()
+	{
+		return scoreB;
+	}
+
+	public void setScoreB(int scoreB)
+	{
+		this.scoreB = scoreB;
+	}
+
+	public String getTotalTime()
+	{
+		return totalTime;
+	}
+
+	public void setTotalTime(String totalTime)
+	{
+		this.totalTime = totalTime;
+	}
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
+	}
+
+}

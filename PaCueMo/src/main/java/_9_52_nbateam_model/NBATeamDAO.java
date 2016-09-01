@@ -1,21 +1,28 @@
 ﻿package _9_52_nbateam_model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import _00_initial_service.GlobalService;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+// @Repository("nbaTeamDAO")
 public class NBATeamDAO implements NBATeamDAO_interface
 {
-	String driver = GlobalService.DRIVER_NAME;
-	String url = GlobalService.DB_URL;
-	String userid = GlobalService.USERID;
-	String passwd = GlobalService.PASSWORD;
+//	String driver = GlobalService.DRIVER_NAME;
+//	String url = GlobalService.DB_URL;
+//	String userid = GlobalService.USERID;
+//	String passwd = GlobalService.PASSWORD;
+
+	JdbcTemplate jdbcTemplate;
+
+	public NBATeamDAO()
+	{
+	}
+
+//	@Autowired
+	public NBATeamDAO(JdbcTemplate jdbcTemplate)
+	{
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	private static final String GET_BY_ID_STMT = "SELECT teamId , teamName , teamLogoURL FROM NBATeam" +
 			"                                       WHERE teamId=?";
@@ -25,13 +32,17 @@ public class NBATeamDAO implements NBATeamDAO_interface
 
 	public static void main(String[] args)
 	{
+//		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
+//		NBATeamDAO dao = (NBATeamDAO) context.getBean("nbaTeamDAO");
+//		NBATeamVO vo = dao.findByTeamId(17);
+//		System.out.println(vo.getTeamName());
+
 //		NBATeamDAO dao = new NBATeamDAO();
-//		NBATeamVO vo = dao.findByTeamName("湖人");
+//		NBATeamVO vo = dao.findByTeamName("公鹿");
 //		System.out.println(vo.getTeamName());
 
 //		NBATeamDAO dao = new NBATeamDAO();
 //		List<NBATeamVO> list = dao.getAll();
-//
 //		for (NBATeamVO vo : list)
 //		{
 //			System.out.println(vo.getTeamID() + "  " + vo.getTeamName());
@@ -46,156 +57,19 @@ public class NBATeamDAO implements NBATeamDAO_interface
 	@Override
 	public NBATeamVO findByTeamId(Integer teamID)
 	{
-		ResultSet rs = null;
-		NBATeamVO nbaVO = null;
-		try
-		{
-			Class.forName(driver);
-		}
-		catch (ClassNotFoundException ex)
-		{
-			throw new RuntimeException("Couldn't load database driver. " + ex.getMessage());
-		}
-
-		try (Connection conn = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pStmt = conn.prepareStatement(GET_BY_ID_STMT);)
-		{
-			pStmt.setInt(1, teamID);
-			rs = pStmt.executeQuery();
-			if (rs.next())
-			{
-				nbaVO = new NBATeamVO();
-				nbaVO.setTeamID(rs.getInt("teamId"));
-				nbaVO.setTeamName(rs.getString("teamName"));
-				nbaVO.setTeamLogoURL(rs.getString("teamLogoURL"));
-
-			}
-		}
-		catch (SQLException se)
-		{
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-
-		return nbaVO;
+		return jdbcTemplate.queryForObject(GET_BY_ID_STMT, new NBATeamRowMapper(), teamID);
 	}
 
 	@Override
 	public NBATeamVO findByTeamName(String teamName)
 	{
-		ResultSet rs = null;
-		NBATeamVO nbaVO = null;
-		try
-		{
-			Class.forName(driver);
-		}
-		catch (ClassNotFoundException ex)
-		{
-			throw new RuntimeException("Couldn't load database driver. " + ex.getMessage());
-		}
-
-		try (Connection conn = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pStmt = conn.prepareStatement(GET_BY_NAME_STMT, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);)
-		{
-			pStmt.setString(1, "%" + teamName + "%");
-			rs = pStmt.executeQuery();
-
-			rs.last();
-			if (rs.getRow() == 0)// 查無資料
-			{
-				return null;
-			}
-
-			rs.beforeFirst();
-			if (rs.next())
-			{
-				nbaVO = new NBATeamVO();
-				nbaVO.setTeamID(rs.getInt("teamId"));
-				nbaVO.setTeamName(rs.getString("teamName"));
-				nbaVO.setTeamLogoURL(rs.getString("teamLogoURL"));
-			}
-		}
-		catch (SQLException se)
-		{
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-
-		return nbaVO;
+		return jdbcTemplate.queryForObject(GET_BY_NAME_STMT, new NBATeamRowMapper(), "%" + teamName + "%");
 	}
 
 	@Override
 	public List<NBATeamVO> getAll()
 	{
-		ResultSet rs = null;
-		List<NBATeamVO> list = new ArrayList<>();
-		try
-		{
-			Class.forName(driver);
-		}
-		catch (ClassNotFoundException ex)
-		{
-			throw new RuntimeException("Couldn't load database driver. " + ex.getMessage());
-		}
-
-		try (Connection conn = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pStmt = conn.prepareStatement(GET_ALL_STMT);)
-		{
-			rs = pStmt.executeQuery();
-			while (rs.next())
-			{
-				NBATeamVO nbaVO = new NBATeamVO();
-				nbaVO.setTeamID(rs.getInt("teamId"));
-				nbaVO.setTeamName(rs.getString("teamName"));
-				nbaVO.setTeamLogoURL(rs.getString("teamLogoURL"));
-				list.add(nbaVO);
-			}
-		}
-		catch (SQLException se)
-		{
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
+		return jdbcTemplate.query(GET_ALL_STMT, new NBATeamRowMapper());
 	}
 
 }

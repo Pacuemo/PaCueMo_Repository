@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface GoodsOrderDAO_interface
 {
-	public void insert(GoodsOrderVO vo);
+	public int insert(GoodsOrderVO vo);
 
-	public void update(GoodsOrderVO vo);
+	public int update(GoodsOrderVO vo);
 
-	public void delete(Integer orderId);
+	public int delete(Integer orderId);
 
 	public GoodsOrderVO findByPrimaryKey(Integer orderId);
 

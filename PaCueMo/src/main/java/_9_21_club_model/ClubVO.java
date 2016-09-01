@@ -1,13 +1,15 @@
 package _9_21_club_model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 import _9_22_clubMember_model.ClubMemberVO;
 
-public class ClubVO
+public class ClubVO implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private int clubID;
 	private String clubName;
 	private String clubImageName;

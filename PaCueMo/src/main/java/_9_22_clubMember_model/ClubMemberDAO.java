@@ -45,7 +45,7 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 			ptsmt = con.prepareStatement(insert_state);
 
 			ptsmt.setInt(1, clubMemberVO.getClubId());
-			ptsmt.setInt(2, clubMemberVO.getClubMemberId());
+			ptsmt.setString(2, clubMemberVO.getClubMemberId());
 			ptsmt.setDate(3, clubMemberVO.getJoinDate());
 			ptsmt.executeUpdate();
 			con.commit();
@@ -95,7 +95,7 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 	 * @see clubMember.model.ClubMemberDAO_I#delete(int)
 	 */
 	@Override
-	public void delete(int clubMemberID)
+	public void delete(String clubMemberID)
 	{
 		Connection con = null;
 		PreparedStatement ptsmt = null;
@@ -114,7 +114,7 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			con.setAutoCommit(false);
 			ptsmt = con.prepareStatement(delete_state);
-			ptsmt.setInt(1, clubMemberID);
+			ptsmt.setString(1, clubMemberID);
 			ptsmt.executeUpdate();
 			con.commit();
 			System.out.println("刪除一筆資料");
@@ -163,7 +163,7 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 	 * @see clubMember.model.ClubMemberDAO_I#findByPK(int)
 	 */
 	@Override
-	public ClubMemberVO findByPK(int clubMemberID)
+	public ClubMemberVO findByPK(String clubMemberID)
 	{
 		Connection con = null;
 		PreparedStatement ptsmt = null;
@@ -184,14 +184,14 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 			con.setAutoCommit(false);
 			ptsmt = con.prepareStatement(get_one_state);
-			ptsmt.setInt(1, clubMemberID);
+			ptsmt.setString(1, clubMemberID);
 			rs = ptsmt.executeQuery();
 			con.commit();
 			System.out.println("查詢一筆資料");
 			while (rs.next())
 			{
 				memberVO.setClubId(rs.getInt(1));
-				memberVO.setClubMemberId(rs.getInt(2));
+				memberVO.setClubMemberId(rs.getString(2));
 				memberVO.setJoinDate(rs.getDate(3));
 			}
 
@@ -269,7 +269,7 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 			{
 				ClubMemberVO memberVO = new ClubMemberVO();
 				memberVO.setClubId(rs.getInt(1));
-				memberVO.setClubMemberId(rs.getInt(2));
+				memberVO.setClubMemberId(rs.getString(2));
 				memberVO.setJoinDate(rs.getDate(3));
 				members.add(memberVO);
 			}
@@ -350,7 +350,7 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 			{
 				ClubMemberVO memberVO = new ClubMemberVO();
 				memberVO.setClubId(rs.getInt(1));
-				memberVO.setClubMemberId(rs.getInt(2));
+				memberVO.setClubMemberId(rs.getString(2));
 				memberVO.setJoinDate(rs.getDate(3));
 				members.add(memberVO);
 			}
