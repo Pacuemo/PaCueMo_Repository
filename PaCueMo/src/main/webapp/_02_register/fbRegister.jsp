@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF8"
     pageEncoding="UTF8"%>
 <!DOCTYPE html>
-<html lang="en" class="layout-signup">
+<html class="layout-signup">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta charset="UTF-8">
 <title>註冊 - PACUEMO</title>
 
 <!-- Bootstrap -->
@@ -28,19 +27,10 @@
   <div class="l-signup-body">
     <div class="container">
       <div class="l-box-content">
-        <section class="signup-select">
-          <form id="js-register-with-facebook" method="post" role="form" action="/tw/xhr/json/sign-up-for-spotify-fb.php" novalidate>
-            <div class="hidden ajax-spinner"></div>
-            <div class="content">
-              <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=&quot;/help/&quot;>說明中心</a>"></div>
-              <a href="#" class="btn btn-facebook btn-sm btn-block js-signup-fb" id="select-button-signup-fb"> 以 Facebook 帳戶註冊 </a> <strong class="line-thru">或</strong> <a href="/tw/signup/" class="primary js-link" data-section="register" id="select-link-signup-email"> 以你的電郵地址註冊 </a>
-              <p class="primary"> 已經擁有帳戶？ <a id="select-link-login" data-section="login" href="">登入</a> </p>
-            </div>
-          </form>
-        </section>
+      	<br>
         <section class="register">
           <div class="content">
-            <h2 class="center hdr-l"> 以你的電郵地址註冊 </h2>
+            <h2 class="center hdr-l"> 以  Facebook 帳戶註冊</h2>
             <form id="js-register-with-email" method="post" action="/tw/xhr/json/sign-up-for-spotify.php" novalidate>
               <div class="hidden ajax-spinner"></div>
               <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=''>說明中心</a>"></div>
@@ -50,25 +40,17 @@
                     <div id="register-dob1" class="register-dob">
                       <div class="name">
                         <label class="sr-only" for="register-userLastName">姓氏:</label>
-                        <input type="text" id="register-userLastName" name="userLastName" placeholder="姓氏" required="" data-msg-required="請輸入您的姓氏。"  maxlength="20" autocapitalize="off" autocorrect="off" >
+                        <input type="text" id="register-userLastName" name="userLastName" placeholder="姓氏" value="${param.lastName}" required="" data-msg-required="請輸入您的姓氏。"  maxlength="20" autocapitalize="off" autocorrect="off" >
                       </div>
                       <div class="name">
                         <label class="sr-only" for="register-userFirstName">名字:</label>
-                        <input type="text" id="register-userFirstName" name="userFirstName" placeholder="名字" required="" data-msg-required="請輸入您的名字。"  maxlength="20" autocapitalize="off" autocorrect="off">
+                        <input type="text" id="register-userFirstName" name="userFirstName" value="${param.firstName}" placeholder="名字" required="" data-msg-required="請輸入您的名字。"  maxlength="20" autocapitalize="off" autocorrect="off">
                       </div>
                     </div>
                   </li>
                   <li>
-                    <label class="sr-only" for="register-password">密碼:</label>
-                    <input type="password" id="register-password" name="password" placeholder="密碼" required="" data-msg-required="請選擇密碼。" data-rule-minlength="4" data-msg-minlength="你的密碼太短。" maxlength="100" autocomplete="off">
-                  </li>
-                  <li>
                     <label class="sr-only" for="register-email">Email:</label>
-                    <input type="email" id="register-email" name="email" value="" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="checkMail.do?model=checkMail" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
-                  </li>
-                  <li>
-                    <label class="sr-only" for="register-confirm-email">確認電郵:</label>
-                    <input type="email" id="register-confirm-email" name="confirm_email" value="" placeholder="確認電郵" required="" data-msg-required="請確認你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-equalto="#register-email" data-msg-equalto="電郵地址不符。" maxlength="100">
+                    <input type="email" id="register-email" name="email" value="${param.email}" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="checkMail.do?model=checkMail" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
                   </li>
                   <li>
                     <label class="sr-only" for="register-phone">手機號碼:</label>
@@ -81,6 +63,7 @@
 						<select id="register-dob-year" class="dob" name="dob_year" max="2003" data-msg-max="很抱歉，你的年齡並不符合 Pacuemo 的規定。" required data-msg-required="你的出生日期？">
                           <option value="" selected="" disabled="">年</option>
                           </select>
+                          <input type="hidden" name="facebookId" value = "${param.facebookId}"/>
                       </div>
                       <div class="controls controls-month">
                         <select id="register-dob-month" class="dob" name="dob_month" required data-msg-required="你的出生日期？">

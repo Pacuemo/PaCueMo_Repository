@@ -166,7 +166,8 @@ body {
 input, button, select, textarea {
 	font-family: inherit;
 	font-size: inherit;
-	line-height: inherit
+	line-height: inherit;
+	font-family: Consolas;
 }
 a {
 	color: #2ebd59;
@@ -4659,7 +4660,7 @@ display:none
 	height: 3em;
 	margin: 0;
 	padding: .625em .625em .625em;
-	width: 100%
+	width: 100%;
 }
 .reboot button {
 	outline: 0
