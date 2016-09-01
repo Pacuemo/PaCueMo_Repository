@@ -1,4 +1,4 @@
-package _21_getclub_service;
+package _21_club_service;
 
 import java.sql.Date;
 import java.util.List;

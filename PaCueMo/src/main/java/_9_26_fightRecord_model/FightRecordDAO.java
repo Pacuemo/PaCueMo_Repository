@@ -65,7 +65,8 @@ public class FightRecordDAO implements FightRecordDAO_I
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_26_fightRecord_model.FightRecordDAO_I#find_All_By_clubMemberId(java.lang.String)
 	 */
 	@Override
@@ -75,7 +76,8 @@ public class FightRecordDAO implements FightRecordDAO_I
 		return jdbc.query(Select_ALL_BY_clubMemberId, new FightRecordRowMapper(), clubMemberId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_26_fightRecord_model.FightRecordDAO_I#find_All_By_fightId(int)
 	 */
 	@Override
@@ -85,7 +87,8 @@ public class FightRecordDAO implements FightRecordDAO_I
 		return jdbc.query(Select_ALL_BY_fightId, new FightRecordRowMapper(), fightId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_26_fightRecord_model.FightRecordDAO_I#find_All_By_clubId(int)
 	 */
 	@Override
@@ -95,7 +98,8 @@ public class FightRecordDAO implements FightRecordDAO_I
 		return jdbc.query(Select_ALL_BY_clubId, new FightRecordRowMapper(), clubId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_26_fightRecord_model.FightRecordDAO_I#add_One(_9_26_fightRecord_model.FightRecordVO)
 	 */
 	@Override
@@ -129,7 +133,8 @@ public class FightRecordDAO implements FightRecordDAO_I
 				fightRecordVO.getScore());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_26_fightRecord_model.FightRecordDAO_I#delete_One(int, java.lang.String)
 	 */
 	@Override

@@ -1,4 +1,4 @@
-package _21_getclub_controller;
+package _21_club_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import _21_getclub_service.ClubService;
+import _21_club_service.ClubService;
 
 @WebServlet("/club/GetClubInfo")
 public class GetClubInfo extends HttpServlet
