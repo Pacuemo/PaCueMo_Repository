@@ -8,13 +8,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourtJdbcDao implements CourtDAO_interface
+import _00_initial_service.GlobalService;
+
+public class CourtDAO implements CourtDAO_interface
 {
 
-	String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	String url = "jdbc:sqlserver://localhost:1433;DatabaseName=MagicJack";
-	String userid = "sa";
-	String passwd = "sa123456";
+	String driver = GlobalService.DRIVER_NAME;
+	String url = GlobalService.DB_URL;
+	String userid = GlobalService.USERID;
+	String passwd = GlobalService.PASSWORD;
 
 	private static final String INSERT_STMT = "INSERT INTO Court (name, courtaddress, imgUrl, latitude, longitude, webUrl, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court order by courtId";
@@ -35,15 +37,14 @@ public class CourtJdbcDao implements CourtDAO_interface
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, courtVO.getName());
-			pstmt.setString(2, courtVO.getAddress());
-			pstmt.setString(3, courtVO.getPhoto1());
+			pstmt.setString(2, courtVO.getCourtaddress());
+			pstmt.setString(3, courtVO.getImgUrl());
 			pstmt.setDouble(4, courtVO.getLatitue());
 			pstmt.setDouble(5, courtVO.getLongitue());
-			pstmt.setString(6, courtVO.getWeb());
+			pstmt.setString(6, courtVO.getWebUrl());
 			pstmt.setString(7, courtVO.getPhone());
 
 			pstmt.executeUpdate();
-
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -96,16 +97,15 @@ public class CourtJdbcDao implements CourtDAO_interface
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, courtVO.getName());
-			pstmt.setString(2, courtVO.getAddress());
-			pstmt.setString(3, courtVO.getPhoto1());
+			pstmt.setString(2, courtVO.getCourtaddress());
+			pstmt.setString(3, courtVO.getImgUrl());
 			pstmt.setDouble(4, courtVO.getLatitue());
 			pstmt.setDouble(5, courtVO.getLongitue());
-			pstmt.setString(6, courtVO.getWeb());
+			pstmt.setString(6, courtVO.getWebUrl());
 			pstmt.setString(7, courtVO.getPhone());
 			pstmt.setInt(8, courtVO.getCourtId());
 
 			pstmt.executeUpdate();
-
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -160,7 +160,6 @@ public class CourtJdbcDao implements CourtDAO_interface
 			pstmt.setInt(1, courtId);
 
 			pstmt.executeUpdate();
-
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -200,6 +199,7 @@ public class CourtJdbcDao implements CourtDAO_interface
 
 	}
 
+	//查詢單一場地
 	@Override
 	public CourtVO findByPrimaryKey(Integer courtId)
 	{
@@ -223,14 +223,13 @@ public class CourtJdbcDao implements CourtDAO_interface
 				courtVO = new CourtVO();
 				courtVO.setCourtId(rs.getInt("courtId"));
 				courtVO.setName(rs.getString("name"));
-				courtVO.setAddress(rs.getString("courtaddress"));
-				courtVO.setPhoto1(rs.getString("imgUrl"));
+				courtVO.setCourtaddress(rs.getString("courtaddress"));
+				courtVO.setImgUrl(rs.getString("imgUrl"));
 				courtVO.setLatitue(rs.getDouble("latitude"));
 				courtVO.setLongitue(rs.getDouble("longitude"));
-				courtVO.setWeb(rs.getString("webUrl"));
+				courtVO.setWebUrl(rs.getString("webUrl"));
 				courtVO.setPhone(rs.getString("phone"));
 			}
-
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -281,6 +280,7 @@ public class CourtJdbcDao implements CourtDAO_interface
 		return courtVO;
 	}
 
+	//查詢縣市場地(building...)
 	@Override
 	public List<CourtVO> getAll()
 	{
@@ -302,11 +302,11 @@ public class CourtJdbcDao implements CourtDAO_interface
 				courtVO = new CourtVO();
 				courtVO.setCourtId(rs.getInt("courtId"));
 				courtVO.setName(rs.getString("name"));
-				courtVO.setAddress(rs.getString("courtaddress"));
-				courtVO.setPhoto1(rs.getString("imgUrl"));
+				courtVO.setCourtaddress(rs.getString("courtaddress"));
+				courtVO.setImgUrl(rs.getString("imgUrl"));
 				courtVO.setLatitue(rs.getDouble("latitude"));
 				courtVO.setLongitue(rs.getDouble("longitude"));
-				courtVO.setWeb(rs.getString("webUrl"));
+				courtVO.setWebUrl(rs.getString("webUrl"));
 				courtVO.setPhone(rs.getString("phone"));
 				list.add(courtVO);
 			}
@@ -360,4 +360,8 @@ public class CourtJdbcDao implements CourtDAO_interface
 		}
 		return list;
 	}
+
+	//查詢行政區場地(building...)
+//	@Override
+//	public List<CourtVO> getAll(){}
 }
