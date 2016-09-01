@@ -27,16 +27,16 @@ public class RegisterService
 		return "true";
 	}
 
-	public String saveMember(String memberFirstName, String memberLastName, String memberPassword, Date memberBirthday, String memberPhone, String memberMail)
+	public MemberVO saveMember(String memberFirstName, String memberLastName, String memberPassword, Date memberBirthday, String memberPhone, String memberMail)
 	{
 
 		MemberVO memberVO = dao.insert(memberFirstName, memberLastName, memberPassword, memberBirthday, memberPhone, memberMail);
 
 		if (memberVO != null)
 		{
-			return "false";
+			return memberVO;
 		}
 
-		return "true";
+		return null;
 	}
 }

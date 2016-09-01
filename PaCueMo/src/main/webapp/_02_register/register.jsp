@@ -110,9 +110,9 @@
                   </li>
                 </ul>
               </fieldset>
-              <input type="submit" id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit" value="註冊"/>
+              <button id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit" >註冊</button>
             </form>
-            <p class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="">登入</a> </p>
+            <p role="submit" class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="">登入</a> </p>
           </div>
         </section>
       </div>
@@ -131,7 +131,7 @@ $(function(){
 		errorClass: "has-error",
 		errorPlacement: function(error, element) {
 							if(element.is('#register-dob-year')||element.is('#register-dob-month')||element.is('#register-dob-day')){
-// 									$("#li-dob").append(error);
+									$("#li-dob").append(error);
 							}else if(element.is('#register-userLastName')||element.is('#register-userFirstName')){
 								$("#register-dob1").after(error);
 							}else{

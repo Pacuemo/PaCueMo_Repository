@@ -29,17 +29,17 @@ public class MemberDAO implements MemberDAO_interface
 	String userid = GlobalService.USERID;
 	String passwd = GlobalService.PASSWORD;
 
-	private static final String INSERT_STMT = "INSERT dbo.Member( memberFirstName ,memberLastName ,memberPassword ,memberBirthday ,memberPhone ,memberMail,"
-			+ " memberPoint ,memberHaveCard ,memberType ,memberRgDateTime, memberMailStatus"
-			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-	private static final String INSERT_STMT_fb = "INSERT dbo.Member( memberFirstName ,memberLastName ,memberBirthday ,memberPhone ,memberMail,"
-			+ " memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus"
-			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	private static final String INSERT_STMT = "INSERT dbo.Member( memberId, memberFirstName ,memberLastName ,memberPassword ,memberBirthday ,memberPhone ,memberMail,"
+			+ " memberPoint ,memberHaveCard ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
+			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	private static final String INSERT_STMT_fb = "INSERT dbo.Member( memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone ,memberMail,"
+			+ " memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
+			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 	private static final String GET_ALL_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member ORDER BY memberId";
 	private static final String GET_ONE_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member WHERE memberId = ?";
-	private static final String GET_ONE_STMT_BY_MAIL = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
+	private static final String GET_ONE_STMT_BY_MAIL = "SELECT memberId, memberPassword, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member WHERE memberMail = ?";
 	private static final String GET_ONE_STMT_BY_FBID = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member WHERE memberFBId = ?";
@@ -56,7 +56,6 @@ public class MemberDAO implements MemberDAO_interface
 
 		try
 		{
-
 			Class.forName(driver);
 
 			con = DriverManager.getConnection(url, userid, passwd);
@@ -74,6 +73,7 @@ public class MemberDAO implements MemberDAO_interface
 			pstmt.setInt(9, 1);
 			pstmt.setTimestamp(10, new Timestamp(System.currentTimeMillis()));
 			pstmt.setBoolean(11, false);
+			pstmt.setBoolean(12, false);
 
 			if (pstmt.executeUpdate() == 1)
 			{
@@ -85,17 +85,23 @@ public class MemberDAO implements MemberDAO_interface
 
 				while (rs.next())
 				{
-					memberVO = new MemberVO();
-					memberVO.setMemberId(rs.getString("memberId"));
-					memberVO.setMemberPassword(rs.getString("memberPassword"));
-					memberVO.setMemberFirstName(rs.getString("memberFirstName"));
-					memberVO.setMemberLastName(rs.getString("memberLastName"));
-					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
-					memberVO.setMemberPhone(rs.getString("memberPhone"));
-					memberVO.setMemberMail(rs.getString("memberMail"));
-					memberVO.setMemberFileName(rs.getString("memberImgUrl"));
-					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
-					memberVO.setMemberFBId(rs.getString("memberFBId"));
+					if (rs.getString("memberPassword").equals(GlobalService.getMD5Endocing(memberPassword)))
+					{
+						memberVO = new MemberVO();
+						memberVO.setMemberId(rs.getString("memberId"));
+						memberVO.setMemberFirstName(rs.getString("memberFirstName"));
+						memberVO.setMemberLastName(rs.getString("memberLastName"));
+						memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
+						memberVO.setMemberPhone(rs.getString("memberPhone"));
+						memberVO.setMemberMail(rs.getString("memberMail"));
+						memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+						memberVO.setMemberPoint(rs.getDouble("memberPoint"));
+						memberVO.setMemberFBId(rs.getString("memberFBId"));
+					}
+					else
+					{
+						return null;
+					}
 				}
 			}
 
