@@ -33,37 +33,6 @@ $( function() {
       dialog.dialog( "open" );
     });
     
-    function chkName() {
-        checkName = false;
-        var name = document.getElementById(" ").value;
-        rs = /%{1}u{1}\S{4}$/;
-
-        for (var i = 0; i < name.length; i++) {
-            var code = escape(name.charAt(i));
-            if (code == "%uu02CA" || code == "%uu02C7" || code == "%u02CB" || code == "%u02D9") { //注音符號
-                checkName = false;
-                break;
-            }
-            if (rs.test(code)) {
-                checkName = true;
-            } else {
-                checkName = false;
-                break;
-            }
-        }
-
-        if (checkName) {
-        	
-        } else {
-            document.getElementById("teamName").customValidity = "(不可空白，且必須為中文字)";
-            if (name == "") {
-                document.getElementById("namespan").innerHTML = "不可空白";
-            } else {
-                document.getElementById("namespan").innerHTML = "輸入錯誤";
-            }
-        }
-    }
-    document.getElementById("teamName").onblur = chkName;
 
 // team dialog end    
     
