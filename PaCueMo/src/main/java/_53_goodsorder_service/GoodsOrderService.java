@@ -2,32 +2,51 @@ package _53_goodsorder_service;
 
 import java.util.List;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+
 import _9_53_goodsorder_model.GoodsOrderDAO;
 import _9_53_goodsorder_model.GoodsOrderVO;
 
 public class GoodsOrderService
 {
 
-	private GoodsOrderDAO dao = null;
+	private GoodsOrderDAO goodsOrderDAO;/* GoodsOrderBeans_Config 注入 */
 
 	public GoodsOrderService()
 	{
-		dao = new GoodsOrderDAO();
+		//goodsOrderDAO = new GoodsOrderDAO();
+	}
+
+	public GoodsOrderService(GoodsOrderDAO goodsOrderDAO)
+	{
+		this.goodsOrderDAO = goodsOrderDAO;
 	}
 
 	public void addGoodsOrder(GoodsOrderVO vo)
 	{
-		dao.insert(vo);
+		goodsOrderDAO.insert(vo);
 	}
 
 	public List<GoodsOrderVO> getAllGoodsOrder()
 	{
-		return dao.getAll();
+		return goodsOrderDAO.getAll();
+	}
+
+	public int delete(Integer orderId)
+	{
+		return goodsOrderDAO.delete(orderId);
 	}
 
 	public static void main(String[] args)
 	{
-		//===========insert test =============
+		///////////////////////////////////////
+		/////////////【Spring】////////////////
+		///////////////////////////////////////
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_53_goodsorder_service");
+		GoodsOrderService svc = (GoodsOrderService) context.getBean("goodsService");
+
+		//===========【測試】insert test =============
 //		GoodsOrderVO myvo = new GoodsOrderVO();
 //		myvo.setMemberId(112);
 //		myvo.setCardNum("6587 1111 8888 7777");
@@ -41,14 +60,16 @@ public class GoodsOrderService
 //
 //		GoodsOrderService svc = new GoodsOrderService();
 //		svc.addGoodsOrder(myvo);
-		//===========getAllGoodsOrder test =============
+		//===========【測試】delete test =============
+		svc.delete(4);
+		//===========【測試】getAllGoodsOrder test =============
 //		GoodsOrderService svc = new GoodsOrderService();
 ////
-//		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
-//		for (GoodsOrderVO vvo : list)
-//		{
-//			System.out.println(vvo.getFullName() + "  " + vvo.getCardNum());
-//		}
+		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
+		for (GoodsOrderVO vvo : list)
+		{
+			System.out.println(vvo.getFullName() + "  " + vvo.getCardNum());
+		}
 	}
 
 }
