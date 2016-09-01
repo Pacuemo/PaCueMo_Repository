@@ -7,9 +7,9 @@ public interface ClubMemberDAO_I
 
 	void insert(ClubMemberVO clubMemberVO);
 
-	void delete(int clubMemberID);
+	void delete(String clubMemberID);
 
-	ClubMemberVO findByPK(int clubMemberID);
+	ClubMemberVO findByPK(String clubMemberID);
 
 	List<ClubMemberVO> getAll();
 

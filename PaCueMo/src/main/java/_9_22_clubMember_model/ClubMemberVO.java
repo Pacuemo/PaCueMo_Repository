@@ -1,14 +1,17 @@
 package _9_22_clubMember_model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import _9_41_member_model.MemberVO;
 
-public class ClubMemberVO
+public class ClubMemberVO implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private int clubId;
-	private int clubMemberId;
+	private String clubMemberId;
 	private Date joinDate;
 
 	private MemberVO member;
@@ -23,12 +26,12 @@ public class ClubMemberVO
 		this.clubId = clubId;
 	}
 
-	public int getClubMemberId()
+	public String getClubMemberId()
 	{
 		return clubMemberId;
 	}
 
-	public void setClubMemberId(int clubMemberId)
+	public void setClubMemberId(String clubMemberId)
 	{
 		this.clubMemberId = clubMemberId;
 	}
