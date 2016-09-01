@@ -5,33 +5,43 @@ import java.util.List;
 import _9_52_nbateam_model.NBATeamDAO;
 import _9_52_nbateam_model.NBATeamVO;
 
+// @Service(value = "nbaTeamService")
 public class NBATeamService
 {
-
-	private NBATeamDAO dao;
+	private NBATeamDAO nbaTeamDAO;
 
 	public NBATeamService()
 	{
-		dao = new NBATeamDAO();
+//		nbaTeamDAO = new NBATeamDAO();
+	}
+
+//	@Autowired
+	public NBATeamService(NBATeamDAO nbaTeamDAO)
+	{
+		this.nbaTeamDAO = nbaTeamDAO;
 	}
 
 	public NBATeamVO getByTeamId(Integer teamID)
 	{
-		return dao.findByTeamId(teamID);
+		return nbaTeamDAO.findByTeamId(teamID);
 	}
 
 	public NBATeamVO getByTeamName(String teamName)
 	{
-		return dao.findByTeamName(teamName);
+		return nbaTeamDAO.findByTeamName(teamName);
 	}
 
 	public List<NBATeamVO> getAllTeam()
 	{
-		return dao.getAll();
+		return nbaTeamDAO.getAll();
 	}
 
 	public static void main(String[] args)
 	{
+//		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_52_nbateam_service");
+//		NBATeamService svc = (NBATeamService) context.getBean("nbaTeamService");
+
 		//-------------------------------------------------------begin 查無資料
 //		NBATeamService svc = new NBATeamService();
 //		svc.getByTeamName("123");
@@ -41,12 +51,14 @@ public class NBATeamService
 //		NBATeamService svc = new NBATeamService();
 //		NBATeamVO vo = svc.getByTeamName("黃蜂");
 //		System.out.println(vo.getTeamName());
-
+		//---------- 查全部 ---------------
 //		List<NBATeamVO> list = svc.getAllTeam();
 //		for (NBATeamVO vo : list)
 //		{
 //			System.out.println(vo.getTeamID() + "  " + vo.getTeamName());
 //		}
+
+		//---------- 查一筆 ---------------
 //		NBATeamService svc = new NBATeamService();
 //		NBATeamVO vo = svc.getByTeamId(3);
 //		System.out.println(vo.getTeamName());

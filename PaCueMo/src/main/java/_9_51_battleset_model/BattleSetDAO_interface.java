@@ -6,9 +6,9 @@ public interface BattleSetDAO_interface
 {
 	public void insert(BattleSetVO vo);
 
-	public void delete(Integer battleId);
+	public int delete(Integer battleId);
 
-	public void update(BattleSetVO vo);
+	public int update(BattleSetVO vo);
 
 	public BattleSetVO findByPrimaryKey(Integer battleId);
 

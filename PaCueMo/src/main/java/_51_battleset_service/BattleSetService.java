@@ -12,45 +12,66 @@ import _9_52_nbateam_model.NBATeamVO;
 
 public class BattleSetService
 {
-	private BattleSetDAO dao = null;
+	private NBATeamService nbaSvc; /* BattleSetBeans_Config 注入 */
+	private BattleSetDAO bSetDAO;/* BattleSetBeans_Config 注入 */
 
 	public BattleSetService()
 	{
-		dao = new BattleSetDAO();
+
+	}
+
+	public BattleSetService(BattleSetDAO bSetDAO)
+	{
+		this.bSetDAO = bSetDAO;
+	}
+
+	public BattleSetService(BattleSetDAO bSetDAO, NBATeamService nbaSvc) /* BattleSetBeans_Config 注入 */
+	{
+		this.bSetDAO = bSetDAO;
+		this.nbaSvc = nbaSvc;
+	}
+
+	public void setNbaSvc(NBATeamService nbaSvc) /* NBA_service */
+	{
+		this.nbaSvc = nbaSvc;
 	}
 
 	public void addBattleSet(BattleSetVO vo)
 	{
-		dao.insert(vo);
+		bSetDAO.insert(vo);
 	}
 
 	public void updateBattleSet(BattleSetVO vo)
 	{
-		dao.update(vo);
+		bSetDAO.update(vo);
 	}
 
 	public void deleteBattleSet(Integer battleId)
 	{
-		dao.delete(battleId);
+		bSetDAO.delete(battleId);
 	}
 
 	public BattleSetVO getOneBattleSet(Integer battleId)
 	{
-		return dao.findByPrimaryKey(battleId);
+		return bSetDAO.findByPrimaryKey(battleId);
 	}
 
 	public List<BattleSetVO> getAllBattleSet()
 	{
-		List<BattleSetVO> list = dao.getAll();
+		List<BattleSetVO> list = bSetDAO.getAll();
 		return list;
 	}
 
+	//=========================================
+	//============= 進階查詢 ==================
+	//=========================================
 	public List<Map<String, Object>> getLogoURLs(String queryDate)// -----modify:2016/08/12：增加對戰時間 Map<String, NBATeamVO> 改為 Map<String, Object>
 	{
-		List<BattleSetVO> list_BattleSet = dao.getAll();
+		List<BattleSetVO> list_BattleSet = bSetDAO.getAll();
 		List<Map<String, Object>> retern_list = new ArrayList<>();// -----modify:2016/08/12：增加對戰時間 Map<String, NBATeamVO> 改為 Map<String, Object>
 
-		NBATeamService nbaSvc = new NBATeamService();
+//		NBATeamService nbaSvc = new NBATeamService(); /* 原本 Local 變數自己new → 改Spring注入*/
+
 		for (BattleSetVO vo : list_BattleSet)
 		{
 			String battleDate = vo.getBattleDateTime().toString().substring(0, 10);
@@ -80,7 +101,8 @@ public class BattleSetService
 	{
 		List<Map<String, Object>> retern_list = new ArrayList<>();// modify:2016/08/12：增加對戰時間
 		//------------【根據輸入的teamName找到對應的teamID】------------------------
-		NBATeamService nbaSvc = new NBATeamService();
+
+//		NBATeamService nbaSvc = new NBATeamService(); /* 原本 Local 變數自己new → 改Spring注入*/
 
 		if (nbaSvc.getByTeamName(teamName) == null)// 若輸入的teamName查不到，直接丟null
 		{
@@ -108,7 +130,7 @@ public class BattleSetService
 			return null;
 		}
 		//------------【根據找到的teamID查詢有此ID的對戰場次】---------
-		List<BattleSetVO> list_battleSet = dao.getSetsById(teamId);
+		List<BattleSetVO> list_battleSet = bSetDAO.getSetsById(teamId);
 		for (BattleSetVO vo : list_battleSet)
 		{
 
@@ -129,8 +151,10 @@ public class BattleSetService
 	public List<Map<String, Object>> getSetsByDate(String queryDate)// modify:2016/08/12 增加對戰時間
 	{
 		List<Map<String, Object>> return_list = new ArrayList<>();// modify:2016/08/12 增加對戰時間
-		List<BattleSetVO> list = dao.getSetsByDate(queryDate);
-		NBATeamService nbaSvc = new NBATeamService();
+		List<BattleSetVO> list = bSetDAO.getSetsByDate(queryDate);
+
+		//NBATeamService nbaSvc = new NBATeamService(); /* 原本 Local 變數自己new → 改Spring注入*/
+
 		for (BattleSetVO vo : list)
 		{
 //			System.out.println(vo.getHomeId() + " vs " + vo.getAwayId());
@@ -153,17 +177,27 @@ public class BattleSetService
 
 	public static void main(String[] args)
 	{
+//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
+//		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
+
+// ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getSetsByDate("2016-07-14");
+//		List<Map<String, Object>> list = svc.getSetsByDate("2015-11-06");
 //		for (Map<String, Object> map : list)
 //		{
 //			System.out.println(((String) map.get("battleTime")));
 //		}
 
+//====================【getLogoURLs】==========================
 //		BattleSetService svc = new BattleSetService();
-//		svc.getLogoURLs("2016-08-12");
-
-		//-------------依隊名查詢(加入 對戰時間)--------------
+//		List<Map<String, Object>> list = svc.getLogoURLs("2016-09-01");
+//		for (Map<String, Object> map : list)
+//		{
+//			System.out.println(((NBATeamVO) map.get("home")).getTeamName() +
+//					"     " + ((NBATeamVO) map.get("away")).getTeamName() +
+//					"     " + map.get("battleTime"));
+//		}
+		//-------------依隊名查詢【getSetsByName】(加入 對戰時間)--------------
 //		BattleSetService svc = new BattleSetService();
 //		List<Map<String, Object>> list = svc.getSetsByName("小牛");
 //		for (Map<String, Object> map : list)
@@ -193,13 +227,12 @@ public class BattleSetService
 
 //////////////
 //		List<Map<String, NBATeamVO>> list = svc.getLogoURLs();
-
 //		for (Map<String, NBATeamVO> map : list)
 //		{
 //			System.out.println(map.get("home").getTeamLogoURL() + "      " + map.get("away").getTeamLogoURL());
 //
 //		}
-
+///////////////【測試】新增/////////////////////
 //		BattleSetVO vo = new BattleSetVO();
 //		vo.setBattleDateTime(java.sql.Timestamp.valueOf("2016-04-27 08:05:33"));
 //		vo.setHomeId(5);
@@ -210,20 +243,34 @@ public class BattleSetService
 //		vo.setAwaybet(9500.0);
 //		svc.addBattleSet(vo);
 
-//		vo.setBattleId(1);
+///////////////【測試】更新 /////////////////////
+//		BattleSetVO vo = new BattleSetVO();
+//		vo.setBattleId(1); /* 主鍵 */
+//		vo.setBattleDateTime(java.sql.Timestamp.valueOf("2016-04-27 08:05:33"));
+//		vo.setHomeId(5);
+//		vo.setAwayId(7);
+//		vo.setHomeScore(77);
+//		vo.setAwayScore(80);
+//		vo.setHomebet(9000.0);
+//		vo.setAwaybet(9500.0);
 //		svc.updateBattleSet(vo);
 
-//		svc.deleteBattleSet(12);
+///////////////【測試】刪除 /////////////////////
+//		svc.deleteBattleSet(314);
+
 //		BattleSetVO vo2 = svc.getOneBattleSet(4);
 //		System.out.println(vo2.getHomeId() + "  " + vo2.getAwayId());
 
-//		NBATeamService NBAsvc = new NBATeamService();
+///////////////【測試】查全部 /////////////////////
+//		NBATeamService NBAsvc = (NBATeamService) context.getBean("nbaTeamService");/* 用Spring, BattleSetBeans_Config 要 @Import({ RootConfig.class, NbaTeamBeans_Config.class }) */
+////		NBATeamService NBAsvc = new NBATeamService();
 //		List<BattleSetVO> list = svc.getAllBattleSet();
+//		int num = 1;
 //		for (BattleSetVO vvo : list)
 //		{
-//			System.out.println(vvo.getHomeId() + "   " + vvo.getAwayId());
-//			NBATeamVO nbavo = NBAsvc.getByTeamId(vvo.getHomeId());
-//			System.out.println(nbavo.getTeamLogoURL());
+//			System.out.println("編號:" + (num++) + "   " + vvo.getHomeId() + "   " + vvo.getAwayId());
+////			NBATeamVO nbavo = NBAsvc.getByTeamId(vvo.getHomeId());
+////			System.out.println(nbavo.getTeamLogoURL());
 //		}
 	}
 

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import _41_login_service.LoginService;
 import _9_41_member_model.MemberVO;
 
-@WebServlet("/login.do")
+@WebServlet("/_01_login/login.do")
 public class LoginServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +28,8 @@ public class LoginServlet extends HttpServlet
 		String mail = request.getParameter("memberMail");
 		String pwd = request.getParameter("memberPassword");
 		String rm = request.getParameter("rememberMe");
+		String mode = request.getParameter("mode");
+		String FbId = request.getParameter("facebookId");
 		String requestURI = (String) session.getAttribute("requestURI");
 
 		if (rm != null)
@@ -36,9 +38,17 @@ public class LoginServlet extends HttpServlet
 		}
 
 		LoginService ms;
+		MemberVO mv = null;
 		ms = new LoginService();
 
-		MemberVO mv = ms.checkMailPwd(mail, pwd);
+		if ("normal_Login".equals(mode))
+		{
+			mv = ms.checkMailPwd(mail, pwd);
+		}
+		else if ("fb_Login".equals(mode))
+		{
+			mv = ms.checkFbId(FbId);
+		}
 
 		if (mv != null)
 		{

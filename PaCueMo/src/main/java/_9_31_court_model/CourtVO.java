@@ -1,79 +1,93 @@
 package _9_31_court_model;
 
-import java.io.Serializable;
-
-public class CourtVO implements Serializable {
-
+public class CourtVO
+{
 	private Integer courtId;
 	private String name;
-	private String address;
-	private String photo1;
+	private String courtaddress;
+	private String imgUrl;
 	private Double latitue;
 	private Double longitue;
-	private String web;
+	private String webUrl;
 	private String phone;
 
-	public Integer getCourtId() {
+	public Integer getCourtId()
+	{
 		return courtId;
 	}
 
-	public void setCourtId(Integer courtId) {
+	public void setCourtId(Integer courtId)
+	{
 		this.courtId = courtId;
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getCourtaddress()
+	{
+		return courtaddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setCourtaddress(String courtaddress)
+	{
+		this.courtaddress = courtaddress;
 	}
 
-	public String getPhoto1() {
-		return photo1;
+	public String getImgUrl()
+	{
+		return imgUrl;
 	}
 
-	public void setPhoto1(String photo1) {
-		this.photo1 = photo1;
+	public void setImgUrl(String imgUrl)
+	{
+		this.imgUrl = imgUrl;
 	}
 
-	public Double getLatitue() {
+	public Double getLatitue()
+	{
 		return latitue;
 	}
 
-	public void setLatitue(Double latitue) {
+	public void setLatitue(Double latitue)
+	{
 		this.latitue = latitue;
 	}
 
-	public Double getLongitue() {
+	public Double getLongitue()
+	{
 		return longitue;
 	}
 
-	public void setLongitue(Double longitue) {
+	public void setLongitue(Double longitue)
+	{
 		this.longitue = longitue;
 	}
 
-	public String getWeb() {
-		return web;
+	public String getWebUrl()
+	{
+		return webUrl;
 	}
 
-	public void setWeb(String web) {
-		this.web = web;
+	public void setWebUrl(String webUrl)
+	{
+		this.webUrl = webUrl;
 	}
 
-	public String getPhone() {
+	public String getPhone()
+	{
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(String phone)
+	{
 		this.phone = phone;
 	}
 }
