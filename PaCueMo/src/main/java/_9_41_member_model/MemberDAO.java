@@ -161,8 +161,108 @@ public class MemberDAO implements MemberDAO_interface
 	@Override
 	public MemberVO insert_fb(String memberFirstName, String memberLastName, Date memberBirthday, String memberPhone, String memberMail, String memberFBId)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(INSERT_STMT_fb);
+
+			pstmt.setString(1, memberFirstName);
+			pstmt.setString(2, memberLastName);
+			pstmt.setDate(3, memberBirthday);
+			pstmt.setString(4, memberPhone);
+			pstmt.setString(5, memberMail);
+			pstmt.setDouble(6, 1000.0);
+			pstmt.setBoolean(7, false);
+			pstmt.setString(8, memberFBId);
+			pstmt.setInt(9, 1);
+			pstmt.setTimestamp(10, new Timestamp(System.currentTimeMillis()));
+			pstmt.setBoolean(11, false);
+			pstmt.setBoolean(12, false);
+
+			if (pstmt.executeUpdate() == 1)
+			{
+				pstmt.close();
+				pstmt = con.prepareStatement(GET_ONE_STMT_BY_MAIL);
+				pstmt.setString(1, memberMail);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next())
+				{
+
+					memberVO = new MemberVO();
+					memberVO.setMemberId(rs.getString("memberId"));
+					memberVO.setMemberFirstName(rs.getString("memberFirstName"));
+					memberVO.setMemberLastName(rs.getString("memberLastName"));
+					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
+					memberVO.setMemberPhone(rs.getString("memberPhone"));
+					memberVO.setMemberMail(rs.getString("memberMail"));
+					memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
+					memberVO.setMemberFBId(rs.getString("memberFBId"));
+
+				}
+			}
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
 	}
 
 	@Override
@@ -285,6 +385,7 @@ public class MemberDAO implements MemberDAO_interface
 			{
 				memberVO = new MemberVO();
 				memberVO.setMemberId(rs.getString("memberId"));
+				memberVO.setMemberPassword(rs.getString("memberPassword"));
 				memberVO.setMemberFirstName(rs.getString("memberFirstName"));
 				memberVO.setMemberLastName(rs.getString("memberLastName"));
 				memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
@@ -346,12 +447,12 @@ public class MemberDAO implements MemberDAO_interface
 			}
 		}
 
-		if (memberVO != null)
+		if (memberVO == null)
 		{
-			return memberVO;
+			return null;
 		}
 
-		return null;
+		return memberVO;
 
 	}
 

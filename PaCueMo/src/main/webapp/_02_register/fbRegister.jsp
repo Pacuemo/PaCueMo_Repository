@@ -60,13 +60,12 @@
                     <label for="register-age">出生日期：</label>
                     <div id="register-dob" class="register-dob">
                       <div class="controls controls-year">
-						<select id="register-dob-year" class="dob" name="dob_year" max="2003" data-msg-max="很抱歉，你的年齡並不符合 Pacuemo 的規定。" required data-msg-required="你的出生日期？">
+						<select id="register-dob-year" class="dob" name="dob_year" max="2003" data-msg-max="很抱歉，你的年齡並不符合 Pacuemo 的規定。" required data-msg-required="請選擇您出生的年份">
                           <option value="" selected="" disabled="">年</option>
                           </select>
-                          <input type="hidden" name="facebookId" value = "${param.facebookId}"/>
                       </div>
                       <div class="controls controls-month">
-                        <select id="register-dob-month" class="dob" name="dob_month" required data-msg-required="你的出生日期？">
+                        <select id="register-dob-month" class="dob" name="dob_month" required data-msg-required="請選擇您出生的月份">
                           <option value="" selected="" disabled="">月份</option>
                           <option value="01">一月</option>
                           <option value="02">二月</option>
@@ -83,9 +82,10 @@
                         </select>
                       </div>
                        <div class="controls controls-day">
-						<select id="register-dob-day" class="dob" name="dob_day" required data-msg-required="你的出生日期？">
+						<select id="register-dob-day" class="dob" name="dob_day" required data-msg-required="請選擇您出生的日期">
                           <option value="" selected="" disabled="">日</option>
                           </select>
+                          <input type="hidden" id="facebookId" value = "${param.facebookId}"/>
                       </div>
                     </div>
                   </li>
@@ -94,7 +94,7 @@
                   </li>
                 </ul>
               </fieldset>
-              <a href="#" id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit">註冊</a>
+              <button id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit" >註冊</button>
             </form>
             <p class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="https://www.spotify.com/tw/login/?continue=https%3A//www.spotify.com/tw/account/overview/">登入</a> </p>
           </div>
@@ -121,7 +121,32 @@ $(function(){
 							}else{
 								error.insertAfter(element);
 							};
-						}
+						},
+						submitHandler:function(form){        
+							var mail = $("#register-email").val();
+							var lastName = $("#register-userLastName").val();
+							var firstName = $("#register-userFirstName").val();
+							var phone = $("#register-phone").val();
+							var year = $("#register-dob-year").val();
+							var month = $("#register-dob-month").val();
+							var day = $("#register-dob-day").val();
+							var fbId = $("#facebookId").val();
+							$.ajax({
+								"type":"post",
+								"url": "../_02_register/register.do",
+								"dataType": "text",
+								"data":{"mail":mail,"fbId":fbId,"lastName":lastName,"firstName":firstName,"phone":phone,"year":year,"month":month,"day":day,"model":"register_fb"},
+								"success":function(data){
+									if( data == "true"){
+										location.href = "../index.jsp";
+									}else{
+										
+									}
+												
+								}
+							});
+							return false;
+						},						
 	});		
 	var date = new Date();
 	var year = date.getFullYear();

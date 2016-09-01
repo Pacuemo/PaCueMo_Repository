@@ -39,4 +39,17 @@ public class RegisterService
 
 		return null;
 	}
+
+	public MemberVO saveMember_fb(String memberFirstName, String memberLastName, Date memberBirthday, String memberPhone, String memberMail, String memberFBId)
+	{
+
+		MemberVO memberVO = dao.insert_fb(memberFirstName, memberLastName, memberBirthday, memberPhone, memberMail, memberFBId);
+
+		if (memberVO != null)
+		{
+			return memberVO;
+		}
+
+		return null;
+	}
 }

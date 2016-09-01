@@ -55,17 +55,11 @@ public class RegisterServlet extends HttpServlet
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		String day = request.getParameter("day");
+		String fbId = request.getParameter("fbId");
 		MemberVO mv = null;
 
 		RegisterService ms;
 		ms = new RegisterService();
-
-		if ("checkMail".equals(model))
-		{
-
-			out.write(ms.checkMail(mail));
-
-		}
 
 		if ("register".equals(model))
 		{
@@ -74,6 +68,27 @@ public class RegisterServlet extends HttpServlet
 			Date dob = new Date(calendar.getTimeInMillis());
 
 			mv = ms.saveMember(firstName, lastName, password, dob, phone, mail);
+
+			if (mv != null)
+			{
+				session.setAttribute("LoginOK", mv);
+				out.write("true");
+				return;
+			}
+			else
+			{
+				out.write("false");
+				return;
+			}
+		}
+
+		if ("register_fb".equals(model))
+		{
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+			Date dob = new Date(calendar.getTimeInMillis());
+
+			mv = ms.saveMember_fb(firstName, lastName, dob, phone, mail, fbId);
 
 			if (mv != null)
 			{
