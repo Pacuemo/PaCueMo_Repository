@@ -20,12 +20,12 @@ public class LoginService
 
 		if (memberVO != null)
 		{
+
 			if (GlobalService.getMD5Endocing(pwd).equals(memberVO.getMemberPassword()))
 			{
 				return memberVO;
 			}
 		}
-
 		return null;
 	}
 

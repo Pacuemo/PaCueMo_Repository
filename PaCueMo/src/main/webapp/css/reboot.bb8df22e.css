@@ -9304,3 +9304,13 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffebedf2', end
 	overflow: hidden;
 	z-index: 1050
 }
+
+input[type="button"].btn-facebook:hover {
+    color: #fff;
+    background-color: #3a61b3;
+}
+
+input[type="button"].btn-facebook {
+    color: #FFF;
+    background-color: #3b5998;
+}
