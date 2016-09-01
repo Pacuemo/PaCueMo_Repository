@@ -1,17 +1,33 @@
 package _9_21_club_model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import _00_initial_service.GlobalService;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Repository;
+
+@Repository("ClubDAO")
 public class ClubDAO implements ClubDAO_I
 {
+	public ClubDAO()
+	{
+	}
+
+	private DataSource ds;
+
+	@Autowired
+	public ClubDAO(DataSource ds)
+	{
+		this.ds = ds;
+	}
 
 	private static final String insert_state = "insert into club(clubName,clubImgURL,clubDate,clubHead,clubProp) values (?,?,?,?,?)";
 	private static final String delete_state = "delete from club where clubID=?";
@@ -19,26 +35,16 @@ public class ClubDAO implements ClubDAO_I
 	private static final String get_all = "select clubID,clubName,clubImgURL,clubDate,clubHead,clubProp from club order by clubID ";
 	private static final String update_one = "update club set clubImgURL=?,clubHead=?,clubProp=? where clubId = ?";
 
-	/*
-	 * (non-Javadoc)
-	 * @see club.model.ClubDAO_I#insert(club.model.ClubVO)
-	 */
 	@Override
 	public void insert(ClubVO clubVO)
 	{
 		PreparedStatement pstmt = null;
 		Connection con = null;
+
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Can't find the SQL Driver." + e.getMessage());
-		}
-		try
-		{
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = ds.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(insert_state);
 			pstmt.setString(1, clubVO.getClubName());
@@ -64,7 +70,7 @@ public class ClubDAO implements ClubDAO_I
 				}
 				catch (SQLException e)
 				{
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
@@ -76,7 +82,7 @@ public class ClubDAO implements ClubDAO_I
 				}
 				catch (SQLException e)
 				{
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 
@@ -96,15 +102,7 @@ public class ClubDAO implements ClubDAO_I
 		Connection con = null;
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e1)
-		{
-			e1.printStackTrace();
-		}
-		try
-		{
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(delete_state);
 			pstmt.setInt(1, clubId);
 			pstmt.execute();
@@ -155,16 +153,7 @@ public class ClubDAO implements ClubDAO_I
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Can't find the SQL Driver." + e.getMessage());
-		}
-		try
-		{
-
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+			con = ds.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(update_one);
 			pstmt.setInt(5, clubVO.getClubID());
@@ -221,18 +210,10 @@ public class ClubDAO implements ClubDAO_I
 		Connection con = null;
 		ResultSet rs = null;
 		ClubVO clubVO = null;
+
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try
-		{
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(get_one_state);
 			pstmt.setInt(1, clubId);
 			rs = pstmt.executeQuery();
@@ -282,10 +263,6 @@ public class ClubDAO implements ClubDAO_I
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see club.model.ClubDAO_I#getAll()
-	 */
 	@Override
 	public List<ClubVO> getAll()
 	{
@@ -293,26 +270,10 @@ public class ClubDAO implements ClubDAO_I
 		Connection con = null;
 		ResultSet rs = null;
 		List<ClubVO> clubVOs = new LinkedList<ClubVO>();
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Can't find the SQL Driver." + e.getMessage());
-		}
 
 		try
 		{
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try
-		{
+			con = ds.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(get_all);
 			rs = pstmt.executeQuery();
@@ -371,14 +332,20 @@ public class ClubDAO implements ClubDAO_I
 
 	public static void main(String[] args)
 	{
-		ClubDAO_I dao = new ClubDAO();
-		List<ClubVO> clubVOs = dao.getAll();
-		for (ClubVO clubVO : clubVOs)
-		{
-			System.out.println("ClubID:" + clubVO.getClubID());
-			System.out.println("imgNAme:" + clubVO.getClubImageName());
-			System.out.println("ClubName:" + clubVO.getClubName());
-		}
+//		ClubDAO_I dao = new ClubDAO();
+
+		ApplicationContext context = new AnnotationConfigApplicationContext(ClubConfig.class);
+		ClubDAO_I dao = (ClubDAO) context.getBean("ClubDAO");
+		ClubVO clubVO = dao.findByPK(1);
+
+		System.out.println("clubName" + clubVO.getClubName());
+//		List<ClubVO> clubVOs = dao.getAll();
+//		for (ClubVO clubVO : clubVOs)
+//		{
+//			System.out.println("ClubID:" + clubVO.getClubID());
+//			System.out.println("imgNAme:" + clubVO.getClubImageName());
+//			System.out.println("ClubName:" + clubVO.getClubName());
+//		}
 
 	}
 

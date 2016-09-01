@@ -1,10 +1,15 @@
 package _9_23_league_model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LeagueVO
+import org.springframework.stereotype.Component;
+
+@Component("LeagueVO")
+public class LeagueVO implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private Integer leagueID;
 	private String leagueName;
 	private Integer clubAmount;

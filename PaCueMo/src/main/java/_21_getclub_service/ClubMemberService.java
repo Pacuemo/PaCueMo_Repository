@@ -10,7 +10,7 @@ public class ClubMemberService
 {
 	ClubMemberDAO dao = new ClubMemberDAO();
 
-	public void save(int clubId, int clubMemberId, Date joinDate)
+	public void save(int clubId, String clubMemberId, Date joinDate)
 	{
 		ClubMemberVO memberVO = new ClubMemberVO();
 		memberVO.setClubId(clubId);
@@ -20,12 +20,12 @@ public class ClubMemberService
 
 	}
 
-	public void delete(int clubMemberId)
+	public void delete(String clubMemberId)
 	{
 		dao.delete(clubMemberId);
 	}
 
-	public ClubMemberVO findOne(int clubMemberId)
+	public ClubMemberVO findOne(String clubMemberId)
 	{
 		ClubMemberVO memberVO = dao.findByPK(clubMemberId);
 		return memberVO;
