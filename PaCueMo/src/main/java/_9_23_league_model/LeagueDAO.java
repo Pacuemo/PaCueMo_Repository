@@ -13,8 +13,6 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import _00_config.RootConfig;
-
 @Repository("LeagueDAO")
 public class LeagueDAO implements LeagueDAO_I
 {
@@ -103,7 +101,7 @@ public class LeagueDAO implements LeagueDAO_I
 	public static void main(String[] args) throws ParseException
 	{
 		LeagueVO leagueVO = null;
-		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(LeagueConfig.class);
 		//測試查詢
 		LeagueDAO_I dao = (LeagueDAO_I) context.getBean("LeagueDAO");
 //		leagueVO= dao.findOne(1);
@@ -129,7 +127,7 @@ public class LeagueDAO implements LeagueDAO_I
 //		System.out.println(success);
 
 		//測試查詢BYNAME
-		List<LeagueVO> leagueVOs = dao.find_by_name("x");
+		List<LeagueVO> leagueVOs = dao.find_by_name("世");
 		for (LeagueVO vo : leagueVOs)
 		{
 			System.out.print("name= ");
