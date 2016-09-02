@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import _10_team_service.TeamService;
+import _11_teammember_service.TeamMemberService;
 import _9_10_team_model.TeamVO;
 import _9_41_member_model.MemberVO;
 
@@ -20,9 +21,29 @@ public class TeamServlet extends HttpServlet {
 	public TeamServlet() {
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("Here is Get");
+		req.setCharacterEncoding("UTF-8");
+		TeamVO teamVO = null;
+		TeamService teamService = null;
+		TeamMemberService teamMemberService = null;
+		if (null != req.getAttribute("teamId")) {
+			try {
+
+				Integer teamId = Integer.valueOf(req.getParameter("teamId"));
+				teamService = new TeamService();
+				teamVO = teamService.getOne(teamId);
+				req.setAttribute("teamVO", teamVO);
+				teamMemberService.getOneTeam(teamId);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("please pass teamId.");
+			return;
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,13 +67,12 @@ public class TeamServlet extends HttpServlet {
 			teamVO.setTeamProp(Integer.valueOf(teamProp));
 
 			MemberVO memberVO = (MemberVO) context.getAttribute("LoginOK");
-			Integer teamMemberId = Integer.valueOf(memberVO.getMemberId());
-			if (null != teamMemberId && teamMemberId != 0) {
+			String teamMemberId = memberVO.getMemberId();
+			if (null != teamMemberId && teamMemberId.length() != 0) {
 				teamVO.setTeamHead(teamMemberId);
 			} else {
 				error = true;
 			}
-
 			if (!error) {
 				teamService.createTeam(teamVO);
 			} else {
@@ -60,7 +80,7 @@ public class TeamServlet extends HttpServlet {
 				return;
 			}
 		} catch (Exception e) {
-
+			System.out.println("整合後取得memberVO，即可正常運作");
 		}
 
 	}

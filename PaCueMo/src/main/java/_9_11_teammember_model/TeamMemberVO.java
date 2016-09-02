@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class TeamMemberVO {
 	private Integer teamId;
-	private Integer teamMemberId;
+	private String teamMemberId;
 	private Date joinDate;
 
 	public Integer getTeamId() {
@@ -15,11 +15,11 @@ public class TeamMemberVO {
 		this.teamId = teamId;
 	}
 
-	public Integer getTeamMemberId() {
+	public String getTeamMemberId() {
 		return teamMemberId;
 	}
 
-	public void setTeamMemberId(Integer teamMemberId) {
+	public void setTeamMemberId(String teamMemberId) {
 		this.teamMemberId = teamMemberId;
 	}
 

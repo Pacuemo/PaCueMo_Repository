@@ -29,7 +29,7 @@ public class TeamDAO implements TeamDAO_interface {
 		TeamVO teamVO = new TeamVO();
 		teamVO.setTeamName("test91");
 		teamVO.setTeamProp(2);
-		teamVO.setTeamHead(9);
+		teamVO.setTeamHead("9");
 
 	}
 
@@ -90,15 +90,15 @@ public class TeamDAO implements TeamDAO_interface {
 
 			con.setAutoCommit(false);
 			// 先新增隊伍
-			Integer teamMemberId = teamVO.getTeamHead();
+			String teamMemberId = teamVO.getTeamHead();
 			pstmt = con.prepareStatement(INSERT);
 			pstmt.setString(1, teamVO.getTeamName());
 			pstmt.setInt(2, teamVO.getTeamProp());
-			pstmt.setInt(3, teamMemberId);
+			pstmt.setString(3, teamMemberId);
 			pstmt.executeUpdate();
 			// 查詢隊伍Id
 			pstmt = con.prepareStatement(FIND_TEAMID);
-			pstmt.setInt(1, teamMemberId);
+			pstmt.setString(1, teamMemberId);
 			ResultSet rs = pstmt.executeQuery();
 			Integer teamId = null;
 			if (rs.next()) {
@@ -107,7 +107,7 @@ public class TeamDAO implements TeamDAO_interface {
 			// 再新增隊長
 			pstmt = con.prepareStatement(INSERT_TeamMember_LEADER);
 			pstmt.setInt(1, teamId);
-			pstmt.setInt(2, teamMemberId);
+			pstmt.setString(2, teamMemberId);
 		} catch (SQLException e) {
 			con.rollback();
 		} catch (Exception e) {
@@ -371,7 +371,7 @@ public class TeamDAO implements TeamDAO_interface {
 			while (rs.next()) {
 				teamMemVO = new TeamMemberVO();
 				teamMemVO.setTeamId(rs.getInt("teamId"));
-				teamMemVO.setTeamMemberId(rs.getInt("teamMemberId"));
+				teamMemVO.setTeamMemberId(rs.getString("teamMemberId"));
 				teamMemVO.setJoinDate(rs.getDate("joinDate"));
 				set.add(teamMemVO);
 			}
