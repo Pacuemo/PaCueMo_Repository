@@ -56,7 +56,9 @@
         <li> <a href="" id="nav-link-battle" > 約戰 </a> </li>
         <li> <a href="" id="nav-link-league" > 聯賽 </a> </li>
         <li> <a href="" id="nav-link-club">社團 </a> </li>
-        <li> <a href="gambling_page.jsp" id="nav-link-lottery">運彩 </a> </li>
+        
+        <li> <a href="<%=request.getContextPath()%>/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
+        
         <li> <a href="" id="nav-link-court">場地 </a> </li>
         <li> <a href="" id="nav-link-report" > 問題回報 </a> </li>       
         <li role="separator" class="divider"></li>

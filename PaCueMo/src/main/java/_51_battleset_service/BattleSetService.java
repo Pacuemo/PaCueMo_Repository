@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+
 import _52_nbateam_service.NBATeamService;
 import _9_51_battleset_model.BattleSetDAO;
 import _9_51_battleset_model.BattleSetVO;
@@ -13,7 +16,7 @@ import _9_52_nbateam_model.NBATeamVO;
 public class BattleSetService
 {
 	private NBATeamService nbaSvc; /* BattleSetBeans_Config 注入 */
-	private BattleSetDAO bSetDAO;/* BattleSetBeans_Config 注入 */
+	private BattleSetDAO bSetDAO; /* BattleSetBeans_Config 注入 */
 
 	public BattleSetService()
 	{
@@ -177,8 +180,8 @@ public class BattleSetService
 
 	public static void main(String[] args)
 	{
-//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
-//		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
+		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
 
 // ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
@@ -190,7 +193,7 @@ public class BattleSetService
 
 //====================【getLogoURLs】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getLogoURLs("2016-09-01");
+//		List<Map<String, Object>> list = svc.getLogoURLs("2016-09-02");
 //		for (Map<String, Object> map : list)
 //		{
 //			System.out.println(((NBATeamVO) map.get("home")).getTeamName() +
@@ -226,8 +229,8 @@ public class BattleSetService
 //		}
 
 //////////////
-//		List<Map<String, NBATeamVO>> list = svc.getLogoURLs();
-//		for (Map<String, NBATeamVO> map : list)
+//		List<Map<String, Object>> list = svc.getLogoURLs("2016-09-02");
+//		for (Map<String, Object> map : list)
 //		{
 //			System.out.println(map.get("home").getTeamLogoURL() + "      " + map.get("away").getTeamLogoURL());
 //

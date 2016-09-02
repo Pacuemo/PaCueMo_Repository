@@ -13,7 +13,7 @@ public class GoodsOrderRowMapper implements RowMapper<GoodsOrderVO>
 	{
 		GoodsOrderVO gdVO = new GoodsOrderVO();
 		gdVO.setOrderId(rs.getInt("orderId"));
-		gdVO.setMemberId(rs.getInt("memberId"));
+		gdVO.setMemberId(rs.getString("memberId"));
 		gdVO.setCardNum(rs.getString("cardNum"));
 		gdVO.setFullName(rs.getString("fullName"));
 		gdVO.setExpire(rs.getString("expire"));

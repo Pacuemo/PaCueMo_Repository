@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import com.google.gson.Gson;
 
 import _51_battleset_service.BattleSetService;
 
-@WebServlet("/_01_Gambling/BattleSet_Servlet.do")
+@WebServlet("/_5_gambling/BattleSet_Servlet.do")
 public class BattleSet_Servlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -42,26 +43,35 @@ public class BattleSet_Servlet extends HttpServlet
 //		action = "queryByDate";
 		if ("queryByDate".equals(action))
 		{
-			//System.out.println("呼叫 BattleSet_Servlet : queryByDate L35");
+//			System.out.println("Hello");
+			System.out.println("呼叫 BattleSet_Servlet : queryByDate");
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 
 			try
 			{
 				response.setHeader("content-type", "text/html;charset=UTF-8");
-				PrintWriter out = response.getWriter();
+				PrintWriter out = response.getWriter();/* for Ajax */
 
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String queryDate = request.getParameter("datepicker");
+
+				if (queryDate == null)
+				{ /* 若 datepicker 沒有日期→設定日期為今天 */
+					java.util.Date today = new java.util.Date(System.currentTimeMillis());
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					queryDate = sdf.format(today);
+				}
+
 //				String queryDate = request.getParameter("xxx");
-				System.out.println(queryDate);
+//				System.out.println(queryDate);
 //				queryDate = "2015-11-06";/////////////////////////////////////////////////////////////////////
 
 				if (queryDate == null || queryDate.trim().length() == 0)
 				{
 					errorMsgs.add("請輸入正確日期");
 				}
-				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
+//				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
 				BattleSetService svc = new BattleSetService();
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
 				Gson gson = new Gson();
@@ -82,6 +92,7 @@ public class BattleSet_Servlet extends HttpServlet
 			}
 			catch (Exception e)//---處理其他不可預期意外
 			{
+				e.printStackTrace();
 				System.out.println(" ========== BattleSet_Servlet.java 不可預期意外 ========== ");
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");

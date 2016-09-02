@@ -20,7 +20,7 @@
   	 <script type="text/javascript" src="advertisment/js/modernizr.custom.46884.js"></script>
   </head>
   <body>
-	<jsp:include page="myTop.jsp"/>
+	<jsp:include page="top.jsp"/>
 	
 	<!-- ---------------------------------- 【Begin 廣告輪播】 ---------------------------------- -->
 	<div class="container">
@@ -175,7 +175,7 @@
 	        autoplay: true,
 	
 	        // time (ms) between each rotation, if autoplay is true
-	        interval: 3000,
+	        interval: 2300,
 	
 	        // the fallback will just fade out / fade in the items
 	        // this is the time fr the fade effect

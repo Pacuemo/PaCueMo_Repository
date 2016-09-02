@@ -2,11 +2,7 @@ package _9_53_goodsorder_model;
 
 import java.util.List;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import _53_goodsorder_service.GoodsOrderBeans_Config;
 
 public class GoodsOrderDAO implements GoodsOrderDAO_interface
 {
@@ -49,8 +45,8 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 		//============================================================
 		//=======================【Spring】===========================
 		//============================================================
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext(GoodsOrderBeans_Config.class);
-		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
+//		AbstractApplicationContext context = new AnnotationConfigApplicationContext(GoodsOrderBeans_Config.class);
+//		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
 		//=========== 【測試】 insert test =============
 //		GoodsOrderVO myvo = new GoodsOrderVO();
 //		myvo.setMemberId(120);
@@ -82,9 +78,11 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	public int insert(GoodsOrderVO vo)
 	{
 		//INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
-		return jdbcTemplate.update(INSERT_STMT,
+		int num = jdbcTemplate.update(INSERT_STMT,
 				vo.getMemberId(), vo.getCardNum(), vo.getFullName(), vo.getExpire(), vo.getCvc(),
 				vo.getNtdQty(), vo.getCoinQty(), vo.getOrderDateTime(), vo.getIsPay());
+		System.out.println(" ============= 新增GoodsOrder " + num + " 一筆成功 ================");
+		return num;
 	}
 
 	@Override
