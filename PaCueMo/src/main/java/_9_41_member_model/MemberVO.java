@@ -123,7 +123,7 @@ public class MemberVO implements Serializable
 		this.memberPoint = memberPoint;
 	}
 
-	public boolean isMemberHaveCard()
+	public boolean getMemberHaveCard()
 	{
 		return memberHaveCard;
 	}
@@ -163,7 +163,7 @@ public class MemberVO implements Serializable
 		this.memberRgDateTime = memberRgDateTime;
 	}
 
-	public boolean isMemberMailStatus()
+	public boolean getMemberMailStatus()
 	{
 		return memberMailStatus;
 	}
@@ -203,7 +203,7 @@ public class MemberVO implements Serializable
 		this.memberSecretKey = memberSecretKey;
 	}
 
-	public boolean isMember2StepVerify()
+	public boolean getMember2StepVerify()
 	{
 		return member2StepVerify;
 	}

@@ -29,9 +29,9 @@ public class LoginService
 		return null;
 	}
 
-	public MemberVO checkFbId(String FbId)
+	public MemberVO checkFbId(String fbId)
 	{
-		MemberVO memberVO = dao.findByUserFBID(FbId);
+		MemberVO memberVO = dao.findByUserFBID(fbId);
 
 		if (memberVO != null)
 		{
@@ -39,5 +39,35 @@ public class LoginService
 		}
 
 		return null;
+	}
+
+	public boolean checkTwoStepVerify(String mail)
+	{
+		MemberVO memberVO = dao.findByUserMail(mail);
+
+		if (memberVO != null)
+		{
+			if (memberVO.getMember2StepVerify())
+			{
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	public boolean checkTwoStepVerify_fb(String fbId)
+	{
+		MemberVO memberVO = dao.findByUserMail(fbId);
+
+		if (memberVO != null)
+		{
+			if (memberVO.getMember2StepVerify())
+			{
+				return true;
+			}
+
+		}
+		return false;
 	}
 }

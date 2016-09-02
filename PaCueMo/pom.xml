@@ -73,6 +73,12 @@
 			<version>20160810</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.warrenstrange</groupId>
+			<artifactId>googleauth</artifactId>
+			<version>0.5.0</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>

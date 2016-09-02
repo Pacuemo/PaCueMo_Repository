@@ -36,13 +36,13 @@ public class MemberDAO implements MemberDAO_interface
 			+ " memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
 			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 	private static final String GET_ALL_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
-			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member ORDER BY memberId";
+			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member ORDER BY memberId";
 	private static final String GET_ONE_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
-			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member WHERE memberId = ?";
+			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member WHERE memberId = ?";
 	private static final String GET_ONE_STMT_BY_MAIL = "SELECT memberId, memberPassword, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
-			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member WHERE memberMail = ?";
+			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member WHERE memberMail = ?";
 	private static final String GET_ONE_STMT_BY_FBID = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
-			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus FROM dbo.Member WHERE memberFBId = ?";
+			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member WHERE memberFBId = ?";
 	private static final String UPDATE = "UPDATE dbo.Member SET memberFirstName = ?, memberLastName = ?, memberPassword = ?,"
 			+ " memberBirthday = ?, memberPhone = ?, memberMail = ?, memberFileName = ? WHERE memberId = ?";
 
@@ -394,6 +394,7 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
+				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
 			}
 
 			// Handle any driver errors
@@ -488,6 +489,7 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
+				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
 			}
 
 			// Handle any driver errors

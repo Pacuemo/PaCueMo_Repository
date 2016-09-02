@@ -9314,3 +9314,7 @@ input[type="button"].btn-facebook {
     color: #FFF;
     background-color: #3b5998;
 }
+
+.sign-up input[type="button"].btn {
+    margin-bottom: 14px;
+}

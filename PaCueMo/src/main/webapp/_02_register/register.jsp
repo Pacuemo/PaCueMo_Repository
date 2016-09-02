@@ -112,7 +112,7 @@
               </fieldset>
               <button id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit" >註冊</button>
             </form>
-            <p role="submit" class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="">登入</a> </p>
+            <p role="submit" class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="${pageContext.request.contextPath}/_01_login/login.jsp">登入</a> </p>
           </div>
         </section>
       </div>

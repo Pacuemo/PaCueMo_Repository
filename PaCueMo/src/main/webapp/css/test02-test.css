@@ -9651,3 +9651,93 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@powder-green',
 .page-download .container.receipt .step p, .page-download-mac .container.receipt .step p, .page-download-windows .container.receipt .step p, .page-download-thanks .container.receipt .step p, .page-download-redirect .container.receipt .step p {
 	margin: .75em 0 1.5em
 }
+
+.navbar-toggle1 {
+    position: relative;
+    float: left;
+    margin-right: 15px;
+    padding: 9px 10px;
+    margin-top: 23px;
+    margin-bottom: 23px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.navbar-toggle1 {
+    margin-top: 13.5px;
+    margin-bottom: 13.5px;
+    border: 0;
+    margin-right: -10px;
+}
+
+.navbar-default .navbar-toggle1 {
+    border-color: transparent;
+}
+
+.navbar-default .navbar-toggle1 .icon-bar {
+    background-color: #fff;
+}
+.navbar-toggle1 .icon-bar {
+    -webkit-transform-origin: 21px;
+    -moz-transform-origin: 21px;
+    -ms-transform-origin: 21px;
+    transform-origin: 21px;
+    -webkit-transition: -webkit-transform .2s;
+    -moz-transition: -moz-transform .2s;
+    -o-transition: -o-transform .2s;
+    transition: transform .2s;
+    height: 3px;
+    width: 22px;
+}
+.navbar-toggle1 .icon-bar {
+    display: block;
+    width: 22px;
+    height: 3px;
+    border-radius: 1px;
+}
+
+.navbar-default .navbar-toggle1:hover, .navbar-default .navbar-toggle1:focus {
+    background-color: transparent;
+}
+.navbar-default .navbar-toggle1 {
+    border-color: transparent;
+}
+
+.navbar-toggle1 .icon-bar+.icon-bar {
+    margin-top: 4px;
+}
+
+.navbar-toggle1 .icon-bar:nth-child(3) {
+    -webkit-transition: opacity .2s;
+    -o-transition: opacity .2s;
+    transition: opacity .2s;
+}
+
+.navbar .navbar-header .nav1,{
+    float: left;
+    margin: 0;
+}
+.nav1,{
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+ul.nav1.ul1 {
+    position: relative;
+    float: left;
+    left: -30px;
+    margin-bottom: 0px;
+}
+
+@media ( min-width :992px) {
+	ul.nav1.ul1 {
+	    position: relative;
+	    float: left;
+	    left: -30px;
+	    margin-bottom: 15.5px;
+    	margin-top: 15.5px;
+	}
+}

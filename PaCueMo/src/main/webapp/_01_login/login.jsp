@@ -51,7 +51,7 @@
     <div class="row row-hint">
       <div class="col-xs-12 text-center">
         <p><a href="">忘記密碼？</a></p>
-        <p>未註冊帳戶？ <a href="">註冊</a></p></div>
+        <p>未註冊帳戶？ <a href="${pageContext.request.contextPath}/_02_register/register.jsp">註冊</a></p></div>
       <div class="col-xs-12">
         <div class="divider"></div>
         <p class="text-muted disclaimer">如果你按一下「以 Facebook 帳戶登入」但並不是 Pacuemo 的使用者，我們會為你註冊，並認定你同意 Pacuemo 的 <a href="" target="_blank">條款與條件</a>以及<a href="" target="_blank">隱私權政策</a>。</p>
@@ -154,6 +154,13 @@
 								"success":function(data){
 									if( data == "true"){
 										location.href = "../index.jsp";
+									}else if( data == "twoStepVerify"){
+										var url = '2stepverify.jsp';
+										var form = $('<form action="' + url + '" method="post">' +
+										  '<input type="text" name="mail" value="' + mail + '" />' +
+										  '</form>');
+										$('body').append(form);
+										form.submit();
 									}else{
 										$('#login_error').remove();
 										$("#loginForm").prepend('<div id="login_error" class="row"><div class="col-xs-12 text-center"><p class="alert alert-warning"><span>用戶名稱或密碼不正確。</span></p></div></div>');
