@@ -18,19 +18,18 @@ public class TeamDAO implements TeamDAO_interface {
 	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
 	private static final String INSERT_TeamMember_LEADER = "INSERT INTO TeamMember (teamId,teamMemberId) VALUES (?, ?)";
 	private static final String FIND_TEAMID = "SELECT teamId FROM Team where teamHead = ?";
-	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,content FROM Team order by teamId";
-	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,content FROM Team where teamId = ?";
+	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
+	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
 	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
-	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, content=? where teamId = ?";
+	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, teamHead=?, content=? where teamId = ?";
 	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamId = ?";
 
 	public static void main(String[] args) {
 		TeamVO teamVO = new TeamVO();
 		teamVO.setTeamName("test91");
 		teamVO.setTeamProp(2);
-		teamVO.setTeamHead(9);
-
+		teamVO.setTeamHead("9");
 	}
 
 	/*
@@ -90,15 +89,15 @@ public class TeamDAO implements TeamDAO_interface {
 
 			con.setAutoCommit(false);
 			// 先新增隊伍
-			Integer teamMemberId = teamVO.getTeamHead();
+			String memberId = teamVO.getTeamHead();
 			pstmt = con.prepareStatement(INSERT);
 			pstmt.setString(1, teamVO.getTeamName());
 			pstmt.setInt(2, teamVO.getTeamProp());
-			pstmt.setInt(3, teamMemberId);
+			pstmt.setString(3, memberId);
 			pstmt.executeUpdate();
 			// 查詢隊伍Id
 			pstmt = con.prepareStatement(FIND_TEAMID);
-			pstmt.setInt(1, teamMemberId);
+			pstmt.setString(1, memberId);
 			ResultSet rs = pstmt.executeQuery();
 			Integer teamId = null;
 			if (rs.next()) {
@@ -107,7 +106,7 @@ public class TeamDAO implements TeamDAO_interface {
 			// 再新增隊長
 			pstmt = con.prepareStatement(INSERT_TeamMember_LEADER);
 			pstmt.setInt(1, teamId);
-			pstmt.setInt(2, teamMemberId);
+			pstmt.setString(2, memberId);
 		} catch (SQLException e) {
 			con.rollback();
 		} catch (Exception e) {
@@ -149,8 +148,9 @@ public class TeamDAO implements TeamDAO_interface {
 			pstmt.setDate(2, teamVO.getCreateDate());
 			pstmt.setInt(3, teamVO.getTeamProp());
 			pstmt.setDouble(4, teamVO.getAvgRank());
-			pstmt.setString(5, teamVO.getContent());
-			pstmt.setInt(6, teamVO.getTeamId());
+			pstmt.setString(5, teamVO.getTeamHead());
+			pstmt.setString(6, teamVO.getContent());
+			pstmt.setInt(7, teamVO.getTeamId());
 
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -256,6 +256,7 @@ public class TeamDAO implements TeamDAO_interface {
 				teamVO.setCreateDate(rs.getDate("createDate"));
 				teamVO.setTeamProp(rs.getInt("teamProp"));
 				teamVO.setAvgRank(rs.getDouble("avgRank"));
+				teamVO.setTeamHead(rs.getString("teamHead"));
 				teamVO.setContent(rs.getString("content"));
 			}
 		} catch (SQLException e) {
@@ -314,6 +315,7 @@ public class TeamDAO implements TeamDAO_interface {
 				teamVO.setCreateDate(rs.getDate("createDate"));
 				teamVO.setTeamProp(rs.getInt("teamProp"));
 				teamVO.setAvgRank(rs.getDouble("avgRank"));
+				teamVO.setTeamHead(rs.getString("teamHead"));
 				teamVO.setContent(rs.getString("content"));
 				list.add(teamVO);
 			}
@@ -371,7 +373,7 @@ public class TeamDAO implements TeamDAO_interface {
 			while (rs.next()) {
 				teamMemVO = new TeamMemberVO();
 				teamMemVO.setTeamId(rs.getInt("teamId"));
-				teamMemVO.setTeamMemberId(rs.getInt("teamMemberId"));
+				teamMemVO.setTeamMemberId(rs.getString("teamMemberId"));
 				teamMemVO.setJoinDate(rs.getDate("joinDate"));
 				set.add(teamMemVO);
 			}

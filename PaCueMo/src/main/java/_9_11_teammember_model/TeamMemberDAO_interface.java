@@ -7,9 +7,12 @@ public interface TeamMemberDAO_interface {
 
 	public void update(TeamMemberVO teamMemberVO);
 
-	public void delete(Integer teamId, Integer teamMemberId);
+	public void delete(Integer teamId, String teamMemberId);
 
-	public TeamMemberVO findByPrimaryKey(Integer teamId, Integer teamMemberId);
+	public TeamMemberVO findByPrimaryKey(Integer teamId, String teamMemberId);
 
 	public List<TeamMemberVO> getAll();
+
+	public List<TeamMemberVO> getOneTeam(Integer teamId);
+
 }

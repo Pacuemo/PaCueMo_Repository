@@ -31,8 +31,7 @@ public class FakeInfoGenerator
 			+ "汪綺函、王培尹、王佩君、楊旺丞、吳慧苓、張雅文、丁可任、李慧君、陳映冰、林鳳珠、彭怡秀、吳玉華、李佳幸、謝志瑋、詹士瑋、藍欣怡、陳瑋山、曾婉婷、吳紹蓁、丁健安、蘇芷洋、施季其、蔡珮裕、王文旺、白宜潔、林冠依、陳婉麟、黃京能、黃文宏"
 			+ "、邱呈方、吳如湖、張文豪、陳財帆、陳冠勇、李辛盈、何旺紋、楊雅惠、李信宏、楊宇馨、葉麗美、吳志薇、柯雅娟、陳信禾、詹晴瑤、林元志、趙思妤、羅致峰、趙燕嘉、舒予龍、杜行心、黃國惟、何燦琪、陳美其、陳逸玉、王建智、王光學、林靜昆、吳孟菱、陳隆龍、"
 			+ "鄭馨鑫、王淑玉、鄭嘉琪、郭怡君、吳惠君、蔡翊友、呂凡沛、何淑婷、陳美彬、陳賢慧、陳柏翰、陳良夢、韓易凱、李依菁、蕭志偉";
-	static String[] emailDomain = { "@yahoo.com.tw", "@gmail.com", "@hotmail.com", "@yahoo.com",
-					"@pchome.com.tw" };
+	static String[] emailDomain = { "@yahoo.com.tw", "@gmail.com", "@hotmail.com", "@yahoo.com", "@pchome.com.tw" };
 	static MemberVO memberVO = null;
 	static Connection con = null;
 	static PreparedStatement pstmt = null;
@@ -152,9 +151,11 @@ public class FakeInfoGenerator
 				int e = random.nextInt(21 - a - b - c - d);
 				int f = random.nextInt(21 - a - b - c - d - e);
 
-				String str = String.format("INSERT INTO PLAYERCARD SELECT '%s', %d, %.2f, %.2f, %2s, %d," + " '%s', '%s', %d, %d, %d, %d, %d, %d",
-						memberId, gender, height, weight, position[random.nextInt(5)], hand, note, location[random.nextInt(4)], a, b,
-						c, d, e, f);
+				String str = String.format(
+						"INSERT INTO PLAYERCARD SELECT '%s', %d, %.2f, %.2f, %2s, %d,"
+								+ " '%s', '%s', %d, %d, %d, %d, %d, %d",
+						memberId, gender, height, weight, position[random.nextInt(5)], hand, note,
+						location[random.nextInt(4)], a, b, c, d, e, f);
 
 				System.out.println(str);
 
@@ -166,14 +167,12 @@ public class FakeInfoGenerator
 		}
 		catch (ClassNotFoundException e)
 		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		}
 		catch (SQLException se)
 		{
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		}
 		finally
@@ -270,14 +269,12 @@ public class FakeInfoGenerator
 		}
 		catch (ClassNotFoundException e)
 		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		}
 		catch (SQLException se)
 		{
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		}
 		finally
@@ -338,7 +335,7 @@ public class FakeInfoGenerator
 			}
 
 			File file = new File("C:\\PaCueMo\\club.txt");
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String str = "";
 
 			while ((str = br.readLine()) != null)
@@ -376,14 +373,12 @@ public class FakeInfoGenerator
 
 		ClassNotFoundException e)
 		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		}
 		catch (SQLException se)
 		{
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		}
 		finally
@@ -479,14 +474,216 @@ public class FakeInfoGenerator
 		}
 		catch (ClassNotFoundException e)
 		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		}
 		catch (SQLException se)
 		{
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	public static void teamGenerator() throws NumberFormatException, IOException
+	{
+		try
+		{
+			List<String> list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			File file = new File("C:\\PaCueMo\\club.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			String str = "";
+
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i];
+					}
+					else if (i == 3)
+					{
+
+						int x = Integer.parseInt(strs[i]) - 1;
+						str1 = str1 + "'" + list.get(x) + "'" + ",";
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
+		}
+		catch (
+
+		ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	public static void teammemberGenerator() throws NumberFormatException, IOException
+	{
+
+		try
+		{
+
+			list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			File file = new File("C:\\PaCueMo\\teammember.txt");
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String str = "";
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i];
+					}
+					else if (i == 1)
+					{
+						int x = Integer.parseInt(strs[i]) - 1;
+						str1 = str1 + "'" + list.get(x) + "'" + ",";
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		}
 		finally
@@ -529,10 +726,11 @@ public class FakeInfoGenerator
 
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
-//		memberGenerator();
-		//playercardGenerator();
-		fightrecoedGenerator();
-//		clubGenerator();
-//		clubmemberGenerator();
+		memberGenerator();
+		// playercardGenerator();
+		// fightrecoedGenerator();
+		// clubGenerator();
+		// clubmemberGenerator();
+		// teammemberGenerator();
 	}
 }
