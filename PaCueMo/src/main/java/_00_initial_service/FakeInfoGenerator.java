@@ -321,7 +321,7 @@ public class FakeInfoGenerator
 
 	public static void clubGenerator() throws NumberFormatException, IOException
 	{
-<<<<<<< HEAD
+
 		try
 		{
 			List<String> list = new ArrayList<String>();
@@ -425,111 +425,110 @@ public class FakeInfoGenerator
 		}
 	}
 
-	public static void clubmemberGenerator() throws NumberFormatException, IOException
-	{
-
-=======
->>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
-		try
-		{
-			List<String> list = new ArrayList<String>();
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next())
-			{
-				String memberId = rs.getString("memberId");
-				list.add(memberId);
-
-			}
-
-			File file = new File("C:\\PaCueMo\\club.txt");
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-			String str = "";
-
-			while ((str = br.readLine()) != null)
-			{
-				String str1 = "";
-				String[] strs = str.split(",");
-				for (int i = 0 ; i < strs.length ; i++)
-				{
-					if (i == strs.length - 1)
-					{
-						str1 = str1 + strs[i];
-					}
-					else if (i == 3)
-					{
-
-						int x = Integer.parseInt(strs[i]) - 1;
-						str1 = str1 + "'" + list.get(x) + "'" + ",";
-					}
-					else
-					{
-						str1 = str1 + strs[i] + ",";
-					}
-
-				}
-
-				System.out.println(str1);
-
-			}
-
-			br.close();
-
-			// Handle any driver errors
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		}
-		catch (SQLException se)
-		{
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-	}
+//	public static void clubmemberGenerator() throws NumberFormatException, IOException
+//	{
+//
+//
+//		try
+//		{
+//			List<String> list = new ArrayList<String>();
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+//			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+//
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next())
+//			{
+//				String memberId = rs.getString("memberId");
+//				list.add(memberId);
+//
+//			}
+//
+//			File file = new File("C:\\PaCueMo\\club.txt");
+//			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+//			String str = "";
+//
+//			while ((str = br.readLine()) != null)
+//			{
+//				String str1 = "";
+//				String[] strs = str.split(",");
+//				for (int i = 0 ; i < strs.length ; i++)
+//				{
+//					if (i == strs.length - 1)
+//					{
+//						str1 = str1 + strs[i];
+//					}
+//					else if (i == 3)
+//					{
+//
+//						int x = Integer.parseInt(strs[i]) - 1;
+//						str1 = str1 + "'" + list.get(x) + "'" + ",";
+//					}
+//					else
+//					{
+//						str1 = str1 + strs[i] + ",";
+//					}
+//
+//				}
+//
+//				System.out.println(str1);
+//
+//			}
+//
+//			br.close();
+//
+//			// Handle any driver errors
+//		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//			// Handle any SQL errors
+//		}
+//		catch (SQLException se)
+//		{
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//			// Clean up JDBC resources
+//		}
+//		finally
+//		{
+//			if (rs != null)
+//			{
+//				try
+//				{
+//					rs.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//	}
 
 	public static void gambleOrderGenerator() throws NumberFormatException, IOException
 	{
@@ -852,12 +851,10 @@ public class FakeInfoGenerator
 //		playercardGenerator();
 //		fightrecoedGenerator();
 //		clubGenerator();
-<<<<<<< HEAD
-		clubmemberGenerator();
-=======
+
 //		gambleOrderGenerator();
 //		clubmemberGenerator();
 //		teammemberGenerator();
->>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
+
 	}
 }
