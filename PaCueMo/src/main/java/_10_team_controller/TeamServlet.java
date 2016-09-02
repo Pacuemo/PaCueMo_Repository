@@ -1,6 +1,7 @@
 package _10_team_controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _9_10_team_model.TeamVO;
+import _9_11_teammember_model.TeamMemberVO;
 import _9_41_member_model.MemberVO;
 
 @WebServlet("/TeamServlet")
@@ -27,6 +29,8 @@ public class TeamServlet extends HttpServlet {
 		TeamVO teamVO = null;
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
+		List<TeamMemberVO> teamMemberList = null;
+		// PlayerCardVO
 		if (null != req.getAttribute("teamId")) {
 			try {
 
@@ -34,8 +38,10 @@ public class TeamServlet extends HttpServlet {
 				teamService = new TeamService();
 				teamVO = teamService.getOne(teamId);
 				req.setAttribute("teamVO", teamVO);
-				teamMemberService.getOneTeam(teamId);
+				teamMemberList = teamMemberService.getOneTeam(teamId);
+				for (TeamMemberVO list : teamMemberList) {
 
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

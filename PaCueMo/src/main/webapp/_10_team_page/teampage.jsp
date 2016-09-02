@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>精華收錄</title>
+<title>PaCueMo</title>
 <meta charset="utf-8" />
 
 <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -47,7 +47,6 @@ $( function() {
 
 </head>
 <body>
-
 	<div class="col-md-12">
 		<h2 class="margin-vert-20"><c:choose><c:when test="requestScope.teamId != null"> ${requestScope.teamId }</c:when><c:otherwise>TeamName !</c:otherwise></c:choose></h2>
 		<div class="row margin-bottom-10">
@@ -226,7 +225,7 @@ $( function() {
 				<!-- End Progress Bars -->
 			</div>
 		</div>
-		<hr class="margin-vert-40">
+		<hr class="margin-vert-20">
 	</div>
 
 </body>
