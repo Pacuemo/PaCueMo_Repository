@@ -12,6 +12,8 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository("ClubDAO")
@@ -22,11 +24,18 @@ public class ClubDAO implements ClubDAO_I
 	}
 
 	private DataSource ds;
+	private JdbcOperations jdbc;
 
 	@Autowired
-	public ClubDAO(DataSource ds)
+	public void setDs(DataSource ds)
 	{
 		this.ds = ds;
+	}
+
+	@Autowired
+	public void setJdbc(JdbcOperations jdbc)
+	{
+		this.jdbc = jdbc;
 	}
 
 	private static final String insert_state = "insert into club(clubName,clubImgURL,clubDate,clubHead,clubProp) values (?,?,?,?,?)";
@@ -34,6 +43,7 @@ public class ClubDAO implements ClubDAO_I
 	private static final String get_one_state = "select clubID,clubName,clubImgURL,clubDate,clubHead,clubProp from club where clubID=? ";
 	private static final String get_all = "select clubID,clubName,clubImgURL,clubDate,clubHead,clubProp from club order by clubID ";
 	private static final String update_one = "update club set clubImgURL=?,clubHead=?,clubProp=? where clubId = ?";
+	private static final String Get_All_By_Name = "select * from club where clubName LIKE ?";
 
 	@Override
 	public void insert(ClubVO clubVO)
@@ -50,7 +60,7 @@ public class ClubDAO implements ClubDAO_I
 			pstmt.setString(1, clubVO.getClubName());
 			pstmt.setString(2, clubVO.getClubImageName());
 			pstmt.setDate(3, clubVO.getClubDate());
-			pstmt.setInt(4, clubVO.getClubHead());
+			pstmt.setString(4, clubVO.getClubHead());
 			pstmt.setInt(5, clubVO.getClubProp());
 			pstmt.executeUpdate();
 			con.commit();
@@ -158,7 +168,7 @@ public class ClubDAO implements ClubDAO_I
 			pstmt = con.prepareStatement(update_one);
 			pstmt.setInt(5, clubVO.getClubID());
 			pstmt.setString(2, clubVO.getClubImageName());
-			pstmt.setInt(3, clubVO.getClubHead());
+			pstmt.setString(3, clubVO.getClubHead());
 			pstmt.setInt(4, clubVO.getClubProp());
 			pstmt.executeUpdate();
 			con.commit();
@@ -224,7 +234,7 @@ public class ClubDAO implements ClubDAO_I
 				clubVO.setClubName(rs.getString("clubName"));
 				clubVO.setClubImageName(rs.getString("clubImgUrl"));
 				clubVO.setClubDate(rs.getDate("clubDate"));
-				clubVO.setClubHead(rs.getInt("clubHead"));
+				clubVO.setClubHead(rs.getString("clubHead"));
 				clubVO.setClubProp(rs.getInt("clubProp"));
 				System.out.println("查詢一筆資料");
 			}
@@ -285,7 +295,7 @@ public class ClubDAO implements ClubDAO_I
 				clubVO.setClubName(rs.getString("clubName"));
 				clubVO.setClubImageName(rs.getString("clubImgURL"));
 				clubVO.setClubDate(rs.getDate("clubDate"));
-				clubVO.setClubHead(rs.getInt("clubHead"));
+				clubVO.setClubHead(rs.getString("clubHead"));
 				clubVO.setClubProp(rs.getInt("clubProp"));
 				clubVOs.add(clubVO);
 				System.out.println("查詢全部資料");
@@ -330,15 +340,39 @@ public class ClubDAO implements ClubDAO_I
 
 	}
 
+	public List<ClubVO> getAll_By_Name(String name)
+	{
+		String queryName = "%" + name + "%";
+		return jdbc.query(Get_All_By_Name, new ClubRowMapper(), queryName);
+	}
+
+	private static final class ClubRowMapper implements RowMapper<ClubVO>
+	{
+
+		@Override
+		public ClubVO mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+
+			return new ClubVO(
+					rs.getInt("clubId"),
+					rs.getString("clubName"),
+					rs.getString("clubImgUrl"),
+					rs.getDate("clubDate"),
+					rs.getString("clubHead"),
+					rs.getInt("clubProp"));
+		}
+
+	}
+
 	public static void main(String[] args)
 	{
 //		ClubDAO_I dao = new ClubDAO();
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(ClubConfig.class);
 		ClubDAO_I dao = (ClubDAO) context.getBean("ClubDAO");
-		ClubVO clubVO = dao.findByPK(1);
-
-		System.out.println("clubName" + clubVO.getClubName());
+//		ClubVO clubVO = dao.findByPK(1);
+//
+//		System.out.println("clubName" + clubVO.getClubName());
 //		List<ClubVO> clubVOs = dao.getAll();
 //		for (ClubVO clubVO : clubVOs)
 //		{
@@ -346,6 +380,12 @@ public class ClubDAO implements ClubDAO_I
 //			System.out.println("imgNAme:" + clubVO.getClubImageName());
 //			System.out.println("ClubName:" + clubVO.getClubName());
 //		}
+		List<ClubVO> clubVOs = dao.getAll_By_Name("社");
+		for (ClubVO vo : clubVOs)
+		{
+
+			System.out.println(vo.getClubName());
+		}
 
 	}
 

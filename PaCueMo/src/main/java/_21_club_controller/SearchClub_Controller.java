@@ -1,27 +1,41 @@
 package _21_club_controller;
 
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
 
-public class SearchClub_Controller extends HttpServlet
+import _21_club_service.SearchClub_Service;
+
+@Controller
+@RequestMapping("/search")
+public class SearchClub_Controller
 {
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-	{
+	private SearchClub_Service service;
+	private Gson gson;
 
-		super.doGet(req, resp);
+	@Autowired
+	public void setService(SearchClub_Service service)
+	{
+		this.service = service;
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	@Autowired
+	public void setGson(Gson gson)
 	{
+		this.gson = gson;
+	}
 
-		super.doPost(req, resp);
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	public String Club_By_Name(@RequestParam("name") String name)
+	{
+		return gson.toJson(service.searchClub(name));
 	}
 
 }

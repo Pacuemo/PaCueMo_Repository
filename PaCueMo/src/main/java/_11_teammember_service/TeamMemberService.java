@@ -18,7 +18,7 @@ public class TeamMemberService {
 		dao.insert(teamMemberVO);
 	}
 
-	public void add(Integer teamId, Integer teamMemberId, Date joinDate) {
+	public void add(Integer teamId, String teamMemberId, Date joinDate) {
 		TeamMemberVO teamMemberVO = new TeamMemberVO();
 		teamMemberVO.setTeamId(teamId);
 		teamMemberVO.setTeamMemberId(teamMemberId);
@@ -30,7 +30,7 @@ public class TeamMemberService {
 		dao.update(teamMemberVO);
 	}
 
-	public void update(Integer teamId, Integer teamMemberId, Date joinDate) {
+	public void update(Integer teamId, String teamMemberId, Date joinDate) {
 		TeamMemberVO teamMemberVO = new TeamMemberVO();
 		teamMemberVO.setTeamId(teamId);
 		teamMemberVO.setTeamMemberId(teamMemberId);
@@ -38,12 +38,16 @@ public class TeamMemberService {
 		dao.update(teamMemberVO);
 	}
 
-	public void delete(Integer teamId, Integer teamMemberId) {
+	public void delete(Integer teamId, String teamMemberId) {
 		dao.delete(teamId, teamMemberId);
 	}
 
-	public TeamMemberVO getOne(Integer teamId, Integer teamMemberId) {
+	public TeamMemberVO getOne(Integer teamId, String teamMemberId) {
 		return dao.findByPrimaryKey(teamId, teamMemberId);
+	}
+
+	public List<TeamMemberVO> getOneTeam(Integer teamId) {
+		return dao.getOneTeam(teamId);
 	}
 
 	public List<TeamMemberVO> getAll() {

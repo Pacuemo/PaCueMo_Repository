@@ -31,12 +31,14 @@ public class TeamService {
 		teamDAO.createTeam(teamVO);
 	}
 
-	public void update(Integer teamId, String teamName, Date createDate, Integer teamProp, Double avgRank) {
+	public void update(Integer teamId, String teamName, Date createDate, Integer teamProp, String teamHead,
+			Double avgRank) {
 		TeamVO teamVO = new TeamVO();
 		teamVO.setTeamId(teamId);
 		teamVO.setTeamName(teamName);
 		teamVO.setCreateDate(createDate);
 		teamVO.setTeamProp(teamProp);
+		teamVO.setTeamHead(teamHead);
 		teamVO.setAvgRank(avgRank);
 
 		teamDAO.update(teamVO);

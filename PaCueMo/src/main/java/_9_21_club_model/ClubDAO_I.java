@@ -15,4 +15,6 @@ public interface ClubDAO_I
 
 	List<ClubVO> getAll();
 
+	List<ClubVO> getAll_By_Name(String name);
+
 }
