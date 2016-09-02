@@ -32,7 +32,7 @@
             <div class="hidden ajax-spinner"></div>
             <div class="content">
               <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=&quot;/help/&quot;>說明中心</a>"></div>
-              <a href="#" class="btn btn-facebook btn-sm btn-block js-signup-fb" id="select-button-signup-fb"> 以 Facebook 帳戶註冊 </a> <strong class="line-thru">或</strong> <a href="/tw/signup/" class="primary js-link" data-section="register" id="select-link-signup-email"> 以你的電郵地址註冊 </a>
+              <input type="button" value="以 Facebook 帳戶註冊" class="btn btn-facebook btn-sm btn-block js-signup-fb" id="select-button-signup-fb"/><strong class="line-thru">或</strong> <a href="/tw/signup/" class="primary js-link" data-section="register" id="select-link-signup-email"> 以你的電郵地址註冊 </a>
               <p class="primary"> 已經擁有帳戶？ <a id="select-link-login" data-section="login" href="">登入</a> </p>
             </div>
           </form>
@@ -126,6 +126,70 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script> 
 <script src="${pageContext.request.contextPath}/js/jquery.validate.js"></script> 
 <script>
+	window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '268809393472621',
+	    cookie     : true,  // enable cookies to allow the server to access 
+	                        // the session
+	    xfbml      : true,  // parse social plugins on this page
+	    version    : 'v2.2' // use version 2.2
+	  });
+	  
+	  };
+	  
+
+	  // Load the SDK asynchronously
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/en_US/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+
+	  // Here we run a very simple test of the Graph API after login is
+	  // successful.  See statusChangeCallback() for when this call is made.
+	  function testAPI() {
+		  FB.api(
+				  '/me',
+				  'GET',
+				  {"fields":"id,first_name,last_name,email"},
+				  function(response) {
+					  $.ajax({
+							"type":"post",
+							"url": "../_01_login/login.do",
+							"dataType": "text",
+							"data":{"facebookId":response.id,"mode":"fb_Login"},
+							"success":function(data){
+								if( data == "true"){
+									location.href = "../index.jsp";
+								}else{
+									location.href = "../_02_register/fbRegister.jsp?facebookId="+response.id+"&lastName="+response.last_name+"&firstName="+response.first_name+"&email="+response.email;
+								}		
+							}
+						});
+				  }
+				);
+	    };
+	    
+	    function fbLogin() {  
+	        FB.login(function(response) {
+	        	if (response.status === 'connected') {
+	        	      // Logged into your app and Facebook.
+	        	      testAPI();
+	        	    } else if (response.status === 'not_authorized') {
+	        	      // The person is logged into Facebook, but not your app.
+	        	      document.getElementById('status').innerHTML = 'Please log ' +
+	        	        'into this app.';
+	        	    } else {
+	        	      // The person is not logged into Facebook, so we're not sure if
+	        	      // they are logged into this app or not.
+	        	      document.getElementById('status').innerHTML = 'Please log ' +
+	        	        'into Facebook.';
+	        	    }
+	       }, {scope: 'public_profile,email'}); //設定需要授權的項目
+	    }
+
 $(function(){
 	$("#js-register-with-email").validate({
 		errorClass: "has-error",
@@ -205,6 +269,10 @@ $(function(){
 			};
 		} 	
 	});
+	
+	$(".btn.btn-facebook.btn-sm.btn-block.js-signup-fb").bind("click",function(){
+		fbLogin();
+	})
 });
 </script>
 </body>
