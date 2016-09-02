@@ -321,42 +321,107 @@ public class FakeInfoGenerator
 
 	public static void clubGenerator() throws NumberFormatException, IOException
 	{
-
-		File file = new File("C:\\PaCueMo\\club.txt");
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-		String str = "";
-
-		while ((str = br.readLine()) != null)
+		try
 		{
-			String str1 = "";
-			String[] strs = str.split(",");
-			for (int i = 0 ; i < strs.length ; i++)
+			List<String> list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
 			{
-				if (i == strs.length - 1)
-				{
-					str1 = str1 + strs[i];
-				}
-				else if (i == 3)
-				{
-					continue;
-//						int x = Integer.parseInt(strs[i]) - 1;
-//						str1 = str1 + "'" + list.get(x) + "'" + ",";
-				}
-				else
-				{
-					str1 = str1 + strs[i] + ",";
-				}
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
 
 			}
 
-			System.out.println(str1);
+			File file = new File("C:\\PaCueMo\\club.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			String str = "";
 
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i];
+					}
+					else if (i == 3)
+					{
+
+						int x = Integer.parseInt(strs[i]) - 1;
+						str1 = str1 + "'" + list.get(x) + "'" + ",";
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
 		}
+		catch (
 
-		br.close();
-
-		// Handle any driver errors
-
+		ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 
 	public static void clubmemberGenerator() throws NumberFormatException, IOException
@@ -404,22 +469,7 @@ public class FakeInfoGenerator
 
 				}
 
-				strs = str1.split("\\)");
-				String str2 = "";
-				for (int i = 0 ; i < strs.length ; i++)
-				{
-					if (i == strs.length - 1)
-					{
-						str2 = str2 + strs[i];
-					}
-					else
-					{
-						str2 = str2 + strs[i] + "," + "0" + ")";
-					}
-
-				}
-
-				System.out.println(str2);
+				System.out.println(str1);
 
 			}
 
@@ -480,7 +530,7 @@ public class FakeInfoGenerator
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
 //		memberGenerator();
-//		playercardGenerator();
+		//playercardGenerator();
 		fightrecoedGenerator();
 //		clubGenerator();
 //		clubmemberGenerator();

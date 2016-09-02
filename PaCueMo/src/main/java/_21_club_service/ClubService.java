@@ -14,7 +14,7 @@ public class ClubService
 {
 	ClubDAO dao = new ClubDAO();
 
-	public void save(String clubName, String clubImageName, Date clubDate, int clubHead, int clubProp)
+	public void save(String clubName, String clubImageName, Date clubDate, String clubHead, int clubProp)
 	{
 		ClubVO clubVO = new ClubVO();
 		clubVO.setClubName(clubName);
@@ -61,7 +61,7 @@ public class ClubService
 	{
 		Date date = new Date(System.currentTimeMillis());
 		ClubService s = new ClubService();
-		s.save("姬八人", "j8.jpg", date, 150, 1);
+		s.save("姬八人", "j8.jpg", date, "150", 1);
 		System.out.println("success");
 	}
 

@@ -5,14 +5,18 @@ import javax.sql.DataSource;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
+import com.google.gson.Gson;
+
 import _00_initial_service.GlobalService;
 
 @Configuration
+@ComponentScan({ "_21_club_service", "_9_21_club_model" })
 public class RootConfig
 {
 
@@ -48,4 +52,11 @@ public class RootConfig
 	{
 		return new JdbcTemplate(dataSource);
 	}
+
+	@Bean
+	public Gson gson()
+	{
+		return new Gson();
+	}
+
 }
