@@ -3,7 +3,7 @@ package _9_53_goodsorder_model;
 public class GoodsOrderVO
 {
 	private int orderId;
-	private int memberId;
+	private String memberId;
 	private String cardNum;
 	private String fullName;
 	private String expire;
@@ -23,12 +23,12 @@ public class GoodsOrderVO
 		this.orderId = orderId;
 	}
 
-	public int getMemberId()
+	public String getMemberId()
 	{
 		return memberId;
 	}
 
-	public void setMemberId(int memberId)
+	public void setMemberId(String memberId)
 	{
 		this.memberId = memberId;
 	}

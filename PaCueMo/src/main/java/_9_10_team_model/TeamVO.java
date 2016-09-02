@@ -8,7 +8,7 @@ public class TeamVO implements java.io.Serializable {
 	private Date createDate;
 	private Integer teamProp;
 	private Double avgRank;
-	private Integer teamHead;
+	private String teamHead;
 	private String content;
 
 	public Integer getTeamId() {
@@ -59,11 +59,11 @@ public class TeamVO implements java.io.Serializable {
 		this.content = content;
 	}
 
-	public Integer getTeamHead() {
+	public String getTeamHead() {
 		return teamHead;
 	}
 
-	public void setTeamHead(Integer teamHead) {
+	public void setTeamHead(String teamHead) {
 		this.teamHead = teamHead;
 	}
 

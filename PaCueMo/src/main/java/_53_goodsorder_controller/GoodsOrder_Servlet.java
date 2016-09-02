@@ -37,7 +37,7 @@ public class GoodsOrder_Servlet extends HttpServlet
 				//=============== 【session 中get 會員id】 ====================
 //				HttpSession session = request.getSession();
 //				Integer memberId = (Integer) session.getAttribute("memberId");
-				Integer memberId = 17;
+				String memberId = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 				//==== 付款狀態 ===
 				Boolean ispay = true;
 				//=============================================

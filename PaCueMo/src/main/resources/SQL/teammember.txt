@@ -1,0 +1,26 @@
+INSERT dbo.TeamMember VALUES  ( 1,14,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 1,10,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 1,11,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 1,12,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 1,13,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 2,6,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 2,7,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 2,8,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 2,9,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 2,15,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 3,1,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 3,2,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 3,3,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 3,4,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 3,5,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 4,21,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 4,22,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 4,23,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 4,24,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 4,25,'2016-07-03');
+INSERT dbo.TeamMember VALUES  ( 5,20,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 5,16,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 5,17,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 5,18,'2016-06-29');
+INSERT dbo.TeamMember VALUES  ( 5,19,'2016-06-29');
+

@@ -321,6 +321,7 @@ public class FakeInfoGenerator
 
 	public static void clubGenerator() throws NumberFormatException, IOException
 	{
+<<<<<<< HEAD
 		try
 		{
 			List<String> list = new ArrayList<String>();
@@ -375,6 +376,216 @@ public class FakeInfoGenerator
 		catch (
 
 		ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	public static void clubmemberGenerator() throws NumberFormatException, IOException
+	{
+
+=======
+>>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
+		try
+		{
+			List<String> list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			File file = new File("C:\\PaCueMo\\club.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			String str = "";
+
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i];
+					}
+					else if (i == 3)
+					{
+
+						int x = Integer.parseInt(strs[i]) - 1;
+						str1 = str1 + "'" + list.get(x) + "'" + ",";
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	public static void gambleOrderGenerator() throws NumberFormatException, IOException
+	{
+		try
+		{
+			List<String> list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			File file = new File("C:\\PaCueMo\\gambleorder.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			String str = "";
+
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i];
+					}
+					else if (i == 0)
+					{
+						String[] test = strs[i].split("\\(");
+						int x = Integer.parseInt(test[1].trim()) - 1;
+						str1 = test[0] + "(" + "'" + list.get(x) + "'" + ",";
+
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
 		{
 			throw new RuntimeException("Couldn't load database driver. "
 					+ e.getMessage());
@@ -527,12 +738,126 @@ public class FakeInfoGenerator
 		}
 	}
 
+	public static void teammemberGenerator() throws NumberFormatException, IOException
+	{
+
+		try
+		{
+
+			list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			File file = new File("C:\\PaCueMo\\teammember.txt");
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String str = "";
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i];
+					}
+					else if (i == 1)
+					{
+						int x = Integer.parseInt(strs[i]) - 1;
+						str1 = str1 + "'" + list.get(x) + "'" + ",";
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
-//		memberGenerator();
+		/**
+		 * Step1 : 先產生會員 memberGenerator() ，貼到SSMS → run
+		 * Step2 : 將你的 與 memberId 相關的 INSERT...假資料 指令貼到文字檔，放到 C:/PaCueMo 根目錄下
+		 * Step3 : 在本程式中執行你的方法，將SSMS NEWID() 生成的 memberId 換掉原本的 INSERT 指令
+		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
+		 */
+
+//		memberGenerator(); //--->產生會員
 //		playercardGenerator();
 //		fightrecoedGenerator();
 //		clubGenerator();
+<<<<<<< HEAD
 		clubmemberGenerator();
+=======
+//		gambleOrderGenerator();
+//		clubmemberGenerator();
+//		teammemberGenerator();
+>>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 	}
 }

@@ -14,34 +14,27 @@ import javax.servlet.annotation.WebFilter;
  * Servlet Filter implementation class TeamFilter
  */
 @WebFilter("/TeamFilter")
-public class TeamFilter implements Filter
-{
+public class TeamFilter implements Filter {
 
-	public TeamFilter()
-	{
+	public TeamFilter() {
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
-	{
-		try
-		{
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		try {
 
 			chain.doFilter(request, response);
 
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 
 		}
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException
-	{
+	public void init(FilterConfig fConfig) throws ServletException {
 	}
 
 	@Override
-	public void destroy()
-	{
+	public void destroy() {
 		// TODO Auto-generated method stub
 
 	}

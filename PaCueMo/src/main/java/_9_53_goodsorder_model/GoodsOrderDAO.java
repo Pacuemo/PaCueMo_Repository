@@ -10,7 +10,16 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //	String url = GlobalService.DB_URL;
 //	String userid = GlobalService.USERID;
 //	String passwd = GlobalService.PASSWORD;
+	//========================================
+	private static final String INSERT_STMT = "INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
+			+ "                                  VALUES   ( ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+	private static final String QUERY_ALL_STMT = "SELECT orderId , memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay "
+			+ "                                     FROM GoodsOrder";
 
+	private static final String DELETE_STMT = "DELETE FROM dbo.GoodsOrder WHERE orderId = ?";
+	private static final String GET_ONE_STMT = "SELECT orderId , memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay "
+			+ "                                   FROM GoodsOrder WHERE orderId = ?";
+	//========================================
 	private JdbcTemplate jdbcTemplate;
 
 	public GoodsOrderDAO()
@@ -23,14 +32,6 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	//========================================
-	private static final String INSERT_STMT = "INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
-			+ "                                  VALUES   ( ? , ? , ? , ? , ? , ? , ? , ? , ?)";
-	private static final String QUERY_ALL_STMT = "SELECT orderId , memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay FROM GoodsOrder";
-
-	private static final String DELETE_STMT = "DELETE FROM dbo.GoodsOrder WHERE orderId = ?";
-
-	//========================================
 	public static void main(String[] args)
 	{
 		//============= 【測試】【信用卡號加密測試】 ===================
@@ -41,7 +42,9 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //		System.out.println(str1 + "   " + str1.length());
 //		String str2 = GlobalService.decryptString(GlobalService.KEY, str1);
 //		System.out.println(str2);
-		//=============【Spring】===========================
+		//============================================================
+		//=======================【Spring】===========================
+		//============================================================
 //		AbstractApplicationContext context = new AnnotationConfigApplicationContext(GoodsOrderBeans_Config.class);
 //		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
 		//=========== 【測試】 insert test =============
@@ -59,6 +62,8 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //		GoodsOrderDAO dao = new GoodsOrderDAO();
 //		dao.insert(myvo);
 		//============ end of insert test ========
+		//=========== 【測試】 查一筆 =============
+//		System.out.println(dao.findByPrimaryKey(2).getCardNum());
 		//===========【測試】 getAll test =============
 //		GoodsOrderDAO dao = new GoodsOrderDAO();
 //		List<GoodsOrderVO> list = dao.getAll();
@@ -73,48 +78,17 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	public int insert(GoodsOrderVO vo)
 	{
 		//INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
-		return jdbcTemplate.update(INSERT_STMT,
+		int num = jdbcTemplate.update(INSERT_STMT,
 				vo.getMemberId(), vo.getCardNum(), vo.getFullName(), vo.getExpire(), vo.getCvc(),
 				vo.getNtdQty(), vo.getCoinQty(), vo.getOrderDateTime(), vo.getIsPay());
-//		try
-//		{
-//			Class.forName(driver);
-//		}
-//		catch (ClassNotFoundException ex)
-//		{
-//			throw new RuntimeException("Couldn't load database driver. " + ex.getMessage());
-//		}
-//
-//		try (Connection conn = DriverManager.getConnection(url, userid, passwd);
-//				PreparedStatement pStmt = conn.prepareStatement(INSERT_STMT);)
-//		{
-//			pStmt.setInt(1, vo.getMemberId());
-//			pStmt.setString(2, vo.getCardNum());
-//			pStmt.setString(3, vo.getFullName());
-//			pStmt.setString(4, vo.getExpire());
-//			pStmt.setInt(5, vo.getCvc());
-//			pStmt.setInt(6, vo.getNtdQty());
-//			pStmt.setInt(7, vo.getCoinQty());
-//			pStmt.setTimestamp(8, vo.getOrderDateTime());
-//			pStmt.setBoolean(9, vo.getIsPay());
-//
-//			int num = pStmt.executeUpdate();
-//			System.out.println("=== 新增 GoodOrder " + num + " 筆 ===");
-//		}
-//		catch (SQLException se)
-//		{
-//			//se.printStackTrace();
-//			throw new RuntimeException("A database error occured. " + se.getMessage());
-//		}
-
+		System.out.println(" ============= 新增GoodsOrder " + num + " 一筆成功 ================");
+		return num;
 	}
 
 	@Override
 	public int update(GoodsOrderVO vo)
 	{
 		return 0;
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -128,53 +102,13 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	@Override
 	public GoodsOrderVO findByPrimaryKey(Integer orderId)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.queryForObject(GET_ONE_STMT, new GoodsOrderRowMapper(), orderId);
 	}
 
 	@Override
 	public List<GoodsOrderVO> getAll()
 	{
 		return jdbcTemplate.query(QUERY_ALL_STMT, new GoodsOrderRowMapper());
-//		List<GoodsOrderVO> list = new ArrayList<>();
-//		ResultSet rs = null;
-//		try
-//		{
-//			Class.forName(driver);
-//		}
-//		catch (ClassNotFoundException ex)
-//		{
-//			throw new RuntimeException("Couldn't load database driver. " + ex.getMessage());
-//		}
-//
-//		try (Connection conn = DriverManager.getConnection(url, userid, passwd);
-//				PreparedStatement pStmt = conn.prepareStatement(QUERY_ALL_STMT);)
-//		{
-//			rs = pStmt.executeQuery();
-//
-//			while (rs.next())
-//			{
-//				GoodsOrderVO vo = new GoodsOrderVO();
-//				vo.setOrderId(rs.getInt("orderId"));
-//				vo.setMemberId(rs.getInt("memberId"));
-//				vo.setCardNum(rs.getString("cardNum"));
-//				vo.setFullName(rs.getString("fullName"));
-//				vo.setExpire(rs.getString("expire"));
-//				vo.setCvc(rs.getInt("cvc"));
-//				vo.setNtdQty(rs.getInt("ntdQty"));
-//				vo.setCoinQty(rs.getInt("coinQty"));
-//				vo.setOrderDateTime(rs.getTimestamp("orderDateTime"));
-//				vo.setIsPay(rs.getBoolean("isPay"));
-//				list.add(vo);
-//			}
-//
-//			System.out.println("=== 查詢 GoodOrder : getAll() 成功 ===");
-//		}
-//		catch (SQLException se)
-//		{
-//			throw new RuntimeException("A database error occured. " + se.getMessage());
-//		}
-//		return list;
 	}
 
 }

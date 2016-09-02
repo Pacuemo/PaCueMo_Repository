@@ -14,7 +14,7 @@ public class ClubVO implements Serializable
 	private String clubName;
 	private String clubImageName;
 	private Date clubDate;
-	private int clubHead;
+	private String clubHead;
 	private int clubProp;
 	private List<ClubMemberVO> clubmembers;
 
@@ -22,7 +22,7 @@ public class ClubVO implements Serializable
 	{
 	}
 
-	public ClubVO(int clubID, String clubName, String clubImageName, Date clubDate, int clubHead, int clubProp, List<ClubMemberVO> clubmembers)
+	public ClubVO(int clubID, String clubName, String clubImageName, Date clubDate, String clubHead, int clubProp)
 	{
 		super();
 		this.clubID = clubID;
@@ -31,7 +31,7 @@ public class ClubVO implements Serializable
 		this.clubDate = clubDate;
 		this.clubHead = clubHead;
 		this.clubProp = clubProp;
-		this.clubmembers = clubmembers;
+
 	}
 
 	public int getClubID()
@@ -74,12 +74,12 @@ public class ClubVO implements Serializable
 		this.clubDate = clubDate;
 	}
 
-	public int getClubHead()
+	public String getClubHead()
 	{
 		return clubHead;
 	}
 
-	public void setClubHead(int clubHead)
+	public void setClubHead(String clubHead)
 	{
 		this.clubHead = clubHead;
 	}
