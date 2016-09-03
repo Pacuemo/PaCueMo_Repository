@@ -185,11 +185,11 @@ public class BattleSetService
 
 // ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getSetsByDate("2015-11-06");
-//		for (Map<String, Object> map : list)
-//		{
-//			System.out.println(((String) map.get("battleTime")));
-//		}
+		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-02");
+		for (Map<String, Object> map : list)
+		{
+			System.out.println(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((String) map.get("battleTime")));
+		}
 
 //====================【getLogoURLs】==========================
 //		BattleSetService svc = new BattleSetService();

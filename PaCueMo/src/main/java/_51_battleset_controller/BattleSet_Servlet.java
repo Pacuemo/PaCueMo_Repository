@@ -14,14 +14,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+import _51_battleset_service.BattleSetBeans_Config;
 import _51_battleset_service.BattleSetService;
 
 @WebServlet("/_5_gambling/BattleSet_Servlet.do")
 public class BattleSet_Servlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
+
+	AnnotationConfigWebApplicationContext context = null;
+	private BattleSetService svc = null;
+
+	@Override
+	public void init() throws ServletException
+	{
+		context = new AnnotationConfigWebApplicationContext();
+		context.scan("_51_battleset_service");
+		context.register(BattleSetBeans_Config.class);
+		context.refresh();
+		svc = (BattleSetService) context.getBean("bSetService");
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -64,7 +78,7 @@ public class BattleSet_Servlet extends HttpServlet
 				}
 
 //				String queryDate = request.getParameter("xxx");
-//				System.out.println(queryDate);
+				System.out.println(queryDate);
 //				queryDate = "2015-11-06";/////////////////////////////////////////////////////////////////////
 
 				if (queryDate == null || queryDate.trim().length() == 0)
@@ -72,23 +86,25 @@ public class BattleSet_Servlet extends HttpServlet
 					errorMsgs.add("請輸入正確日期");
 				}
 //				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
-				BattleSetService svc = new BattleSetService();
+//				BattleSetService svc = new BattleSetService();
+
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
-				Gson gson = new Gson();
 
-				String ans = gson.toJson(list);
+				//=========================
+				//========【Ajax】=========
+				//=========================
+//				Gson gson = new Gson();
+//				String ans = gson.toJson(list);
+//				request.setAttribute("battleSetJson", ans);
+//				System.out.println(ans);
+//				out.println(ans.toString());
 
-//				StringBuffer ans = new StringBuffer();
-//				for (Map<String, NBATeamVO> map : list)
-//				{
-//					ans.append(gson.toJson(map));
-//
-//				}
-				System.out.println(ans);
-				out.println(ans.toString());
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				/* use jQuery with Ajax */
-				/*************************** 其他可能的錯誤處理 *************************************/
+				request.setAttribute("battleSetList", list);
+				request.getRequestDispatcher("gamblingPage.jsp").forward(request, response);
+				return;
+//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//				/* use jQuery with Ajax */
+//				/*************************** 其他可能的錯誤處理 *************************************/
 			}
 			catch (Exception e)//---處理其他不可預期意外
 			{
