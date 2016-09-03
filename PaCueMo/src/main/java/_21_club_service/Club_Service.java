@@ -9,12 +9,12 @@ import _9_21_club_model.ClubDAO_I;
 import _9_21_club_model.ClubVO;
 
 @Component
-public class SearchClub_Service
+public class Club_Service
 {
 	private ClubDAO_I dao;
 
 	@Autowired
-	public SearchClub_Service(ClubDAO_I dao)
+	public Club_Service(ClubDAO_I dao)
 	{
 		this.dao = dao;
 	}
@@ -22,6 +22,12 @@ public class SearchClub_Service
 	public List<ClubVO> searchClub(String name)
 	{
 		return dao.getAll_By_Name(name);
+	}
+
+	public int registerClub(ClubVO clubVO)
+	{
+		return dao.insert(clubVO);
+
 	}
 
 }

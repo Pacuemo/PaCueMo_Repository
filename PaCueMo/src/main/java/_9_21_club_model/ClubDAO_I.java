@@ -5,7 +5,7 @@ import java.util.List;
 public interface ClubDAO_I
 {
 
-	void insert(ClubVO clubVO);
+	int insert(ClubVO clubVO);
 
 	void delete(int clubId);
 

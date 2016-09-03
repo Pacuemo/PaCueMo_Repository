@@ -4,17 +4,28 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.springframework.stereotype.Component;
+
 import _9_22_clubMember_model.ClubMemberVO;
 
+@Component
 public class ClubVO implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 	private int clubID;
+	@NotNull
 	private String clubName;
 	private String clubImageName;
+	@NotNull
+	@Past
 	private Date clubDate;
+	@NotNull
 	private String clubHead;
+	@NotNull
 	private int clubProp;
 	private List<ClubMemberVO> clubmembers;
 

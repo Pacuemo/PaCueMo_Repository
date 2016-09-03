@@ -23,6 +23,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/");
 		resolver.setSuffix(".jsp");
+		resolver.setContentType("text/html;charset=UTF-8");
 		resolver.setExposeContextBeansAsAttributes(true);
 		return resolver;
 
