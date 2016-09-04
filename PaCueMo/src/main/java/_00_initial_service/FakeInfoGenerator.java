@@ -853,11 +853,11 @@ public class FakeInfoGenerator
 //      club和league部分
 //		clubGenerator();
 //		clubmemberGenerator();
-		fightrecoedGenerator();
+//		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
 
-//		teammemberGenerator();
+		teammemberGenerator();
 
 	}
 }
