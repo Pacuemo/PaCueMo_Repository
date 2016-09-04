@@ -52,6 +52,13 @@ public class NBATeamDAO implements NBATeamDAO_interface
 //
 //		System.out.println(dao.findByTeamId(1).getTeamName());
 //		System.out.println(dao.findByTeamName("夏洛特黃蜂").getTeamLogoURL());
+
+		//================= 根據隊名查多筆 =================
+//		List<NBATeamVO> list = dao.findByTeamNames("");
+//		for (NBATeamVO vo : list)
+//		{
+//			System.out.println(vo.getTeamName());
+//		}
 	}
 
 	@Override
@@ -64,6 +71,13 @@ public class NBATeamDAO implements NBATeamDAO_interface
 	public NBATeamVO findByTeamName(String teamName)
 	{
 		return jdbcTemplate.queryForObject(GET_BY_NAME_STMT, new NBATeamRowMapper(), "%" + teamName + "%");
+	}
+
+	@Override
+	public List<NBATeamVO> findByTeamNames(String teamName)
+	{
+		teamName = teamName.equals("") ? " " : teamName; // 避免模糊查詢 %_% → 兩個%中間為空字串查到全部的情況
+		return jdbcTemplate.query(GET_BY_NAME_STMT, new NBATeamRowMapper(), "%" + teamName + "%");
 	}
 
 	@Override

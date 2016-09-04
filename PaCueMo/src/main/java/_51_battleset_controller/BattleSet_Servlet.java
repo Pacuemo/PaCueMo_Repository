@@ -1,7 +1,6 @@
 ﻿package _51_battleset_controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,8 +23,8 @@ public class BattleSet_Servlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	AnnotationConfigWebApplicationContext context = null;
-	private BattleSetService svc = null;
+	private AnnotationConfigWebApplicationContext context;
+	private BattleSetService svc;
 
 	@Override
 	public void init() throws ServletException
@@ -58,15 +57,13 @@ public class BattleSet_Servlet extends HttpServlet
 		if ("queryByDate".equals(action))
 		{
 //			System.out.println("Hello");
-			System.out.println("呼叫 BattleSet_Servlet : queryByDate");
+			System.out.println(" 呼叫 BattleSet_Servlet : queryByDate");
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 
 			try
 			{
 				response.setHeader("content-type", "text/html;charset=UTF-8");
-				PrintWriter out = response.getWriter();/* for Ajax */
-
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String queryDate = request.getParameter("datepicker");
 
@@ -78,33 +75,25 @@ public class BattleSet_Servlet extends HttpServlet
 				}
 
 //				String queryDate = request.getParameter("xxx");
-				System.out.println(queryDate);
+				System.out.println(" 查詢日期 : " + queryDate);
 //				queryDate = "2015-11-06";/////////////////////////////////////////////////////////////////////
 
 				if (queryDate == null || queryDate.trim().length() == 0)
 				{
 					errorMsgs.add("請輸入正確日期");
 				}
-//				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
+				/*************************** 2.開始查詢資料 ******************************************/
 //				BattleSetService svc = new BattleSetService();
-
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
-
-				//=========================
-				//========【Ajax】=========
-				//=========================
-//				Gson gson = new Gson();
-//				String ans = gson.toJson(list);
-//				request.setAttribute("battleSetJson", ans);
-//				System.out.println(ans);
-//				out.println(ans.toString());
-
+				int listSize = list.size();
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				System.out.println(" 共 : " + listSize + " 筆資料");
+				request.setAttribute("queryDate", queryDate);
 				request.setAttribute("battleSetList", list);
+				request.setAttribute("battleSetList_len", (listSize % 3 == 0 ? (listSize / 3) : (listSize / 3 + 1)));// 計算總頁數(每頁3筆情況)
 				request.getRequestDispatcher("gamblingPage.jsp").forward(request, response);
 				return;
-//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-//				/* use jQuery with Ajax */
-//				/*************************** 其他可能的錯誤處理 *************************************/
+				/*************************** 其他可能的錯誤處理 *************************************/
 			}
 			catch (Exception e)//---處理其他不可預期意外
 			{
