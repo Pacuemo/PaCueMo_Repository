@@ -847,12 +847,12 @@ public class FakeInfoGenerator
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
 
-//		memberGenerator(); //--->產生會員
+		memberGenerator(); //--->產生會員
 //		playercardGenerator();
 
 //      club和league部分
 //		clubGenerator();
-		clubmemberGenerator();
+//		clubmemberGenerator();
 //		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
