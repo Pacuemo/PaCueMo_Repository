@@ -38,6 +38,24 @@ public class Club_Controller
 		this.gson = gson;
 	}
 
+	//---------------------------登入--------------------------------
+	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpSession session)
+	{
+		ClubVO clubVO;
+		try
+		{
+			clubVO = service.getClub_byMemberId(memberId);
+		}
+		catch (SQLException e)
+		{
+			//此會員沒有社團
+			return "redirect:/_21_club/joinClub.jsp";
+		}
+		session.setAttribute("MyClub", clubVO);
+		return "clubInfo";
+	}
+
 //------------------------註冊----------------------------------
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -83,21 +101,4 @@ public class Club_Controller
 
 	}
 
-//---------------------------登入--------------------------------
-	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
-	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpSession session)
-	{
-		ClubVO clubVO;
-		try
-		{
-			clubVO = service.getClub_byMemberId(memberId);
-		}
-		catch (SQLException e)
-		{
-			//此會員沒有社團
-			return "error";
-		}
-		session.setAttribute("MyClub", clubVO);
-		return "clubInfo";
-	}
 }
