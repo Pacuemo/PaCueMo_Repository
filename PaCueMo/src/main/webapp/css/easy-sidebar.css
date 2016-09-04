@@ -61,6 +61,7 @@ body.toggled {
 .navbar1.easy-sidebar .navbar-toggle {
 	display: inline-block;
 	padding: 9px 0px;
+	width: 30px;
 }
 
 .navbar1.easy-sidebar .navbar-toggle:hover {
