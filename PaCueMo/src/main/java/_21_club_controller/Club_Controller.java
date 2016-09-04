@@ -3,7 +3,7 @@ package _21_club_controller;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +46,12 @@ public class Club_Controller
 		return "club/registerForm";
 	}
 
+	//Spring 驗證流程 當呼叫此方法時，Spring會先去後台比對驗證資料格式正確，才執行方法裡面的程式碼
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String registerClub(@Valid ClubVO clubVO, Errors errors, HttpServletRequest request)
+	public String registerClub(@Valid ClubVO clubVO, Errors errors, HttpSession session)
 	{
-		System.out.println(clubVO.getClubName());
 		clubVO.setClubDate(new Date(System.currentTimeMillis()));
-		clubVO.setClubHead("A56404E2-04D9-427E-8D7E-06F44C2EC1CB");
+		clubVO.setClubHead("EF29C07B-F126-44D1-A5BB-005018DC7358");
 		if (errors.hasErrors())
 		{
 			return "club/registerForm";
@@ -59,8 +59,8 @@ public class Club_Controller
 		int success = service.registerClub(clubVO);
 		if (success == 1)
 		{
-			request.getSession().setAttribute("MyClub", clubVO);
-			return "club/success";
+			session.setAttribute("MyClub", clubVO);
+			return "redirect:/_21_club/success.jsp";
 		}
 		else
 		{
@@ -85,7 +85,7 @@ public class Club_Controller
 
 //---------------------------登入--------------------------------
 	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
-	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpServletRequest request)
+	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpSession session)
 	{
 		ClubVO clubVO;
 		try
@@ -97,7 +97,7 @@ public class Club_Controller
 			//此會員沒有社團
 			return "error";
 		}
-		request.getSession().setAttribute("MyClub", clubVO);
+		session.setAttribute("MyClub", clubVO);
 		return "clubInfo";
 	}
 }
