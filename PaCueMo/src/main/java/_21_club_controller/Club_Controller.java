@@ -38,12 +38,7 @@ public class Club_Controller
 		this.gson = gson;
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
-	public String club_By_Name(@RequestParam("name") String name)
-	{
-		return gson.toJson(service.searchClub(name));
-	}
+//------------------------註冊----------------------------------
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegisterForm()
@@ -73,6 +68,14 @@ public class Club_Controller
 		}
 	}
 
+//------------------------查詢------------------------------------	
+	@ResponseBody
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	public String club_By_Name(@RequestParam("name") String name)
+	{
+		return gson.toJson(service.searchClub(name));
+	}
+
 	@RequestMapping(value = "/get", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public String get_Club_By_Id(@RequestParam("clubId") int clubId)
 	{
@@ -80,6 +83,7 @@ public class Club_Controller
 
 	}
 
+//---------------------------登入--------------------------------
 	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpServletRequest request)
 	{
