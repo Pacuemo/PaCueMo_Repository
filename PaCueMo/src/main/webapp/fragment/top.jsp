@@ -35,14 +35,14 @@
   <div class="container-fluid">
     <div class="navbar-header">
     <ul class="nav1 ul1">
-    <li><button type="button" class="navbar-toggle1 collapsed" id="test"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button><li>
+    <li><button type="button" class="navbar-toggle1 collapsed" id="test"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></li>
     </ul>
       <button type="button" class="navbar-toggle collapsed" data-toggle="sidepanel" data-target="#navbar-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <c:if test="${not empty LoginOK }">
       <ul class="nav">
       <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
-        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOk.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
+        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
         </c:when>
         <c:when test="${not empty LoginOK.memberFileName }">
         <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}"></a></li>
@@ -66,12 +66,12 @@
         <li> <a href="" id="nav-link-report" > 問題回報 </a> </li>       
         <li role="separator" class="divider"></li>
         <c:if test="${empty LoginOK }">
-        <li class="alternate sidepanel-item-small"> <a href="" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
-        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_02_register/register.jsp" id="nav-link-sign_up" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_01_login/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="" id="nav-link-account" > 帳戶 </a> </li>
-        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="" id="nav-link-log out" > 登出 </a> </li>
+        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do" id="nav-link-log out" > 登出 </a> </li>
         <li class="hidden-xs hidden-sm dropdown"> <a href="" class="user-link dropdown-toggle" data-toggle="dropdown">
         <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
@@ -91,7 +91,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li> <a href="">帳戶</a> </li>
-            <li> <a href="">登出</a> </li>
+            <li> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do">登出</a> </li>
           </ul>
         </li>
         </c:if>
@@ -104,6 +104,9 @@
   <div class="container-fluid"> 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+    <ul class="nav1 ul1">
+    <li><button type="button" class="navbar-toggle easy-sidebar-toggle" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></li>
+    </ul>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
@@ -139,12 +142,11 @@
       </li>
     </ul>
   </div>
-  
   <!-- /.container-fluid --> 
 </nav>
 </div>
 <script>
-$('#test').click(function(e) {
+$('#test,.navbar-toggle.easy-sidebar-toggle').click(function(e) {
     e.preventDefault();
     $('body').toggleClass('toggled');
     $('.navbar1.easy-sidebar').removeClass('toggled');
