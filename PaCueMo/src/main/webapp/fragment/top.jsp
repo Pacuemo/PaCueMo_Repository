@@ -35,7 +35,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
     <ul class="nav1 ul1">
-    <li><button type="button" class="navbar-toggle1 collapsed" id="test"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button><li>
+    <li><button type="button" class="navbar-toggle1 collapsed" id="test"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></li>
     </ul>
       <button type="button" class="navbar-toggle collapsed" data-toggle="sidepanel" data-target="#navbar-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <c:if test="${not empty LoginOK }">
@@ -104,6 +104,9 @@
   <div class="container-fluid"> 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+    <ul class="nav1 ul1">
+    <li><button type="button" class="navbar-toggle easy-sidebar-toggle" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></li>
+    </ul>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
@@ -139,12 +142,11 @@
       </li>
     </ul>
   </div>
-  
   <!-- /.container-fluid --> 
 </nav>
 </div>
 <script>
-$('#test').click(function(e) {
+$('#test,.navbar-toggle.easy-sidebar-toggle').click(function(e) {
     e.preventDefault();
     $('body').toggleClass('toggled');
     $('.navbar1.easy-sidebar').removeClass('toggled');

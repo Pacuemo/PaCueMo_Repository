@@ -5740,7 +5740,9 @@ th.visible-print, td.visible-print {
 	font-style: normal
 }
 body {
-	font-weight: 300
+	font-weight: 300;
+	height: 100%;
+}
 }
 a:active, a.active {
 	color: #2ebd59
@@ -9719,11 +9721,6 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@powder-green',
     float: left;
     margin: 0;
 }
-.nav1,{
-    margin-bottom: 0;
-    padding-left: 0;
-    list-style: none;
-}
 
 ul.nav1.ul1 {
     position: relative;
@@ -9737,7 +9734,12 @@ ul.nav1.ul1 {
 	    position: relative;
 	    float: left;
 	    left: -30px;
-	    margin-bottom: 15.5px;
-    	margin-top: 15.5px;
+	    margin-bottom: 14px;
+    	margin-top: 14px;
 	}
+}
+
+.nav1>li{
+    position: relative;
+    display: block;
 }
