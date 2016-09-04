@@ -852,7 +852,11 @@ public class FakeInfoGenerator
 
 //      club和league部分
 //		clubGenerator();
+<<<<<<< HEAD
 //		clubmemberGenerator();
+=======
+		clubmemberGenerator();
+>>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 //		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
