@@ -1,7 +1,9 @@
 package _21_club_controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +38,7 @@ public class Club_Controller
 		this.gson = gson;
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
-	public String club_By_Name(@RequestParam("name") String name)
-	{
-		return gson.toJson(service.searchClub(name));
-	}
+//------------------------註冊----------------------------------
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegisterForm()
@@ -50,7 +47,7 @@ public class Club_Controller
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String registerClub(@Valid ClubVO clubVO, Errors errors)
+	public String registerClub(@Valid ClubVO clubVO, Errors errors, HttpServletRequest request)
 	{
 		System.out.println(clubVO.getClubName());
 		clubVO.setClubDate(new Date(System.currentTimeMillis()));
@@ -62,6 +59,7 @@ public class Club_Controller
 		int success = service.registerClub(clubVO);
 		if (success == 1)
 		{
+			request.getSession().setAttribute("MyClub", clubVO);
 			return "club/success";
 		}
 		else
@@ -70,4 +68,36 @@ public class Club_Controller
 		}
 	}
 
+//------------------------查詢------------------------------------	
+	@ResponseBody
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	public String club_By_Name(@RequestParam("name") String name)
+	{
+		return gson.toJson(service.searchClub(name));
+	}
+
+	@RequestMapping(value = "/get", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	public String get_Club_By_Id(@RequestParam("clubId") int clubId)
+	{
+		return gson.toJson(service.getClub(clubId));
+
+	}
+
+//---------------------------登入--------------------------------
+	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpServletRequest request)
+	{
+		ClubVO clubVO;
+		try
+		{
+			clubVO = service.getClub_byMemberId(memberId);
+		}
+		catch (SQLException e)
+		{
+			//此會員沒有社團
+			return "error";
+		}
+		request.getSession().setAttribute("MyClub", clubVO);
+		return "clubInfo";
+	}
 }
