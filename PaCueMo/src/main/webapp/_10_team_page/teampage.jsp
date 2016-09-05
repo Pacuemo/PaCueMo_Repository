@@ -26,9 +26,6 @@
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
 	<div class="col-md-12">
-		<script type="text/javascript">
-			alert("${requestScope.teamVO.teamName}")
-		</script>
 		<h2 class="margin-vert-20" style="color: white;">
 			<c:choose>
 				<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
