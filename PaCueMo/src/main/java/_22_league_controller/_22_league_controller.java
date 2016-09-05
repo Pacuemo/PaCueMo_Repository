@@ -40,6 +40,7 @@ public class _22_league_controller
 	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String getInfo(@RequestParam("leagueId") int leagueId, HttpServletRequest request)
 	{
+		System.out.println(leagueId);
 		return gson.toJson(service.getOne(leagueId));
 	}
 }
