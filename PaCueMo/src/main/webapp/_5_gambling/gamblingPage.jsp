@@ -36,11 +36,13 @@
 						</div>
        					<div id="tableDiv">
        						<table class="table">
-       							<c:forEach var="battleSetVO" items="${battleSetList}" begin="1" end="3">
+       							<c:set var="startNum" value="1"/>
+       							<c:set var="endNum" value="3"/>
+       							<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}">
        								<tr align='center' valign='middle'>
-										<td><img width="150" class="img-rounded" alt="home"   src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
-										<td><img width="70"  					 alt="vs.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
-										<td><img width="150" class="img-rounded" alt="away"   src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
+										<td><img width="150" class="img-rounded" alt="home"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
+										<td><img width="70"  					 alt="vs4.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
+										<td><img width="150" class="img-rounded" alt="away"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
 									</tr>
        								<tr align='center' valign='middle'>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -65,10 +67,12 @@
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
        <script type="text/javascript">
-           
-       		var funFlag = undefined;//=== 偵測user按下哪個按鈕 ===
-       
+
+            var funFlag = "<%=request.getAttribute("funFlag")%>";//=== 偵測user按下哪個按鈕 ===    
+//          alert( funFlag );
+            	
        		$(function(){
+       			
        			/* ================ 【隊名Auto-complete】 ================= */
 				$("#searchName").keyup(function(){
 					
@@ -98,68 +102,87 @@
 					
 				})
 				/* ================ 【隊名Auto-complete結束】 ================= */
+				$("#searchBtn").click(function(){
+					
+	   				//******** 判斷user按下按鈕的flag *********
+	   				funFlag = 'byTeamName';
+					//alert( funFlag );
+	   				//*****************************************
+	   				
+					var searchName = $("#searchName").val();
+					var searchForm = document.getElementById('searchForm');
+					
+					searchForm.action = "<c:url value = 'BattleSet_Servlet.do?action=queryByName&teamName=" + searchName + "&funFlag=" + funFlag +"'/>" ;
+// 					searchForm.action = "BattleSet_Servlet.do?action=queryByName&teamName=" + searchName ;
+					searchForm.method = "POST";
+					searchForm.submit();
+				})
+				
+				
        			/* ==================== 【隊名查詢開始】 =================== */
-       			$("#searchBtn").click(function(){       				
-       				var searchName = $("#searchName").val();// 查詢的隊伍名稱
-       				//alert(searchName);
+//        			$("#searchBtn").click(function(){       				
+//        				var searchName = $("#searchName").val();// 查詢的隊伍名稱
+//        				//alert(searchName);
        				
-       				//*********************
-       				funFlag = 'byTeamName';
-       				//*********************
+//        				//*********************
+//        				funFlag = 'byTeamName';
+//        				//*********************
        				
-       				$.ajax({
-       					"type":"post",//傳遞方式				
-                		"url" :"BattleSet_Ajax_Servlet.do",
-                		"dataType":"json",//Servlet回傳格式
-                		"data":{ "action":"queryByName" , "searchName":searchName },
-       					"success":function(data){
-       						if( data.err != undefined ){ //若Servlet有 out.println 錯誤訊息 → alert
-	       						alert( data.errMsg );  
-       							return;
-       						}else
-       						{	
-       							// ================== ﹝表頭開始﹞==================
-       							$(".page-header > h2").empty(); // 清空 h2 以下的元素
-       		       				var tmp = $("<STRONG style='font-family:微軟正黑體;font-weight:bolder;color:orange;'></STRONG>").html(searchName);
-       		       				$(".page-header > h2").append(tmp);
-       		       				// ================== ﹝表頭結束﹞==================
-       							$("#tableDiv").children('.table').remove();// 先移除舊資料
-	                			var mytable =  $('<table></table>').addClass("table");
-	        					var mybody =  $('<tbody></tbody>');
-	        					mytable.append(mybody);
+       		
+       				
+//        				$.ajax({
+//        					"type":"post",//傳遞方式				
+//                 		"url" :"BattleSet_Ajax_Servlet.do",
+//                 		"dataType":"json",//Servlet回傳格式
+//                 		"data":{ "action":"queryByNameAndPage" , "searchName":searchName , "pageNo": 1 },
+//        					"success":function(data){
+//        						if( data.err != undefined ){ //若Servlet有 out.println 錯誤訊息 → alert
+// 	       						alert( data.errMsg );  
+//        							return;
+//        						}else
+//        						{	
+//        							// ================== ﹝表頭開始﹞==================
+//        							$(".page-header > h2").empty(); // 清空 h2 以下的元素
+//        		       				var tmp = $("<STRONG style='font-family:微軟正黑體;font-weight:bolder;color:orange;'></STRONG>").html(searchName);
+//        		       				$(".page-header > h2").append(tmp);
+//        		       				// ================== ﹝表頭結束﹞==================
+//        							$("#tableDiv").children('.table').remove();// 先移除舊資料
+// 	                			var mytable =  $('<table></table>').addClass("table");
+// 	        					var mybody  =  $('<tbody></tbody>');
+// 	        					mytable.append(mybody);
 
-								$.each(data , function( index , obj ){
+// 								$.each(data , function( index , obj ){
 
-									var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
-									var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif'		, 'width':70 });										
-									var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
-									var cell11  =  $('<td></td>');
-									var cell12  =  $('<td></td>');
-									var cell13  =  $('<td></td>');
-									img1.appendTo(cell11);
-									img2.appendTo(cell12);
-									img3.appendTo(cell13);
-									var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-									var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-									var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
-									var cell22  =  $('<td></td>').html("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong>");
-									var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
-									myrow1.append([ cell11 , cell12 , cell13 ]);
-									myrow2.append([ cell21 , cell22 , cell23 ]);
+<%-- 									var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										 --%>
+<%-- 									var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif'		, 'width':70 });										 --%>
+<%-- 									var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										 --%>
+// 									var cell11  =  $('<td></td>');
+// 									var cell12  =  $('<td></td>');
+// 									var cell13  =  $('<td></td>');
+// 									img1.appendTo(cell11);
+// 									img2.appendTo(cell12);
+// 									img3.appendTo(cell13);
+// 									var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
+// 									var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
+// 									var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
+// 									var cell22  =  $('<td></td>').html("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong>");
+// 									var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
+// 									myrow1.append([ cell11 , cell12 , cell13 ]);
+// 									myrow2.append([ cell21 , cell22 , cell23 ]);
 									
-									myrow1.appendTo(mybody);
-									myrow2.appendTo(mybody);
-								})
+// 									myrow1.appendTo(mybody);
+// 									myrow2.appendTo(mybody);
+// 								})
 									
-								$("#tableDiv").append(mytable);
-       						}       			
-       					},
-                		"error":function(data){
-                			alert(" ※ 查無隊伍，請重新輸入！");
-                		}
-       				})
+// 								$("#tableDiv").append(mytable);
+//        						}       			
+//        					},
+//                 		"error":function(data){
+//                 			alert(" ※ 查無隊伍，請重新輸入！");
+//                 		}
+//        				})
        				
-       			})
+//        			})
        			/* ==================== 【隊名查詢結束】 =================== */
        			/* ==================== 【分頁開始】 =================== */
        			$("#slicePage").paginate({
@@ -172,29 +195,36 @@
 		                text_hover_color: 'rgb(234, 57, 57)',
 		                background_hover_color: '#00BBFF',
 		                onChange: function (pageNo) {  /* pageNo → 當前頁數 */   //alert(pageNo); 
-		                	
-		                //===﹝根據funFlag 決定 呼叫 controller 的 action﹞===
-		                var actionName = "";                               
-		                switch (funFlag) {
+		               
+		                //alert(funFlag); // 判斷使用者按下哪個按鈕
+		                
+		                //===﹝根據funFlag 決定 呼叫 controller 的 action & controller﹞===
+		                var actionName = "";       
+		                var ajaxUrl    = "";
+		                var searchName = "";
+		                switch ( funFlag ) {
 							case "byTeamName":
-								actionName = "queryByName";
+								actionName = "queryByNameAndPage";
+								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
+								searchName = $("#searchName").val();// 查詢的隊伍名稱;
 								break;
 							default:
 								actionName = "queryByDateAndPage";
+								ajaxUrl = "BattleSet_Ajax_Servlet.do";
 								break;
 						}
 		                //====================================================
 		                
 		                	$.ajax({
-		                		"type":"post",//傳遞方式				
-		                		"url":"BattleSet_Ajax_Servlet.do",
+		                		"type": "post" ,   //傳遞方式				
+		                		"url" :  ajaxUrl , 
 		                		"dataType":"json",//Servlet回傳格式
-		                		"data":{ "action": actionName , "pageNo":pageNo },
+		                		"data":{ "action": actionName , "pageNo":pageNo , "searchName":searchName },
 		                		"success":function(data){
 		                			//console.log(data[0]);
 		                			$("#tableDiv").children('.table').remove();// 每次按下換頁，先移除舊資料
 		                			var mytable =  $('<table></table>').addClass("table");
-		        					var mybody =  $('<tbody></tbody>');
+		        					var mybody  =  $('<tbody></tbody>');
 		        					mytable.append(mybody);
 		        				
 									$.each(data , function( index , obj ){

@@ -14,6 +14,8 @@
 </style>
 </head>
 <body>
+   <jsp:include page="/fragment/top.jsp"/>
+   <jsp:include page="sidebar.jsp"/>
 	<sf:form method="post" commandName="clubVO">
             社團名稱:<sf:input path="clubName" /><sf:errors path="clubName"/><br/>         
             社團性質:<sf:select path="clubProp" ><br/>

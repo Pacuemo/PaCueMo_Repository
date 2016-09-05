@@ -20,4 +20,6 @@ public interface BattleSetDAO_interface
 
 	public List<BattleSetVO> getSetsByDateAndPage(String queryDate, Integer pageNo);
 
+	public List<BattleSetVO> getSetsByIdAndPage(Integer teamId, Integer pageNo);
+
 }

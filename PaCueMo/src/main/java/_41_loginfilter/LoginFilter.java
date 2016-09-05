@@ -20,7 +20,8 @@ import javax.servlet.http.HttpSession;
 import _9_41_member_model.MemberVO;
 
 @WebFilter(urlPatterns = { "/*" }, initParams = {
-				@WebInitParam(name = "mustLogin1", value = "club/login"),
+
+				@WebInitParam(name = "mustLogin1", value = "/spring/club/login"),
 				@WebInitParam(name = "mustLogin2", value = "TeamServlet"),
 				@WebInitParam(name = "mustLogin3", value = ""),
 				@WebInitParam(name = "mustLogin4", value = "")
@@ -45,6 +46,7 @@ public class LoginFilter implements Filter
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException
 	{
+
 		boolean isRequestedSessionIdValid = false;
 		if (request instanceof HttpServletRequest
 				&& response instanceof HttpServletResponse)
@@ -115,7 +117,8 @@ public class LoginFilter implements Filter
 			}
 			else
 			{
-				if (servletPath.equals(sURL))
+				String requestURIs = contextPath + sURL;
+				if (requestURI.equals(requestURIs))
 				{
 					login = true;
 					break;

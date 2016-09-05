@@ -16,13 +16,14 @@ import com.google.gson.Gson;
 import _00_initial_service.GlobalService;
 
 @Configuration
-@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model",
-		"_9_13_invitation_model" })
-public class RootConfig {
+@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model", "_22_league_service" })
+public class RootConfig
+{
 
 	@Bean
 	@Profile("prod")
-	public DataSource dataSource() {
+	public DataSource dataSource()
+	{
 
 		JndiObjectFactoryBean factoryBean = new JndiObjectFactoryBean();
 		factoryBean.setJndiName(GlobalService.JNDI_DB_NAME);
@@ -33,7 +34,9 @@ public class RootConfig {
 
 	@Bean
 	@Profile("default")
-	public DataSource dataS() {
+	public DataSource dataS()
+	{
+
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName(GlobalService.DRIVER_NAME);
 		ds.setUrl(GlobalService.DB_URL);
@@ -46,12 +49,14 @@ public class RootConfig {
 
 	@Bean
 	@Autowired
-	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+	public JdbcTemplate jdbcTemplate(DataSource dataSource)
+	{
 		return new JdbcTemplate(dataSource);
 	}
 
 	@Bean
-	public Gson gson() {
+	public Gson gson()
+	{
 		return new Gson();
 	}
 

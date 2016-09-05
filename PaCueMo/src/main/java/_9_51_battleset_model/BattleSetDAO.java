@@ -46,10 +46,15 @@ public class BattleSetDAO implements BattleSetDAO_interface
 			+ "                                          WHERE battleDateTime BETWEEN   ?   AND   ?   ";
 	private static final String QUERY_BY_DATE_PAGE_STMT = ""
 			+ "SELECT battleId , battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet FROM "
-			+ " 		(SELECT ROW_NUMBER() OVER (ORDER BY battleDateTime) AS RowNum , "
+			+ " 		(SELECT ROW_NUMBER() OVER (ORDER BY battleDateTime DESC) AS RowNum , "
 			+ "				battleId , battleDateTime , homeId , awayId ,homeScore ,"
 			+ "				awayScore , homebet , awaybet FROM BattleSet WHERE battleDateTime BETWEEN  ?  AND  ?  ) as tmp "
 			+ " WHERE tmp.RowNum  BETWEEN   ?   AND   ?  ";
+	private static final String QUERY_BY_NAME_PAGE_STMT = "SELECT battleId , battleDateTime , homeId , awayId , homeScore ,awayScore , homebet , awaybet  "
+			+ "FROM (SELECT ROW_NUMBER() OVER (ORDER BY battleDateTime DESC) AS RowNum"
+			+ ", battleId , battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet "
+			+ "FROM BattleSet WHERE homeId = ? OR awayId = ?) AS tmp "
+			+ "WHERE tmp.RowNum  BETWEEN   ?   AND   ?  ";
 
 	//========================================
 	@Override
@@ -174,6 +179,16 @@ public class BattleSetDAO implements BattleSetDAO_interface
 		return jdbcTemplate.query(QUERY_BY_DATE_PAGE_STMT, new BattleSetRowMapper(), date1, date2, startProductNo, endProductNo);
 	}
 
+	@Override
+	public List<BattleSetVO> getSetsByIdAndPage(Integer teamId, Integer pageNo)
+	{
+		//------------------【頁碼】---------------------------
+		int recordsPerPage = 5;
+		int startProductNo = (pageNo - 1) * recordsPerPage + 1;
+		int endProductNo = pageNo * recordsPerPage;
+		return jdbcTemplate.query(QUERY_BY_NAME_PAGE_STMT, new BattleSetRowMapper(), teamId, teamId, startProductNo, endProductNo);
+	}
+
 	public static void main(String[] args)
 	{
 		//-------- 測試 Calendar ----------
@@ -188,6 +203,14 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //【【【【【【【【【【【【【【【 Spring 】】】】】】】】】】】】】】】】】】】】
 //		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
 //		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
+
+//		----------【teamId】依日期 及 【頁碼】 查詢----------------
+
+//		List<BattleSetVO> list = dao.getSetsByIdAndPage(1, 1);
+//		for (BattleSetVO vo : list)
+//		{
+//			System.out.println(vo.getBattleDateTime());
+//		}
 //		----------【測試】依日期 及 【頁碼】 查詢----------------
 //		List<BattleSetVO> list = dao.getSetsByDateAndPage("2016-09-03", 1);
 //		for (BattleSetVO vo : list)

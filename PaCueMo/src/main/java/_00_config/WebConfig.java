@@ -12,13 +12,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 //加入需要被裝載的控制器位置
-@ComponentScan("_21_club_controller")
+@ComponentScan({ "_21_club_controller", "_22_league_controller" })
 public class WebConfig extends WebMvcConfigurerAdapter
 {
 
 //	宣告視圖解析器
 	@Bean
-	public ViewResolver ViewResolver()
+	public ViewResolver viewResolver()
 	{
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/");

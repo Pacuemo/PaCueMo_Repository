@@ -2,6 +2,7 @@ package _21_club_controller;
 
 import java.sql.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -17,43 +18,52 @@ import com.google.gson.Gson;
 
 import _21_club_service.Club_Service;
 import _9_21_club_model.ClubVO;
+import _9_41_member_model.MemberVO;
 
 @Controller
+@RequestMapping(value = "/club")
 public class Club_Controller
 {
-
+	@Autowired
 	private Club_Service service;
+	@Autowired
 	private Gson gson;
 
-	@Autowired
-	public void setService(Club_Service service)
+	//---------------------------index--------------------------------
+	@RequestMapping(value = "/introduce", method = RequestMethod.GET)
+	public String introduceClub()
 	{
-		this.service = service;
-	}
-
-	@Autowired
-	public void setGson(Gson gson)
-	{
-		this.gson = gson;
+		return "club/introduceClub";
 	}
 
 	//---------------------------登入--------------------------------
+	@RequestMapping(value = "/joinClub", method = RequestMethod.GET)
+	public String joinClub()
+	{
+		return "club/joinClub";
+	}
+
+	@RequestMapping(value = "/myClub", method = RequestMethod.GET)
+	public String myClub()
+	{
+		return "club/myClub";
+	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	public String get_Club_By_member(HttpSession session)
 	{
 		ClubVO clubVO;
 		try
 		{
-			String memberId = (String) session.getAttribute("memberId");
-			clubVO = service.getClub_byMemberId(memberId);
+			clubVO = service.getClub_byMemberId(((MemberVO) session.getAttribute("LoginOK")).getMemberId());
 		}
 		catch (RuntimeException e)
 		{
 			//此會員沒有社團
-			return "redirect:/_21_club/joinClub.jsp";
+			return "redirect:/spring/club/joinClub";
 		}
 		session.setAttribute("MyClub", clubVO);
-		return "redirect:/_21_club/myClub.jsp";
+		return "redirect:/spring/club/myClub";
 	}
 
 //------------------------註冊----------------------------------
@@ -69,7 +79,7 @@ public class Club_Controller
 	public String registerClub(@Valid ClubVO clubVO, Errors errors, HttpSession session)
 	{
 		clubVO.setClubDate(new Date(System.currentTimeMillis()));
-		clubVO.setClubHead((String) session.getAttribute("memberId"));
+		clubVO.setClubHead(((MemberVO) session.getAttribute("LoginOK")).getMemberId());
 		if (errors.hasErrors())
 		{
 			return "club/registerForm";
@@ -78,7 +88,7 @@ public class Club_Controller
 		if (success == 1)
 		{
 			session.setAttribute("MyClub", clubVO);
-			return "redirect:/_21_club/success.jsp";
+			return "/club/success";
 		}
 		else
 		{
@@ -88,16 +98,24 @@ public class Club_Controller
 
 //------------------------查詢------------------------------------	
 	@ResponseBody
-	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String club_By_Name(@RequestParam("name") String name)
 	{
 		return gson.toJson(service.searchClub(name));
 	}
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	@RequestMapping(value = "/getById", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String get_Club_By_Id(@RequestParam("clubId") int clubId)
 	{
 		return gson.toJson(service.getClub(clubId));
+	}
+
+	@RequestMapping(value = "/searchName", method = RequestMethod.GET)
+	public String clubByName(@RequestParam("name") String name, HttpServletRequest request)
+	{
+		request.setAttribute("club", service.searchClub(name));
+		return "/club/searchClub";
 	}
 
 }
