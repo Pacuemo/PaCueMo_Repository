@@ -22,8 +22,10 @@
 	</style>
   </head>
   <body>
-  		<jsp:include page="myTop.jsp"/>
-<%--    <h1>${battleSetList}</h1> --%>
+  		<%-- <jsp:include page="myTop.jsp"/> --%>
+		<jsp:include page="/fragment/top.jsp"/>
+		<jsp:include page="sidebar.jsp"/>
+
        <div class="container">
        		<div class="row">
        			<div class="col-md-2"></div>
@@ -122,7 +124,7 @@
 								$.each(data , function( index , obj ){
 
 									var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
-									var img2    =  $('<img></img>').attr({'src': 'image/VS4.gif', 'width':70 });										
+									var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif'		, 'width':70 });										
 									var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
 									var cell11  =  $('<td></td>');
 									var cell12  =  $('<td></td>');
@@ -179,7 +181,7 @@
 									$.each(data , function( index , obj ){
 										
 										var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
-										var img2    =  $('<img></img>').attr({'src': 'image/VS4.gif',       'width':70 });										
+										var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',       'width':70 });										
 										var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
 										var cell11  =  $('<td></td>');
 										var cell12  =  $('<td></td>');

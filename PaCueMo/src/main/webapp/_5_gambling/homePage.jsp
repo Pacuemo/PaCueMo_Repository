@@ -20,7 +20,8 @@
   	 <script type="text/javascript" src="advertisment/js/modernizr.custom.46884.js"></script>
   </head>
   <body>
-	<jsp:include page="top.jsp"/>
+  
+	<jsp:include page="/fragment/top.jsp"/>
 	
 	<!-- ---------------------------------- 【Begin 廣告輪播】 ---------------------------------- -->
 	<div class="container">
