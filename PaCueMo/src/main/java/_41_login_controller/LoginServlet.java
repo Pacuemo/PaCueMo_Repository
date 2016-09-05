@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet
 		String mode = request.getParameter("mode");
 		String fbId = request.getParameter("facebookId");
 		boolean isNeed2StepVerify = false;
+		String code = null;
 		String requestURI = (String) session.getAttribute("requestURI");
 
 		if (rm != null)
@@ -44,7 +45,8 @@ public class LoginServlet extends HttpServlet
 
 		if ("normal_Login".equals(mode))
 		{
-			if (ms.checkTwoStepVerify(mail))
+			code = ms.checkTwoStepVerify(mail);
+			if ("true".equals(code.substring(0, 4)))
 			{
 				mv = null;
 				isNeed2StepVerify = true;
@@ -57,7 +59,8 @@ public class LoginServlet extends HttpServlet
 		}
 		else if ("fb_Login".equals(mode))
 		{
-			if (ms.checkTwoStepVerify_fb(fbId))
+			code = ms.checkTwoStepVerify_fb(fbId);
+			if ("true".equals(code.substring(0, 4)))
 			{
 				mv = null;
 				isNeed2StepVerify = true;
@@ -80,7 +83,8 @@ public class LoginServlet extends HttpServlet
 		{
 			if (isNeed2StepVerify)
 			{
-				out.write("twoStepVerify");
+				out.write("twoStepVerify" + code.substring(4));
+				return;
 			}
 			else
 			{
