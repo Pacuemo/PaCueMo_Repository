@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import _00_initial_service.GlobalService;
 
 @Repository("BattleRecordDAO")
-public class BattleRecordDAO implements BattleRecordDAO_interface
+public class BattleRecordDAO_JDBC_notF implements BattleRecordDAO_interface
 {
 
 	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,courtId,battleMode,battleBet,battleDateTime) "
@@ -28,6 +28,7 @@ public class BattleRecordDAO implements BattleRecordDAO_interface
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
 	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
 	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate,isCaptain FROM TeamMember where teamId = ? order by teamMemberId";
+
 	private static final String SELECT_TEAM_MEMBERS_POINT = "SELECT m.[memberId],m.[memberFirstName],m.[memberLastName],[memberPoint],tm.teamId"
 			+ "FROM dbo.Member m JOIN (SELECT [teamId],[teamMemberId] FROM dbo.TeamMember )tm"
 			+ "ON m.memberId = tm.teamMemberId" + "WHERE tm.teamId = 1";
@@ -342,7 +343,7 @@ public class BattleRecordDAO implements BattleRecordDAO_interface
 		battleRecordVO.setBattleBet((double) 0);
 		battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis()));
 
-		BattleRecordDAO dao = new BattleRecordDAO();
+		BattleRecordDAO_JDBC_notF dao = new BattleRecordDAO_JDBC_notF();
 		dao.insert(battleRecordVO);
 	}
 
