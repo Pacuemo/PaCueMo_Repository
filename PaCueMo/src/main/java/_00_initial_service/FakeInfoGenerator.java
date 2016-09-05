@@ -849,11 +849,15 @@ public class FakeInfoGenerator
 
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-//		fightrecoedGenerator();
+
+//      club和league部分
 //		clubGenerator();
 
-//		gambleOrderGenerator();
 //		clubmemberGenerator();
+		fightrecoedGenerator();
+
+//		gambleOrderGenerator();
+
 //		teammemberGenerator();
 
 	}

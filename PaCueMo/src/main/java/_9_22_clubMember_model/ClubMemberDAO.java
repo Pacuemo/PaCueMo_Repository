@@ -8,8 +8,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import _00_initial_service.GlobalService;
 
+@Component
 public class ClubMemberDAO implements ClubMemberDAO_I
 {
 

@@ -1,49 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <display-name>PaCueMo</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <session-config>
-    <session-timeout>30</session-timeout>
-  </session-config>
-  <resource-ref>
-    <res-ref-name>jdbc/MagicJackDS</res-ref-name>
-    <res-type>javax.sql.DataSource</res-type>
-    <res-auth>Container</res-auth>
-    <res-sharing-scope>Shareable</res-sharing-scope>
-  </resource-ref>
-  <context-param>
-    <param-name>spring.profiles.default</param-name>
-    <param-value>default</param-value>
-  </context-param>
-  <context-param>
-    <param-name>contextClass</param-name>
-    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-  </context-param>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>_00_config.RootConfig</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <servlet>
-    <servlet-name>appServlet</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextClass</param-name>
-      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-    </init-param>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>_00_config.WebConfig</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>appServlet</servlet-name>
-    <url-pattern>/club/*</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>PaCueMo</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<resource-ref>
+		<res-ref-name>jdbc/MagicJackDS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	<context-param>
+		<param-name>spring.profiles.default</param-name>
+		<param-value>default</param-value>
+	</context-param>
+
+	<!-- 宣告TomCat容器讀取的檔案性質(使用.java方式布置) -->
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	<!-- 加載Spring Context需要呼叫的RootConfig內的Bean -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>_00_config.RootConfig</param-value>
+	</context-param>
+
+	<!-- 事件觸發宣告(springContext啟動時會載入上面宣告的RootConfig) -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- 宣告Spring DispatcherServlet -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 宣告需要讀取的WebConfig的檔案性質(使用.java方式布置) -->
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<!-- 宣告webConfig.class類別的位置 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>_00_config.WebConfig</param-value>
+		</init-param>
+		<!-- 宣告此servlet重要程度，在容器啟動時就載入此DispatcherServlet -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<!-- 宣告須採用Spring DispatcherServlet的URL -->
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/club/*</url-pattern>
+	</servlet-mapping>
+	 
+<!-- 宣告通過Spring Post方法的編碼	  -->
+	 <filter>    
+   <filter-name>encodingFilter</filter-name>    
+   <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>    
+    <init-param>        
+       <param-name>encoding</param-name>        
+       <param-value>UTF-8</param-value>    
+    </init-param>    
+    <init-param>        
+       <param-name>forceEncoding</param-name>        
+       <param-value>true</param-value>    
+    </init-param>    
+ </filter>
+ <filter-mapping>    
+     <filter-name>encodingFilter</filter-name>    
+     <url-pattern>/*</url-pattern>
+ </filter-mapping>
+
 </web-app>

@@ -60,25 +60,17 @@ body.toggled {
 
 .navbar1.easy-sidebar .navbar-toggle {
 	display: inline-block;
-}
-.navbar1.easy-sidebar .navbar-toggle span.icon-bar:nth-child(2) {
-	-webkit-transform-origin: 0 50%;
-	transform-origin: 0 50%;
-	-webkit-transform: translate(2px, -5px) rotate(45deg);
-	transform: translate(2px, -5px) rotate(45deg)
-}
-.navbar1.easy-sidebar .navbar-toggle span.icon-bar:nth-child(3) {
-	display: none;
-}
-.navbar1.easy-sidebar .navbar-toggle span.icon-bar:nth-child(4) {
-	-webkit-transform-origin: 0 50%;
-	transform-origin: 0 50%;
-	-webkit-transform: translate(2px, 4.5px) rotate(-45deg);
-	transform: translate(2px, 4.5px) rotate(-45deg);
+	padding: 9px 0px;
+	width: 30px;
 }
 
+.navbar1.easy-sidebar .navbar-toggle:hover {
+    background-color: black;
+}
+
+
 .navbar1.easy-sidebar .nav.navbar-nav {
-	margin: 7.5px -15px;
+	margin: 0 -15px;
 	float: none;
 }
 .navbar1.easy-sidebar .nav.navbar-nav>li {
@@ -118,5 +110,5 @@ body.toggled {
 }
 
 .navbar1.easy-sidebar .nav.navbar-nav>li>a:hover {
-    background-color: #13e84b;
+    background-color: #1ed760;
 }

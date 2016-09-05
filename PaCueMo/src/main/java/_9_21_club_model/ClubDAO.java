@@ -46,10 +46,11 @@ public class ClubDAO implements ClubDAO_I
 	private static final String Get_All_By_Name = "select * from club where clubName LIKE ?";
 
 	@Override
-	public void insert(ClubVO clubVO)
+	public int insert(ClubVO clubVO)
 	{
 		PreparedStatement pstmt = null;
 		Connection con = null;
+		int success = 0;
 
 		try
 		{
@@ -62,9 +63,10 @@ public class ClubDAO implements ClubDAO_I
 			pstmt.setDate(3, clubVO.getClubDate());
 			pstmt.setString(4, clubVO.getClubHead());
 			pstmt.setInt(5, clubVO.getClubProp());
-			pstmt.executeUpdate();
+			success = pstmt.executeUpdate();
 			con.commit();
 			System.out.println("新增一筆資料");
+
 		}
 		catch (Exception e)
 		{
@@ -98,6 +100,7 @@ public class ClubDAO implements ClubDAO_I
 
 			}
 		}
+		return success;
 
 	}
 

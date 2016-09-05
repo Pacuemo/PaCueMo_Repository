@@ -4,17 +4,24 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
+import org.springframework.stereotype.Component;
+
 import _9_22_clubMember_model.ClubMemberVO;
 
+@Component
 public class ClubVO implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 	private int clubID;
+	@Size(min = 1, max = 20, message = "社團名稱必須介於1-20個中文字")
 	private String clubName;
 	private String clubImageName;
 	private Date clubDate;
 	private String clubHead;
+
 	private int clubProp;
 	private List<ClubMemberVO> clubmembers;
 
