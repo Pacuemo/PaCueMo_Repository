@@ -1,8 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%> <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>  <%-- for Struts2 --%> 
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> <%-- for Spring --%> 
-<%--<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>--%> <%-- for Spring Form --%> 
+ 
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,6 +18,10 @@
 	</script>
   </head>
   <body>
-      <a href="${pageContext.request.contextPath}/club/register">註冊帳號</a>
+   <jsp:include page="/fragment/top.jsp"/>
+   <jsp:include page="sidebar.jsp"/>
+      <a href="${pageContext.request.contextPath}/spring/club/register">新增社團</a><br/>
+      <h3>or</h3><br/>
+      
   </body>
 </html>

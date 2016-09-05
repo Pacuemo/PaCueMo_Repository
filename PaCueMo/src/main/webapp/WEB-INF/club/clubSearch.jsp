@@ -32,7 +32,7 @@
     	  var query=$('#query').val();
     	  $('#buttonLoad').click(function(){	
     		  $.ajax({
-    			  url:ctx+'/club/search?name='+$('#query').val(),
+    			  url:ctx+'/spring/club/search?name='+$('#query').val(),
     			  type:'get',
     			  success:function(clubVO){
     				  $.each(clubVOs,function(index,value){

@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet
 
 		if ("normal_Login".equals(mode))
 		{
-			code = ms.checkTwoStepVerify(mail);
+			code = ms.checkTwoStepVerify(mail.trim());
 
 			if ("true".equals(code.substring(0, 4)))
 			{
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet
 			}
 			else
 			{
-				mv = ms.checkMailPwd(mail, pwd);
+				mv = ms.checkMailPwd(mail.trim(), pwd);
 			}
 
 		}
