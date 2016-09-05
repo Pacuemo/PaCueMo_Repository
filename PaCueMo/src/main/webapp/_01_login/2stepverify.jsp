@@ -13,6 +13,7 @@
 <body>
 <div>
   <div class="head "><a class="pacuemo-logo" title="Pacuemo" href=""></a></div>
+  <input type="hidden" id="guid" value="${param.guid}"/>
 </div>
 <div class="container-fluid login">
   <div class="content4twostep">
@@ -32,7 +33,7 @@
       <div class="row">
         <div class="col-xs-12">
           <label for="login-code" class="control-label sr-only">驗證碼</label>
-          <input type="text" class="form-control" name="memberCode" id="login-code" placeholder="請輸入6位數驗證碼" pattern="[0-9]*" required="" data-msg-required="請輸入驗證碼" data-rule-minlength="6" data-rule-maxlength="6" data-msg-minlength="您的驗證碼長度不正確" autocomplete="off"></div>
+          <input type="text" class="form-control" name="memberCode" id="login-code" placeholder="請輸入6位數驗證碼" pattern="[0-9]*" required="" data-msg-required="請輸入6位數驗證碼" data-rule-minlength="6" data-rule-maxlength="6" data-msg-maxlength="請輸入6位數驗證碼" data-msg-minlength="您的驗證碼長度不正確" autocomplete="off"></div>
       </div>
       <div class="row row-submit">
         <div class="col-xs-12 col-sm-12">
@@ -62,20 +63,19 @@
   				 			$(element).parent().parent().removeClass("has-error")
 					   },	
 			submitHandler:function(form){        
-							var mail = $("#login-username").val();
-							var pwd = $("#login-password").val();
-							var rm = $("#login-remember").val();
+							var guid = $("#guid").val();
+							var code = $("#login-code").val();
 							$.ajax({
 								"type":"post",
-								"url": "login.do",
+								"url": "twosteplogin.do",
 								"dataType": "text",
-								"data":{"memberMail":mail,"memberPassword":pwd,"rememberMe":rm,"mode":"normal_Login"},
+								"data":{"guid":guid,"validCode":code,"type":"normal"},
 								"success":function(data){
 									if( data == "true"){
-										location.href = "../index.jsp";
+										location.href = "/pacuemo/index.jsp";
 									}else{
 										$('#login_error').remove();
-										$("#loginForm").prepend('<div id="login_error" class="row"><div class="col-xs-12 text-center"><p class="alert alert-warning"><span>用戶名稱或密碼不正確。</span></p></div></div>');
+										$("#loginForm").prepend('<div id="login_error" class="row"><div class="col-xs-12 text-center"><p class="alert alert-warning"><span>驗證碼不正確。</span></p></div></div>');
 									}
 											
 								}

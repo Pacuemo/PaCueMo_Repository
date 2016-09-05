@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import _9_41_member_model.MemberVO;
 
 @WebFilter(urlPatterns = { "/*" }, initParams = {
-				@WebInitParam(name = "mustLogin1", value = ""),
+				@WebInitParam(name = "mustLogin1", value = "/_21_club/clubIndex.jsp"),
 				@WebInitParam(name = "mustLogin2", value = ""),
 				@WebInitParam(name = "mustLogin3", value = ""),
 				@WebInitParam(name = "mustLogin4", value = "")
@@ -70,7 +70,7 @@ public class LoginFilter implements Filter
 					{
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}
-					resp.sendRedirect(contextPath + "/_02_login/login.jsp");
+					resp.sendRedirect(contextPath + "/_01_login/login.jsp");
 					return;
 				}
 			}
