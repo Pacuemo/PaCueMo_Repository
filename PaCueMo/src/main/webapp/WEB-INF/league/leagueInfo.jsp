@@ -42,7 +42,8 @@
     				  $("<h1></h1>").text(value.clubName).appendTo($("#info"));
     				  }
     				  $.each(leagueVO.leagueRecordVOs,function(index,value){
-        				  $("<h1></h1>").text(value.clubName).appendTo($("#info"));
+        				  $("<p></p>").text(value.clubIdA).appendTo($("#info"));
+        				  $("<p></p>").text(value.clubIdB).appendTo($("#info"));
         				  }
     				  );   				  
     			  }
