@@ -36,9 +36,9 @@
        						<table class="table">
        							<c:forEach var="battleSetVO" items="${battleSetList}" begin="1" end="3">
        								<tr align='center' valign='middle'>
-										<td><img width="150" class="img-rounded" alt="home"   src="<%=request.getContextPath()%>${battleSetVO['home'].teamLogoURL}"></td>
+										<td><img width="150" class="img-rounded" alt="home"   src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
 										<td><img width="70"  					 alt="vs.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
-										<td><img width="150" class="img-rounded" alt="away"   src="<%=request.getContextPath()%>${battleSetVO['away'].teamLogoURL}"></td>
+										<td><img width="150" class="img-rounded" alt="away"   src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
 									</tr>
        								<tr align='center' valign='middle'>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -121,9 +121,9 @@
 
 								$.each(data , function( index , obj ){
 
-									var img1    =  $('<img></img>').attr({'src': (obj.away.teamLogoURL).substring(13) , 'width':150});										
-									var img2    =  $('<img></img>').attr({'src': 'image/VS4.gif',       				'width':70 });										
-									var img3    =  $('<img></img>').attr({'src': (obj.home.teamLogoURL).substring(13) , 'width':150});										
+									var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
+									var img2    =  $('<img></img>').attr({'src': 'image/VS4.gif', 'width':70 });										
+									var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
 									var cell11  =  $('<td></td>');
 									var cell12  =  $('<td></td>');
 									var cell13  =  $('<td></td>');
@@ -175,18 +175,19 @@
 		                			var mytable =  $('<table></table>').addClass("table");
 		        					var mybody =  $('<tbody></tbody>');
 		        					mytable.append(mybody);
-
+		        				
 									$.each(data , function( index , obj ){
-
-										var img1    =  $('<img></img>').attr({'src': (obj.away.teamLogoURL).substring(13) , 'width':150});										
-										var img2    =  $('<img></img>').attr({'src': 'image/VS4.gif',       				'width':70 });										
-										var img3    =  $('<img></img>').attr({'src': (obj.home.teamLogoURL).substring(13) , 'width':150});										
+										
+										var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
+										var img2    =  $('<img></img>').attr({'src': 'image/VS4.gif',       'width':70 });										
+										var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
 										var cell11  =  $('<td></td>');
 										var cell12  =  $('<td></td>');
 										var cell13  =  $('<td></td>');
 										img1.appendTo(cell11);
 										img2.appendTo(cell12);
 										img3.appendTo(cell13);
+										
 										var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
 										var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
 										var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
