@@ -65,6 +65,9 @@
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
        <script type="text/javascript">
+           
+       		var funFlag = undefined;//=== 偵測user按下哪個按鈕 ===
+       
        		$(function(){
        			/* ================ 【隊名Auto-complete】 ================= */
 				$("#searchName").keyup(function(){
@@ -99,6 +102,10 @@
        			$("#searchBtn").click(function(){       				
        				var searchName = $("#searchName").val();// 查詢的隊伍名稱
        				//alert(searchName);
+       				
+       				//*********************
+       				funFlag = 'byTeamName';
+       				//*********************
        				
        				$.ajax({
        					"type":"post",//傳遞方式				
@@ -165,12 +172,24 @@
 		                text_hover_color: 'rgb(234, 57, 57)',
 		                background_hover_color: '#00BBFF',
 		                onChange: function (pageNo) {  /* pageNo → 當前頁數 */   //alert(pageNo); 
-		                    
+		                	
+		                //===﹝根據funFlag 決定 呼叫 controller 的 action﹞===
+		                var actionName = "";                               
+		                switch (funFlag) {
+							case "byTeamName":
+								actionName = "queryByName";
+								break;
+							default:
+								actionName = "queryByDateAndPage";
+								break;
+						}
+		                //====================================================
+		                
 		                	$.ajax({
 		                		"type":"post",//傳遞方式				
 		                		"url":"BattleSet_Ajax_Servlet.do",
 		                		"dataType":"json",//Servlet回傳格式
-		                		"data":{ "action":"queryByDateAndPage" , "pageNo":pageNo },
+		                		"data":{ "action": actionName , "pageNo":pageNo },
 		                		"success":function(data){
 		                			//console.log(data[0]);
 		                			$("#tableDiv").children('.table').remove();// 每次按下換頁，先移除舊資料
@@ -181,7 +200,7 @@
 									$.each(data , function( index , obj ){
 										
 										var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
-										var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',       'width':70 });										
+										var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',      'width':70 });										
 										var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
 										var cell11  =  $('<td></td>');
 										var cell12  =  $('<td></td>');
