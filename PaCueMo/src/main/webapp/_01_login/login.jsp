@@ -104,8 +104,8 @@
 						"dataType": "text",
 						"data":{"facebookId":response.id,"mode":"fb_Login"},
 						"success":function(data){
-							if( data == "true"){
-								location.href = "../index.jsp";
+							if( data.substr(0,4) == "true"){
+								location.href = data.substr(4);
 							}else if( data.substr(0,13) == "twoStepVerify"){
 								var url = '2stepverify.jsp';
 								var form = $('<form style="display:none"action="' + url + '" method="post">' +
