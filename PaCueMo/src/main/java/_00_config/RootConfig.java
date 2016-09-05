@@ -3,7 +3,6 @@ package _00_config;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +15,7 @@ import com.google.gson.Gson;
 import _00_initial_service.GlobalService;
 
 @Configuration
-@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model" })
+@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model", "_22_league_service" })
 public class RootConfig
 {
 
@@ -33,7 +32,7 @@ public class RootConfig
 	}
 
 	@Bean
-	@Profile("default")
+	@Profile("dev")
 	public DataSource dataS()
 	{
 		BasicDataSource ds = new BasicDataSource();
@@ -47,7 +46,6 @@ public class RootConfig
 	}
 
 	@Bean
-	@Autowired
 	public JdbcTemplate jdbcTemplate(DataSource dataSource)
 	{
 		return new JdbcTemplate(dataSource);
