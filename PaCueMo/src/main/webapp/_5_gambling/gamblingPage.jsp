@@ -36,11 +36,13 @@
 						</div>
        					<div id="tableDiv">
        						<table class="table">
-       							<c:forEach var="battleSetVO" items="${battleSetList}" begin="1" end="3">
+       							<c:set var="startNum" value="1"/>
+       							<c:set var="endNum" value="3"/>
+       							<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}">
        								<tr align='center' valign='middle'>
-										<td><img width="150" class="img-rounded" alt="home"   src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
-										<td><img width="70"  					 alt="vs.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
-										<td><img width="150" class="img-rounded" alt="away"   src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
+										<td><img width="150" class="img-rounded" alt="home"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
+										<td><img width="70"  					 alt="vs4.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
+										<td><img width="150" class="img-rounded" alt="away"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
 									</tr>
        								<tr align='center' valign='middle'>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -125,7 +127,7 @@
        		       				// ================== ﹝表頭結束﹞==================
        							$("#tableDiv").children('.table').remove();// 先移除舊資料
 	                			var mytable =  $('<table></table>').addClass("table");
-	        					var mybody =  $('<tbody></tbody>');
+	        					var mybody  =  $('<tbody></tbody>');
 	        					mytable.append(mybody);
 
 								$.each(data , function( index , obj ){
