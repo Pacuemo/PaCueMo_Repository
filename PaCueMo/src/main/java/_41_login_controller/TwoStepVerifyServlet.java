@@ -50,8 +50,17 @@ public class TwoStepVerifyServlet extends HttpServlet
 				if (gAuth.authorize(mv.getMemberSecretKey().trim(), Integer.valueOf(validCode)))
 				{
 					session.setAttribute("LoginOK", mv);
-					out.write("true");
-					return;
+					if (requestURI == null)
+					{
+						out.write("true" + "../index.jsp");
+						return;
+					}
+					else
+					{
+						session.removeAttribute("requestURI");
+						out.write("true" + requestURI);
+						return;
+					}
 				}
 				else
 				{
@@ -68,8 +77,17 @@ public class TwoStepVerifyServlet extends HttpServlet
 				if (gAuth.authorize(mv.getMemberSecretKey(), Integer.valueOf(validCode)))
 				{
 					session.setAttribute("LoginOK", mv);
-					out.write("true");
-					return;
+					if (requestURI == null)
+					{
+						out.write("true" + "../index.jsp");
+						return;
+					}
+					else
+					{
+						session.removeAttribute("requestURI");
+						out.write("true" + requestURI);
+						return;
+					}
 				}
 				else
 				{

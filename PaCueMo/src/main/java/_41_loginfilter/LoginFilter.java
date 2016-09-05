@@ -70,7 +70,7 @@ public class LoginFilter implements Filter
 					{
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}
-					resp.sendRedirect(contextPath + "/_02_login/login.jsp");
+					resp.sendRedirect(contextPath + "/_01_login/login.jsp");
 					return;
 				}
 			}

@@ -71,8 +71,8 @@
 								"dataType": "text",
 								"data":{"guid":guid,"validCode":code,"type":"normal"},
 								"success":function(data){
-									if( data == "true"){
-										location.href = "/pacuemo/index.jsp";
+									if( data.substr(0,4) == "true"){
+										location.href = data.substr(4);
 									}else{
 										$('#login_error').remove();
 										$("#loginForm").prepend('<div id="login_error" class="row"><div class="col-xs-12 text-center"><p class="alert alert-warning"><span>驗證碼不正確。</span></p></div></div>');
