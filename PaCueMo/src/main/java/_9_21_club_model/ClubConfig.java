@@ -8,7 +8,7 @@ import _00_config.RootConfig;
 
 @Import(RootConfig.class)
 @Configuration
-@ComponentScan("_9_21_club_model")
+@ComponentScan({ "_9_21_club_model", "_9_22_clubMember_model", "_21_club_service" })
 public class ClubConfig
 {
 

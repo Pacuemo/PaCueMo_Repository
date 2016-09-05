@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
-
 import _52_nbateam_service.NBATeamService;
 import _9_51_battleset_model.BattleSetDAO;
 import _9_51_battleset_model.BattleSetVO;
@@ -178,19 +175,52 @@ public class BattleSetService
 		return return_list;
 	}
 
+	public List<Map<String, Object>> getSetsByDateAndPage(String queryDate, Integer pageNo)
+	{
+		List<Map<String, Object>> return_list = new ArrayList<>();// modify:2016/08/12 增加對戰時間
+		List<BattleSetVO> list = bSetDAO.getSetsByDateAndPage(queryDate, pageNo);
+
+		//NBATeamService nbaSvc = new NBATeamService(); /* 原本 Local 變數自己new → 改Spring注入*/
+
+		for (BattleSetVO vo : list)
+		{
+//			System.out.println(vo.getHomeId() + " vs " + vo.getAwayId());
+//			System.out.println(vo.getBattleDateTime().toString().substring(11, 16));
+
+			String battleTime = vo.getBattleDateTime().toString().substring(11, 16);// modify:2016/08/12 增加對戰時間
+			NBATeamVO home = nbaSvc.getByTeamId(vo.getHomeId());
+			NBATeamVO away = nbaSvc.getByTeamId(vo.getAwayId());
+
+			Map<String, Object> myMap = new HashMap<>();// modify:2016/08/12 增加對戰時間
+			myMap.put("home", home);
+			myMap.put("away", away);
+			myMap.put("battleTime", battleTime);
+
+			return_list.add(myMap);
+		}
+
+		return return_list;
+	}
+
 	public static void main(String[] args)
 	{
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
-		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
+//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
+//		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
 
 // ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getSetsByDate("2015-11-06");
+//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-02");
 //		for (Map<String, Object> map : list)
 //		{
-//			System.out.println(((String) map.get("battleTime")));
+//			System.out.println(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((String) map.get("battleTime")));
 //		}
-
+//====================【getSetsByDateAndPage】根據日期及分頁編號查詢==========================
+//		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-04", 1);
+//		System.out.println(list);
+//		for (Map<String, Object> map : list)
+//		{
+//			System.out.println(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((String) map.get("battleTime")) + "     " + ((NBATeamVO) map.get("away")).getTeamName());
+//		}
 //====================【getLogoURLs】==========================
 //		BattleSetService svc = new BattleSetService();
 //		List<Map<String, Object>> list = svc.getLogoURLs("2016-09-02");
@@ -203,6 +233,7 @@ public class BattleSetService
 		//-------------依隊名查詢【getSetsByName】(加入 對戰時間)--------------
 //		BattleSetService svc = new BattleSetService();
 //		List<Map<String, Object>> list = svc.getSetsByName("小牛");
+//		System.out.println(list);
 //		for (Map<String, Object> map : list)
 //		{
 //			String homeName = ((NBATeamVO) map.get("home")).getTeamName();

@@ -61,7 +61,8 @@
         <li> <a href="" id="nav-link-aboutus" > 關於我們 </a> </li>
         <li> <a href="" id="nav-link-battle" > 約戰 </a> </li>
         <li> <a href="" id="nav-link-league" > 聯賽 </a> </li>
-        <li> <a href="" id="nav-link-club">社團 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/_21_club/clubIndex.jsp" id="nav-link-club">社團 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
         <li> <a href="" id="nav-link-court">場地 </a> </li>
         <li> <a href="" id="nav-link-report" > 問題回報 </a> </li>       
         <li role="separator" class="divider"></li>
@@ -70,7 +71,7 @@
         <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_01_login/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
-        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="" id="nav-link-account" > 帳戶 </a> </li>
+        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_03_member/myPage.jsp" id="nav-link-account" > 帳戶 </a> </li>
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do" id="nav-link-log out" > 登出 </a> </li>
         <li class="hidden-xs hidden-sm dropdown"> <a href="" class="user-link dropdown-toggle" data-toggle="dropdown">
         <c:choose>
@@ -90,7 +91,7 @@
           </svg>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <li> <a href="">帳戶</a> </li>
+            <li> <a href="${pageContext.request.contextPath}/_03_member/myPage.jsp">帳戶</a> </li>
             <li> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do">登出</a> </li>
           </ul>
         </li>

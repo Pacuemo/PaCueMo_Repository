@@ -2,15 +2,17 @@
     pageEncoding="UTF8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test02-test.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test01.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/easy-sidebar.css">
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script> 
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script> 
+<script src="${pageContext.request.contextPath}/js/jquery.detect_swipe.js"></script> 
 
 </head>
 <body>
@@ -30,14 +32,17 @@
   </symbol>
 </svg>
 <header id="js-navbar" class="navbar navbar-default navbar-static-top " role="banner">
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
+    <ul class="nav1 ul1">
+    <li><button type="button" class="navbar-toggle1 collapsed" id="test"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></li>
+    </ul>
       <button type="button" class="navbar-toggle collapsed" data-toggle="sidepanel" data-target="#navbar-nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <c:if test="${not empty LoginOK }">
       <ul class="nav">
       <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
-        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOk.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
+        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
         </c:when>
         <c:when test="${not empty LoginOK.memberFileName }">
         <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}"></a></li>
@@ -48,6 +53,7 @@
       </c:choose>
       </ul>
 
+
       </c:if>
       <a class="navbar-brand" href=""> <span class="navbar-logo">PACHEMO</span> </a> </div>
     <nav class="collapse navbar-collapse" id="navbar-nav" role="navigation">
@@ -55,20 +61,18 @@
         <li> <a href="" id="nav-link-aboutus" > 關於我們 </a> </li>
         <li> <a href="" id="nav-link-battle" > 約戰 </a> </li>
         <li> <a href="" id="nav-link-league" > 聯賽 </a> </li>
-        <li> <a href="" id="nav-link-club">社團 </a> </li>
-        
-        <li> <a href="<%=request.getContextPath()%>/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
-        
+        <li> <a href="${pageContext.request.contextPath}/_21_club/clubIndex.jsp" id="nav-link-club">社團 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
         <li> <a href="" id="nav-link-court">場地 </a> </li>
         <li> <a href="" id="nav-link-report" > 問題回報 </a> </li>       
         <li role="separator" class="divider"></li>
         <c:if test="${empty LoginOK }">
-        <li class="alternate sidepanel-item-small"> <a href="" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
-        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_02_register/register.jsp" id="nav-link-sign_up" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_01_login/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="" id="nav-link-account" > 帳戶 </a> </li>
-        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="" id="nav-link-log out" > 登出 </a> </li>
+        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do" id="nav-link-log out" > 登出 </a> </li>
         <li class="hidden-xs hidden-sm dropdown"> <a href="" class="user-link dropdown-toggle" data-toggle="dropdown">
         <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
@@ -88,7 +92,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li> <a href="">帳戶</a> </li>
-            <li> <a href="">登出</a> </li>
+            <li> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do">登出</a> </li>
           </ul>
         </li>
         </c:if>

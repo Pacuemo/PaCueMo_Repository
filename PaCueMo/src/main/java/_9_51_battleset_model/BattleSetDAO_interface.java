@@ -17,4 +17,7 @@ public interface BattleSetDAO_interface
 	public List<BattleSetVO> getSetsById(Integer battleId);
 
 	public List<BattleSetVO> getSetsByDate(String queryDate);
+
+	public List<BattleSetVO> getSetsByDateAndPage(String queryDate, Integer pageNo);
+
 }

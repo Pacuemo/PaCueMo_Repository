@@ -5,9 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>Insert title here</title>
-</head>
-<body>
+<title>Pacuemo</title>
+
 <jsp:include page="/fragment/top.jsp" />
 <jsp:include page="/fragment/sidebar.jsp" />
 </body>

@@ -17,6 +17,12 @@ public interface MemberDAO_interface
 
 	public MemberVO findByUserFBID(String fbId);
 
+	public MemberVO findSKeyByUserMail(String memberMail);
+
+	public MemberVO findSKeyByUserFBID(String fbId);
+
+	public MemberVO updatePointByPrimaryKey(String memberId, Double point);
+
 	public List<MemberVO> getAll();
 
 }

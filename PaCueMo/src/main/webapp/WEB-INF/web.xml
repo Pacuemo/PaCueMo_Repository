@@ -60,9 +60,10 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/club/*</url-pattern>
 	</servlet-mapping>
-	 
+
+
 <!-- 宣告通過Spring Post方法的編碼	  -->
-	 <filter>    
+<filter>    
    <filter-name>encodingFilter</filter-name>    
    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>    
     <init-param>        

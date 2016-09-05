@@ -31,6 +31,11 @@ public class NBATeamService
 		return nbaTeamDAO.findByTeamName(teamName);
 	}
 
+	public List<NBATeamVO> getByTeamNames(String teamName)
+	{
+		return nbaTeamDAO.findByTeamNames(teamName);
+	}
+
 	public List<NBATeamVO> getAllTeam()
 	{
 		return nbaTeamDAO.getAll();
@@ -62,6 +67,12 @@ public class NBATeamService
 //		NBATeamService svc = new NBATeamService();
 //		NBATeamVO vo = svc.getByTeamId(3);
 //		System.out.println(vo.getTeamName());
+		//-------------- 隊名模糊查詢得到多筆 -----------------
+//		List<NBATeamVO> list = svc.getByTeamNames("人");
+//		for (NBATeamVO vo : list)
+//		{
+//			System.out.println(vo.getTeamName());
+//		}
 	}
 
 }
