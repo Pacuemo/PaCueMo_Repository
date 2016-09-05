@@ -40,11 +40,12 @@ public class Club_Controller
 
 	//---------------------------登入--------------------------------
 	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
-	public String get_Club_By_member(@RequestParam("memberId") String memberId, HttpSession session)
+	public String get_Club_By_member(HttpSession session)
 	{
 		ClubVO clubVO;
 		try
 		{
+			String memberId = (String) session.getAttribute("memberId");
 			clubVO = service.getClub_byMemberId(memberId);
 		}
 		catch (SQLException e)
@@ -53,7 +54,7 @@ public class Club_Controller
 			return "redirect:/_21_club/joinClub.jsp";
 		}
 		session.setAttribute("MyClub", clubVO);
-		return "clubInfo";
+		return "redirect:/_21_club/myClub.jsp";
 	}
 
 //------------------------註冊----------------------------------
@@ -98,7 +99,6 @@ public class Club_Controller
 	public String get_Club_By_Id(@RequestParam("clubId") int clubId)
 	{
 		return gson.toJson(service.getClub(clubId));
-
 	}
 
 }

@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+import _9_21_club_model.ClubConfig;
 import _9_21_club_model.ClubDAO_I;
 import _9_21_club_model.ClubVO;
 import _9_22_clubMember_model.ClubMemberDAO_I;
@@ -69,6 +71,7 @@ public class Club_Service
 	public ClubVO getClub_byMemberId(String memberId) throws SQLException
 	{
 		ClubMemberVO clubMemberVO = clubMemberDAO.findByPK(memberId);
+		System.out.println(clubMemberVO.getClubMemberId());
 		if (clubMemberVO == null)
 		{
 			throw new SQLException();
@@ -77,6 +80,15 @@ public class Club_Service
 		{
 			return getClub(clubMemberVO.getClubId());
 		}
+	}
+
+	public static void main(String[] args) throws SQLException
+	{
+
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ClubConfig.class);
+		Club_Service service = context.getBean(Club_Service.class);
+		ClubVO vo = service.getClub_byMemberId("7A4A3654-149E-44C5-B240-253C5ACF926D");
+		System.out.println(vo.getClubName());
 	}
 
 }
