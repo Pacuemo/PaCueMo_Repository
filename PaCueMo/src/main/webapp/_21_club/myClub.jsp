@@ -1,5 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%> <%--use JSTL Standard Syntax--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>  <%-- for Struts2 --%> 
  
 <!DOCTYPE html>
@@ -20,5 +20,9 @@
   <body>
       <h1>你的社團</h1>
       <h1>${sessionScope.MyClub.clubName}</h1>
+       <c:if test="${sessionScope.memberId == sessionScope.MyClub.clubHead}">
+      
+      <h1>你是團長</h1>
+      </c:if> 
   </body>
 </html>

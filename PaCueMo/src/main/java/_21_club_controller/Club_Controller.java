@@ -1,7 +1,6 @@
 package _21_club_controller;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -48,7 +47,7 @@ public class Club_Controller
 			String memberId = (String) session.getAttribute("memberId");
 			clubVO = service.getClub_byMemberId(memberId);
 		}
-		catch (SQLException e)
+		catch (RuntimeException e)
 		{
 			//此會員沒有社團
 			return "redirect:/_21_club/joinClub.jsp";
@@ -70,7 +69,7 @@ public class Club_Controller
 	public String registerClub(@Valid ClubVO clubVO, Errors errors, HttpSession session)
 	{
 		clubVO.setClubDate(new Date(System.currentTimeMillis()));
-		clubVO.setClubHead("EF29C07B-F126-44D1-A5BB-005018DC7358");
+		clubVO.setClubHead((String) session.getAttribute("memberId"));
 		if (errors.hasErrors())
 		{
 			return "club/registerForm";

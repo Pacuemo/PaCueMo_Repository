@@ -1,6 +1,5 @@
 package _21_club_service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,27 +67,29 @@ public class Club_Service
 	}
 
 	//get社團資訊by clubMemberID
-	public ClubVO getClub_byMemberId(String memberId) throws SQLException
+	public ClubVO getClub_byMemberId(String memberId)
 	{
 		ClubMemberVO clubMemberVO = clubMemberDAO.findByPK(memberId);
-		System.out.println(clubMemberVO.getClubMemberId());
-		if (clubMemberVO == null)
-		{
-			throw new SQLException();
-		}
-		else
-		{
-			return getClub(clubMemberVO.getClubId());
-		}
+		return getClub(clubMemberVO.getClubId());
 	}
 
-	public static void main(String[] args) throws SQLException
+	public static void main(String[] args)
 	{
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ClubConfig.class);
 		Club_Service service = context.getBean(Club_Service.class);
-		ClubVO vo = service.getClub_byMemberId("7A4A3654-149E-44C5-B240-253C5ACF926D");
-		System.out.println(vo.getClubName());
+		ClubVO vo;
+		try
+		{   //有社團 7A4A3654-149E-44C5-B240-253C5ACF926D
+			//沒社團 CC4116FB-5C04-4ACC-8F47-3E6E30395974
+			vo = service.getClub_byMemberId("CC4116FB-5C04-4ACC-8F47-3E6E30395974");
+			System.out.println(vo.getClubName());
+		}
+		catch (RuntimeException e)
+		{
+			System.out.println("該成員沒有社團");
+		}
+
 	}
 
 }
