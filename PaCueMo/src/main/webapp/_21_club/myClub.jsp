@@ -18,8 +18,11 @@
 	</script>
   </head>
   <body>
-      <h1>註冊成功</h1>
-      <h2>${sessionScope.MyClub.clubName }</h2>
-          
+      <h1>你的社團</h1>
+      <h1>${sessionScope.MyClub.clubName}</h1>
+       <c:if test="${sessionScope.memberId == sessionScope.MyClub.clubHead}">
+      
+      <h1>你是團長</h1>
+      </c:if> 
   </body>
 </html>

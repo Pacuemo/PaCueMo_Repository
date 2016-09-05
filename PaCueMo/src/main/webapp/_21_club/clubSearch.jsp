@@ -34,8 +34,10 @@
     		  $.ajax({
     			  url:ctx+'/club/search?name='+$('#query').val(),
     			  type:'get',
-    			  success:function(response){
-    				  console.log(response);   				  
+    			  success:function(clubVO){
+    				  $.each(clubVOs,function(index,value){
+    					 value.clubName ;    					  
+    				  });   				  
     			  }
     		  })
     	  }
