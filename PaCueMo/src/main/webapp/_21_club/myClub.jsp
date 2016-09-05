@@ -18,6 +18,7 @@
 	</script>
   </head>
   <body>
+  <jsp:include page="/fragment/top.jsp"/>
       <h1>你的社團</h1>
       <h1>${sessionScope.MyClub.clubName}</h1>
        <c:if test="${sessionScope.memberId == sessionScope.MyClub.clubHead}">

@@ -18,7 +18,7 @@
 	</script>
   </head>
   <body>
-  <jsp:include page="${pageContext.request.contextPath}/fragment/top.jsp"/>
+  <jsp:include page="/fragment/top.jsp"/>
 <!-- 有社團  7A4A3654-149E-44C5-B240-253C5ACF926D -->
 <!--  無社團 CC4116FB-5C04-4ACC-8F47-3E6E30395974 -->
 <!-- 團長 C12329E2-4265-4188-A97B-520F507A2FD6 -->

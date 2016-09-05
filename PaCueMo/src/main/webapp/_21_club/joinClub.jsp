@@ -18,6 +18,7 @@
 	</script>
   </head>
   <body>
+   <jsp:include page="/fragment/top.jsp"/>
       <a href="${pageContext.request.contextPath}/club/register">新增社團</a><br/>
       <h3>or</h3><br/>
       
