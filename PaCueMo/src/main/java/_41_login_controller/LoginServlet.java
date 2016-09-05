@@ -46,6 +46,7 @@ public class LoginServlet extends HttpServlet
 		if ("normal_Login".equals(mode))
 		{
 			code = ms.checkTwoStepVerify(mail);
+
 			if ("true".equals(code.substring(0, 4)))
 			{
 				mv = null;
@@ -74,7 +75,15 @@ public class LoginServlet extends HttpServlet
 		if (mv != null)
 		{
 			session.setAttribute("LoginOK", mv);
-			out.write("true");
+			if (requestURI == null)
+			{
+				out.write("true" + "../index.jsp");
+			}
+			else
+			{
+				session.removeAttribute("requestURI");
+				out.write("true" + requestURI);
+			}
 //			response.sendRedirect(response.encodeRedirectURL("index.jsp"));
 //			response.sendRedirect("index.jsp");
 			return;

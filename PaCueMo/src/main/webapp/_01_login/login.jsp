@@ -106,6 +106,13 @@
 						"success":function(data){
 							if( data == "true"){
 								location.href = "../index.jsp";
+							}else if( data.substr(0,13) == "twoStepVerify"){
+								var url = '2stepverify.jsp';
+								var form = $('<form style="display:none"action="' + url + '" method="post">' +
+								  '<input type="text" name="guid" value="' + data.substr(13) + '" />' +
+								  '</form>');
+								$('body').append(form);
+								form.submit();
 							}else{
 								location.href = "../_02_register/fbRegister.jsp?facebookId="+response.id+"&lastName="+response.last_name+"&firstName="+response.first_name+"&email="+response.email;
 							}		
@@ -152,9 +159,9 @@
 								"dataType": "text",
 								"data":{"memberMail":mail,"memberPassword":pwd,"rememberMe":rm,"mode":"normal_Login"},
 								"success":function(data){
-									if( data == "true"){
-										location.href = "../index.jsp";
-									}else if( data.substr(0,12) == "twoStepVerify"){
+									if( data.substr(0,4) == "true"){
+										location.href = data.substr(4);
+									}else if( data.substr(0,13) == "twoStepVerify"){
 										var url = '2stepverify.jsp';
 										var form = $('<form style="display:none"action="' + url + '" method="post">' +
 										  '<input type="text" name="guid" value="' + data.substr(13) + '" />' +

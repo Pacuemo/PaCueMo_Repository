@@ -58,7 +58,7 @@ public class LoginService
 
 	public String checkTwoStepVerify_fb(String fbId)
 	{
-		MemberVO memberVO = dao.findByUserMail(fbId);
+		MemberVO memberVO = dao.findByUserFBID(fbId);
 
 		if (memberVO != null)
 		{
@@ -71,9 +71,9 @@ public class LoginService
 		return "false";
 	}
 
-	public MemberVO getSKeyByEmail(String mail)
+	public MemberVO getSKeyByGUID(String guid)
 	{
-		MemberVO memberVO = dao.findSKeyByUserMail(mail);
+		MemberVO memberVO = dao.findByPrimaryKey(guid);
 
 		if (memberVO != null)
 		{
@@ -83,15 +83,4 @@ public class LoginService
 		return null;
 	}
 
-	public MemberVO getSKeyByFbId(String fbId)
-	{
-		MemberVO memberVO = dao.findSKeyByUserFBID(fbId);
-
-		if (memberVO != null)
-		{
-			return memberVO;
-		}
-
-		return null;
-	}
 }

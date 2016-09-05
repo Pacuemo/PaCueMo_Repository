@@ -63,16 +63,16 @@
   				 			$(element).parent().parent().removeClass("has-error")
 					   },	
 			submitHandler:function(form){        
-							var mail = $("#email").val();
+							var guid = $("#guid").val();
 							var code = $("#login-code").val();
 							$.ajax({
 								"type":"post",
 								"url": "twosteplogin.do",
 								"dataType": "text",
-								"data":{"mail":mail,"validCode":code,"type":"normal"},
+								"data":{"guid":guid,"validCode":code,"type":"normal"},
 								"success":function(data){
 									if( data == "true"){
-										location.href = "../index.jsp";
+										location.href = "/pacuemo/index.jsp";
 									}else{
 										$('#login_error').remove();
 										$("#loginForm").prepend('<div id="login_error" class="row"><div class="col-xs-12 text-center"><p class="alert alert-warning"><span>驗證碼不正確。</span></p></div></div>');
