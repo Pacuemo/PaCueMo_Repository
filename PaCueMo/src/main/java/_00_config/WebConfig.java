@@ -18,7 +18,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
 
 //	宣告視圖解析器
 	@Bean
-	public ViewResolver ViewResolver()
+	public ViewResolver viewResolver()
 	{
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/");

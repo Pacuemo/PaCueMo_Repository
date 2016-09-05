@@ -19,6 +19,8 @@
 	</script>
   </head>
   <body>
+    <jsp:include page="/fragment/top.jsp"/>
+    <jsp:include page="sidebar.jsp"/>
       <h1>註冊失敗</h1>
   </body>
 </html>
