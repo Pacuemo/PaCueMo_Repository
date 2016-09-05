@@ -41,7 +41,7 @@ public class MemberDAO implements MemberDAO_interface
 	private static final String GET_ALL_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member ORDER BY memberId";
 	private static final String GET_ONE_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, memberImgUrl, "
-			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member WHERE memberId = ?";
+			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify, memberSecretKey FROM dbo.Member WHERE memberId = ?";
 	private static final String GET_ONE_STMT_BY_MAIL = "SELECT memberId, memberPassword, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify, memberSecretKey FROM dbo.Member WHERE memberMail = ?";
 	private static final String GET_ONE_STMT_BY_FBID = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
@@ -309,6 +309,8 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
+				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+				memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
 
 			}
 
