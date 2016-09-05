@@ -2,8 +2,13 @@ package _9_23_league_model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import _9_24_leagueClub_model.LeagueClubVO;
+import _9_25_leagueRecord_model.LeagueRecordVO;
+import _9_31_court_model.CourtVO;
 
 @Component("LeagueVO")
 public class LeagueVO implements Serializable
@@ -16,6 +21,9 @@ public class LeagueVO implements Serializable
 	private Date startDate;
 	private Date endDate;
 	private Integer placeID;
+	private CourtVO courtVO;
+	private List<LeagueClubVO> leagueClubVOs;
+	private List<LeagueRecordVO> leagueRecordVOs;
 
 	public LeagueVO()
 	{
@@ -71,6 +79,16 @@ public class LeagueVO implements Serializable
 		this.startDate = startDate;
 	}
 
+	public CourtVO getCourtVO()
+	{
+		return courtVO;
+	}
+
+	public void setCourtVO(CourtVO courtVO)
+	{
+		this.courtVO = courtVO;
+	}
+
 	public Date getEndDate()
 	{
 		return endDate;
@@ -89,6 +107,26 @@ public class LeagueVO implements Serializable
 	public void setPlaceID(Integer placeID)
 	{
 		this.placeID = placeID;
+	}
+
+	public List<LeagueClubVO> getLeagueClubVOs()
+	{
+		return leagueClubVOs;
+	}
+
+	public void setLeagueClubVOs(List<LeagueClubVO> leagueClubVOs)
+	{
+		this.leagueClubVOs = leagueClubVOs;
+	}
+
+	public List<LeagueRecordVO> getLeagueRecordVOs()
+	{
+		return leagueRecordVOs;
+	}
+
+	public void setLeagueRecordVOs(List<LeagueRecordVO> leagueRecordVOs)
+	{
+		this.leagueRecordVOs = leagueRecordVOs;
 	}
 
 }
