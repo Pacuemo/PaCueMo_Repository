@@ -8,5 +8,7 @@ public interface NBATeamDAO_interface
 
 	public NBATeamVO findByTeamName(String teamName);
 
+	public List<NBATeamVO> findByTeamNames(String teamName);
+
 	public List<NBATeamVO> getAll();
 }

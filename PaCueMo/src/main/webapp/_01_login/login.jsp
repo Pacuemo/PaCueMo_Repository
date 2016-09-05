@@ -154,10 +154,10 @@
 								"success":function(data){
 									if( data == "true"){
 										location.href = "../index.jsp";
-									}else if( data == "twoStepVerify"){
+									}else if( data.substr(0,12) == "twoStepVerify"){
 										var url = '2stepverify.jsp';
-										var form = $('<form action="' + url + '" method="post">' +
-										  '<input type="text" name="mail" value="' + mail + '" />' +
+										var form = $('<form style="display:none"action="' + url + '" method="post">' +
+										  '<input type="text" name="guid" value="' + data.substr(13) + '" />' +
 										  '</form>');
 										$('body').append(form);
 										form.submit();

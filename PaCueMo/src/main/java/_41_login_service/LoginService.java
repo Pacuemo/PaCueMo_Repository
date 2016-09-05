@@ -41,7 +41,7 @@ public class LoginService
 		return null;
 	}
 
-	public boolean checkTwoStepVerify(String mail)
+	public String checkTwoStepVerify(String mail)
 	{
 		MemberVO memberVO = dao.findByUserMail(mail);
 
@@ -49,14 +49,14 @@ public class LoginService
 		{
 			if (memberVO.getMember2StepVerify())
 			{
-				return true;
+				return "true" + memberVO.getMemberId();
 			}
 
 		}
-		return false;
+		return "false";
 	}
 
-	public boolean checkTwoStepVerify_fb(String fbId)
+	public String checkTwoStepVerify_fb(String fbId)
 	{
 		MemberVO memberVO = dao.findByUserMail(fbId);
 
@@ -64,10 +64,34 @@ public class LoginService
 		{
 			if (memberVO.getMember2StepVerify())
 			{
-				return true;
+				return "true" + memberVO.getMemberId();
 			}
 
 		}
-		return false;
+		return "false";
+	}
+
+	public MemberVO getSKeyByEmail(String mail)
+	{
+		MemberVO memberVO = dao.findSKeyByUserMail(mail);
+
+		if (memberVO != null)
+		{
+			return memberVO;
+		}
+
+		return null;
+	}
+
+	public MemberVO getSKeyByFbId(String fbId)
+	{
+		MemberVO memberVO = dao.findSKeyByUserFBID(fbId);
+
+		if (memberVO != null)
+		{
+			return memberVO;
+		}
+
+		return null;
 	}
 }
