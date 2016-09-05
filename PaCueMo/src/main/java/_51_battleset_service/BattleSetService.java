@@ -104,13 +104,14 @@ public class BattleSetService
 
 //		NBATeamService nbaSvc = new NBATeamService(); /* 原本 Local 變數自己new → 改Spring注入*/
 
-		if (nbaSvc.getByTeamName(teamName) == null)// 若輸入的teamName查不到，直接丟null
-		{
-			return null;
-		}
-		else
+		try
 		{
 			teamName = nbaSvc.getByTeamName(teamName).getTeamName();//根據輸入的隊名模糊查詢(Like)出正確隊名
+		}
+		catch (org.springframework.dao.EmptyResultDataAccessException e)
+		{
+			e.printStackTrace();
+			return null;// 若輸入的teamName查不到，直接丟null
 		}
 
 		List<NBATeamVO> list1 = nbaSvc.getAllTeam();

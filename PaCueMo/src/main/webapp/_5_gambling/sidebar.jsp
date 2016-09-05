@@ -24,9 +24,9 @@
     </ul>
 
     <!-- 搜尋 開始 -->
-    <form class="navbar-form navbar-left" role="search">
+    <form id="searchForm" class="navbar-form navbar-left" role="search">
       <div class="form-group">
-        <input id="searchName" type="text" class="form-control" placeholder="Search"/>
+        <input id="searchName" type="text" value="${queryTeamName}" class="form-control" placeholder="Search"/>
       </div>
       <button id="searchBtn" type="submit" class="btn btn-default">Submit</button>
     </form>

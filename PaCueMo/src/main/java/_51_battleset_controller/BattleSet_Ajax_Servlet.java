@@ -172,6 +172,77 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
+
+		// ************************************************************************************************
+		// ****************************【依輸入 隊名 & 頁碼 查詢】*****************************************
+		// ************************************************************************************************
+		if ("queryByNameAndPage".equals(action))
+		{
+			System.out.println("呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByNameAndPage");
+			System.out.println("searchName : " + request.getParameter("searchName"));
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			try
+			{
+				response.setHeader("content-type", "text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();//********************** for Ajax ********************/
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String queryTeamName = request.getParameter("searchName"); // 搜尋隊伍名稱
+
+				if (queryTeamName.equals(""))// User未輸入時
+				{
+					System.out.println("====== 請輸入NBA現役隊伍名稱 ======");
+					out.println("{ \"errMsg\" : \" ※ 請輸入NBA現役隊伍名稱\"}"); // JSON格式
+					return;
+				}
+
+				String page = request.getParameter("pageNo"); // 頁碼
+				Integer pageNo = null;
+				try
+				{
+					pageNo = Integer.valueOf(page);
+				}
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+				}
+				/*************************** 2.開始查詢資料 *****************************************/
+				//BattleSetService svc = new BattleSetService();
+
+//				List<Map<String, Object>> list = svc.getSetsByName(queryTeamName);
+				List<Map<String, Object>> tmpList = svc.getSetsByName(queryTeamName);// 查詢總筆數
+				List<Map<String, Object>> list = svc.getSetsByNameAndPage(queryTeamName, pageNo);
+				System.out.println("tmpList.size()  = " + tmpList.size());
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+
+				if (list == null)// 查詢不到隊伍時
+				{
+					System.out.println("====== 查無隊伍 ======");
+					out.println("{ \"errMsg\" : \"※ 查無此隊伍，請重新輸入！\"}"); // JSON格式
+					return;
+				}
+				else
+				{
+//					System.out.println(list);
+					System.out.println("查詢總筆數 : " + list.size());
+					Gson gson = new Gson();
+					String ans = gson.toJson(list);
+					System.out.println(ans);
+					out.println(ans);
+					return;
+				}
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			}
+			catch (Exception e)//---處理其他不可預期意外
+			{
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = request.getRequestDispatcher("自訂錯誤頁面");
+				failureView.forward(request, response);
+			}
+
+		}
 	}
 
 }
