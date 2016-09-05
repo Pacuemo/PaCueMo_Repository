@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import _9_41_member_model.MemberVO;
 
 @WebFilter(urlPatterns = { "/*" }, initParams = {
-				@WebInitParam(name = "mustLogin1", value = "/_21_club/clubIndex.jsp"),
+				@WebInitParam(name = "mustLogin1", value = "club/login"),
 				@WebInitParam(name = "mustLogin2", value = ""),
 				@WebInitParam(name = "mustLogin3", value = ""),
 				@WebInitParam(name = "mustLogin4", value = "")

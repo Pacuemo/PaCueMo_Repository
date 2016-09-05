@@ -5,10 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>Insert title here</title>
-</head>
-<body>
+<title>帳戶 - Pacuemo</title>
+
 <jsp:include page="/fragment/top.jsp" />
-<jsp:include page="/fragment/sidebar.jsp" />
+<jsp:include page="/_03_member/fragment/sidebar.jsp" />
 </body>
 </html>
