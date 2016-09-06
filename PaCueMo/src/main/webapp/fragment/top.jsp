@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test02-test.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test01.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/easy-sidebar.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
@@ -13,6 +14,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script> 
 <script src="${pageContext.request.contextPath}/js/jquery.detect_swipe.js"></script> 
+<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script> 
 
 </head>
 <body>
@@ -44,8 +46,8 @@
         <c:when test="${not empty LoginOK.memberFBId }">
         <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
         </c:when>
-        <c:when test="${not empty LoginOK.memberFileName }">
-        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}"></a></li>
+        <c:when test="${not empty LoginOK.memberImgUrl }">
+        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberImgUrl}" alt="${LoginOK.memberFirstName}"></a></li>
         </c:when>
         <c:otherwise>
         <li><a href="" class="user-link hidden-md hidden-lg"> <div class="user-icon-container img-circle navbar-user-img"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use> </svg></div></a></li>
@@ -78,8 +80,8 @@
         <c:when test="${not empty LoginOK.memberFBId }">
         <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}">
         </c:when>
-        <c:when test="${not empty LoginOK.memberFileName }">
-        <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}">
+        <c:when test="${not empty LoginOK.memberImgUrl }">
+        <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberImgUrl}" alt="${LoginOK.memberFirstName}">
         </c:when>
         <c:otherwise>
         <div class="user-icon-container img-circle navbar-user-img"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"></use></svg></div> 

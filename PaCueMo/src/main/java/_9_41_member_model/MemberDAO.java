@@ -35,19 +35,33 @@ public class MemberDAO implements MemberDAO_interface
 	private static final String INSERT_STMT = "INSERT dbo.Member( memberId, memberFirstName ,memberLastName ,memberPassword ,memberBirthday ,memberPhone ,memberMail,"
 			+ " memberPoint ,memberHaveCard ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
 			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+
 	private static final String INSERT_STMT_fb = "INSERT dbo.Member( memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone ,memberMail,"
 			+ " memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
 			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-	private static final String GET_ALL_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
+
+	private static final String GET_ALL_STMT = "SELECT memberId, memberPassword, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify FROM dbo.Member ORDER BY memberId";
+
 	private static final String GET_ONE_STMT = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, memberImgUrl, "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify, memberSecretKey FROM dbo.Member WHERE memberId = ?";
-	private static final String GET_ONE_STMT_BY_MAIL = "SELECT memberId, memberPassword, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
+
+	private static final String GET_ONE_STMT_BY_MAIL = "SELECT memberId, memberPassword, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail, memberImgUrl, "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify, memberSecretKey FROM dbo.Member WHERE memberMail = ?";
+
 	private static final String GET_ONE_STMT_BY_FBID = "SELECT memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone , memberMail,memberImgUrl , "
 			+ "memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify, memberSecretKey FROM dbo.Member WHERE memberFBId = ?";
-	private static final String UPDATE = "UPDATE dbo.Member SET memberFirstName = ?, memberLastName = ?, memberPassword = ?,"
-			+ " memberBirthday = ?, memberPhone = ?, memberMail = ?, memberFileName = ? WHERE memberId = ?";
+
+	private static final String UPDATE = "UPDATE dbo.Member SET memberPhone = ?, memberMail = ? WHERE memberId = ?";
+
+	private static final String UPDATE_FBID = "UPDATE dbo.Member SET memberFBId = ?, memberImgUrl = ? WHERE memberId = ?";
+
+	private static final String UPDATE_SKEY = "UPDATE dbo.Member SET memberSecretKey = ?, member2StepVerify = ? WHERE memberId = ?";
+
+	private static final String UPDATE_PASSWORD = "UPDATE dbo.Member SET memberPassword = ? WHERE memberId = ?";
+
+	private static final String UPDATE_IMG = "UPDATE dbo.Member SET memberImgUrl = ? WHERE memberId = ?";
+
 	private static final String UPDATE_POINT = "UPDATE dbo.Member SET memberPoint = ? WHERE memberId = ?";
 
 	@Override
@@ -98,7 +112,7 @@ public class MemberDAO implements MemberDAO_interface
 						memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 						memberVO.setMemberPhone(rs.getString("memberPhone"));
 						memberVO.setMemberMail(rs.getString("memberMail"));
-						memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+						memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 						memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 						memberVO.setMemberFBId(rs.getString("memberFBId"));
 					}
@@ -209,7 +223,7 @@ public class MemberDAO implements MemberDAO_interface
 					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 					memberVO.setMemberPhone(rs.getString("memberPhone"));
 					memberVO.setMemberMail(rs.getString("memberMail"));
-					memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+					memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 					memberVO.setMemberFBId(rs.getString("memberFBId"));
 
@@ -270,14 +284,6 @@ public class MemberDAO implements MemberDAO_interface
 	}
 
 	@Override
-	public MemberVO update()
-	{
-		return null;
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public MemberVO findByPrimaryKey(String memberId)
 	{
 
@@ -307,7 +313,7 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 				memberVO.setMemberPhone(rs.getString("memberPhone"));
 				memberVO.setMemberMail(rs.getString("memberMail"));
-				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+				memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
 				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
@@ -397,10 +403,11 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 				memberVO.setMemberPhone(rs.getString("memberPhone"));
 				memberVO.setMemberMail(rs.getString("memberMail"));
-				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+				memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
 				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+				memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
 			}
 
 			// Handle any driver errors
@@ -492,10 +499,11 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 				memberVO.setMemberPhone(rs.getString("memberPhone"));
 				memberVO.setMemberMail(rs.getString("memberMail"));
-				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+				memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
 				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+				memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
 			}
 
 			// Handle any driver errors
@@ -594,7 +602,7 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 				memberVO.setMemberPhone(rs.getString("memberPhone"));
 				memberVO.setMemberMail(rs.getString("memberMail"));
-				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+				memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
 				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
@@ -688,7 +696,7 @@ public class MemberDAO implements MemberDAO_interface
 				memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 				memberVO.setMemberPhone(rs.getString("memberPhone"));
 				memberVO.setMemberMail(rs.getString("memberMail"));
-				memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+				memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 				memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 				memberVO.setMemberFBId(rs.getString("memberFBId"));
 				memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
@@ -792,9 +800,423 @@ public class MemberDAO implements MemberDAO_interface
 					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
 					memberVO.setMemberPhone(rs.getString("memberPhone"));
 					memberVO.setMemberMail(rs.getString("memberMail"));
-					memberVO.setMemberFileName(rs.getString("memberImgUrl"));
+					memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
 					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
 					memberVO.setMemberFBId(rs.getString("memberFBId"));
+					memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+					memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
+
+				}
+			}
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	}
+
+	@Override
+	public MemberVO updateSKeyByPrimaryKey(String memberId, String memberSecretKey, boolean status)
+	{
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(UPDATE_SKEY);
+
+			pstmt.setString(1, memberSecretKey);
+			pstmt.setBoolean(2, status);
+			pstmt.setString(3, memberId);
+
+			if (pstmt.executeUpdate() == 1)
+			{
+				pstmt.close();
+				pstmt = con.prepareStatement(GET_ONE_STMT);
+				pstmt.setString(1, memberId);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next())
+				{
+
+					memberVO = new MemberVO();
+					memberVO.setMemberId(rs.getString("memberId"));
+					memberVO.setMemberFirstName(rs.getString("memberFirstName"));
+					memberVO.setMemberLastName(rs.getString("memberLastName"));
+					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
+					memberVO.setMemberPhone(rs.getString("memberPhone"));
+					memberVO.setMemberMail(rs.getString("memberMail"));
+					memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
+					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
+					memberVO.setMemberFBId(rs.getString("memberFBId"));
+					memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+					memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
+
+				}
+			}
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	}
+
+	@Override
+	public MemberVO updateFbIdByPrimaryKey(String memberId, String fbId, String memberImgUrl)
+	{
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(UPDATE_FBID);
+
+			pstmt.setString(1, fbId);
+			pstmt.setString(2, memberImgUrl);
+			pstmt.setString(3, memberId);
+
+			if (pstmt.executeUpdate() == 1)
+			{
+				pstmt.close();
+				pstmt = con.prepareStatement(GET_ONE_STMT);
+				pstmt.setString(1, memberId);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next())
+				{
+
+					memberVO = new MemberVO();
+					memberVO.setMemberId(rs.getString("memberId"));
+					memberVO.setMemberFirstName(rs.getString("memberFirstName"));
+					memberVO.setMemberLastName(rs.getString("memberLastName"));
+					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
+					memberVO.setMemberPhone(rs.getString("memberPhone"));
+					memberVO.setMemberMail(rs.getString("memberMail"));
+					memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
+					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
+					memberVO.setMemberFBId(rs.getString("memberFBId"));
+					memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+					memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
+
+				}
+			}
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	}
+
+	@Override
+	public int updatePasswordByMail(String memberMail)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updatePasswordByPrimaryKey(String memberId)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public MemberVO updateMemberInfo(String memberId, String memberMail, String memberPhone)
+	{
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, memberPhone);
+			pstmt.setString(1, memberMail);
+			pstmt.setString(3, memberId);
+
+			if (pstmt.executeUpdate() == 1)
+			{
+				pstmt.close();
+				pstmt = con.prepareStatement(GET_ONE_STMT);
+				pstmt.setString(1, memberId);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next())
+				{
+
+					memberVO = new MemberVO();
+					memberVO.setMemberId(rs.getString("memberId"));
+					memberVO.setMemberFirstName(rs.getString("memberFirstName"));
+					memberVO.setMemberLastName(rs.getString("memberLastName"));
+					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
+					memberVO.setMemberPhone(rs.getString("memberPhone"));
+					memberVO.setMemberMail(rs.getString("memberMail"));
+					memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
+					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
+					memberVO.setMemberFBId(rs.getString("memberFBId"));
+					memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+					memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
+
+				}
+			}
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	}
+
+	@Override
+	public MemberVO updateMemberImg(String memberId, String memberImgUrl)
+	{
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(UPDATE_POINT);
+
+			pstmt.setString(1, memberImgUrl);
+			pstmt.setString(2, memberId);
+
+			if (pstmt.executeUpdate() == 1)
+			{
+				pstmt.close();
+				pstmt = con.prepareStatement(GET_ONE_STMT);
+				pstmt.setString(1, memberId);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next())
+				{
+
+					memberVO = new MemberVO();
+					memberVO.setMemberId(rs.getString("memberId"));
+					memberVO.setMemberFirstName(rs.getString("memberFirstName"));
+					memberVO.setMemberLastName(rs.getString("memberLastName"));
+					memberVO.setMemberBirthday(rs.getDate("memberBirthday"));
+					memberVO.setMemberPhone(rs.getString("memberPhone"));
+					memberVO.setMemberMail(rs.getString("memberMail"));
+					memberVO.setMemberImgUrl(rs.getString("memberImgUrl"));
+					memberVO.setMemberPoint(rs.getDouble("memberPoint"));
+					memberVO.setMemberFBId(rs.getString("memberFBId"));
+					memberVO.setMember2StepVerify(rs.getBoolean("member2StepVerify"));
+					memberVO.setMemberSecretKey(rs.getString("memberSecretKey"));
 
 				}
 			}
