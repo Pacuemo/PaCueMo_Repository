@@ -90,10 +90,16 @@ public class BattleSet_Servlet extends HttpServlet
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
 
 //				for (Map<String, Object> map : list)
-//				{
-//					System.out.print(((NBATeamVO) map.get("home")).getTeamID() + "     " + ((NBATeamVO) map.get("away")).getTeamID() + "     ");
-//					System.out.print(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((NBATeamVO) map.get("away")).getTeamName());
-//					System.out.println("    " + ((String) map.get("battleTime")));
+//				{/*測試程式*/
+//					String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//							((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//							((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//							((String) map.get("battleTime")),
+//							((String) map.get("homeScore")),
+//							((String) map.get("awayScore")),
+//							((String) map.get("homebet")),
+//							((String) map.get("awaybet")));
+//					System.out.println(temp);
 //				}
 
 				int listSize = list.size();

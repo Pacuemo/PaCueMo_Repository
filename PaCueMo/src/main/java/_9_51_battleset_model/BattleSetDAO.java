@@ -6,12 +6,8 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
-
-import _51_battleset_service.BattleSetBeans_Config;
 
 public class BattleSetDAO implements BattleSetDAO_interface
 {
@@ -205,8 +201,8 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //		System.out.println(date2);
 		//------------------------------------------------------------------
 //【【【【【【【【【【【【【【【 Spring 】】】】】】】】】】】】】】】】】】】】
-		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
-		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
+//		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
+//		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
 
 //		----------【teamId】依日期 及 【頁碼】 查詢----------------
 

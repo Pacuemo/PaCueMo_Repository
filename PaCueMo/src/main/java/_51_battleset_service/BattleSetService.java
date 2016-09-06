@@ -170,6 +170,11 @@ public class BattleSetService
 			myMap.put("away", away);
 			myMap.put("battleTime", battleTime);
 
+			myMap.put("homeScore", vo.getHomeScore().toString());
+			myMap.put("awayScore", vo.getAwayScore().toString());
+			myMap.put("homebet", vo.getHomebet().toString());
+			myMap.put("awaybet", vo.getAwaybet().toString());
+
 			return_list.add(myMap);
 		}
 
@@ -251,9 +256,15 @@ public class BattleSetService
 //		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-06");
 //		for (Map<String, Object> map : list)
 //		{
-//			System.out.print(((NBATeamVO) map.get("home")).getTeamID() + "     " + ((NBATeamVO) map.get("away")).getTeamID() + "     ");
-//			System.out.print(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((NBATeamVO) map.get("away")).getTeamName());
-//			System.out.println("    " + ((String) map.get("battleTime")));
+//			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((String) map.get("battleTime")),
+//					((String) map.get("homeScore")),
+//					((String) map.get("awayScore")),
+//					((String) map.get("homebet")),
+//					((String) map.get("awaybet")));
+//			System.out.println(temp);
 //		}
 //====================【getSetsByDateAndPage】根據日期及分頁編號查詢==========================
 //		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-04", 1);

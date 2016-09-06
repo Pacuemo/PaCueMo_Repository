@@ -51,18 +51,30 @@
 	       					</c:choose>	       			
 						</div>
        					<div id="tableDiv">
-       						<table class="table">
+       						<table id="myTable" class="table">
        							<c:set var="startNum" value="0"/>
-       							<c:set var="endNum" value="2"/>
-       							<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}">
+       							<c:set var="endNum"   value="2"/>
+       							<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}" varStatus="vs">
        								<tr align='center' valign='middle'>
-										<td><img width="150" class="img-rounded" alt="home"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
+										<td><img width="150" class="img-rounded" alt="away"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
 										<td><img width="70"  					 alt="vs4.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
-										<td><img width="150" class="img-rounded" alt="away"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
+										<td><img width="150" class="img-rounded" alt="home"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
 									</tr>
        								<tr align='center' valign='middle'>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['away'].teamName}</h4></td>
-										<td><Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong></td>
+										<td>
+											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/>
+									    	<input type="hidden" value="${battleSetVO['away'].teamName}"/>
+									    	<input type="hidden" value="${battleSetVO['home'].teamName}"/>							
+									    	<input type="hidden" value="<%=request.getContextPath()%>/_5_gambling${battleSetVO['away'].teamLogoURL}"/>
+									    	<input type="hidden" value="<%=request.getContextPath()%>/_5_gambling${battleSetVO['home'].teamLogoURL}"/>							
+									    	<input type="hidden" value="${battleSetVO.battleTime}"/>							
+									    	<input type="hidden" value="${battleSetVO.awayScore}"/>							
+									    	<input type="hidden" value="${battleSetVO.homeScore}"/>							
+									    	<input type="hidden" value="${battleSetVO.awaybet}"/>							
+									    	<input type="hidden" value="${battleSetVO.homebet}"/>											
+										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
+										</td>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
 									</tr>    				
        							</c:forEach>
@@ -79,6 +91,7 @@
        	   </div>
        </div>
 
+
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -93,6 +106,32 @@
             	
        		$(function(){
        			
+       			/* ================ 【下注 開始】 ================= */
+       			$("#myTable").find('button').click(function(){
+       				//alert($(this)); // <button>
+       				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
+       				var awayName 	= inputsHidden[0].value ;
+       				var homeName    = inputsHidden[1].value ;
+       				var awayLogoUrl = inputsHidden[2].value ;
+       				var homeLogoUrl = inputsHidden[3].value ;
+       				var battleTime 	= inputsHidden[4].value ;
+       				var awayScore 	= inputsHidden[5].value ; 
+       				var homeScore   = inputsHidden[6].value ;
+       				var awayBet 	= inputsHidden[7].value ;
+       				var homeBet 	= inputsHidden[8].value ;
+  
+       				console.log("awayName " + inputsHidden[0].value);
+       				console.log("homeName " + inputsHidden[1].value);
+       				console.log("awayLogoUrl " + inputsHidden[2].value);
+       				console.log("homeLogoUrl " + inputsHidden[3].value);
+       				console.log("battleTime " + inputsHidden[4].value);
+       				console.log("awayScore " + inputsHidden[5].value);
+       				console.log("homeScore " + inputsHidden[6].value);
+       				console.log("awayBet " + inputsHidden[7].value);
+       				console.log("homeBet " + inputsHidden[8].value);
+		
+       			})
+       			/* ================ 【下注 結束】 ================= */
        			/* ================ 【DatePicker 開始】 ================= */
        		    $('#myDatepicker').Zebra_DatePicker({
 
