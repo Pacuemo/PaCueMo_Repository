@@ -53,23 +53,24 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		// ************************************************************************************************
 		if ("queryByDateAndPage".equals(action))
 		{
-			System.out.println("呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByDateAndPage");
+			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByDateAndPage");
 
 			try
 			{
 				response.setHeader("content-type", "text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();/* for Ajax */
 
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String queryDate = request.getParameter("datepicker");
-				if (queryDate == null)
+				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String queryDate = request.getParameter("datepickerDate");
+
+				if (queryDate == null || queryDate.trim() == "")
 				{ /* 若 datepicker 沒有日期→設定日期為今天 */
 					java.util.Date today = new java.util.Date(System.currentTimeMillis());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					queryDate = sdf.format(today);
 				}
 
-//				System.out.println(queryDate);
+				System.out.println(" 查詢日期： " + queryDate);
 				String strPageNo = request.getParameter("pageNo");
 				int pageNo = 0;
 				try
@@ -80,8 +81,9 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				{
 					e.printStackTrace();
 				}
+				System.out.println("page no = " + pageNo);
 				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
-//				BattleSetService svc = new BattleSetService();
+//				BattleSetService svc = new BattleSetService(); // Spring
 				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				// *************************
@@ -94,13 +96,12 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				System.out.println(ans);
 				out.println(ans);
 //				out.println(ans.toString());
-
 				/*************************** 其他可能的錯誤處理 *************************************/
 			}
 			catch (Exception e)//---處理其他不可預期意外
 			{
 				e.printStackTrace();
-				System.out.println(" ========== BattleSet_Servlet.java 不可預期意外 ========== ");
+				System.out.println(" \n========== BattleSet_Servlet.java 不可預期意外 ========== ");
 				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");
 				failureView.forward(request, response);
 			}
@@ -111,7 +112,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		// ************************************************************************************************
 		if ("queryByName".equals(action))
 		{
-			System.out.println("呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByName");
+			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByName");
 			System.out.println("searchName : " + request.getParameter("searchName"));
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -178,7 +179,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		// ************************************************************************************************
 		if ("queryByNameAndPage".equals(action))
 		{
-			System.out.println("呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByNameAndPage");
+			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByNameAndPage");
 			System.out.println("searchName : " + request.getParameter("searchName"));
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -211,9 +212,10 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				//BattleSetService svc = new BattleSetService();
 
 //				List<Map<String, Object>> list = svc.getSetsByName(queryTeamName);
-				List<Map<String, Object>> tmpList = svc.getSetsByName(queryTeamName);// 查詢總筆數
+				List<Map<String, Object>> tmpList = svc.getSetsByName(queryTeamName);// 查詢總筆數									
 				List<Map<String, Object>> list = svc.getSetsByNameAndPage(queryTeamName, pageNo);
-				System.out.println("tmpList.size()  = " + tmpList.size());
+
+				System.out.println("tmpList.size()  = " + tmpList.size() + " 筆");
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				if (list == null)// 查詢不到隊伍時
