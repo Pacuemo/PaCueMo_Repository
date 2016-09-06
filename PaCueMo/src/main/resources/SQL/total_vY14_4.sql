@@ -157,6 +157,23 @@ CREATE TABLE ClubMemberTable
 
 	PRIMARY KEY(clubId,clubMemberId)
 );
+--球團申請表--
+CREATE TABLE ClubApply
+(
+clubId	    /*加入球團*/    INT              FOREIGN KEY REFERENCES club(clubId) NOT NULL ,
+memberId    /*申請人編號*/  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
+applyDate   /*申請時間*/    Date  NOT NULL ,
+PRIMARY KEY(clubId,memberId)
+);
+--球團邀請表--
+CREATE TABLE ClubInvite
+(
+clubId         /*邀請社團*/  INT              FOREIGN KEY REFERENCES club(clubId) NOT NULL ,
+memberId       /*邀請人*/    UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
+clubMemberId   /*被邀請人*/  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
+inviteDay      /*邀請時間*/  Date  NOT NULL ,
+PRIMARY KEY(clubId,memberId)
+);
 
 --球團聊天表--
 CREATE TABLE ClubChat
