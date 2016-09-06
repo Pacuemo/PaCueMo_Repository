@@ -166,7 +166,7 @@
 		               
 		                //alert(funFlag); // 判斷使用者按下哪個按鈕
 		                
-		                //===﹝ 根據funFlag 決定 呼叫哪支 controller 的 action ﹞===
+		                //===﹝ 根據 funFlag 決定 呼叫哪支 controller 的 action ﹞===
 		                var actionName = "";       
 		                var ajaxUrl    = "";
 		                var searchName = "";
@@ -175,7 +175,7 @@
 							case "byTeamName":
 								actionName = "queryByNameAndPage";
 								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
-								searchName = $("#searchName").val();// 查詢的隊伍名稱;
+								searchName = $("#searchName").val();   // 查詢的隊伍名稱;
 								break;
 							case "byDatePicker":
 								actionName = "queryByDateAndPage";
@@ -183,6 +183,7 @@
 								chooseDate = $("#myDatepicker").val(); // user 選擇的日期
 								break;
 							default:
+								/*=== user都沒選擇動作→直接查〈當天〉===*/
 								actionName = "queryByDateAndPage";
 								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
 								break;

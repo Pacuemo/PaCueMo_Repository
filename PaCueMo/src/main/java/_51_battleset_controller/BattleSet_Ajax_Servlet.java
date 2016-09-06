@@ -70,7 +70,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 					queryDate = sdf.format(today);
 				}
 
-				System.out.println("ggggggggggg    " + queryDate);
+				System.out.println(" 查詢日期： " + queryDate);
 				String strPageNo = request.getParameter("pageNo");
 				int pageNo = 0;
 				try
