@@ -13,8 +13,20 @@ public class ClubMemberVO implements Serializable
 	private int clubId;
 	private String clubMemberId;
 	private Date joinDate;
-
 	private MemberVO member;
+
+	public ClubMemberVO()
+	{
+
+	}
+
+	public ClubMemberVO(int clubId, String clubMemberId, Date joinDate)
+	{
+		super();
+		this.clubId = clubId;
+		this.clubMemberId = clubMemberId;
+		this.joinDate = joinDate;
+	}
 
 	public int getClubId()
 	{
