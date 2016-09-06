@@ -14,6 +14,9 @@
      <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/advertisment/css/slicebox.css" />
      <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/advertisment/css/custom.css" />
      <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/reset.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/default.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/style.css" type="text/css">
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
@@ -28,11 +31,21 @@
 
        <div class="container">
        		<div class="row">
-       			<div class="col-md-2"></div>
+       			<div class="col-md-2"></div>       	
        			<div class="col-md-8">
         				
 	       				<div class="page-header">
-							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryDate}</strong></h2>
+	       					<c:choose>
+	       						<c:when test="${funFlag=='byTeamName'}">
+	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryTeamName}</strong></h2>
+	       						</c:when>
+	       						<c:when test="${empty battleSetList}">
+	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:red;">查無資料</strong></h2>
+	       						</c:when>
+	       						<c:otherwise>
+	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryDate}</strong></h2>
+	       						</c:otherwise>
+	       					</c:choose>	       			
 						</div>
        					<div id="tableDiv">
        						<table class="table">
@@ -59,16 +72,20 @@
 					       
        			</div>
        			<div class="col-md-2"></div>
-       		</div>
+       		 
+       	   </div>
        </div>
-       
+
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/zebra_datepicker.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/core.js"></script>
        <script type="text/javascript">
-
-            var funFlag = "<%=request.getAttribute("funFlag")%>";//=== 偵測user按下哪個按鈕 ===    
+       
+       		//=== 偵測user按下哪個按鈕 ===
+            var funFlag = "<%=request.getAttribute("funFlag")%>";    
 //          alert( funFlag );
             	
        		$(function(){
@@ -108,82 +125,11 @@
 	   				funFlag = 'byTeamName';
 					//alert( funFlag );
 	   				//*****************************************
-	   				
-					var searchName = $("#searchName").val();
-					var searchForm = document.getElementById('searchForm');
-					
-					searchForm.action = "<c:url value = 'BattleSet_Servlet.do?action=queryByName&teamName=" + searchName + "&funFlag=" + funFlag +"'/>" ;
-// 					searchForm.action = "BattleSet_Servlet.do?action=queryByName&teamName=" + searchName ;
-					searchForm.method = "POST";
-					searchForm.submit();
+					var searchName = $("#searchName").val(); // 搜尋textBox的值(隊名)
+					$('#searchForm').attr({'action':'BattleSet_Servlet.do?'+
+											'action=queryByName'+'&teamName='+ searchName +'&funFlag='+ funFlag , 
+					  'method':'POST'}).submit();
 				})
-				
-				
-       			/* ==================== 【隊名查詢開始】 =================== */
-//        			$("#searchBtn").click(function(){       				
-//        				var searchName = $("#searchName").val();// 查詢的隊伍名稱
-//        				//alert(searchName);
-       				
-//        				//*********************
-//        				funFlag = 'byTeamName';
-//        				//*********************
-       				
-       		
-       				
-//        				$.ajax({
-//        					"type":"post",//傳遞方式				
-//                 		"url" :"BattleSet_Ajax_Servlet.do",
-//                 		"dataType":"json",//Servlet回傳格式
-//                 		"data":{ "action":"queryByNameAndPage" , "searchName":searchName , "pageNo": 1 },
-//        					"success":function(data){
-//        						if( data.err != undefined ){ //若Servlet有 out.println 錯誤訊息 → alert
-// 	       						alert( data.errMsg );  
-//        							return;
-//        						}else
-//        						{	
-//        							// ================== ﹝表頭開始﹞==================
-//        							$(".page-header > h2").empty(); // 清空 h2 以下的元素
-//        		       				var tmp = $("<STRONG style='font-family:微軟正黑體;font-weight:bolder;color:orange;'></STRONG>").html(searchName);
-//        		       				$(".page-header > h2").append(tmp);
-//        		       				// ================== ﹝表頭結束﹞==================
-//        							$("#tableDiv").children('.table').remove();// 先移除舊資料
-// 	                			var mytable =  $('<table></table>').addClass("table");
-// 	        					var mybody  =  $('<tbody></tbody>');
-// 	        					mytable.append(mybody);
-
-// 								$.each(data , function( index , obj ){
-
-<%-- 									var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										 --%>
-<%-- 									var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif'		, 'width':70 });										 --%>
-<%-- 									var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										 --%>
-// 									var cell11  =  $('<td></td>');
-// 									var cell12  =  $('<td></td>');
-// 									var cell13  =  $('<td></td>');
-// 									img1.appendTo(cell11);
-// 									img2.appendTo(cell12);
-// 									img3.appendTo(cell13);
-// 									var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-// 									var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-// 									var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
-// 									var cell22  =  $('<td></td>').html("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong>");
-// 									var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
-// 									myrow1.append([ cell11 , cell12 , cell13 ]);
-// 									myrow2.append([ cell21 , cell22 , cell23 ]);
-									
-// 									myrow1.appendTo(mybody);
-// 									myrow2.appendTo(mybody);
-// 								})
-									
-// 								$("#tableDiv").append(mytable);
-//        						}       			
-//        					},
-//                 		"error":function(data){
-//                 			alert(" ※ 查無隊伍，請重新輸入！");
-//                 		}
-//        				})
-       				
-//        			})
-       			/* ==================== 【隊名查詢結束】 =================== */
        			/* ==================== 【分頁開始】 =================== */
        			$("#slicePage").paginate({
 		                count: "${battleSetList_len}",/*總資料長度*/
@@ -198,7 +144,7 @@
 		               
 		                //alert(funFlag); // 判斷使用者按下哪個按鈕
 		                
-		                //===﹝根據funFlag 決定 呼叫 controller 的 action & controller﹞===
+		                //===﹝根據funFlag 決定 呼叫哪支 controller 的 action ﹞===
 		                var actionName = "";       
 		                var ajaxUrl    = "";
 		                var searchName = "";
@@ -210,7 +156,7 @@
 								break;
 							default:
 								actionName = "queryByDateAndPage";
-								ajaxUrl = "BattleSet_Ajax_Servlet.do";
+								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
 								break;
 						}
 		                //====================================================

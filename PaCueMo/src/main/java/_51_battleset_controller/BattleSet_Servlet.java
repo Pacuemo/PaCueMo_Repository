@@ -17,7 +17,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import _51_battleset_service.BattleSetBeans_Config;
 import _51_battleset_service.BattleSetService;
-import _9_52_nbateam_model.NBATeamVO;
 
 @WebServlet("/_5_gambling/BattleSet_Servlet.do")
 public class BattleSet_Servlet extends HttpServlet
@@ -51,13 +50,12 @@ public class BattleSet_Servlet extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		//---------------------------------------------------------------------------
-//		action = "queryByDate";
 		if ("queryByDate".equals(action))
 		{
-//			System.out.println("Hello");
 			System.out.println(" 呼叫 BattleSet_Servlet : queryByDate");
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
@@ -112,7 +110,6 @@ public class BattleSet_Servlet extends HttpServlet
 		if ("queryByName".equals(action))
 		{
 			System.out.println("|||  呼叫 BattleSet_Servlet : queryByName ");
-
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 			try
@@ -139,10 +136,10 @@ public class BattleSet_Servlet extends HttpServlet
 				}
 				int listSize = list.size();
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				for (Map<String, Object> mymap : list)
-				{
-					System.out.println(((NBATeamVO) mymap.get("home")).getTeamName() + "  vs " + ((NBATeamVO) mymap.get("away")).getTeamName());
-				}
+//				for (Map<String, Object> mymap : list)
+//				{
+//					System.out.println(((NBATeamVO) mymap.get("home")).getTeamName() + "  vs " + ((NBATeamVO) mymap.get("away")).getTeamName());
+//				}
 				request.setAttribute("funFlag", funFlag);
 				request.setAttribute("queryTeamName", queryTeamName);
 				request.setAttribute("battleSetList", list);
@@ -153,7 +150,7 @@ public class BattleSet_Servlet extends HttpServlet
 			}
 			catch (Exception e)//---處理其他不可預期意外
 			{
-				e.printStackTrace();
+				//e.printStackTrace();
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = request.getRequestDispatcher("自訂錯誤頁面");
 				failureView.forward(request, response);

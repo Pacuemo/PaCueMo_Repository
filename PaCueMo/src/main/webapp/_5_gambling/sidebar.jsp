@@ -46,6 +46,14 @@
     </ul>
   </div>
   <!-- /.container-fluid --> 
+  <!-- ===【DatePicker 開始】=== -->
+	<form action="javascript:void(0)" method="POST" class="navbar-form navbar-left">
+            <div>
+                <input id="datepicker-example14" type="text" style="margin: 5px 0 0 23px;width:200px;font-weight:400;">
+                <div id="container" style="margin: 5px 0 0 23px; height: 250px ; position:relative;"></div>
+            </div>
+	</form>
+  <!-- ===【DatePicker 結束】=== -->
 </nav>
 </div>
 <script>
