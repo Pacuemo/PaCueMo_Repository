@@ -27,7 +27,7 @@
   <body>
   		<%-- <jsp:include page="myTop.jsp"/> --%>
 		<jsp:include page="/fragment/top.jsp"/>
-		<jsp:include page="sidebar.jsp"/>
+		<jsp:include page="/_5_gambling/sidebar.jsp"/>
 
        <div class="container">
        		<div class="row">
@@ -38,6 +38,9 @@
 	       					<c:choose>
 	       						<c:when test="${funFlag=='byTeamName'}">
 	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryTeamName}</strong></h2>
+	       						</c:when>
+	       						<c:when test="${funFlag=='byDatePicker'}">
+	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryDate}</strong></h2>
 	       						</c:when>
 	       						<c:when test="${empty battleSetList}">
 	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:red;">查無資料</strong></h2>
@@ -84,12 +87,31 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/core.js"></script>
        <script type="text/javascript">
        
-       		//=== 偵測user按下哪個按鈕 ===
+       		//=== 偵測user按下哪個按鈕 : funFlag ===
             var funFlag = "<%=request.getAttribute("funFlag")%>";    
-//          alert( funFlag );
+            //alert( funFlag );
             	
        		$(function(){
        			
+       			/* ================ 【DatePicker 開始】 ================= */
+       		    $('#myDatepicker').Zebra_DatePicker({
+
+       		        always_visible: $('#dateBox') ,
+       		    	onSelect:function(){
+       		    		
+       		    		//******** 判斷user按下按鈕的flag *********
+    	   				funFlag = 'byDatePicker';
+    					//alert( funFlag );
+    	   				//*****************************************
+       		    		//alert($('#myDatepicker').val());
+       		    		var chooseDate = $('#myDatepicker').val(); // user 選擇的日期
+       		    		$("#dateForm").attr({"ACTION": "BattleSet_Servlet.do?"+
+       		    							  		   "action=queryByDate"  +
+       		    							  		   "&datepickerDate="+ chooseDate +'&funFlag='+ funFlag , 
+       		    							 "METHOD":"POST"}).submit();
+       		    	}       		      
+       			});
+       			/* ================ 【DatePicker 結束】 ================= */
        			/* ================ 【隊名Auto-complete】 ================= */
 				$("#searchName").keyup(function(){
 					
@@ -126,7 +148,7 @@
 					//alert( funFlag );
 	   				//*****************************************
 					var searchName = $("#searchName").val(); // 搜尋textBox的值(隊名)
-					$('#searchForm').attr({'action':'BattleSet_Servlet.do?'+
+					$('#searchForm').attr({ 'action':'BattleSet_Servlet.do?'+
 											'action=queryByName'+'&teamName='+ searchName +'&funFlag='+ funFlag , 
 					  'method':'POST'}).submit();
 				})
@@ -144,15 +166,21 @@
 		               
 		                //alert(funFlag); // 判斷使用者按下哪個按鈕
 		                
-		                //===﹝根據funFlag 決定 呼叫哪支 controller 的 action ﹞===
+		                //===﹝ 根據funFlag 決定 呼叫哪支 controller 的 action ﹞===
 		                var actionName = "";       
 		                var ajaxUrl    = "";
 		                var searchName = "";
+		                var chooseDate = "";
 		                switch ( funFlag ) {
 							case "byTeamName":
 								actionName = "queryByNameAndPage";
 								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
 								searchName = $("#searchName").val();// 查詢的隊伍名稱;
+								break;
+							case "byDatePicker":
+								actionName = "queryByDateAndPage";
+								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
+								chooseDate = $("#myDatepicker").val(); // user 選擇的日期
 								break;
 							default:
 								actionName = "queryByDateAndPage";
@@ -162,10 +190,10 @@
 		                //====================================================
 		                
 		                	$.ajax({
-		                		"type": "post" ,   //傳遞方式				
+		                		"type": "post" ,  //傳遞方式				
 		                		"url" :  ajaxUrl , 
 		                		"dataType":"json",//Servlet回傳格式
-		                		"data":{ "action": actionName , "pageNo":pageNo , "searchName":searchName },
+		                		"data":{ "action": actionName , "pageNo":pageNo , "searchName":searchName , "datepickerDate":chooseDate },
 		                		"success":function(data){
 		                			//console.log(data[0]);
 		                			$("#tableDiv").children('.table').remove();// 每次按下換頁，先移除舊資料
