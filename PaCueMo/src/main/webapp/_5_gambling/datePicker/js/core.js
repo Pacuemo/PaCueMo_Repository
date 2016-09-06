@@ -74,11 +74,29 @@ $(document).ready(function() {
             }
         }
     });
-
-    $('#datepicker-example14').Zebra_DatePicker({
-        always_visible: $('#container')
-    });
-
+//==========================================================【DatePicker】===========
+//    $('#myDatepicker').Zebra_DatePicker({
+//        always_visible: $('#dateBox'),
+//        onChange: function(view, elements){
+//        	  if (view == 'days') {
+//
+//        	      // iterate through the active elements in the view
+//        	      elements.each(function() {
+//
+//        	        if ($(this).data('date'))
+//
+//        	          // and highlight it!
+////        	          $(this).css({
+////        	            backgroundColor:    '#C40000',
+////        	            color:              '#FFF'
+////        	          });
+//        	        	alert('tetststes');
+//        	        });
+//
+//        	      }
+//        }
+//    });
+//===================================================================================
     $('#datepicker-example15').Zebra_DatePicker();
 
 });

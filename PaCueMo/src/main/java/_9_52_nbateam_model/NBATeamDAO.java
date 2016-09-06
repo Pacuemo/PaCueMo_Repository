@@ -2,7 +2,11 @@
 
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import _52_nbateam_service.NbaTeamBeans_Config;
 
 // @Repository("nbaTeamDAO")
 public class NBATeamDAO implements NBATeamDAO_interface
@@ -32,10 +36,10 @@ public class NBATeamDAO implements NBATeamDAO_interface
 
 	public static void main(String[] args)
 	{
-//		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
-//		NBATeamDAO dao = (NBATeamDAO) context.getBean("nbaTeamDAO");
-//		NBATeamVO vo = dao.findByTeamId(17);
-//		System.out.println(vo.getTeamName());
+		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
+		NBATeamDAO dao = (NBATeamDAO) context.getBean("nbaTeamDAO");
+		NBATeamVO vo = dao.findByTeamId(17);
+		System.out.println(vo.getTeamName());
 
 //		NBATeamDAO dao = new NBATeamDAO();
 //		NBATeamVO vo = dao.findByTeamName("公鹿");
