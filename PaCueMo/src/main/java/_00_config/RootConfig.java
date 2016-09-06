@@ -34,7 +34,7 @@ public class RootConfig
 	}
 
 	@Bean
-	@Profile("dev")
+	@Profile("default")
 	public DataSource dataS()
 	{
 
