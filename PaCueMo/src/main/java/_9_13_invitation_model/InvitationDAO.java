@@ -2,11 +2,11 @@ package _9_13_invitation_model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -32,8 +32,8 @@ public class InvitationDAO implements InvitationDAO_I
 	private static final String SELECT_BY_MEMBERB = "SELECT * FROM Invitation WHERE memberB = ? AND invstatus = 0";
 	private static final String SELECT_BY_TEAM = "SELECT * FROM Invitation WHERE teamId = ? AND invstatus = 0";
 	private static final String SELECT_BY_CLUB = "SELECT * FROM Invitation WHERE clubId = ? AND invstatus = 0";
-	private static final String INSERT = "INSERT INTO dbo.Invitation (memberA, memberB, teamId, clubId, invstatus) VALUES (?, ?, ?, ?, 0)";
-	private static final String DELETE = "DELETE FROM dbo.Invitation WHERE invId = ?";
+	private static final String INSERT = "INSERT INTO Invitation (memberA, memberB, teamId, clubId, invstatus) VALUES (?, ?, ?, ?, 0)";
+	private static final String DELETE = "DELETE FROM Invitation WHERE invId = ?";
 
 	/*
 	 * (non-Javadoc)
@@ -103,14 +103,7 @@ public class InvitationDAO implements InvitationDAO_I
 	@Override
 	public void add(InvitationVO invitationVO)
 	{
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("memberA", invitationVO.getMemberA());
-		paramMap.put("memberB", invitationVO.getMemberB());
-		paramMap.put("teamId", invitationVO.getTeamId());
-		paramMap.put("clubId", invitationVO.getClubId());
-		paramMap.put("invstatus", invitationVO.getInvstatus());
-
-		jdbc.update(INSERT, paramMap);
+		jdbc.update(INSERT, invitationVO.getMemberA(), invitationVO.getMemberB(), invitationVO.getTeamId(), invitationVO.getClubId());
 	}
 
 	// 刪除
@@ -136,21 +129,30 @@ public class InvitationDAO implements InvitationDAO_I
 
 	public static void main(String[] args)
 	{
-//		String insert = "INSERT INTO dbo.Invitation (memberA, memberB, teamId, clubId, invstatus)"
-//		+ " VALUES ('5D364BF9-CA21-4788-96EF-C1CF92F630B6', 'B660A9A0-CE10-45BB-B6A5-FF516102E880', 4, NULL, 0)";
-//
-//		ApplicationContext context = new AnnotationConfigApplicationContext(InvitationConfig.class);
-//		InvitationDAO_I dao = (InvitationDAO_I) context.getBean("InvitationDAO");
-//
-//		try
-//		{
-//			dao.delete(2);
-//			System.out.println("good");
-//		}
-//		catch (Exception e)
-//		{
-//			System.out.println("幹");
-//		}
+		String insert = "INSERT INTO dbo.Invitation (memberA, memberB, teamId, clubId, invstatus)"
+				+ " VALUES ('5D364BF9-CA21-4788-96EF-C1CF92F630B6', 'B660A9A0-CE10-45BB-B6A5-FF516102E880', 4, NULL, 0)";
+		InvitationVO invitationVO = new InvitationVO();
+		invitationVO.setMemberA("6B3F8AE1-B555-43CF-BB51-A809B1D2573A");//home laptop Id
+		invitationVO.setMemberB("7CC8A025-9060-4642-85CC-C89C3E67302A");
+		invitationVO.setTeamId(4);
+		invitationVO.setClubId(0);
+		invitationVO.setInvstatus(0);
+
+		ApplicationContext context = new AnnotationConfigApplicationContext(InvitationConfig.class);
+		InvitationDAO_I dao = (InvitationDAO_I) context.getBean("InvitationDAO");
+
+		try
+		{
+			dao.add(invitationVO);
+//			dao.delete(1);
+			System.out.println("good");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("幹");
+		}
+		((AnnotationConfigApplicationContext) context).close();
 	}
 
 }

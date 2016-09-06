@@ -1,0 +1,20 @@
+USE MagicJack
+
+/*
+create table Team   --隊伍
+(
+    teamId       /*隊伍編號*/  INT           NOT NULL IDENTITY PRIMARY KEY,
+	teamName     /*隊伍名稱*/  NVARCHAR(10)  NOT NULL,
+	createDate   /*創立時間*/  DATE          NOT NULL DEFAULT GETDATE(),
+	teamProp     /*隊伍性質*/  INT           NOT NULL, -- (0)公開,(1)需申請,(2)私密
+	avgRank	     /*平均評分*/  decimal(2,1)  , -- 連到隊員評分 PlayerRank
+	teamHead	 /*隊長編號*/  UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES member(memberId),
+	content		 /*隊伍簡介*/  NVARCHAR(200) 
+);   
+ */
+
+INSERT INTO dbo.team VALUES  ( '起司貓', GETDATE(), 1, 0,'  needed type memberId here  ','Hello Everyone')
+INSERT INTO dbo.team VALUES  ( '東區勇士', GETDATE(), 0, 0,'','Hello Everyone')
+INSERT INTO dbo.team VALUES  ( '老師說的隊', GETDATE(), 1, 0,'','Hello Everyone')
+INSERT INTO dbo.team VALUES  ( '你說對不隊', GETDATE(), 3, 0,'','Hello Everyone')
+INSERT INTO dbo.team VALUES  ( '松山皮卡丘', GETDATE(), 2, 0,'','Hello Everyone')
