@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 
 import _00_initial_service.GlobalService;
@@ -15,9 +16,18 @@ import _00_initial_service.GlobalService;
 @Repository("BattleRecordDAO")
 public class BattleRecordDAO implements BattleRecordDAO_interface
 {
+	private JdbcOperations jdbc;
 
-	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,courtId,battleMode,battleBet,battleDateTime) "
-			+ "VALUES (?, ?, ?, ?, ?, ?)";
+	public BattleRecordDAO()
+	{
+	}
+
+	public BattleRecordDAO(JdbcOperations jdbc)
+	{
+		this.jdbc = jdbc;
+	}
+
+	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,courtId,battleMode,battleBet,battleDateTime) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE BattleRecord set teamIdA=?, teamIdB=?, battleStatus=?, courtId=?, battleMode=?, "
 			+ "battleBet=?, battleDateTime=?, result=?, reportA=?, reportB=? where battleId = ?";
 	private static final String REPORT_A = "UPDATE BattleRecord set reportA=? where battleId = ? and teamIdA = ?";
@@ -32,56 +42,10 @@ public class BattleRecordDAO implements BattleRecordDAO_interface
 			+ "FROM dbo.Member m JOIN (SELECT [teamId],[teamMemberId] FROM dbo.TeamMember )tm"
 			+ "ON m.memberId = tm.teamMemberId" + "WHERE tm.teamId = 1";
 
-	@Override
-	public void insert(BattleRecordVO battleRecordVO)
+	public void add(BattleRecordVO battleRecordVO)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(INSERT);
-
-			pstmt.setInt(1, battleRecordVO.getTeamIdA());
-			pstmt.setInt(2, battleRecordVO.getTeamIdB());
-			pstmt.setInt(3, battleRecordVO.getCourtId());
-			pstmt.setInt(4, battleRecordVO.getBattleMode());
-			pstmt.setDouble(5, battleRecordVO.getBattleBet());
-			pstmt.setTimestamp(6, battleRecordVO.getBattleDateTime());
-
-			pstmt.executeUpdate();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		jdbc.update(arg0, arg1)
 	}
 
 	@Override
@@ -344,6 +308,13 @@ public class BattleRecordDAO implements BattleRecordDAO_interface
 
 		BattleRecordDAO dao = new BattleRecordDAO();
 		dao.insert(battleRecordVO);
+	}
+
+	@Override
+	public void insert(BattleRecordVO battleRecordVO)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

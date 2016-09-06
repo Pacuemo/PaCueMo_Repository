@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import _00_initial_service.GlobalService;
 
 @Configuration
-@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model", "_22_league_service" })
+@ComponentScan({ "_21_club_service", "_9_13_invitation_model", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model", "_22_league_service" })
 public class RootConfig
 {
 
