@@ -24,21 +24,10 @@ import _9_41_member_model.MemberVO;
 @RequestMapping(value = "/club")
 public class Club_Controller
 {
-
+	@Autowired
 	private Club_Service service;
+	@Autowired
 	private Gson gson;
-
-	@Autowired
-	public void setService(Club_Service service)
-	{
-		this.service = service;
-	}
-
-	@Autowired
-	public void setGson(Gson gson)
-	{
-		this.gson = gson;
-	}
 
 	//---------------------------index--------------------------------
 	@RequestMapping(value = "/introduce", method = RequestMethod.GET)

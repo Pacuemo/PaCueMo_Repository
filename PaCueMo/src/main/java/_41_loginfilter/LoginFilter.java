@@ -22,7 +22,7 @@ import _9_41_member_model.MemberVO;
 @WebFilter(urlPatterns = { "/*" }, initParams = {
 
 				@WebInitParam(name = "mustLogin1", value = "/spring/club/login"),
-				@WebInitParam(name = "mustLogin2", value = ""),
+				@WebInitParam(name = "mustLogin2", value = "/TeamServlet"),
 				@WebInitParam(name = "mustLogin3", value = ""),
 				@WebInitParam(name = "mustLogin4", value = "")
 })

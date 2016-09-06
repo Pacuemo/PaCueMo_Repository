@@ -59,8 +59,8 @@
     <nav class="collapse navbar-collapse" id="navbar-nav" role="navigation">
       <ul class="nav navbar-nav navbar-right nav-main">
         <li> <a href="" id="nav-link-aboutus" > 關於我們 </a> </li>
-        <li> <a href="" id="nav-link-battle" > 約戰 </a> </li>
-        <li> <a href="" id="nav-link-league" > 聯賽 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/TeamServlet" id="nav-link-battle" > 約戰 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/spring/league/introduce" id="nav-link-league" > 聯賽 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/club/introduce" id="nav-link-club">社團 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
         <li> <a href="" id="nav-link-court">場地 </a> </li>

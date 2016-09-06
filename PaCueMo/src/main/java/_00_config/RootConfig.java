@@ -16,7 +16,8 @@ import com.google.gson.Gson;
 import _00_initial_service.GlobalService;
 
 @Configuration
-@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model" })
+@ComponentScan({ "_21_club_service", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model",
+				"_22_league_service", "_9_23_league_model", "_9_24_leagueClub_model", "_9_24_leagueClub_model", "_9_25_leagueRecord_model" })
 public class RootConfig
 {
 
@@ -33,9 +34,10 @@ public class RootConfig
 	}
 
 	@Bean
-	@Profile("default")
+	@Profile("dev")
 	public DataSource dataS()
 	{
+
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName(GlobalService.DRIVER_NAME);
 		ds.setUrl(GlobalService.DB_URL);

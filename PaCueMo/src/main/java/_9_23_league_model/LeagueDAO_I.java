@@ -8,6 +8,9 @@ public interface LeagueDAO_I
 	//查詢BY NAME
 	List<LeagueVO> find_by_name(String name);
 
+	//查詢全部
+	List<LeagueVO> find_All();
+
 	//查尋
 	LeagueVO findOne(int id);
 

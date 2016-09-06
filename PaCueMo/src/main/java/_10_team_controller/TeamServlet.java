@@ -15,6 +15,7 @@ import _11_teammember_service.TeamMemberService;
 import _9_10_team_model.TeamVO;
 import _9_11_teammember_model.TeamMemberVO;
 import _9_41_member_model.MemberVO;
+import _9_42_playerCard_model.PlayerCardVO;
 
 @WebServlet("/TeamServlet")
 public class TeamServlet extends HttpServlet
@@ -33,21 +34,25 @@ public class TeamServlet extends HttpServlet
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
 		List<TeamMemberVO> teamMemberList = null;
-		// PlayerCardVO
-		if (null != req.getAttribute("teamId"))
+		PlayerCardVO playerCardVO = new PlayerCardVO();
+		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
 		{
 			try
 			{
-
-				Integer teamId = Integer.valueOf(req.getParameter("teamId"));
+//				Integer teamId = Integer.valueOf(req.getParameter("teamId"));
+				Integer teamId = 4;//測試!!! TEST TEST TEST
 				teamService = new TeamService();
 				teamVO = teamService.getOne(teamId);
-				req.setAttribute("teamVO", teamVO);
+				req.setAttribute("teamVO", teamVO); //setAtt
+				teamMemberService = new TeamMemberService();
 				teamMemberList = teamMemberService.getOneTeam(teamId);
+				System.out.println(teamVO.getTeamName());
 				for (TeamMemberVO list : teamMemberList)
 				{
 
 				}
+				req.getRequestDispatcher("/_10_team_page/teampage.jsp").forward(req, resp);
+
 			}
 			catch (Exception e)
 			{

@@ -19,7 +19,7 @@
 	</resource-ref>
 	<context-param>
 		<param-name>spring.profiles.default</param-name>
-		<param-value>default</param-value>
+		<param-value>dev</param-value>
 	</context-param>
 	
 	<!-- 宣告TomCat容器讀取的檔案性質(使用.java方式布置) -->

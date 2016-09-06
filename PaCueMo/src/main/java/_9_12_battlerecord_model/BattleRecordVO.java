@@ -1,8 +1,12 @@
 package _9_12_battlerecord_model;
 
-import java.sql.*;
+import java.sql.Timestamp;
 
-public class BattleRecordVO {
+import org.springframework.stereotype.Component;
+
+@Component
+public class BattleRecordVO
+{
 	private Integer battleId;
 	private Integer teamIdA;
 	private Integer teamIdB;
@@ -14,71 +18,114 @@ public class BattleRecordVO {
 	private Integer result;
 	private Integer reportA;
 	private Integer reportB;
-	
-	public Integer getBattleId() {
+
+	public Integer getBattleId()
+	{
 		return battleId;
 	}
-	public void setBattleId(Integer battleId) {
+
+	public void setBattleId(Integer battleId)
+	{
 		this.battleId = battleId;
 	}
-	public Integer getTeamIdA() {
+
+	public Integer getTeamIdA()
+	{
 		return teamIdA;
 	}
-	public void setTeamIdA(Integer teamIdA) {
+
+	public void setTeamIdA(Integer teamIdA)
+	{
 		this.teamIdA = teamIdA;
 	}
-	public Integer getTeamIdB() {
+
+	public Integer getTeamIdB()
+	{
 		return teamIdB;
 	}
-	public void setTeamIdB(Integer teamIdB) {
+
+	public void setTeamIdB(Integer teamIdB)
+	{
 		this.teamIdB = teamIdB;
 	}
-	public Boolean getBattleStatus() {
+
+	public Boolean getBattleStatus()
+	{
 		return battleStatus;
 	}
-	public void setBattleStatus(Boolean battleStatus) {
+
+	public void setBattleStatus(Boolean battleStatus)
+	{
 		this.battleStatus = battleStatus;
 	}
-	public Integer getCourtId() {
+
+	public Integer getCourtId()
+	{
 		return courtId;
 	}
-	public void setCourtId(Integer courtId) {
+
+	public void setCourtId(Integer courtId)
+	{
 		this.courtId = courtId;
 	}
-	public Integer getBattleMode() {
+
+	public Integer getBattleMode()
+	{
 		return battleMode;
 	}
-	public void setBattleMode(Integer battleMode) {
+
+	public void setBattleMode(Integer battleMode)
+	{
 		this.battleMode = battleMode;
 	}
-	public Double getBattleBet() {
+
+	public Double getBattleBet()
+	{
 		return battleBet;
 	}
-	public void setBattleBet(Double battleBet) {
+
+	public void setBattleBet(Double battleBet)
+	{
 		this.battleBet = battleBet;
 	}
-	public Timestamp getBattleDateTime() {
+
+	public Timestamp getBattleDateTime()
+	{
 		return battleDateTime;
 	}
-	public void setBattleDateTime(Timestamp battleDateTime) {
+
+	public void setBattleDateTime(Timestamp battleDateTime)
+	{
 		this.battleDateTime = battleDateTime;
 	}
-	public Integer getResult() {
+
+	public Integer getResult()
+	{
 		return result;
 	}
-	public void setResult(Integer result) {
+
+	public void setResult(Integer result)
+	{
 		this.result = result;
 	}
-	public Integer getReportA() {
+
+	public Integer getReportA()
+	{
 		return reportA;
 	}
-	public void setReportA(Integer reportA) {
+
+	public void setReportA(Integer reportA)
+	{
 		this.reportA = reportA;
 	}
-	public Integer getReportB() {
+
+	public Integer getReportB()
+	{
 		return reportB;
 	}
-	public void setReportB(Integer reportB) {
+
+	public void setReportB(Integer reportB)
+	{
 		this.reportB = reportB;
 	}
 }

@@ -1,5 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>
 <%-- for Struts2 --%>
@@ -11,51 +11,37 @@
 <title>PaCueMo</title>
 <meta charset="utf-8" />
 
-<link rel="stylesheet" href="assets/css/bootstrap.css">
-<link rel="stylesheet" href="assets/css/animate.css">
-<link rel="stylesheet" href="assets/css/font-awesome.css">
-<link rel="stylesheet" href="assets/css/nexus.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/animate.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/nexus.css">
 <!--     add icon  		-->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/css/style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--     add icon  		-->
-
-<script type="text/javascript">
-$( function() {
-	// team dialog
-	    var dialog;
-	 
-	    dialog = $( "#contact" ).dialog({
-	      autoOpen: false,
-	      height: 400,
-	      width: 350,
-	      modal: true,
-	      draggable: false,
-	      resizable: false,
-	    });
-	 
-	    $( "#add_teammember" ).button().on( "click", function() {
-	      dialog.dialog( "open" );
-	    });
-	    
-
-	// team dialog end    
-	    
-	// initial end
-	  } );
-</script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
+
+	<jsp:include page="/fragment/top.jsp" />
+	<jsp:include page="/fragment/sidebar.jsp" />
 	<div class="col-md-12">
-		<h2 class="margin-vert-20"><c:choose><c:when test="requestScope.teamId != null"> ${requestScope.teamId }</c:when><c:otherwise>TeamName !</c:otherwise></c:choose></h2>
+		<h2 class="margin-vert-20" style="color: white;">
+			<c:choose>
+				<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
+				<c:otherwise>TeamName !</c:otherwise>
+			</c:choose>
+
+		</h2>
 		<div class="row margin-bottom-10">
 			<div class="col-sm-2 animate fadeInLeft animated">
-				<p class="margin-bottom-30"><c:choose>
-				<c:when test=""></c:when>
-				
-				
-				</c:choose></p>
+				<p class="margin-bottom-30">
+					<c:choose>
+						<c:when test=""></c:when>
+
+
+					</c:choose>
+				</p>
 				<div class="col-sm-2 col-sm-offset-4 animate fadeIn animated">
 					<i class="material-icons" id="add_teammember">add</i>
 				</div>
@@ -64,7 +50,7 @@ $( function() {
 			<!-- Person Details -->
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="assets/img/theteam/image1.jpg" alt="image1">
+					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image1.jpg" alt="image1">
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							April <small>- Programmer</small>
@@ -89,7 +75,7 @@ $( function() {
 			<!-- Person Details -->
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="assets/img/theteam/image2.jpg" alt="image2">
+					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image2.jpg" alt="image2">
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							Simon <small>- Sales Assistant</small>
@@ -114,7 +100,7 @@ $( function() {
 			<!-- Person Details -->
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="assets/img/theteam/image3.jpg" alt="image3">
+					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image3.jpg" alt="image3">
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							Jeff <small>- Support</small>
@@ -137,7 +123,7 @@ $( function() {
 			</div>
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="assets/img/theteam/image3.jpg" alt="image3">
+					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image3.jpg" alt="image3">
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							Jeff <small>- Support</small>
@@ -160,7 +146,7 @@ $( function() {
 			</div>
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="assets/img/theteam/image3.jpg" alt="image3">
+					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image3.jpg" alt="image3">
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							Jeff <small>- Support</small>
@@ -227,6 +213,8 @@ $( function() {
 		</div>
 		<hr class="margin-vert-20">
 	</div>
+
+
 
 </body>
 </html>
