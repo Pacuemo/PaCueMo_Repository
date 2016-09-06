@@ -17,6 +17,8 @@ DROP TABLE battleSet;
 DROP TABLE LeagueClub;
 DROP TABLE league;
 DROP TABLE [Message];
+DROP TABLE ClubApply;
+DROP TABLE ClubInvite;
 DROP TABLE ClubChat;
 DROP TABLE clubMemberTable;
 DROP TABLE club;
@@ -90,46 +92,53 @@ create table Team   --隊伍
 	content		 /*隊伍簡介*/  NVARCHAR(200) 
 );   
 
-
 create table BattleRecord   --約戰紀錄
 (
     battleId       /*約戰編號*/   INT             IDENTITY PRIMARY KEY, 
 	teamIdA        /*隊伍1*/      INT             NOT NULL FOREIGN KEY REFERENCES team(teamId), 
 	teamIdB        /*隊伍2*/      INT             FOREIGN KEY REFERENCES team(teamId),
-	battleStatus   /*同意狀態*/   BIT			  ,
+	battleStatus   /*同意狀態*/   INT			  , -- (-1)表示拒絕 (0)表示尚未決定 (1)表示接受
 	courtId        /*場地*/       INT             NOT NULL FOREIGN KEY REFERENCES court(courtId),
 	battleMode     /*模式*/       INT             NOT NULL, -- (3)表示3V3 (5)表示5V5
 	battleBet      /*賭注*/       decimal(10, 2)  ,
 	battleDateTime /*日期*/       datetime		  NOT NULL, 
 	-- gender         /*限制性別*/   BIT          ,
-	result         /*輸贏*/       INT             , -- (0)代表A贏, (1)代表B贏, (2)代表沒輸贏, (3)代表衝突
-	reportA        /*隊伍1回報*/  INT             , -- (0)代表A贏, (1)代表B贏, (2)代表沒輸贏, (3)代表未比賽
-	reportB		   /*隊伍2回報*/  INT             , -- (0)代表A贏, (1)代表B贏, (2)代表沒輸贏, (3)代表未比賽
+	result         /*輸贏*/       INT,            -- (0)未回報, (1)A贏, (2)B贏, (3)沒輸贏, (4)未比賽, (5)衝突
+	reportA        /*隊伍1回報*/  INT,            -- (0)未回報, (1)A贏, (2)B贏, (3)沒輸贏, (4)未比賽
+	reportB		   /*隊伍2回報*/  INT,            -- (0)未回報, (1)A贏, (2)B贏, (3)沒輸贏, (4)未比賽
 );  
-
-
- 
-
 
 CREATE TABLE TeamMember -- 隊伍成員
 (   teamId        /*隊伍編號*/   INT  NOT NULL  FOREIGN KEY REFERENCES team(teamId),
 	teamMemberId  /*隊伍成員*/   UNIQUEIDENTIFIER  NOT NULL  FOREIGN KEY REFERENCES member(memberId),
 	joinDate      /*加入日期*/   DATE NOT NULL DEFAULT GETDATE()
-	
-
 	PRIMARY KEY(teamId,teamMemberId) ,
 )
 
+CREATE TABLE TeamApply
+(	teamId		/*隊伍編號*/  INT NOT NULL FOREIGN KEY REFERENCES Team(teamId),
+	memberId	/*申請人*/	  UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Member(memberId),
+	applystatus /*申請狀態*/  INT DEFAULT 0, -- (1)表示接受 (0)表示尚未決定 (-1)表示拒絕
+	applyDate   /*申請時間*/  DATE NOT NULL DEFAULT GETDATE()
+	PRIMARY KEY(teamId,memberId)
+)
 
-
+CREATE TABLE TeamInvite 
+(	teamId        /*隊伍編號*/  INT NOT NULL FOREIGN KEY REFERENCES Team(teamId),
+	memberId	  /*被邀請人*/  UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Member(memberId),
+	teamMemberId  /*邀請人*/    UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Member(memberId),
+	invstatus     /*邀請狀態*/  INT DEFAULT 0,  -- (1)表示接受 (0)表示尚未決定 (-1)表示拒絕
+	inviteDate	  /*邀請時間*/	DATE NOT NULL DEFAULT GETDATE()
+	PRIMARY KEY(teamId,memberId)
+);
 
 /*
 CREATE TABLE teamRank -- 隊伍評價
 (   
     rankId          /*評價編號*/    INT          NOT NULL  IDENTITY primary key,
     teamId          /*隊伍編號*/    INT          NOT NULL  FOREIGN KEY REFERENCES team(teamId),
-	rankDateTime   /*日期*/        datetime     NOT NULL,
-	memberId        /*評價人Id*/    INT          NOT NULL FOREIGN KEY REFERENCES member(memberId),
+	rankDateTime    /*日期*/        datetime     NOT NULL,
+	memberId        /*評價人Id*/    UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Member(memberId),
 	ranking         /*評分*/        decimal(2,1) not null
 )
 */
@@ -154,25 +163,7 @@ CREATE TABLE ClubMemberTable
 	clubId			/*球團編號*/	INT			 NOT NULL FOREIGN KEY REFERENCES club(clubId),
     clubMemberId	/*團員編號*/	UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES member(memberId),
     joinDate		/*加入日期*/	DATE		 NOT NULL
-
 	PRIMARY KEY(clubId,clubMemberId)
-);
---球團申請表--
-CREATE TABLE ClubApply
-(
-clubId	    /*加入球團*/    INT              FOREIGN KEY REFERENCES club(clubId) NOT NULL ,
-memberId    /*申請人編號*/  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
-applyDate   /*申請時間*/    Date  NOT NULL ,
-PRIMARY KEY(clubId,memberId)
-);
---球團邀請表--
-CREATE TABLE ClubInvite
-(
-clubId         /*邀請社團*/  INT              FOREIGN KEY REFERENCES club(clubId) NOT NULL ,
-memberId       /*邀請人*/    UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
-clubMemberId   /*被邀請人*/  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
-inviteDay      /*邀請時間*/  Date  NOT NULL ,
-PRIMARY KEY(clubId,memberId)
 );
 
 --球團聊天表--
@@ -187,13 +178,22 @@ chatDateTime    /*聊天時間*/    datetime     NOT NULL,
 FOREIGN KEY (clubId,clubMemberId) REFERENCES ClubMemberTable (clubId,clubMemberId), 
 )
 
-CREATE TABLE Invitation 
-(	invId		  /*邀請編號*/	INT	NOT NULL IDENTITY PRIMARY KEY,
-	memberA		  /*邀請人*/    UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Member(memberId),
-	memberB		  /*被邀請人*/  UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Member(memberId),
-	teamId		  /*隊伍編號*/  INT NOT NULL FOREIGN KEY REFERENCES Team(teamId),
-	clubId		  /*球團編號*/  INT NOT NULL FOREIGN KEY REFERENCES Club(clubId),
-	invstatus     /*邀請狀態*/  INT -- (1)表示接受 (0)表示尚未決定 (-1)表示拒絕
+--球團申請表--
+CREATE TABLE ClubApply
+(
+clubId	    /*加入球團*/    INT              FOREIGN KEY REFERENCES club(clubId) NOT NULL ,
+memberId    /*申請人編號*/  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
+applyDate   /*申請時間*/    Date  NOT NULL ,
+PRIMARY KEY(clubId,memberId)
+);
+--球團邀請表--
+CREATE TABLE ClubInvite
+(
+clubId         /*邀請社團*/  INT              FOREIGN KEY REFERENCES club(clubId) NOT NULL ,
+memberId       /*被邀請人*/  UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
+clubMemberId   /*邀請人*/	 UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member(MemberId) NOT NULL ,
+inviteDay      /*邀請時間*/  Date  NOT NULL ,
+PRIMARY KEY(clubId,memberId)
 );
 
 --球團聊天留言表--
@@ -285,7 +285,7 @@ CREATE TABLE FriendsList
     (
       memberId           /*會員編號*/              UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member ( memberId ) , 
       memberFriendId     /*會員好友的編號*/        UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Member ( memberId ) , 
-	  memberBlackList    /*會員黑名單*/            BIT ,
+	  friendStatus    /*會員好友狀態*/          INT ,
 	  PRIMARY KEY(memberId,memberFriendId)
     );
 

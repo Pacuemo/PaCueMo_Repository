@@ -67,16 +67,16 @@ public class Club_Service
 	}
 
 	//邀請進入社團
-	public String applyClub(ClubApplyVO clubApplyVO)
+	public String applyClub(int clubId, String memberId)
 	{
 
-		if (clubMemberDAO.findByPK(clubApplyVO.getMemberId()).getClubMemberId() != null)
+		if (clubMemberDAO.findByPK(memberId).getClubMemberId() != null)
 		{
 			return "fail";
 		}
 		else
 		{
-			clubApplyDAO.add_One(clubApplyVO);
+			clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
 			return "success";
 		}
 	}
