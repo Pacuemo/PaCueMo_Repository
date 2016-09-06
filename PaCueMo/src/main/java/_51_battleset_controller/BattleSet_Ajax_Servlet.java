@@ -81,6 +81,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				{
 					e.printStackTrace();
 				}
+				System.out.println("page no = " + pageNo);
 				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
 //				BattleSetService svc = new BattleSetService(); // Spring
 				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
@@ -211,9 +212,10 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				//BattleSetService svc = new BattleSetService();
 
 //				List<Map<String, Object>> list = svc.getSetsByName(queryTeamName);
-				List<Map<String, Object>> tmpList = svc.getSetsByName(queryTeamName);// 查詢總筆數
+				List<Map<String, Object>> tmpList = svc.getSetsByName(queryTeamName);// 查詢總筆數									
 				List<Map<String, Object>> list = svc.getSetsByNameAndPage(queryTeamName, pageNo);
-				System.out.println("tmpList.size()  = " + tmpList.size());
+
+				System.out.println("tmpList.size()  = " + tmpList.size() + " 筆");
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				if (list == null)// 查詢不到隊伍時

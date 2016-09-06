@@ -88,6 +88,14 @@ public class BattleSet_Servlet extends HttpServlet
 				/*************************** 2.開始查詢資料 ******************************************/
 //				BattleSetService svc = new BattleSetService(); // Spring 注入
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
+
+//				for (Map<String, Object> map : list)
+//				{
+//					System.out.print(((NBATeamVO) map.get("home")).getTeamID() + "     " + ((NBATeamVO) map.get("away")).getTeamID() + "     ");
+//					System.out.print(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((NBATeamVO) map.get("away")).getTeamName());
+//					System.out.println("    " + ((String) map.get("battleTime")));
+//				}
+
 				int listSize = list.size();
 				System.out.println(" 共 : " + listSize + " 筆資料");
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/

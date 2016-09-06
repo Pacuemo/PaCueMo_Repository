@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+
+import _51_battleset_service.BattleSetBeans_Config;
 
 public class BattleSetDAO implements BattleSetDAO_interface
 {
@@ -43,7 +47,7 @@ public class BattleSetDAO implements BattleSetDAO_interface
 			+ "                                             ORDER BY battleDateTime DESC";
 	private static final String QUERY_BY_DATE_STMT = "SELECT battleId , battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet "
 			+ "                                          FROM BattleSet "
-			+ "                                          WHERE battleDateTime BETWEEN   ?   AND   ?   ";
+			+ "                                          WHERE battleDateTime BETWEEN   ?   AND   ?   ORDER BY battleDateTime DESC";
 	private static final String QUERY_BY_DATE_PAGE_STMT = ""
 			+ "SELECT battleId , battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet FROM "
 			+ " 		(SELECT ROW_NUMBER() OVER (ORDER BY battleDateTime DESC) AS RowNum , "
@@ -201,8 +205,8 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //		System.out.println(date2);
 		//------------------------------------------------------------------
 //【【【【【【【【【【【【【【【 Spring 】】】】】】】】】】】】】】】】】】】】
-//		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
-//		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
+		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
+		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
 
 //		----------【teamId】依日期 及 【頁碼】 查詢----------------
 
@@ -212,14 +216,14 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //			System.out.println(vo.getBattleDateTime());
 //		}
 //		----------【測試】依日期 及 【頁碼】 查詢----------------
-//		List<BattleSetVO> list = dao.getSetsByDateAndPage("2016-09-03", 1);
+//		List<BattleSetVO> list = dao.getSetsByDateAndPage("2016-09-06", 1);
 //		for (BattleSetVO vo : list)
 //		{
 //			System.out.println(vo.getHomeId() + "   " + vo.getAwayId());
 //		}
 //		----------【測試】依日期查詢----------------
 //		BattleSetDAO dao = new BattleSetDAO();
-//		List<BattleSetVO> mylist = dao.getSetsByDate("2015-11-06");
+//		List<BattleSetVO> mylist = dao.getSetsByDate("2016-09-06");
 //		for (BattleSetVO vo : mylist)
 //		{
 //			System.out.println(vo.getBattleId() + "  " + vo.getHomeId() + " vs " + vo.getAwayId());
