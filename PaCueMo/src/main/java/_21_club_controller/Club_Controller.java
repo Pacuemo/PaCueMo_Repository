@@ -33,7 +33,7 @@ public class Club_Controller
 	@RequestMapping(value = "/introduce", method = RequestMethod.GET)
 	public String introduceClub()
 	{
-		return "club/introduceClub";
+		return "club/introduce";
 	}
 
 	//---------------------------登入--------------------------------

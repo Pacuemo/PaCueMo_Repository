@@ -18,6 +18,7 @@ public class LeagueDAO implements LeagueDAO_I
 {
 
 	private JdbcOperations jdbc;
+	private final String Select_All = "select * from league order by startDate desc";
 	private final String Select_One_BY_ID = "select * from league where leagueID = ?";
 	private final String Add_One_BY_VO = "insert into league values (?,?,?,?,?)";
 	private final String Delete_One_BY_ID = "delete from league where leagueId =?";
@@ -45,6 +46,12 @@ public class LeagueDAO implements LeagueDAO_I
 	{
 		return jdbc.queryForObject(Select_One_BY_ID, new LeagueRowMapper(), id);
 
+	}
+
+	@Override
+	public List<LeagueVO> find_All()
+	{
+		return jdbc.query(Select_All, new LeagueRowMapper());
 	}
 
 	//新增
