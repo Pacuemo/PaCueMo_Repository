@@ -9,7 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.gson.Gson;
 
@@ -19,6 +21,7 @@ import _00_initial_service.GlobalService;
 @ComponentScan({ "_21_club_service", "_9_13_invitation_model", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model",
 				"_22_league_service", "_9_23_league_model", "_9_24_leagueClub_model", "_9_24_leagueClub_model", "_9_25_leagueRecord_model",
 				"_9_26_fightRecord_model", "_9_12_battlerecord_model" })
+@EnableTransactionManagement
 public class RootConfig
 {
 
@@ -47,6 +50,12 @@ public class RootConfig
 		ds.setInitialSize(5);
 		ds.setMaxTotal(10);
 		return ds;
+	}
+
+	@Bean
+	public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataS)
+	{
+		return new DataSourceTransactionManager(dataS);
 	}
 
 	@Bean

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import _9_21_club_model.ClubConfig;
 import _9_21_club_model.ClubDAO_I;
@@ -19,6 +20,7 @@ import _9_28_clubInvite_model.ClubInviteVO;
 import _9_41_member_model.MemberDAO_interface;
 
 @Component
+@Transactional
 public class Club_Service
 {
 	@Autowired
@@ -41,7 +43,11 @@ public class Club_Service
 	//註冊新社團
 	public int registerClub(ClubVO clubVO)
 	{
-		return clubDAO.insert(clubVO);
+
+		clubDAO.insert(clubVO);
+		List<ClubVO> clubVOs = clubDAO.getAll_By_Name(clubVO.getClubName());
+		clubMemberDAO.insert(new ClubMemberVO(clubVOs.get(clubVOs.size() - 1).getClubID(), clubVO.getClubHead(), new Date(System.currentTimeMillis())));
+		return 1;
 
 	}
 

@@ -98,8 +98,12 @@
 			<artifactId>googleauth</artifactId>
 			<version>0.5.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-core -->
-		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-api -->
+		<dependency>
+
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.8.9</version>
+		</dependency>
 
 
 	</dependencies>
