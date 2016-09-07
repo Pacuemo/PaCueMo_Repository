@@ -18,37 +18,38 @@ public class ReportServlet extends HttpServlet
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		doPost(req, resp);
+		doPost(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		req.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = resp.getWriter();
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print("");
 
 		Map<String, String> errorMsg = new HashMap<String, String>();
-		req.setAttribute("ErrorMsg", errorMsg);
+		request.setAttribute("ErrorMsg", errorMsg);
 
-		String reportType = req.getParameter("reportType");
+		String reportType = request.getParameter("reportType");
 		if (reportType == null)
 		{
 			errorMsg.put("reportTypeEmpty", "請選擇問題類型");
 		}
 
-		String reportContent = req.getParameter("reportContent");
+		String reportContent = request.getParameter("reportContent");
 		if (reportContent == null || reportContent.trim().length() == 0)
 		{
 			errorMsg.put("reportContentEmpty", "請輸入內容");
 		}
 
-		if (errorMsg.isEmpty())
+		if (!errorMsg.isEmpty())
 		{
-			RequestDispatcher rd = req.getRequestDispatcher("/");
-			rd.forward(req, resp);
+			RequestDispatcher rd = request.getRequestDispatcher("");//導向頁面
+			rd.forward(request, response);
 			return;
 		}
 	}
