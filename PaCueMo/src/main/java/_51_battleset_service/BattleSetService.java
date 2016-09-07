@@ -144,6 +144,12 @@ public class BattleSetService
 			myMap.put("away", awayVO);
 			myMap.put("battleTime", vo.getBattleDateTime().toString().substring(0, 16));
 
+			myMap.put("battleId", vo.getBattleId());
+			myMap.put("homeScore", vo.getHomeScore().toString());
+			myMap.put("awayScore", vo.getAwayScore().toString());
+			myMap.put("homebet", vo.getHomebet().toString());
+			myMap.put("awaybet", vo.getAwaybet().toString());
+
 			retern_list.add(myMap);
 		}
 		return retern_list;
@@ -166,10 +172,12 @@ public class BattleSetService
 			NBATeamVO away = nbaSvc.getByTeamId(vo.getAwayId());
 
 			Map<String, Object> myMap = new HashMap<>();// modify:2016/08/12 增加對戰時間
+
 			myMap.put("home", home);
 			myMap.put("away", away);
 			myMap.put("battleTime", battleTime);
 
+			myMap.put("battleId", vo.getBattleId());
 			myMap.put("homeScore", vo.getHomeScore().toString());
 			myMap.put("awayScore", vo.getAwayScore().toString());
 			myMap.put("homebet", vo.getHomebet().toString());
@@ -253,7 +261,7 @@ public class BattleSetService
 //		}
 // ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-06");
+//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-07");
 //		for (Map<String, Object> map : list)
 //		{
 //			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
@@ -264,7 +272,7 @@ public class BattleSetService
 //					((String) map.get("awayScore")),
 //					((String) map.get("homebet")),
 //					((String) map.get("awaybet")));
-//			System.out.println(temp);
+//			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 //====================【getSetsByDateAndPage】根據日期及分頁編號查詢==========================
 //		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-04", 1);
@@ -286,12 +294,18 @@ public class BattleSetService
 //		BattleSetService svc = new BattleSetService();
 //		List<Map<String, Object>> list = svc.getSetsByName("小牛");
 //		System.out.println(list);
+//		System.out.println("總筆數 : " + list.size());
 //		for (Map<String, Object> map : list)
 //		{
-//			String homeName = ((NBATeamVO) map.get("home")).getTeamName();
-//			String awayName = ((NBATeamVO) map.get("away")).getTeamName();
-//			String battletime = ((String) map.get("battleTime"));
-//			System.out.println(homeName + "  vs  " + awayName + "  -----  time :  " + battletime);
+//			String temp = String.format("%3s %5s %15s %15s %13s %20s %20s %10s %10s",
+//					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((String) map.get("battleTime")),
+//					((String) map.get("homeScore")),
+//					((String) map.get("awayScore")),
+//					((String) map.get("homebet")),
+//					((String) map.get("awaybet")));
+//			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 		//-------------依日期查詢--------------
 //		BattleSetService svc = new BattleSetService();

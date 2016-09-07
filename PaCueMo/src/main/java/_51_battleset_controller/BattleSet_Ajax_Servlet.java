@@ -245,6 +245,46 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
+
+		// ************************************************************************************************
+		// ***********************【會員﹝下注後更新﹞battleSetVO 、memberVO資料】*****************************
+		// ************************************************************************************************
+		if ("gamblingUpdate".equals(action))
+		{
+			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : gamblingUpdate");
+
+//			try
+//			{
+//				response.setHeader("content-type", "text/html;charset=UTF-8");
+//				PrintWriter out = response.getWriter();/* for Ajax */
+//
+//				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//
+//				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
+////				BattleSetService svc = new BattleSetService(); // Spring
+////				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
+//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//				// *************************
+//				// ********【Ajax】*********
+//				// *************************
+////						System.out.println(list.size() + " 筆");
+//				Gson gson = new Gson();
+//				String ans = gson.toJson(list);
+//				System.out.println(" 本頁筆數 " + list.size() + " 筆");
+//				System.out.println(ans);
+//				out.println(ans);
+////						out.println(ans.toString());
+//				/*************************** 其他可能的錯誤處理 *************************************/
+//			}
+//			catch (Exception e)//---處理其他不可預期意外
+//			{
+//				e.printStackTrace();
+//				System.out.println(" \n========== BattleSet_Servlet.java 不可預期意外 ========== ");
+//				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");
+//				failureView.forward(request, response);
+//			}
+
+		}
 	}
 
 }

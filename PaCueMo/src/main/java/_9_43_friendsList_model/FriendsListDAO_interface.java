@@ -5,4 +5,6 @@ import java.util.List;
 public interface FriendsListDAO_interface
 {
 	public List<FriendsListVO> getAllFriends(String memberId);
+
+	public List<FriendsListVO> getAllFriendsInvite(String memberId);
 }

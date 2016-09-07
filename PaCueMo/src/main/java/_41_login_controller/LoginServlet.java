@@ -33,6 +33,7 @@ public class LoginServlet extends HttpServlet
 		boolean isNeed2StepVerify = false;
 		String code = null;
 		String requestURI = (String) session.getAttribute("requestURI");
+		String queryString = (String) session.getAttribute("queryString");
 
 		if (rm != null)
 		{
@@ -81,8 +82,28 @@ public class LoginServlet extends HttpServlet
 			}
 			else
 			{
-				session.removeAttribute("requestURI");
-				out.write("true" + requestURI);
+				if (null != queryString && queryString.trim().length() != 0)
+				{
+					if (queryString.contains("memberId"))
+					{
+
+						String newqueryString = queryString.replace("memberId=", "memberId=" + mv.getMemberId());
+						session.removeAttribute("requestURI");
+						session.removeAttribute("queryString");
+						out.write("true" + requestURI + "?" + newqueryString);
+					}
+					else
+					{
+						session.removeAttribute("requestURI");
+						session.removeAttribute("queryString");
+						out.write("true" + requestURI + "?" + queryString);
+					}
+				}
+				else
+				{
+					session.removeAttribute("requestURI");
+					out.write("true" + requestURI);
+				}
 			}
 //			response.sendRedirect(response.encodeRedirectURL("index.jsp"));
 //			response.sendRedirect("index.jsp");

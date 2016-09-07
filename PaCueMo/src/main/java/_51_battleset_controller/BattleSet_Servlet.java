@@ -17,6 +17,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import _51_battleset_service.BattleSetBeans_Config;
 import _51_battleset_service.BattleSetService;
+import _9_52_nbateam_model.NBATeamVO;
 
 @WebServlet("/_5_gambling/BattleSet_Servlet.do")
 public class BattleSet_Servlet extends HttpServlet
@@ -89,18 +90,18 @@ public class BattleSet_Servlet extends HttpServlet
 //				BattleSetService svc = new BattleSetService(); // Spring 注入
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
 
-//				for (Map<String, Object> map : list)
-//				{/*測試程式*/
-//					String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
-//							((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
-//							((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
-//							((String) map.get("battleTime")),
-//							((String) map.get("homeScore")),
-//							((String) map.get("awayScore")),
-//							((String) map.get("homebet")),
-//							((String) map.get("awaybet")));
-//					System.out.println(temp);
-//				}
+				for (Map<String, Object> map : list)
+				{/* 測試程式 */
+					String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+							((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+							((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+							((String) map.get("battleTime")),
+							((String) map.get("homeScore")),
+							((String) map.get("awayScore")),
+							((String) map.get("homebet")),
+							((String) map.get("awaybet")));
+					System.out.println("battleId : " + map.get("battleId") + "  " + temp);
+				}
 
 				int listSize = list.size();
 				System.out.println(" 共 : " + listSize + " 筆資料");
@@ -154,7 +155,23 @@ public class BattleSet_Servlet extends HttpServlet
 					request.getRequestDispatcher("/_5_gambling/gamblingPage.jsp").forward(request, response);
 					return;
 				}
-				int listSize = list.size();
+				int listSize = list.size(); // 總筆數
+
+				// ====== 測試程式 ======
+//				System.out.println("總筆數 : " + list.size());
+//				for (Map<String, Object> map : list)
+//				{
+//					String temp = String.format("%3s %5s %15s %15s %13s %20s %20s %10s %10s",
+//							((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//							((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//							((String) map.get("battleTime")),
+//							((String) map.get("homeScore")),
+//							((String) map.get("awayScore")),
+//							((String) map.get("homebet")),
+//							((String) map.get("awaybet")));
+//					System.out.println("battleId : " + map.get("battleId") + "  " + temp);
+//				}
+
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				for (Map<String, Object> mymap : list)
 //				{

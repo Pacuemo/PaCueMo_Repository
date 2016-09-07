@@ -77,6 +77,33 @@ public class MemberService
 		return map;
 	}
 
+	public HashMap<String, List<String>> showAllFriendsInvite(String memberId)
+	{
+		HashMap<String, List<String>> map = new HashMap<>();
+		List<FriendsListVO> friends = fDao.getAllFriendsInvite(memberId);
+		List<String> friendids = new ArrayList<>();
+		List<String> names = new ArrayList<>();
+		List<String> imgUrls = new ArrayList<>();
+		List<String> fbIds = new ArrayList<>();
+
+		for (FriendsListVO friend : friends)
+		{
+			String friendid = friend.getMemberFriendId();
+			MemberVO memberVO = dao.findByPrimaryKey(friendid);
+			friendids.add(friendid);
+			names.add(memberVO.getMemberLastName() + memberVO.getMemberFirstName());
+			imgUrls.add(memberVO.getMemberImgUrl());
+			fbIds.add(memberVO.getMemberFBId());
+		}
+
+		map.put("ids", friendids);
+		map.put("names", names);
+		map.put("imgs", imgUrls);
+		map.put("fbIds", fbIds);
+
+		return map;
+	}
+
 	public static void main(String[] args)
 	{
 		MemberService memberService = new MemberService();

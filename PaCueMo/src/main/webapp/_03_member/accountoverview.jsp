@@ -67,20 +67,26 @@
 							<h3 class="text-primary1">好友</h3>
 							<c:choose>
 							<c:when test="${fn:length(friends.ids) > 0}">
-							<c:forEach var="i" begin="1" end="5">
-								<div class="form-group">
+							<c:forEach var="i" begin="0" end="5">
 								<c:choose>
 							        <c:when test="${not empty friends.fbIds[i]}">
-							        <div class="form-control-static1 test"><a href="" class="user-link"> <img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${friends.names[i]}"></a>${friends.names[i]}</div>
+							        <div class="form-group">
+							        <button class="form-control-static1 test"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${friends.names[i]}"><font>${friends.names[i]}</font></button>
+							        </div>
 							        </c:when>
 							        <c:when test="${not empty friends.imgs[i]}">
-							        <div class="form-control-static1 test"><a href="" class="user-link"> <img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${friends.imgs[i]}" alt="${friends.names[i]}"></a>${friends.names[i]}</div>
+							        <div class="form-group">
+							        <button class="form-control-static1 test"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${friends.imgs[i]}" alt="${friends.names[i]}"><font>${friends.names[i]}</font></button>
+							        </div>
+							        </c:when>
+							        <c:when test="${i >= fn:length(friends.ids)}">
 							        </c:when>
 							        <c:otherwise>
-							        <div class="form-control-static1 test"><a href="" class="user-link"> <div class="user-icon-container img-circle navbar-user-img2"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use> </svg></div></a>${friends.names[i]}</div>
+							        <div class="form-group">
+							        <button class="form-control-static1 test"><div class="user-icon-container img-circle navbar-user-img2"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use></svg></div><font>${friends.names[i]}</font></button>
+							        </div>
 							        </c:otherwise>							    
       							</c:choose>
-      							</div>
 							</c:forEach>
 								<c:if test="${fn:length(friends.ids) > 5 }">
 								<div class="form-group">
@@ -90,7 +96,7 @@
 							</c:when>
 							<c:otherwise>
 								<div class="form-group">
-								<div class="form-control-static test"><h4>您還尚未擁有好友喔!!!</h4></div>
+								<div class="form-control-static test"><h5>您還尚未擁有好友喔!!!</h5></div>
 								</div>
 							</c:otherwise>
 							</c:choose>

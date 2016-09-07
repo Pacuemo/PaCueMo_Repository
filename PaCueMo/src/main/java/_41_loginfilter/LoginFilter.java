@@ -24,7 +24,7 @@ import _9_41_member_model.MemberVO;
 				@WebInitParam(name = "mustLogin1", value = "/spring/club/login"),
 				@WebInitParam(name = "mustLogin2", value = "/TeamServlet"),
 				@WebInitParam(name = "mustLogin3", value = "/_03_member/*"),
-				@WebInitParam(name = "mustLogin4", value = "")
+				@WebInitParam(name = "mustLogin4", value = "/spring/club/apply")
 })
 public class LoginFilter implements Filter
 {
@@ -32,6 +32,7 @@ public class LoginFilter implements Filter
 	String servletPath;
 	String contextPath;
 	String requestURI;
+	String queryString;
 
 	public void init(FilterConfig fConfig) throws ServletException
 	{
@@ -56,6 +57,7 @@ public class LoginFilter implements Filter
 			servletPath = req.getServletPath();
 			contextPath = req.getContextPath();
 			requestURI = req.getRequestURI();
+			queryString = req.getQueryString();
 			isRequestedSessionIdValid = req.isRequestedSessionIdValid();
 
 			if (mustLogin())
@@ -68,6 +70,7 @@ public class LoginFilter implements Filter
 				{				//  需要登入，尚未登入
 					HttpSession session = req.getSession();
 					session.setAttribute("requestURI", requestURI);
+					session.setAttribute("queryString", queryString);
 					if (!isRequestedSessionIdValid)
 					{
 						session.setAttribute("timeOut", "使用逾時，請重新登入");

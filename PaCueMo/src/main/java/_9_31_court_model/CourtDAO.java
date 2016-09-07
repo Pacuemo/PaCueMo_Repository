@@ -23,6 +23,7 @@ public class CourtDAO implements CourtDAO_interface
 	private static final String GET_ONE_STMT = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where courtId=?";
 	private static final String DELETE = "DELETE FROM Court where courtId =?";
 	private static final String UPDATE = "UPDATE Court set name=?, courtaddress=?, imgUrl=?, latitude=?, longitude=?, webUrl=?, phone=? where courtId=?";
+	private static final String Get_By_Name = "SELECT * FROM Court where name LIKE ?";
 
 	@Override
 	public void insert(CourtVO courtVO)
@@ -280,7 +281,7 @@ public class CourtDAO implements CourtDAO_interface
 		return courtVO;
 	}
 
-	//查詢縣市場地(building...)
+	//查詢場地
 	@Override
 	public List<CourtVO> getAll()
 	{
@@ -361,7 +362,83 @@ public class CourtDAO implements CourtDAO_interface
 		return list;
 	}
 
-	//查詢行政區場地(building...)
-//	@Override
-//	public List<CourtVO> getAll(){}
+	@Override
+	public List<CourtVO> getByName(String name)
+	{
+		List<CourtVO> list = new ArrayList<CourtVO>();
+		CourtVO courtVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(Get_By_Name);
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				courtVO = new CourtVO();
+				courtVO.setCourtId(rs.getInt("courtId"));
+				courtVO.setName(rs.getString("name"));
+				courtVO.setCourtaddress(rs.getString("courtaddress"));
+				courtVO.setImgUrl(rs.getString("imgUrl"));
+				courtVO.setLatitue(rs.getDouble("latitude"));
+				courtVO.setLongitue(rs.getDouble("longitude"));
+				courtVO.setWebUrl(rs.getString("webUrl"));
+				courtVO.setPhone(rs.getString("phone"));
+				list.add(courtVO);
+			}
+
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace();
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace();
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
 }

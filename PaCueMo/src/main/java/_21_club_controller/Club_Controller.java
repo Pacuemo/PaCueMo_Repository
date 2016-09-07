@@ -2,9 +2,10 @@ package _21_club_controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -122,19 +123,20 @@ public class Club_Controller
 
 //	-------------------申請加入社團---------------------------
 	@ResponseBody
-	@RequestMapping(value = "/apply", method = RequestMethod.GET, produces = "text/html; charset=UTF-8")
-	public void applyClub(@RequestParam("club") int clubId, @RequestParam("member") String memberId, HttpServletResponse response) throws IOException
+	@RequestMapping(value = "/apply", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String applyClub(@RequestParam("club") int clubId, @RequestParam("memberId") String memberId) throws IOException
 	{
-
+		Map<String, String> message = new HashMap<String, String>();
 		String outCome = service.applyClub(clubId, memberId);
 		if (outCome == "success")
 		{
-			response.getWriter().println("申請成功");
+			message.put("status", "申請成功");
 		}
 		else
 		{
-			response.getWriter().println("申請失敗，請確認是否已有社團");
+			message.put("status", "申請失敗，請確認是否已有社團");
 		}
+		return gson.toJson(message);
 	}
 
 }

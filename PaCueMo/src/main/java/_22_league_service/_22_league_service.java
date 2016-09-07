@@ -1,10 +1,15 @@
 package _22_league_service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import _00_config.RootConfig;
 import _9_21_club_model.ClubDAO_I;
 import _9_23_league_model.LeagueDAO_I;
 import _9_23_league_model.LeagueVO;
@@ -18,6 +23,7 @@ import _9_31_court_model.CourtDAO_interface;
 import _9_41_member_model.MemberDAO_interface;
 
 @Component
+@Transactional
 public class _22_league_service
 {
 	@Autowired
@@ -70,5 +76,20 @@ public class _22_league_service
 			vo.setMemberVO(memberDao.findByPrimaryKey(vo.getClubMemberId()));
 		}
 		return fightRecordVOs;
+	}
+
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void insert()
+	{
+		leagueDao.addOne(new LeagueVO(4, "幹你娘", 12, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 1));
+		leagueClubDao.add_One(new LeagueClubVO(5, 1));
+	}
+
+	public static void main(String[] args)
+	{
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+		_22_league_service dao = context.getBean(_22_league_service.class);
+		dao.insert();
+		System.out.println("成功");
 	}
 }
