@@ -1,4 +1,4 @@
-package _13_invitation_controller;
+package _13_teaminvite_controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

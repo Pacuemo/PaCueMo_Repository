@@ -8,11 +8,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import _00_initial_service.GlobalService;
 
-@Repository("BattleRecordDAO")
 public class BattleRecordDAO_JDBC_notF implements BattleRecordDAO_interface
 {
 
@@ -99,7 +96,7 @@ public class BattleRecordDAO_JDBC_notF implements BattleRecordDAO_interface
 
 			pstmt.setInt(1, battleRecordVO.getTeamIdA());
 			pstmt.setInt(2, battleRecordVO.getTeamIdB());
-			pstmt.setBoolean(3, battleRecordVO.getBattleStatus());
+			pstmt.setInt(3, battleRecordVO.getBattleStatus());
 			pstmt.setInt(4, battleRecordVO.getCourtId());
 			pstmt.setInt(5, battleRecordVO.getBattleMode());
 			pstmt.setDouble(6, battleRecordVO.getBattleBet());
@@ -337,7 +334,7 @@ public class BattleRecordDAO_JDBC_notF implements BattleRecordDAO_interface
 		BattleRecordVO battleRecordVO = new BattleRecordVO();
 		battleRecordVO.setTeamIdA(1);
 		battleRecordVO.setTeamIdB(2);
-		battleRecordVO.setBattleStatus(true);
+		battleRecordVO.setBattleStatus(0);
 		battleRecordVO.setCourtId(1);
 		battleRecordVO.setBattleMode(3);
 		battleRecordVO.setBattleBet((double) 0);
