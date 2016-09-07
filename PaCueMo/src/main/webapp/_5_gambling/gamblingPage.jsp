@@ -19,9 +19,27 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/style.css" type="text/css">
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
 	<style type="text/css">
-       
+        #dialog-div tr {
+            height:50px;
+        }
+        #dialog-div td {
+            width:250px;
+            text-align:center;
+        }
+        #dialog-div img {
+        	display:block; margin:0 auto;
+        }
+        #betData{
+        	background-color:#2F0000;
+        }
+        #betData td{
+        	background-color:#2F0000;
+        	border:2px groove #3C3C3C;
+        }
+        
 	</style>
   </head>
   <body>
@@ -82,7 +100,7 @@
        					</div>		 	
 
       					<div style="margin-left:250px;width:580px;padding:10px;background-color: rgb(50, 118, 110 , 0.8);">
-				            <div id="slicePage" ></div>
+				            <div id="slicePage"></div>
 				        </div>
 					       
        			</div>
@@ -90,10 +108,61 @@
        		 
        	   </div>
        </div>
-
+		
+		<!-- ***************************【下注 dialog 開始】***************************** -->
+		<div id="dialog-div" title="下注場次">
+	        <form>
+	            <table>
+	                <tr id="row1" align='center' valign='middle' style="height:200px;">
+	                    <td align="center"><img width="150" class="img-rounded" alt="away" src=""></td>
+	                    <td align="center"><img width="70"  alt="VS4.gif" src="image/VS4.gif"></td>
+	                    <td align="center"><img width="150" class="img-rounded" alt="home" src=""></td>
+	                </tr>
+	                <tr id="row2">
+	                    <td align="center"></td>
+	                    <td align="center"></td>
+	                    <td align="center"></td>
+	                </tr>
+	            </table>
+	            <p/>
+	            <table style="border:2px outset #8E8E8E"> 
+	                <tr id="row3" align='center' valign='middle'>
+	                    <td align="center" colspan="3">比賽時間</td>
+	                </tr>
+	                <tr id="row4">
+	                    <td></td>
+	                    <td align="center">比分</td>
+	                    <td></td>
+	                </tr>
+	                <tr id="row5" align='center' valign='middle'>
+	                    <td></td>
+	                    <td align="center">下注總額</td>
+	                    <td></td>
+	                </tr>
+	            </table>
+	            <p/>
+	            <table id="betData">
+	            	<tr align='center' valign='middle'>
+	            		<td colspan="3">點選下注</td>
+	            	</tr>
+	            	<tr align='center' valign='middle'>
+	            		<td align="center" height="100">
+	            			<label for="awayCoins">客隊金額：</label>
+                   		    <input id="awayCoins" name="value" readonly="readonly">	
+	            		</td>
+	            		<td align="center" height="100">
+							<label for="homeCoins">主隊金額：</label>
+                   		    <input id="homeCoins" name="value" readonly="readonly">	
+	            		</td>
+	            	</tr>
+	            </table>
+	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+	        </form>
+    	</div>
+		<!-- ***************************【下注 dialog 結束】***************************** -->
 
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/zebra_datepicker.js"></script>
@@ -105,8 +174,19 @@
             //alert( funFlag );
             	
        		$(function(){
-       			
        			/* ================ 【下注 開始】 ================= */
+       			/* ==== 下注金額 ==== */
+       			var spinnerAway = $("#awayCoins").spinner({
+       				"option": "disabled",
+                    step: 100,
+                    min : 0
+                });
+       			var spinnerHome = $("#homeCoins").spinner({
+       				"option": "disabled",
+                    step: 100,
+                    min : 0
+                });
+       			/* ==== 下注金額 end ==== */
        			$("#myTable").find('button').click(function(){
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
@@ -129,9 +209,61 @@
        				console.log("homeScore " + inputsHidden[6].value);
        				console.log("awayBet " + inputsHidden[7].value);
        				console.log("homeBet " + inputsHidden[8].value);
-		
+       				
+       				$("#row1 img:eq(0)").attr('src',awayLogoUrl);
+       				$("#row1 img:eq(2)").attr('src',homeLogoUrl);
+       				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
+       				$("#row2 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeName + "</h4>");
+       				$("#row3 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>"+ "比賽時間：" + battleTime + "</h4>");
+       				$("#row4 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayScore + "</h4>");
+       				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
+       				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
+       				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
+       				
+       			 	myDialog.dialog("open");
        			})
        			/* ================ 【下注 結束】 ================= */
+       			/* ================ 【下注 Dialog 開始】 ================= */
+       			var myDialog, form;
+	            myDialog = $("#dialog-div").dialog({
+	                autoOpen: false,
+	                height: 750,
+	                width: 500,
+	                modal: true,
+	                resizable: false,
+	                position: { my: "center", at: "center", of: window }, /* dialog 起始彈出位置 */
+	                buttons:[{
+		                			'text'  : "確認下注",
+		                			'class' : "btn btn-danger",
+		                			'click' : function()
+		                			 {
+		                				 alert('hi');
+		                				 myDialog.dialog("close");
+		                			 }
+	                		 },
+	                		 {
+	                			 	'text' : "取消",
+		                			'class': "btn btn-primary",
+		                			'click' : function()
+		                			 {
+		                				 alert('結束');
+		                				 myDialog.dialog("close");
+		                			 }
+	                		 }
+	                ]
+	                ,
+	                close: function () {
+	                    form[0].reset();
+	                }
+	            });
+	
+	            form = myDialog.find("form").on("submit", function (event) {
+	                event.preventDefault();
+	
+	            });
+	
+       			/* ================ 【下注 Dialog 結束】 ================= */
+       			
        			/* ================ 【DatePicker 開始】 ================= */
        		    $('#myDatepicker').Zebra_DatePicker({
 
