@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+
 import _52_nbateam_service.NBATeamService;
 import _9_51_battleset_model.BattleSetDAO;
 import _9_51_battleset_model.BattleSetVO;
@@ -166,10 +169,12 @@ public class BattleSetService
 			NBATeamVO away = nbaSvc.getByTeamId(vo.getAwayId());
 
 			Map<String, Object> myMap = new HashMap<>();// modify:2016/08/12 增加對戰時間
+
 			myMap.put("home", home);
 			myMap.put("away", away);
 			myMap.put("battleTime", battleTime);
 
+			myMap.put("battleId", vo.getBattleId());
 			myMap.put("homeScore", vo.getHomeScore().toString());
 			myMap.put("awayScore", vo.getAwayScore().toString());
 			myMap.put("homebet", vo.getHomebet().toString());
@@ -241,8 +246,8 @@ public class BattleSetService
 
 	public static void main(String[] args)
 	{
-//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
-//		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
+		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
 
 // ====================【getSetsByNameAndPage】==========================
 //		List<Map<String, Object>> list = svc.getSetsByNameAndPage("亞特蘭大老鷹", 1);
@@ -253,7 +258,7 @@ public class BattleSetService
 //		}
 // ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-06");
+//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-07");
 //		for (Map<String, Object> map : list)
 //		{
 //			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
@@ -264,7 +269,7 @@ public class BattleSetService
 //					((String) map.get("awayScore")),
 //					((String) map.get("homebet")),
 //					((String) map.get("awaybet")));
-//			System.out.println(temp);
+//			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 //====================【getSetsByDateAndPage】根據日期及分頁編號查詢==========================
 //		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-04", 1);

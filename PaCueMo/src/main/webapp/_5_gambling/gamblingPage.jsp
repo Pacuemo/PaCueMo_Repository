@@ -82,6 +82,7 @@
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['away'].teamName}</h4></td>
 										<td>
 											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/>
+									    	<input type="hidden" value="${battleSetVO.battleId}"/>
 									    	<input type="hidden" value="${battleSetVO['away'].teamName}"/>
 									    	<input type="hidden" value="${battleSetVO['home'].teamName}"/>							
 									    	<input type="hidden" value="<%=request.getContextPath()%>/_5_gambling${battleSetVO['away'].teamLogoURL}"/>
@@ -118,7 +119,7 @@
 	                    <td align="center"><img width="70"  alt="VS4.gif" src="image/VS4.gif"></td>
 	                    <td align="center"><img width="150" class="img-rounded" alt="home" src=""></td>
 	                </tr>
-	                <tr id="row2">
+	                <tr id="row2"><!-- 隊名 -->
 	                    <td align="center"></td>
 	                    <td align="center"></td>
 	                    <td align="center"></td>
@@ -190,25 +191,27 @@
        			$("#myTable").find('button').click(function(){
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
-       				var awayName 	= inputsHidden[0].value ;
-       				var homeName    = inputsHidden[1].value ;
-       				var awayLogoUrl = inputsHidden[2].value ;
-       				var homeLogoUrl = inputsHidden[3].value ;
-       				var battleTime 	= inputsHidden[4].value ;
-       				var awayScore 	= inputsHidden[5].value ; 
-       				var homeScore   = inputsHidden[6].value ;
-       				var awayBet 	= inputsHidden[7].value ;
-       				var homeBet 	= inputsHidden[8].value ;
+       				var battleId 	= inputsHidden[0].value ;
+       				var awayName 	= inputsHidden[1].value ;
+       				var homeName    = inputsHidden[2].value ;
+       				var awayLogoUrl = inputsHidden[3].value ;
+       				var homeLogoUrl = inputsHidden[4].value ;
+       				var battleTime 	= inputsHidden[5].value ;
+       				var awayScore 	= inputsHidden[6].value ; 
+       				var homeScore   = inputsHidden[7].value ;
+       				var awayBet 	= inputsHidden[8].value ;
+       				var homeBet 	= inputsHidden[9].value ;
   
-       				console.log("awayName " + inputsHidden[0].value);
-       				console.log("homeName " + inputsHidden[1].value);
-       				console.log("awayLogoUrl " + inputsHidden[2].value);
-       				console.log("homeLogoUrl " + inputsHidden[3].value);
-       				console.log("battleTime " + inputsHidden[4].value);
-       				console.log("awayScore " + inputsHidden[5].value);
-       				console.log("homeScore " + inputsHidden[6].value);
-       				console.log("awayBet " + inputsHidden[7].value);
-       				console.log("homeBet " + inputsHidden[8].value);
+       				console.log("battleId " 	+ inputsHidden[0].value);
+       				console.log("awayName " 	+ inputsHidden[1].value);
+       				console.log("homeName " 	+ inputsHidden[2].value);
+       				console.log("awayLogoUrl " 	+ inputsHidden[3].value);
+       				console.log("homeLogoUrl " 	+ inputsHidden[4].value);
+       				console.log("battleTime " 	+ inputsHidden[5].value);
+       				console.log("awayScore " 	+ inputsHidden[6].value);
+       				console.log("homeScore " 	+ inputsHidden[7].value);
+       				console.log("awayBet " 		+ inputsHidden[8].value);
+       				console.log("homeBet " 		+ inputsHidden[9].value);
        				
        				$("#row1 img:eq(0)").attr('src',awayLogoUrl);
        				$("#row1 img:eq(2)").attr('src',homeLogoUrl);
@@ -363,7 +366,7 @@
 		                
 		                	$.ajax({
 		                		"type": "post" ,  //傳遞方式				
-		                		"url" :  ajaxUrl , 
+		                		"url" :  "<%=request.getContextPath()%>" + "/_5_gambling/" + ajaxUrl , 
 		                		"dataType":"json",//Servlet回傳格式
 		                		"data":{ "action": actionName , "pageNo":pageNo , "searchName":searchName , "datepickerDate":chooseDate },
 		                		"success":function(data){
