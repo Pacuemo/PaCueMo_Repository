@@ -71,7 +71,7 @@ public class MemberService
 
 		map.put("ids", friendids);
 		map.put("names", names);
-		map.put("img", imgUrls);
+		map.put("imgs", imgUrls);
 		map.put("fbIds", fbIds);
 
 		return map;

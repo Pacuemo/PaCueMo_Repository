@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="/fragment/top.jsp" />
 <jsp:include page="/_03_member/fragment/sidebar.jsp" />
-<div class="container-fluid container-content">
+<div class="container container-content">
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="content">
@@ -42,11 +42,18 @@
 		   					 </form>
 							 <a href="" class="btn btn-secondary btn-sm btn-block center-block" id="btn-edit-profile">編輯個人檔案</a>
 	   				    </div>
-	   				    <div class="well card receipt" id="">
-							<h3 class="text-primary1">帳戶明細</h3>
-						</div>	
-					 </div>
-					 <div class="col-sm-12 col-md-4">
+							<div class="well card profile" id="">
+							<h3 class="text-primary1">臉書帳號連結狀態</h3>
+							<c:choose>
+								<c:when test="${not empty LoginOK.memberFBId }">
+								<h5 style="color:#1ed760">連結中</h5>
+								</c:when>
+								<c:otherwise>
+								<h5 style="color:#eb1e32">尚未連結</h5>
+								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-fb-connect">連結臉書帳號</button>
+								</c:otherwise>
+							</c:choose>
+							</div>	
 							<div class="well card profile" id="">
 								<h3 class="text-primary1">更改密碼</h3>
 								<br>	
@@ -69,19 +76,12 @@
 									</div>
 									</c:otherwise>
 								</c:choose>
-							</div>
-							<div class="well card profile" id="">
-							<h3 class="text-primary1">臉書帳號連結狀態</h3>
-							<c:choose>
-								<c:when test="${not empty LoginOK.memberFBId }">
-								<h5 style="color:#1ed760">連結中</h5>
-								</c:when>
-								<c:otherwise>
-								<h5 style="color:#eb1e32">尚未連結</h5>
-								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-fb-connect">連結臉書帳號</button>
-								</c:otherwise>
-							</c:choose>
 							</div>							
+					 </div>
+					 <div class="col-sm-12 col-md-4">
+					 	<div class="well card receipt" id="">
+							<h3 class="text-primary1">帳戶明細</h3>
+						</div>
 					 </div>
 					 <div class="col-sm-12 col-md-4">
 					 	<div class="well card friendlist" id="">
