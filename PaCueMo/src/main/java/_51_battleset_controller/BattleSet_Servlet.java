@@ -155,7 +155,23 @@ public class BattleSet_Servlet extends HttpServlet
 					request.getRequestDispatcher("/_5_gambling/gamblingPage.jsp").forward(request, response);
 					return;
 				}
-				int listSize = list.size();
+				int listSize = list.size(); // 總筆數
+
+				// ====== 測試程式 ======
+//				System.out.println("總筆數 : " + list.size());
+//				for (Map<String, Object> map : list)
+//				{
+//					String temp = String.format("%3s %5s %15s %15s %13s %20s %20s %10s %10s",
+//							((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//							((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//							((String) map.get("battleTime")),
+//							((String) map.get("homeScore")),
+//							((String) map.get("awayScore")),
+//							((String) map.get("homebet")),
+//							((String) map.get("awaybet")));
+//					System.out.println("battleId : " + map.get("battleId") + "  " + temp);
+//				}
+
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				for (Map<String, Object> mymap : list)
 //				{

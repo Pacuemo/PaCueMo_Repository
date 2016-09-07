@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
-
 import _52_nbateam_service.NBATeamService;
 import _9_51_battleset_model.BattleSetDAO;
 import _9_51_battleset_model.BattleSetVO;
@@ -147,6 +144,12 @@ public class BattleSetService
 			myMap.put("away", awayVO);
 			myMap.put("battleTime", vo.getBattleDateTime().toString().substring(0, 16));
 
+			myMap.put("battleId", vo.getBattleId());
+			myMap.put("homeScore", vo.getHomeScore().toString());
+			myMap.put("awayScore", vo.getAwayScore().toString());
+			myMap.put("homebet", vo.getHomebet().toString());
+			myMap.put("awaybet", vo.getAwaybet().toString());
+
 			retern_list.add(myMap);
 		}
 		return retern_list;
@@ -246,8 +249,8 @@ public class BattleSetService
 
 	public static void main(String[] args)
 	{
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
-		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
+//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
+//		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
 
 // ====================【getSetsByNameAndPage】==========================
 //		List<Map<String, Object>> list = svc.getSetsByNameAndPage("亞特蘭大老鷹", 1);
@@ -291,12 +294,18 @@ public class BattleSetService
 //		BattleSetService svc = new BattleSetService();
 //		List<Map<String, Object>> list = svc.getSetsByName("小牛");
 //		System.out.println(list);
+//		System.out.println("總筆數 : " + list.size());
 //		for (Map<String, Object> map : list)
 //		{
-//			String homeName = ((NBATeamVO) map.get("home")).getTeamName();
-//			String awayName = ((NBATeamVO) map.get("away")).getTeamName();
-//			String battletime = ((String) map.get("battleTime"));
-//			System.out.println(homeName + "  vs  " + awayName + "  -----  time :  " + battletime);
+//			String temp = String.format("%3s %5s %15s %15s %13s %20s %20s %10s %10s",
+//					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((String) map.get("battleTime")),
+//					((String) map.get("homeScore")),
+//					((String) map.get("awayScore")),
+//					((String) map.get("homebet")),
+//					((String) map.get("awaybet")));
+//			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 		//-------------依日期查詢--------------
 //		BattleSetService svc = new BattleSetService();
