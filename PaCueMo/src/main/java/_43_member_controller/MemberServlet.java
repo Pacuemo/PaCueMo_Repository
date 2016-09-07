@@ -20,7 +20,8 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
 import _43_member_service.MemberService;
 import _9_41_member_model.MemberVO;
 
-@WebServlet(urlPatterns = { "/_03_member/activate.do", "/_03_member/deactivate.do", "/_03_member/connect.do", "/_03_member/overview.do" })
+@WebServlet(urlPatterns = { "/_03_member/activate.do", "/_03_member/deactivate.do", "/_03_member/connect.do", "/_03_member/overview.do",
+				"/_03_member/security.do", "/_03_member/friendsList.do" })
 public class MemberServlet extends HttpServlet
 {
 
@@ -30,19 +31,37 @@ public class MemberServlet extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		System.out.println("call MemberServlet doGet");
-		System.out.println(request.getServletPath());
+		String servletPath = request.getServletPath();
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 		MemberService ms;
 
 		if (memberVO != null)
 		{
-			ms = new MemberService();
-			HashMap<String, List<String>> map = ms.showAllFriends(memberVO.getMemberId());
-			request.setAttribute("friends", map);
-			request.getRequestDispatcher("/_03_member/accountoverview.jsp").forward(request, response);
-			return;
 
+			if ("/_03_member/overview.do".equals(servletPath))
+			{
+				ms = new MemberService();
+				HashMap<String, List<String>> map = ms.showAllFriends(memberVO.getMemberId());
+				request.setAttribute("friends", map);
+				request.getRequestDispatcher("/_03_member/accountoverview.jsp").forward(request, response);
+				return;
+			}
+			else if ("/_03_member/security.do".equals(servletPath))
+			{
+				request.getRequestDispatcher("/_03_member/accountsecurity.jsp").forward(request, response);
+				return;
+			}
+			else if ("/_03_member/friendsList.do".equals(servletPath))
+			{
+				ms = new MemberService();
+				HashMap<String, List<String>> map = ms.showAllFriends(memberVO.getMemberId());
+				HashMap<String, List<String>> map1 = ms.showAllFriendsInvite(memberVO.getMemberId());
+				request.setAttribute("friends", map);
+				request.setAttribute("invite", map1);
+				request.getRequestDispatcher("/_03_member/accountfriend.jsp").forward(request, response);
+				return;
+			}
 		}
 
 	}

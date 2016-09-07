@@ -14,26 +14,21 @@ public class CourtServlet extends HttpServlet
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		doPost(req, resp);
+		doPost(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		req.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		String search = request.getParameter("search");
 
-		String[] cityAndTownship = req.getParameterValues("selectCityORTownship");
-		String county = req.getParameter("selectCounty");
-		String court = req.getParameter("searchCourt");
-		if (court == null || court.trim().length() == 0)
-		{
-			court = "searchCourt";
-		}
-
-//		SearchBean sb = new SearchBean(cityAndTownship, county, court);//CourtVo part...
-//		req.setAttribute("customer", sb);
+		String pageNo = request.getParameter("pageno");
+		int pageNumber = 0;
+		pageNumber = Integer.valueOf(pageNo);
+		System.out.println("pageNO = " + pageNo);
 	}
 
 }
