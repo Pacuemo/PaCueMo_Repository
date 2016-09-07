@@ -124,28 +124,28 @@
 		<div id="dialog-div" title="下注場次">
 	        <form>
 	            <table>
-	                <tr id="row1" align='center' valign='middle' style="height:200px;">
-	                    <td align="center"><img width="150" class="img-rounded" alt="away" src=""></td>
-	                    <td align="center"><img width="70"  alt="VS4.gif" src="image/VS4.gif"></td>
-	                    <td align="center"><img width="150" class="img-rounded" alt="home" src=""></td>
+	                <tr id="row1" align='center' valign='middle' style="height:200px;"><!-- 隊徽 -->
+	                    <td align="center"><img width="150" class="img-rounded" alt="away" 		src=""></td>
+	                    <td align="center"><img width="70"  					alt="VS4.gif" 	src="image/VS4.gif"></td>
+	                    <td align="center"><img width="150" class="img-rounded" alt="home" 		src=""></td>
 	                </tr>
-	                <tr id="row2"><!-- 隊名 -->
+	                <tr id="row2"><!-- 隊名 : 由 ===【下注 開始】=== 動態塞入 -->
+	                    <td align="center"></td><!-- away -->
 	                    <td align="center"></td>
-	                    <td align="center"></td>
-	                    <td align="center"></td>
+	                    <td align="center"></td><!-- home -->
 	                </tr>
 	            </table>
 	            <p/>
 	            <table style="border:2px outset #8E8E8E"> 
-	                <tr id="row3" align='center' valign='middle'>
+	                <tr id="row3" align='center' valign='middle'><!-- 比賽時間 -->
 	                    <td align="center" colspan="3">比賽時間</td>
 	                </tr>
-	                <tr id="row4">
+	                <tr id="row4"><!-- 比分 -->
 	                    <td></td>
 	                    <td align="center">比分</td>
 	                    <td></td>
 	                </tr>
-	                <tr id="row5" align='center' valign='middle'>
+	                <tr id="row5" align='center' valign='middle'><!-- 賭金 -->
 	                    <td></td>
 	                    <td align="center">下注總額</td>
 	                    <td></td>
@@ -167,6 +167,8 @@
 	            		</td>
 	            	</tr>
 	            </table>
+	            
+	            <input id="battleId_choosed" type="hidden" value=""/><!-- <hidden 欄位存放該場次 battleId > -->
 	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	        </form>
     	</div>
@@ -186,18 +188,16 @@
             	
        		$(function(){
        			/* ================ 【下注 開始】 ================= */
-       			/* ==== 下注金額 ==== */
+       			/* ==== ﹝ 下注金額 ﹞ ==== */
        			var spinnerAway = $("#awayCoins").spinner({
-       				"option": "disabled",
-                    step: 100,
-                    min : 0
+                    "step": 100,
+                    "min" : 0
                 });
        			var spinnerHome = $("#homeCoins").spinner({
-       				"option": "disabled",
-                    step: 100,
-                    min : 0
+                    "step": 100,
+                    "min" : 0
                 });
-       			/* ==== 下注金額 end ==== */
+       			/* ==== ﹝ 下注金額 ﹞ end ==== */
        			$("#myTable").find('button').click(function(){
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
@@ -223,6 +223,7 @@
        				console.log("awayBet " 		+ inputsHidden[8].value);
        				console.log("homeBet " 		+ inputsHidden[9].value);
        				
+       				$("#battleId_choosed").val(battleId);
        				$("#row1 img:eq(0)").attr('src',awayLogoUrl);
        				$("#row1 img:eq(2)").attr('src',homeLogoUrl);
        				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
@@ -250,7 +251,12 @@
 		                			'class' : "btn btn-danger",
 		                			'click' : function()
 		                			 {
-		                				 alert($(this).attr('id'));
+		                				 alert('hi');
+		                				 alert($("#battleId_choosed").val());
+		                				 
+		                				 
+		                				 
+		                				 // 關閉 dialog
 		                				 myDialog.dialog("close");
 		                			 }
 	                		 },
@@ -260,6 +266,7 @@
 		                			'click' : function()
 		                			 {
 		                				 alert('結束');
+		                				 // 關閉 dialog
 		                				 myDialog.dialog("close");
 		                			 }
 	                		 }
