@@ -31,11 +31,36 @@
 }
 
 .card.friendlist {
-	min-height: 600px;
+	min-height: 400px;
 }
 
 .col-sm-12>.card div.test {
 	display: block;
+}
+
+.col-sm-12>.card button.test {
+	display: block;
+	background: transparent;
+    border: 0px;
+    color: #2ebd59;
+}
+
+.col-sm-12>.card button.test1 {
+	display: block;
+	background: transparent;
+    border: 0px;
+    color: #2ebd59;
+    width: 100%;
+}
+
+.test.form-group:hover {
+    background-color: #cccccc;
+}
+
+
+.col-sm-12>.card button > font {
+
+    color: black;
 }
 
 @media ( min-width : 992px) {

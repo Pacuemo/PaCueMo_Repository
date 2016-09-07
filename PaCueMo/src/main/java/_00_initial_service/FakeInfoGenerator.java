@@ -942,7 +942,7 @@ public class FakeInfoGenerator
 
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 10);
+		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
 //      club和league部分
 //		clubGenerator();
 
