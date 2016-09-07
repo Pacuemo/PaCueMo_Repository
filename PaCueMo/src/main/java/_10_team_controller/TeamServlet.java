@@ -3,12 +3,12 @@ package _10_team_controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
@@ -69,7 +69,7 @@ public class TeamServlet extends HttpServlet
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		req.setCharacterEncoding("UTF-8");
-		ServletContext context = req.getServletContext();
+		HttpSession session = req.getSession();
 		Boolean error = false;
 		TeamService teamService = null;
 		TeamVO teamVO = null;
@@ -91,7 +91,7 @@ public class TeamServlet extends HttpServlet
 			String teamProp = req.getParameter("teamProp");
 			teamVO.setTeamProp(Integer.valueOf(teamProp));
 
-			MemberVO memberVO = (MemberVO) context.getAttribute("LoginOK");
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 			String teamMemberId = memberVO.getMemberId();
 			if (null != teamMemberId && teamMemberId.length() != 0)
 			{
@@ -113,6 +113,7 @@ public class TeamServlet extends HttpServlet
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			System.out.println("整合後取得memberVO，即可正常運作");
 		}
 

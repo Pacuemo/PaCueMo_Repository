@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test02-test.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test01.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/easy-sidebar.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
@@ -13,6 +14,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script> 
 <script src="${pageContext.request.contextPath}/js/jquery.detect_swipe.js"></script> 
+<script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script> 
 
 </head>
 <body>
@@ -42,13 +44,13 @@
       <ul class="nav">
       <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
-        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
+        <li><a href="${pageContext.request.contextPath}/_03_member/overview.do" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}"> </a> </li>
         </c:when>
-        <c:when test="${not empty LoginOK.memberFileName }">
-        <li><a href="" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}"></a></li>
+        <c:when test="${not empty LoginOK.memberImgUrl }">
+        <li><a href="${pageContext.request.contextPath}/_03_member/overview.do" class="user-link hidden-md hidden-lg"> <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberImgUrl}" alt="${LoginOK.memberFirstName}"></a></li>
         </c:when>
         <c:otherwise>
-        <li><a href="" class="user-link hidden-md hidden-lg"> <div class="user-icon-container img-circle navbar-user-img"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use> </svg></div></a></li>
+        <li><a href="${pageContext.request.contextPath}/_03_member/overview.do" class="user-link hidden-md hidden-lg"> <div class="user-icon-container img-circle navbar-user-img"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use> </svg></div></a></li>
         </c:otherwise>
       </c:choose>
       </ul>
@@ -60,6 +62,7 @@
       <ul class="nav navbar-nav navbar-right nav-main">
         <li> <a href="" id="nav-link-aboutus" > 關於我們 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/TeamServlet" id="nav-link-battle" > 約戰 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/TeamServlet" id="nav-link-team" > 隊伍</a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/league/introduce" id="nav-link-league" > 聯賽 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/club/introduce" id="nav-link-club">社團 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
@@ -71,15 +74,16 @@
         <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_01_login/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
-        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_03_member/myPage.jsp" id="nav-link-account" > 帳戶 </a> </li>
+        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="">點數餘額：${LoginOK.memberPoint}點</a></li>
+        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_03_member/overview.do" id="nav-link-account" > 帳戶 </a> </li>
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do" id="nav-link-log out" > 登出 </a> </li>
         <li class="hidden-xs hidden-sm dropdown"> <a href="" class="user-link dropdown-toggle" data-toggle="dropdown">
         <c:choose>
         <c:when test="${not empty LoginOK.memberFBId }">
         <img class="user-img img-circle navbar-user-img" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=64&amp;height=64" alt="${LoginOK.memberFirstName}">
         </c:when>
-        <c:when test="${not empty LoginOK.memberFileName }">
-        <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberFileName}" alt="${LoginOK.memberFirstName}">
+        <c:when test="${not empty LoginOK.memberImgUrl }">
+        <img class="user-img img-circle navbar-user-img" src="${pageContext.request.contextPath}/image/member/${LoginOK.memberImgUrl}" alt="${LoginOK.memberFirstName}">
         </c:when>
         <c:otherwise>
         <div class="user-icon-container img-circle navbar-user-img"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"></use></svg></div> 
@@ -91,7 +95,8 @@
           </svg>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <li> <a href="${pageContext.request.contextPath}/_03_member/myPage.jsp">帳戶</a> </li>
+          	<li> <a class="point" href="">點數餘額：${LoginOK.memberPoint}點</a></li>
+            <li> <a href="${pageContext.request.contextPath}/_03_member/overview.do">帳戶</a> </li>
             <li> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do">登出</a> </li>
           </ul>
         </li>

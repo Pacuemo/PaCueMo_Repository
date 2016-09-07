@@ -1,4 +1,4 @@
-package _9_13_invitation_model;
+package _9_13_teaminvite_model;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import _00_config.RootConfig;
 @Import(RootConfig.class)
 @Configuration
 @ComponentScan("_9_13_invitation_model")
-public class InvitationConfig
+public class TeamInviteConfig
 {
 
 }

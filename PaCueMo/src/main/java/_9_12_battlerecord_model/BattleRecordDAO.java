@@ -1,20 +1,19 @@
 package _9_12_battlerecord_model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import _00_initial_service.GlobalService;
-
 @Repository("BattleRecordDAO")
-public class BattleRecordDAO implements BattleRecordDAO_interface
+public class BattleRecordDAO
 {
 	private JdbcOperations jdbc;
 
@@ -22,298 +21,121 @@ public class BattleRecordDAO implements BattleRecordDAO_interface
 	{
 	}
 
+	@Autowired
 	public BattleRecordDAO(JdbcOperations jdbc)
 	{
 		this.jdbc = jdbc;
 	}
 
-	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,courtId,battleMode,battleBet,battleDateTime) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE = "UPDATE BattleRecord set teamIdA=?, teamIdB=?, battleStatus=?, courtId=?, battleMode=?, "
-			+ "battleBet=?, battleDateTime=?, result=?, reportA=?, reportB=? where battleId = ?";
-	private static final String REPORT_A = "UPDATE BattleRecord set reportA=? where battleId = ? and teamIdA = ?";
-	private static final String REPORT_B = "UPDATE BattleRecord set reportB=? where battleId = ? and teamIdB = ?";
+	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,battleStatus,courtId,battleMode,battleBet,battleDateTime,"
+			+ "result,reportA,reportB) VALUES (?, ?, 0, ?, ?, ?, ?, 0, 0, 0)";
+	private static final String ACCEPT = "UPDATE BattleRecord set battleStatus=? where battleId = ?";
+	private static final String REPORT_A = "UPDATE BattleRecord set reportA=? where battleId = ?";
+	private static final String REPORT_B = "UPDATE BattleRecord set reportB=? where battleId = ?";
 	private static final String UPDATE_RESULT = "UPDATE BattleRecord set result=? where battleId = ?";
-	private static final String GET_ALL = "SELECT battleId,teamIdA,createDate,teamProp,avgRank FROM Team order by teamId";
-	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank FROM Team where teamId = ?";
-	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
-	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
-	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate,isCaptain FROM TeamMember where teamId = ? order by teamMemberId";
-	private static final String SELECT_TEAM_MEMBERS_POINT = "SELECT m.[memberId],m.[memberFirstName],m.[memberLastName],[memberPoint],tm.teamId"
-			+ "FROM dbo.Member m JOIN (SELECT [teamId],[teamMemberId] FROM dbo.TeamMember )tm"
-			+ "ON m.memberId = tm.teamMemberId" + "WHERE tm.teamId = 1";
+	private static final String DELETE = "DELETE FROM BattleRecord where battleId = ?";
+	private static final String GET_ONE = "SELECT * FROM BattleRecord where battleId = ?";
+	private static final String FIND_BY_TEAM_A = "SELECT * FROM BattleRecord where teamIdA = ?";
+	private static final String FIND_BY_TEAM_B = "SELECT * FROM BattleRecord where teamIdB = ?";
+	private static final String GET_ALL = "SELECT * FROM BattleRecord";
 
 	public void add(BattleRecordVO battleRecordVO)
 	{
-
-//		jdbc.update(arg0, arg1)
+		jdbc.update(INSERT, battleRecordVO.getTeamIdA(), battleRecordVO.getTeamIdB(), battleRecordVO.getCourtId(),
+				battleRecordVO.getBattleMode(), battleRecordVO.getBattleBet(), battleRecordVO.getBattleDateTime());
 	}
 
-	@Override
-	public void update(BattleRecordVO battleRecordVO)
+	public void accept_Reject(Integer battleStatus, Integer battleId)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(UPDATE);
-
-			pstmt.setInt(1, battleRecordVO.getTeamIdA());
-			pstmt.setInt(2, battleRecordVO.getTeamIdB());
-			pstmt.setBoolean(3, battleRecordVO.getBattleStatus());
-			pstmt.setInt(4, battleRecordVO.getCourtId());
-			pstmt.setInt(5, battleRecordVO.getBattleMode());
-			pstmt.setDouble(6, battleRecordVO.getBattleBet());
-			pstmt.setTimestamp(7, battleRecordVO.getBattleDateTime());
-			pstmt.setInt(8, battleRecordVO.getResult());
-			pstmt.setInt(9, battleRecordVO.getReportA());
-			pstmt.setInt(10, battleRecordVO.getReportB());
-			pstmt.setInt(11, battleRecordVO.getBattleId());
-
-			pstmt.executeUpdate();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+		jdbc.update(ACCEPT, battleStatus, battleId);
 	}
 
 	public void reportA(BattleRecordVO battleRecordVO)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(REPORT_A);
-			pstmt.setInt(1, battleRecordVO.getReportA());
-			pstmt.setInt(2, battleRecordVO.getBattleId());
-			pstmt.setInt(3, battleRecordVO.getTeamIdA());
-
-			pstmt.executeUpdate();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+		jdbc.update(REPORT_A, battleRecordVO.getReportB(), battleRecordVO.getBattleId());
 	}
 
 	public void reportB(BattleRecordVO battleRecordVO)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(REPORT_B);
-			pstmt.setInt(1, battleRecordVO.getReportB());
-			pstmt.setInt(2, battleRecordVO.getBattleId());
-			pstmt.setInt(3, battleRecordVO.getTeamIdB());
-
-			pstmt.executeUpdate();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+		jdbc.update(REPORT_B, battleRecordVO.getReportB(), battleRecordVO.getBattleId());
 	}
 
-	public void updateResult(Integer battleId, Integer result)
+	//由service 判斷何時該呼叫此方法
+	public void updateResult(BattleRecordVO battleRecordVO)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try
+		if (battleRecordVO.getReportA() == battleRecordVO.getReportB())
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(UPDATE_RESULT);
-			pstmt.setInt(1, result);
-			pstmt.setInt(2, battleId);
-
-			pstmt.executeUpdate();
+			jdbc.update(UPDATE_RESULT, battleRecordVO.getReportA());
 		}
-		catch (Exception e)
+		else
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
+			jdbc.update(UPDATE_RESULT, 5); //結果(5)表示有衝突
 		}
 	}
 
-	@Override
 	public void delete(Integer batteleRecordId)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try
-		{
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(DELETE_TEAM);
-
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		jdbc.update(DELETE, batteleRecordId);
 	}
 
-	@Override
-	public BattleRecordVO findByPrimaryKey(Integer battleId)
+	public BattleRecordVO findById(Integer battleId)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		return null;
+		return jdbc.queryForObject(GET_ONE, new BattleRecordRowMapper(), battleId);
 	}
 
-	@Override
-	public BattleRecordVO findByTeamIdA(Integer teamIdA)
+	public List<BattleRecordVO> findByTeamIdA(Integer teamIdA)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return jdbc.query(FIND_BY_TEAM_A, new BattleRecordRowMapper(), teamIdA);
 	}
 
-	@Override
-	public BattleRecordVO findByTeamIdB(Integer teamIdB)
+	public List<BattleRecordVO> findByTeamIdB(Integer teamIdB)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return jdbc.query(FIND_BY_TEAM_B, new BattleRecordRowMapper(), teamIdB);
 	}
 
-	@Override
 	public List<BattleRecordVO> getAll()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return jdbc.query(GET_ALL, new BattleRecordRowMapper());
+	}
+
+	private static final class BattleRecordRowMapper implements RowMapper<BattleRecordVO>
+	{
+		public BattleRecordVO mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			return new BattleRecordVO(rs.getInt("battleId"), rs.getInt("teamIdA"), rs.getInt("teamIdB"), rs.getInt("battleStatus"),
+					rs.getInt("courtId"), rs.getInt("battleMode"), rs.getDouble("battleBet"), rs.getTimestamp("battleDateTime"),
+					rs.getInt("result"), rs.getInt("reportA"), rs.getInt("reportB"));
+		}
 	}
 
 	public static void main(String arg[])
 	{
 		BattleRecordVO battleRecordVO = new BattleRecordVO();
-		battleRecordVO.setTeamIdA(1);
-		battleRecordVO.setTeamIdB(2);
-		battleRecordVO.setBattleStatus(true);
+		battleRecordVO.setTeamIdA(4);
+		battleRecordVO.setTeamIdB(1);
+		battleRecordVO.setBattleStatus(0);
 		battleRecordVO.setCourtId(1);
 		battleRecordVO.setBattleMode(3);
 		battleRecordVO.setBattleBet((double) 0);
 		battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis()));
 
-		BattleRecordDAO dao = new BattleRecordDAO();
-		dao.insert(battleRecordVO);
-	}
+		ApplicationContext context = new AnnotationConfigApplicationContext(BatteleRecordConfig.class);
+		BattleRecordDAO dao = context.getBean(BattleRecordDAO.class);
 
-	@Override
-	public void insert(BattleRecordVO battleRecordVO)
-	{
-		// TODO Auto-generated method stub
+		try
+		{
+//			dao.add(battleRecordVO);
+//			dao.accept_Reject(0, 1);
+//			System.out.println(dao.findById(1).getBattleId() + " " +dao.findById(1).getTeamIdA() );
+
+			System.out.println("good");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+		}
+		((AnnotationConfigApplicationContext) context).close();
 
 	}
 

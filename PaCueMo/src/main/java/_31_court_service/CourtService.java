@@ -60,22 +60,21 @@ public class CourtService
 		dao.delete(courtId);
 	}
 
-//各種查詢
 	//查詢單一場地
 	public CourtVO findOne(Integer courtId)
 	{
 		return dao.findByPrimaryKey(courtId);
 	}
 
-	//查詢縣市場地(building...)
+	//查詢場地
 	public List<CourtVO> findCountyAll()
 	{
 		return dao.getAll();
 	}
 
-	//查詢行政區場地(building...)
-	public List<CourtVO> findCityandTownship()
+	//查詢場地 By Name
+	public List<CourtVO> findNameAll(String name)
 	{
-		return dao.getAll();
+		return dao.getByName(name);
 	}
 }

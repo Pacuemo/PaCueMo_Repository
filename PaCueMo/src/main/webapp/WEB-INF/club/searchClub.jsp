@@ -23,6 +23,7 @@
      <s:param name="clubId" value="${club.clubID}"/>
      </s:url>
      <h1><a href="${searchClub}"><c:out value="${club.clubName}"/></a></h1>
+     <input type="button" value="加入" onclick=""/>
      </c:forEach>
    </div>  
    

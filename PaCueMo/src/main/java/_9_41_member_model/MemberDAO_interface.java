@@ -9,7 +9,17 @@ public interface MemberDAO_interface
 
 	public MemberVO insert_fb(String memberFirstName, String memberLastName, Date memberBirthday, String memberPhone, String memberMail, String memberFBId);
 
-	public MemberVO update();
+	public int updatePasswordByMail(String memberMail);
+
+	public int updatePasswordByPrimaryKey(String memberId);
+
+	public MemberVO updateSKeyByPrimaryKey(String memberId, String memberSecretKey, boolean status);
+
+	public MemberVO updateFbIdByPrimaryKey(String memberId, String fbId, String memberImgUrl);
+
+	public MemberVO updateMemberInfo(String memberId, String memberMail, String memberPhone);
+
+	public MemberVO updateMemberImg(String memberId, String memberImgUrl);
 
 	public MemberVO findByPrimaryKey(String memberId);
 

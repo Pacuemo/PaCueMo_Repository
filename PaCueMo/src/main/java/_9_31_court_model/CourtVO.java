@@ -1,7 +1,10 @@
 package _9_31_court_model;
 
-public class CourtVO
+import java.io.Serializable;
+
+public class CourtVO implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private Integer courtId;
 	private String name;
 	private String courtaddress;

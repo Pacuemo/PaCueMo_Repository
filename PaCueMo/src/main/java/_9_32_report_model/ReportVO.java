@@ -1,7 +1,10 @@
 package _9_32_report_model;
 
-public class ReportVO
+import java.io.Serializable;
+
+public class ReportVO implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private Integer reportId;
 	private Integer reportMemberId;
 	private Integer reportType;

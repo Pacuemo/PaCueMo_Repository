@@ -17,7 +17,8 @@ import _00_initial_service.GlobalService;
 
 @Configuration
 @ComponentScan({ "_21_club_service", "_9_13_invitation_model", "_9_21_club_model", "_9_41_member_model", "_9_22_clubMember_model",
-				"_22_league_service", "_9_23_league_model", "_9_24_leagueClub_model", "_9_24_leagueClub_model", "_9_25_leagueRecord_model" })
+				"_22_league_service", "_9_23_league_model", "_9_24_leagueClub_model", "_9_24_leagueClub_model", "_9_25_leagueRecord_model",
+				"_9_26_fightRecord_model", "_9_12_battlerecord_model" })
 public class RootConfig
 {
 

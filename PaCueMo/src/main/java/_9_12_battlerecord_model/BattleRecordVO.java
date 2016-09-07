@@ -10,7 +10,7 @@ public class BattleRecordVO
 	private Integer battleId;
 	private Integer teamIdA;
 	private Integer teamIdB;
-	private Boolean battleStatus;
+	private Integer battleStatus;
 	private Integer courtId;
 	private Integer battleMode;
 	private Double battleBet;
@@ -18,6 +18,27 @@ public class BattleRecordVO
 	private Integer result;
 	private Integer reportA;
 	private Integer reportB;
+
+	public BattleRecordVO()
+	{
+	}
+
+	public BattleRecordVO(Integer battleId, Integer teamIdA, Integer teamIdB, Integer battleStatus, Integer courtId, Integer battleMode,
+			Double battleBet, Timestamp battleDateTime, Integer result, Integer reportA, Integer reportB)
+	{
+		super();
+		this.battleId = battleId;
+		this.teamIdA = teamIdA;
+		this.teamIdB = teamIdB;
+		this.battleStatus = battleStatus;
+		this.courtId = courtId;
+		this.battleMode = battleMode;
+		this.battleBet = battleBet;
+		this.battleDateTime = battleDateTime;
+		this.result = result;
+		this.reportA = reportA;
+		this.reportB = reportB;
+	}
 
 	public Integer getBattleId()
 	{
@@ -49,12 +70,12 @@ public class BattleRecordVO
 		this.teamIdB = teamIdB;
 	}
 
-	public Boolean getBattleStatus()
+	public Integer getBattleStatus()
 	{
 		return battleStatus;
 	}
 
-	public void setBattleStatus(Boolean battleStatus)
+	public void setBattleStatus(Integer battleStatus)
 	{
 		this.battleStatus = battleStatus;
 	}

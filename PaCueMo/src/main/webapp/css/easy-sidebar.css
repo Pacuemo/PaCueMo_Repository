@@ -77,7 +77,15 @@ body.toggled {
 	float: none;
 }
 .navbar1.easy-sidebar .nav.navbar-nav>li>a {
-	padding: 10px 15px;
+/* 	padding: 10px 15px; */
+/* new */
+    background: transparent;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1;
+	padding: 10px 15px;	
+	
 }
 
 .navbar1.easy-sidebar .navbar-nav .open .dropdown-menu .divider {

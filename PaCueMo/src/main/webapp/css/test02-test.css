@@ -7480,7 +7480,7 @@ transform:translate(100px, 0px)
 
 @media(min-width:992px) {
 .navbar-nav>li>a {
-	padding: 28px 17px
+	padding: 28px 8px
 }
 }
 
@@ -9744,4 +9744,10 @@ ul.nav1.ul1 {
 .nav1>li{
     position: relative;
     display: block;
+}
+
+.navbar-nav>li>.dropdown-menu>li>a.point {
+    font-size: 14px;
+    font-weight: 500;
+    
 }

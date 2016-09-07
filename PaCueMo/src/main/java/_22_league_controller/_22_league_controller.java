@@ -1,12 +1,14 @@
 package _22_league_controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
@@ -37,10 +39,21 @@ public class _22_league_controller
 	}
 
 //--------------------- 查詢單一聯賽名稱--------------------------------------------------	
-	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	@RequestMapping(value = "/Info", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String getInfo(@RequestParam("leagueId") int leagueId, HttpServletRequest request)
 	{
-		System.out.println(leagueId);
+		System.out.println("查詢聯賽ID" + leagueId);
 		return gson.toJson(service.getOne(leagueId));
+	}
+
+//----------------------查詢單場聯賽紀錄-------------------------------------------------	
+	@RequestMapping(value = "/Info/one", method = RequestMethod.GET)
+	public String getInfo(@RequestParam("fightId") int fightId, HttpSession session)
+	{
+		System.out.println("查詢單場紀錄" + fightId);
+		session.setAttribute("fightRecordVOs", service.getOneFightRecords(fightId));
+		System.out.println("已將記錄存至Session中");
+		return "league/recordInfos";
 	}
 }
