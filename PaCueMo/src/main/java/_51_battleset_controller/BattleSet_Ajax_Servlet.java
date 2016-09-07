@@ -18,8 +18,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.google.gson.Gson;
 
-import _51_battleset_service.BattleSetBeans_Config;
 import _51_battleset_service.BattleSetService;
+import _53_gambling_facade.GamblingFacade_Config;
 
 @WebServlet("/_5_gambling/BattleSet_Ajax_Servlet.do")
 public class BattleSet_Ajax_Servlet extends HttpServlet
@@ -33,8 +33,10 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 	public void init() throws ServletException
 	{
 		context = new AnnotationConfigWebApplicationContext();
-		context.scan("_51_battleset_service");
-		context.register(BattleSetBeans_Config.class);
+//		context.scan("_51_battleset_service");
+//		context.register(BattleSetBeans_Config.class);
+		context.scan("_53_gambling_facade");
+		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
 	}
@@ -253,36 +255,44 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		{
 			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : gamblingUpdate");
 
-//			try
-//			{
-//				response.setHeader("content-type", "text/html;charset=UTF-8");
-//				PrintWriter out = response.getWriter();/* for Ajax */
+			try
+			{
+				response.setHeader("content-type", "text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();/* for Ajax */
 //
-//				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//
-//				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
+				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String battleId = request.getParameter("battleId");
+				String awayName = request.getParameter("awayName");
+				String homeName = request.getParameter("homeName");
+				String battleTime = request.getParameter("battleTime");
+				String awayScore = request.getParameter("awayScore");
+				String homeScore = request.getParameter("homeScore");
+				String awayBet = request.getParameter("awayBet");
+				String homeBet = request.getParameter("homeBet");
+				String awayCoins = request.getParameter("awayCoins");
+				String homeCoins = request.getParameter("homeCoins");
+
+				System.out.println(battleId + "  " + awayName + "  " + homeName + "  "
+						+ battleTime + "  " + awayScore + "  " + homeScore + "  " + awayBet + "  " + homeBet
+						+ "   " + awayCoins + "   " + homeCoins);
+				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return text ) **********/
 ////				BattleSetService svc = new BattleSetService(); // Spring
 ////				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
-//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********
 //				// *************************
-////						System.out.println(list.size() + " 筆");
-//				Gson gson = new Gson();
-//				String ans = gson.toJson(list);
-//				System.out.println(" 本頁筆數 " + list.size() + " 筆");
-//				System.out.println(ans);
-//				out.println(ans);
-////						out.println(ans.toString());
-//				/*************************** 其他可能的錯誤處理 *************************************/
-//			}
-//			catch (Exception e)//---處理其他不可預期意外
-//			{
-//				e.printStackTrace();
-//				System.out.println(" \n========== BattleSet_Servlet.java 不可預期意外 ========== ");
-//				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");
-//				failureView.forward(request, response);
-//			}
+
+				out.println(" 回送資料成功!! ");
+				/*************************** 其他可能的錯誤處理 *************************************/
+			}
+			catch (Exception e)//---處理其他不可預期意外
+			{
+				e.printStackTrace();
+				System.out.println(" \n========== BattleSet_Servlet.java 不可預期意外 ========== ");
+				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");
+				failureView.forward(request, response);
+			}
 
 		}
 	}

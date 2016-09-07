@@ -29,4 +29,5 @@ public class BattleSetBeans_Config
 	{
 		return new BattleSetService(bSetDAO, nbaSvc);
 	}
+
 }

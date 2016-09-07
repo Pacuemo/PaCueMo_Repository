@@ -18,7 +18,7 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/style.css" type="text/css">
      
-<!--      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
 	<style type="text/css">
@@ -154,16 +154,16 @@
 	            <p/>
 	            <table id="betData">
 	            	<tr align='center' valign='middle'>
-	            		<td colspan="3">點選下注</td>
+	            		<td colspan="3">輸入下注金額</td>
 	            	</tr>
 	            	<tr align='center' valign='middle'>
 	            		<td align="center" height="100">
 	            			<label for="awayCoins">客隊金額：</label>
-                   		    <input id="awayCoins" name="value" readonly="readonly">	
+                   		    <input id="awayCoins" name="value" value="0" readonly="readonly"/>	
 	            		</td>
 	            		<td align="center" height="100">
 							<label for="homeCoins">主隊金額：</label>
-                   		    <input id="homeCoins" name="value" readonly="readonly">	
+                   		    <input id="homeCoins" name="value" value="0" readonly="readonly"/>	
 	            		</td>
 	            	</tr>
 	            </table>
@@ -252,10 +252,28 @@
 		                			'click' : function()
 		                			 {
 		                				 alert('hi');
-		                				 alert($("#battleId_choosed").val());
-		                				 
-		                				 
-		                				 
+		                				 //---
+		                				 $.ajax({
+		                					 "type":"post",//傳遞方式				
+		                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
+		                             		 "dataType":"text",//Servlet回傳格式
+		                             		 "data":{ "action"     : 'gamblingUpdate' , 
+		                             			 	  "battleId"   : $("#battleId_choosed").val() ,
+		                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
+		                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
+		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5,14),
+		                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
+		                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
+		                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
+		                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
+		                             			 	  "awayCoins"  : $("#awayCoins").val(),
+		                             			 	  "homeCoins"  : $("#homeCoins").val()
+		                             		  },
+		                    				 "success":function(data){
+		                    					 alert("fuck" + data);
+		                    				 }
+		                				 })
+		                				 //---
 		                				 // 關閉 dialog
 		                				 myDialog.dialog("close");
 		                			 }
@@ -309,7 +327,7 @@
 					var input = $(this).val(); // textbox 輸入值
 					$.ajax({
 						"type":"post",//傳遞方式				
-                		"url" :"NbaTeam_Ajax_Servlet.do",
+                		"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'NbaTeam_Ajax_Servlet.do',
                 		"dataType":"json",//Servlet回傳格式
                 		"data":{ "searchName" : input },
        					"success":function(data){

@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+
+import _51_battleset_service.BattleSetBeans_Config;
 
 public class BattleSetDAO implements BattleSetDAO_interface
 {
@@ -201,8 +205,8 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //		System.out.println(date2);
 		//------------------------------------------------------------------
 //【【【【【【【【【【【【【【【 Spring 】】】】】】】】】】】】】】】】】】】】
-//		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
-//		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
+		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
+		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
 
 //		----------【teamId】依日期 及 【頁碼】 查詢----------------
 
@@ -267,12 +271,12 @@ public class BattleSetDAO implements BattleSetDAO_interface
 
 //		BattleSetDAO dao = new BattleSetDAO();
 
-		//=====【測試】 update 資料 ======
+		//=======================【測試】 update 資料 =======================
 //		BattleSetVO vo = new BattleSetVO();
-//		vo.setBattleId(1);
+//		vo.setBattleId(313);
 //		vo.setBattleDateTime(java.sql.Timestamp.valueOf("2000-12-01 01:05:08"));
-//		vo.setHomeId(19);
-//		vo.setAwayId(1);
+//		vo.setHomeId(7);
+//		vo.setAwayId(9);
 //		vo.setHomeScore(98);
 //		vo.setAwayScore(60);
 //		vo.setHomebet(19000.0);
