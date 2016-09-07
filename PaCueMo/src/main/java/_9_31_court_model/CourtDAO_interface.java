@@ -13,4 +13,6 @@ public interface CourtDAO_interface
 	public CourtVO findByPrimaryKey(Integer courtId);
 
 	public List<CourtVO> getAll();
+
+	public List<CourtVO> getByName(String name);
 }
