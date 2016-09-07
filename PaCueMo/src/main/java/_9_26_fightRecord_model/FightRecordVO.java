@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
 
+import _9_41_member_model.MemberVO;
+
 @Component("FightRecordVO")
 public class FightRecordVO implements Serializable
 {
@@ -35,6 +37,7 @@ public class FightRecordVO implements Serializable
 	private int turnOver;
 	private int fouls;
 	private int score;
+	private MemberVO memberVO;
 
 	public FightRecordVO()
 	{
@@ -351,9 +354,14 @@ public class FightRecordVO implements Serializable
 		this.score = score;
 	}
 
-	public static long getSerialversionuid()
+	public MemberVO getMemberVO()
 	{
-		return serialVersionUID;
+		return memberVO;
+	}
+
+	public void setMemberVO(MemberVO memberVO)
+	{
+		this.memberVO = memberVO;
 	}
 
 }

@@ -103,14 +103,14 @@ public class MemberVO implements Serializable
 		this.memberMail = memberMail;
 	}
 
-	public String getMemberFileName()
+	public String getMemberImgUrl()
 	{
 		return memberImgUrl;
 	}
 
-	public void setMemberFileName(String memberFileName)
+	public void setMemberImgUrl(String memberImgUrl)
 	{
-		this.memberImgUrl = memberFileName;
+		this.memberImgUrl = memberImgUrl;
 	}
 
 	public double getMemberPoint()

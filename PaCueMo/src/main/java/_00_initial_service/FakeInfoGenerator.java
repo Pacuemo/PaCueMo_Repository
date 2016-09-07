@@ -838,6 +838,99 @@ public class FakeInfoGenerator
 		}
 	}
 
+	public static void friendListGenerator(String myId, int number) throws IOException
+	{
+
+		try
+		{
+
+			List<String> list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			for (int i = 1 ; i <= number ; i++)
+			{
+
+				String friendId = null;
+
+				while (true)
+				{
+					friendId = list.get((int) (Math.random() * 144));
+					if (myId != friendId)
+						break;
+				}
+
+				String str = String.format("INSERT INTO dbo.FriendsList( memberId, memberFriendId, memberStatus ) "
+						+ "VALUES ('%s','%s',%s)", myId, friendId, 1);
+
+				System.out.println(str);
+			}
+
+			// Handle any driver errors
+		}
+		catch (
+
+		ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
 		/**
@@ -847,9 +940,9 @@ public class FakeInfoGenerator
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
 
-		memberGenerator(); //--->產生會員
+//		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-
+		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 10);
 //      club和league部分
 //		clubGenerator();
 

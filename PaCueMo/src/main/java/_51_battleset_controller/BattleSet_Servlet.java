@@ -53,7 +53,10 @@ public class BattleSet_Servlet extends HttpServlet
 
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
-		//---------------------------------------------------------------------------
+
+		//===================================================================
+		//=====================【依輸入日期查詢】============================
+		//===================================================================
 		if ("queryByDate".equals(action))
 		{
 			System.out.println(" 呼叫 BattleSet_Servlet : queryByDate");
@@ -63,8 +66,8 @@ public class BattleSet_Servlet extends HttpServlet
 			try
 			{
 				response.setHeader("content-type", "text/html;charset=UTF-8");
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String queryDate = request.getParameter("datepicker");
+				/******************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String queryDate = request.getParameter("datepickerDate");
 
 				if (queryDate == null)
 				{ /* 若 datepicker 沒有日期→設定日期為今天 */
@@ -73,20 +76,36 @@ public class BattleSet_Servlet extends HttpServlet
 					queryDate = sdf.format(today);
 				}
 
-//				String queryDate = request.getParameter("xxx");
 				System.out.println(" 查詢日期 : " + queryDate);
-//				queryDate = "2015-11-06";/////////////////////////////////////////////////////////////////////
 
 				if (queryDate == null || queryDate.trim().length() == 0)
 				{
 					errorMsgs.add("請輸入正確日期");
 				}
+
+				String funFlag = request.getParameter("funFlag");// 判斷前端使用者動作的flag
+				//System.out.println("funFlag = " + funFlag);
 				/*************************** 2.開始查詢資料 ******************************************/
-//				BattleSetService svc = new BattleSetService();
+//				BattleSetService svc = new BattleSetService(); // Spring 注入
 				List<Map<String, Object>> list = svc.getSetsByDate(queryDate);// modify:2016/08/12 增加對戰時間
+
+//				for (Map<String, Object> map : list)
+//				{/*測試程式*/
+//					String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//							((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//							((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//							((String) map.get("battleTime")),
+//							((String) map.get("homeScore")),
+//							((String) map.get("awayScore")),
+//							((String) map.get("homebet")),
+//							((String) map.get("awaybet")));
+//					System.out.println(temp);
+//				}
+
 				int listSize = list.size();
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				System.out.println(" 共 : " + listSize + " 筆資料");
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				request.setAttribute("funFlag", funFlag);
 				request.setAttribute("queryDate", queryDate);
 				request.setAttribute("battleSetList", list);
 				request.setAttribute("battleSetList_len", (listSize % 3 == 0 ? (listSize / 3) : (listSize / 3 + 1)));// 計算總頁數(每頁3筆情況)
@@ -105,8 +124,9 @@ public class BattleSet_Servlet extends HttpServlet
 
 		}
 
-		//====================================【依輸入隊名查詢】==========================================
-
+		//===================================================================
+		//=====================【依輸入隊名查詢】============================
+		//===================================================================
 		if ("queryByName".equals(action))
 		{
 			System.out.println("|||  呼叫 BattleSet_Servlet : queryByName ");
