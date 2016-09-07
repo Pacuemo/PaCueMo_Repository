@@ -15,16 +15,19 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/animate.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/nexus.css">
+<link href="${pageContext.request.contextPath }/_10_team_page/css/jquery-ui.min.css" rel="stylesheet">
 <!--     add icon  		-->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/css/style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--     add icon  		-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-3.1.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-ui.min.js"></script>
 </head>
 <body>
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
+	<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-ui.min.js"></script>
 	<div class="col-md-12">
 		<h2 class="margin-vert-20" style="color: white;">
 			<c:choose>
@@ -36,11 +39,11 @@
 		<div class="row margin-bottom-10">
 			<div class="col-sm-2 animate fadeInLeft animated">
 				<p class="margin-bottom-30">
-					<c:choose>
-						<c:when test=""></c:when>
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test=""></c:when> --%>
 
 
-					</c:choose>
+<%-- 					</c:choose> --%>
 				</p>
 				<div class="col-sm-2 col-sm-offset-4 animate fadeIn animated">
 					<i class="material-icons" id="add_teammember">add</i>
@@ -215,6 +218,63 @@
 	</div>
 
 
+	<!-- dialog -->
+	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post">
+		<!--             <div class="tm_title"> -->
+		<!--                 <h3>建立新隊伍</h3> -->
+		<!--             </div>  oninvalid="setCustomValidity('不能为空')" oninput="setCustomValidity('')"-->
+		<fieldset>
+			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required oninvalid="setCustomValidity('GG')" maxlength="10" autofocus pattern=".{2,}">
+		</fieldset>
+		<fieldset>
+			<input placeholder="輸入隊員姓名或電子郵件" name="" type="text" tabindex="2">
+		</fieldset>
+		<fieldset>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
+				</span>
+					<div class="descrip" id="">所有人都可以自由加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
+				</span>
+					<div class="descrip" id="">所有人都可以申請加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
+				</span>
+					<div class="descrip" id="">只有被邀請的成員才可以加入這個隊伍。</div>
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+		</fieldset>
+	</form>
+	<!-- dialog -->
+
+	<script>
+		// initial start
+		$(function()
+		{
+			// team dialog
+			var dialog;
+
+			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+
+			//新增事件
+			$("#add_teammember").button().on("click", function()
+			{
+				dialog.dialog("open");
+			});
+
+			// team dialog end    
+
+			// initial end
+		});
+	</script>
 
 </body>
 </html>
