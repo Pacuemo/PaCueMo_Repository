@@ -8,10 +8,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.stereotype.Repository;
+
 import _00_initial_service.GlobalService;
 
+@Repository("TeamMemberDAO")
 public class TeamMemberDAO implements TeamMemberDAO_interface
 {
+	private JdbcOperations jdbcOperations;
+
+	public TeamMemberDAO()
+	{
+
+	}
+
+	@Autowired
+	public TeamMemberDAO(JdbcOperations jdbcOperations)
+	{
+		this.jdbcOperations = jdbcOperations;
+	}
 
 	private static final String INSERT = "INSERT INTO TeamMember (teamId,teamMemberId) VALUES (?, ?)";
 	private static final String GET_ALL = "SELECT teamId,teamMemberId,joinDate FROM TeamMember order by teamMemberId";
@@ -28,6 +45,12 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		// teamMemberVO.setIsCaptain(false);
 		// new TeamMemberDAO().insert(teamMemberVO);
 
+	}
+
+	@Override
+	public void insert(Integer teamId, String teamMemberId)
+	{
+		jdbcOperations.update(INSERT, teamId, teamMemberId);
 	}
 
 	@Override

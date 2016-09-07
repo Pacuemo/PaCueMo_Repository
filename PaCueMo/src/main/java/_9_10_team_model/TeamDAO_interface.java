@@ -6,7 +6,9 @@ import java.util.Set;
 
 import _9_11_teammember_model.TeamMemberVO;
 
-public interface TeamDAO_interface {
+public interface TeamDAO_interface
+{
+	public void insert(TeamVO teamVO);
 
 	public void createTeam(TeamVO teamVO) throws SQLException;
 
@@ -19,4 +21,6 @@ public interface TeamDAO_interface {
 	public List<TeamVO> getAll();
 
 	public Set<TeamMemberVO> getMemsByTeamId(Integer teamId);
+
+	public Integer find_TeamId(String teamHead) throws SQLException;
 }

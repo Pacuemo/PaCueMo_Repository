@@ -2,7 +2,8 @@ package _9_11_teammember_model;
 
 import java.util.List;
 
-public interface TeamMemberDAO_interface {
+public interface TeamMemberDAO_interface
+{
 	public void insert(TeamMemberVO teamMemberVO);
 
 	public void update(TeamMemberVO teamMemberVO);
@@ -14,5 +15,7 @@ public interface TeamMemberDAO_interface {
 	public List<TeamMemberVO> getAll();
 
 	public List<TeamMemberVO> getOneTeam(Integer teamId);
+
+	void insert(Integer teamId, String teamMemberId);
 
 }

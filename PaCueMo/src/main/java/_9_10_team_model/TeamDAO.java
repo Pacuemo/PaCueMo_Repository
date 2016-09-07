@@ -10,71 +10,71 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.stereotype.Repository;
+
 import _00_initial_service.GlobalService;
 import _9_11_teammember_model.TeamMemberVO;
 
+@Repository("TeamDAO")
 public class TeamDAO implements TeamDAO_interface
 {
+	private JdbcOperations jdbc;
+
+	public TeamDAO()
+	{
+	}
+
+	@Autowired
+	public TeamDAO(JdbcOperations jdbc)
+	{
+		this.jdbc = jdbc;
+	}
 
 	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
-	private static final String INSERT_TeamMember_LEADER = "INSERT INTO TeamMember (teamId,teamMemberId) VALUES (?, ?)";
 	private static final String FIND_TEAMID = "SELECT teamId FROM Team where teamHead = ?";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
 	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
-	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
-	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, teamHead=?, content=? where teamId = ?";
-	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamId = ?";
+	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, teamHead=?, content=? where teamId=?";
 	private static final String UPDATE_AVG = " UPDATE Team SET avgRank=? WHERE teamId=?";
+
+	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamId = ?";
+	private static final String INSERT_TeamMember_LEADER = "INSERT INTO TeamMember (teamId,teamMemberId) VALUES (?, ?)";
+	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
 	private static final String SELECT_TEAM_MEMBERS = "SELECT teamMemberId FROM TeamMember where teamId=?";
+
 //	private static final String SELECT_ = "SELECT ranking FROM PlayerRecord where teamId=?"; PlayerRecordDAO 之後會有總平均? 拿來用就好
 
 	public static void main(String[] args)
 	{
-		TeamVO teamVO = new TeamVO();
-		teamVO.setTeamName("test91");
-		teamVO.setTeamProp(2);
-		teamVO.setTeamHead("9");
+//		TeamVO teamVO = new TeamVO();
+//		teamVO.setTeamName("test91");
+//		teamVO.setTeamProp(2);
+//		teamVO.setTeamHead("9");
+
+		ApplicationContext context = new AnnotationConfigApplicationContext(TeamConfig.class);
+		TeamDAO dao = context.getBean(TeamDAO.class);
+
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see _9_10_team_model.Test#insert(_9_10_team_model.TeamVO)
 	 */
-	// @Override
-	// public void insert(TeamVO teamVO) {
-	// Connection con = null;
-	// PreparedStatement pstmt = null;
-	// try {
-	// Class.forName(GlobalService.DRIVER_NAME);
-	// con = DriverManager.getConnection(GlobalService.DB_URL,
-	// GlobalService.USERID, GlobalService.PASSWORD);
-	// pstmt = con.prepareStatement(INSERT);
-	//
-	// pstmt.setString(1, teamVO.getTeamName());
-	// pstmt.setInt(2, teamVO.getTeamProp());
-	// pstmt.setInt(3, teamVO.getTeamHead());
-	//
-	// pstmt.executeUpdate();
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// } finally {
-	// if (pstmt != null) {
-	// try {
-	// pstmt.close();
-	// } catch (SQLException e) {
-	// e.printStackTrace(System.err);
-	// }
-	// }
-	// if (con != null) {
-	// try {
-	// con.close();
-	// } catch (Exception e) {
-	// e.printStackTrace(System.err);
-	// }
-	// }
-	// }
-	// }
+
+	public void insert(TeamVO teamVO)
+	{
+		jdbc.update(INSERT, teamVO.getTeamName(), teamVO.getTeamProp(), teamVO.getTeamHead());
+	}
+
+	public Integer find_TeamId(String teamHead) throws SQLException
+	{
+		return jdbc.queryForObject(FIND_TEAMID, Integer.class, teamHead);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -598,7 +598,6 @@ public class TeamDAO implements TeamDAO_interface
 				}
 			}
 		}
-
 	}
 
 }

@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository("BattleRecordDAO")
-public class BattleRecordDAO
+public class BattleRecordDAO implements BattleRecordDAO_I
 {
 	private JdbcOperations jdbc;
 
@@ -38,29 +38,60 @@ public class BattleRecordDAO
 	private static final String FIND_BY_TEAM_A = "SELECT * FROM BattleRecord where teamIdA = ?";
 	private static final String FIND_BY_TEAM_B = "SELECT * FROM BattleRecord where teamIdB = ?";
 	private static final String GET_ALL = "SELECT * FROM BattleRecord";
+	private static final String GET_ABSENCE_PERCENT = "SELECT 100*COUNT(*)/(SELECT COUNT(*) FROM BattleRecord WHERE "
+			+ "(result != 0 and result != 6) AND (teamIdA = ? OR teamIdB =?)) FROM BattleRecord WHERE "
+			+ "(teamIdA = ? AND result = 4) OR (teamIdB = ? AND result = 5)";
+	private static final String GET_WPCT = "SELECT 100*COUNT(*)/(SELECT COUNT(*) FROM BattleRecord WHERE "
+			+ "(result = 1 OR result = 2 OR result = 3) AND (teamIdA = ? OR teamIdB = ?)) FROM BattleRecord WHERE "
+			+ "(teamIdA = ? AND result = 1) OR (teamIdB = ? AND result = 2)";
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#add(_9_12_battlerecord_model.BattleRecordVO)
+	 */
+	@Override
 	public void add(BattleRecordVO battleRecordVO)
 	{
 		jdbc.update(INSERT, battleRecordVO.getTeamIdA(), battleRecordVO.getTeamIdB(), battleRecordVO.getCourtId(),
 				battleRecordVO.getBattleMode(), battleRecordVO.getBattleBet(), battleRecordVO.getBattleDateTime());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#accept_Reject(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
 	public void accept_Reject(Integer battleStatus, Integer battleId)
 	{
 		jdbc.update(ACCEPT, battleStatus, battleId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#reportA(_9_12_battlerecord_model.BattleRecordVO)
+	 */
+	@Override
 	public void reportA(BattleRecordVO battleRecordVO)
 	{
 		jdbc.update(REPORT_A, battleRecordVO.getReportB(), battleRecordVO.getBattleId());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#reportB(_9_12_battlerecord_model.BattleRecordVO)
+	 */
+	@Override
 	public void reportB(BattleRecordVO battleRecordVO)
 	{
 		jdbc.update(REPORT_B, battleRecordVO.getReportB(), battleRecordVO.getBattleId());
 	}
 
 	//由service 判斷何時該呼叫此方法
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#updateResult(_9_12_battlerecord_model.BattleRecordVO)
+	 */
+	@Override
 	public void updateResult(BattleRecordVO battleRecordVO)
 	{
 		if (battleRecordVO.getReportA() == battleRecordVO.getReportB())
@@ -69,33 +100,78 @@ public class BattleRecordDAO
 		}
 		else
 		{
-			jdbc.update(UPDATE_RESULT, 5); //結果(5)表示有衝突
+			jdbc.update(UPDATE_RESULT, 6); //結果(6)表示有衝突
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#delete(java.lang.Integer)
+	 */
+	@Override
 	public void delete(Integer batteleRecordId)
 	{
 		jdbc.update(DELETE, batteleRecordId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#findById(java.lang.Integer)
+	 */
+	@Override
 	public BattleRecordVO findById(Integer battleId)
 	{
 		return jdbc.queryForObject(GET_ONE, new BattleRecordRowMapper(), battleId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#findByTeamIdA(java.lang.Integer)
+	 */
+	@Override
 	public List<BattleRecordVO> findByTeamIdA(Integer teamIdA)
 	{
 		return jdbc.query(FIND_BY_TEAM_A, new BattleRecordRowMapper(), teamIdA);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#findByTeamIdB(java.lang.Integer)
+	 */
+	@Override
 	public List<BattleRecordVO> findByTeamIdB(Integer teamIdB)
 	{
 		return jdbc.query(FIND_BY_TEAM_B, new BattleRecordRowMapper(), teamIdB);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#getAll()
+	 */
+	@Override
 	public List<BattleRecordVO> getAll()
 	{
 		return jdbc.query(GET_ALL, new BattleRecordRowMapper());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#getAbsencePercent(java.lang.Integer)
+	 */
+	@Override
+	public Double getAbsencePercent(Integer teamId)
+	{
+		return jdbc.queryForObject(GET_ABSENCE_PERCENT, Double.class, teamId, teamId, teamId, teamId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#getWPCT(java.lang.Integer)
+	 */
+	@Override
+	public Double getWPCT(Integer teamId)
+	{
+		return jdbc.queryForObject(GET_WPCT, Double.class, teamId, teamId, teamId, teamId);
 	}
 
 	private static final class BattleRecordRowMapper implements RowMapper<BattleRecordVO>
@@ -112,7 +188,7 @@ public class BattleRecordDAO
 	{
 		BattleRecordVO battleRecordVO = new BattleRecordVO();
 		battleRecordVO.setTeamIdA(4);
-		battleRecordVO.setTeamIdB(1);
+		battleRecordVO.setTeamIdB(3);
 		battleRecordVO.setBattleStatus(0);
 		battleRecordVO.setCourtId(1);
 		battleRecordVO.setBattleMode(3);
@@ -120,13 +196,15 @@ public class BattleRecordDAO
 		battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis()));
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(BatteleRecordConfig.class);
-		BattleRecordDAO dao = context.getBean(BattleRecordDAO.class);
+		BattleRecordDAO_I dao = context.getBean(BattleRecordDAO.class);
 
 		try
 		{
 //			dao.add(battleRecordVO);
 //			dao.accept_Reject(0, 1);
 //			System.out.println(dao.findById(1).getBattleId() + " " +dao.findById(1).getTeamIdA() );
+
+			System.out.println(dao.getAbsencePercent(4));
 
 			System.out.println("good");
 		}

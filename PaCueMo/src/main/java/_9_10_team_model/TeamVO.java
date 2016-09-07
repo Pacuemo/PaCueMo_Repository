@@ -1,8 +1,17 @@
 package _9_10_team_model;
 
 import java.sql.Date;
+import java.util.List;
 
-public class TeamVO implements java.io.Serializable {
+import org.springframework.stereotype.Component;
+
+import _9_11_teammember_model.TeamMemberVO;
+
+@Component
+public class TeamVO implements java.io.Serializable
+{
+
+	private static final long serialVersionUID = 1L;
 	private Integer teamId;
 	private String teamName;
 	private Date createDate;
@@ -10,61 +19,86 @@ public class TeamVO implements java.io.Serializable {
 	private Double avgRank;
 	private String teamHead;
 	private String content;
+	private List<TeamMemberVO> teamMemberVOs;
 
-	public Integer getTeamId() {
+	public Integer getTeamId()
+	{
 		return teamId;
 	}
 
-	public void setTeamId(Integer teamId) {
+	public void setTeamId(Integer teamId)
+	{
 		this.teamId = teamId;
 	}
 
-	public String getTeamName() {
+	public String getTeamName()
+	{
 		return teamName;
 	}
 
-	public void setTeamName(String teamName) {
+	public void setTeamName(String teamName)
+	{
 		this.teamName = teamName;
 	}
 
-	public Date getCreateDate() {
+	public Date getCreateDate()
+	{
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Date createDate)
+	{
 		this.createDate = createDate;
 	}
 
-	public Integer getTeamProp() {
+	public Integer getTeamProp()
+	{
 		return teamProp;
 	}
 
-	public void setTeamProp(Integer teamProp) {
+	public void setTeamProp(Integer teamProp)
+	{
 		this.teamProp = teamProp;
 	}
 
-	public Double getAvgRank() {
+	public Double getAvgRank()
+	{
 		return avgRank;
 	}
 
-	public void setAvgRank(Double avgRank) {
+	public void setAvgRank(Double avgRank)
+	{
 		this.avgRank = avgRank;
 	}
 
-	public String getContent() {
+	public String getContent()
+	{
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent(String content)
+	{
 		this.content = content;
 	}
 
-	public String getTeamHead() {
+	public String getTeamHead()
+	{
 		return teamHead;
 	}
 
-	public void setTeamHead(String teamHead) {
+	public void setTeamHead(String teamHead)
+	{
 		this.teamHead = teamHead;
+	}
+
+	public List<TeamMemberVO> getTeamMemberVOs()
+	{
+		return teamMemberVOs;
+	}
+
+	public void setTeamMemberVOs(List<TeamMemberVO> teamMemberVOs)
+	{
+		this.teamMemberVOs = teamMemberVOs;
 	}
 
 }

@@ -10,8 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import _00_config.RootConfig;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
+import _12_battlerecord_service.BattleRecordService;
 import _9_10_team_model.TeamVO;
 import _9_11_teammember_model.TeamMemberVO;
 import _9_41_member_model.MemberVO;
@@ -30,11 +35,14 @@ public class TeamServlet extends HttpServlet
 	{
 		System.out.println("Here is Get");
 		req.setCharacterEncoding("UTF-8");
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		TeamVO teamVO = null;
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
 		List<TeamMemberVO> teamMemberList = null;
 		PlayerCardVO playerCardVO = new PlayerCardVO();
+		BattleRecordService battleRecordService = null;
+
 		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
 		{
 			try
@@ -42,8 +50,13 @@ public class TeamServlet extends HttpServlet
 //				Integer teamId = Integer.valueOf(req.getParameter("teamId"));
 				Integer teamId = 4;						//測試!!! TEST TEST TEST
 				teamService = new TeamService();
+				battleRecordService = context.getBean(BattleRecordService.class);
+				Double attendancePercent = battleRecordService.getAttendancePercent(teamId);
+				Double teamWPCT = battleRecordService.getWPCT(teamId);
 				teamVO = teamService.getOne(teamId);
-				req.setAttribute("teamVO", teamVO); //setAtt
+				req.setAttribute("teamVO", teamVO); 							//setAtt
+				req.setAttribute("attendancePercent", attendancePercent);				//setAtt
+				req.setAttribute("teamWPCT", teamWPCT);							//setAtt
 				teamMemberService = new TeamMemberService();
 				teamMemberList = teamMemberService.getOneTeam(teamId);
 				System.out.println(teamVO.getTeamName());

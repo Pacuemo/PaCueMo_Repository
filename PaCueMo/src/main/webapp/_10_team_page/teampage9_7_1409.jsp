@@ -20,103 +20,20 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/css/style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--     add icon  		-->
-
-
+<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-3.1.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-ui.min.js"></script>
 <style type="text/css">
-tempstyle {
+.tempstyle {
 	color: white;
 }
-
-p.tempstyle {
-	color: white;
-	font-size: 18;
-	font-family: "微軟正黑體";
-}
 </style>
-
-<style>
-/* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
-@import url(http://fonts.googleapis.com/css?family=Nunito:300);
-
-/* body { font-family: "Nunito", sans-serif; font-size: 24px; } */
-/* a    { text-decoration: none; } */
-/* p    { text-align: center; } */
-/* sup  { font-size: 36px; font-weight: 100; line-height: 55px; } */
-.button {
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	text-align: center;
-	color: #0C5;
-	font-size: 24px;
-	font-family: "Nunito", sans-serif;
-	font-weight: 300;
-	margin: 5em auto;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	padding: 0px 0;
-	width: 220px;
-	height: 40px;
-	background: #0D6;
-	border: 1px solid #0D6;
-	color: #FFF;
-	overflow: hidden;
-	transition: all 0.5s;
-}
-
-.button:hover, .button:active {
-	text-decoration: none;
-	color: #0C5;
-	border-color: #0C5;
-	background: #FFF;
-}
-
-.button span {
-	display: inline-block;
-	position: relative;
-	padding: 0; padding-right : 0;
-	transition: padding-right 0.5s;
-	padding-right: 0
-}
-
-.button span:after {
-	content: ' ';
-	position: absolute;
-	top: 0;
-	right: -18px;
-	opacity: 0;
-	width: 10px;
-	height: 10px;
-	margin-top: -10px;
-	background: rgba(0, 0, 0, 0);
-	border: 3px solid #FFF;
-	border-top: none;
-	border-right: none;
-	transition: opacity 0.5s, top 0.5s, right 0.5s;
-	transform: rotate(-45deg);
-}
-
-.button:hover span, .button:active span {
-	padding-right: 30px;
-}
-
-.button:hover span:after, .button:active span:after {
-	transition: opacity 0.5s, top 0.5s, right 0.5s;
-	opacity: 1;
-	border-color: #0C5;
-	right: 0;
-	top: 50%;
-}
-</style>
-
 </head>
 <body>
 
 	<jsp:include page="/fragment/top.jsp" />
-	<jsp:include page="/_10_team_page/fragment/sidebar.jsp" />
-
+	<jsp:include page="/fragment/sidebar.jsp" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/css/style.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-ui.min.js"></script>
 	<div class="col-md-12">
@@ -130,23 +47,15 @@ p.tempstyle {
 		<div class="row margin-bottom-10">
 			<div class="col-sm-2 animate fadeInLeft animated">
 				<p class="margin-bottom-30 tempstyle">${requestScope.teamVO.content}</p>
-				<c:if test="${requestScope.teamOK == null }">
-				<a href="#" class="button"> 
-				<span>
-					<c:choose>
-						<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
-						<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
-						<c:otherwise>Join</c:otherwise>
-					</c:choose>
-				</span>
-				</a>
-				</c:if>
+				<div class="col-sm-2 col-sm-offset-4 animate fadeIn animated">
+					<i class="material-icons" id="add_teammember">add</i>
+				</div>
 			</div>
 
 			<!-- Person Details -->
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="${pageContext.request.contextPath }/image/member/theteam/image1.jpg" alt="image1">
+					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image1.jpg" alt="image1">
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							April <small>- Programmer</small>
@@ -287,10 +196,10 @@ p.tempstyle {
 			<div class="col-md-6" style="color: white">
 				<!-- Progress Bars -->
 				<h3 class="progress-label">
-					出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
+					出席 <span class="pull-right">92%</span>
 				</h3>
 				<div class="progress progress-sm">
-					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.attendancePercent}%"></div>
+					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: 90%"></div>
 				</div>
 				<h3 class="progress-label">
 					評價 <span class="pull-right">82%</span>
@@ -299,10 +208,10 @@ p.tempstyle {
 					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: 82%"></div>
 				</div>
 				<h3 class="progress-label">
-					勝率 <span class="pull-right">${requestScope.teamWPCT}%</span>
+					勝率 <span class="pull-right">74%</span>
 				</h3>
 				<div class="progress progress-sm">
-					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.teamWPCT}%"></div>
+					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: 74%"></div>
 				</div>
 				<!-- End Progress Bars -->
 			</div>
@@ -311,7 +220,63 @@ p.tempstyle {
 	</div>
 
 
+	<!-- dialog -->
+	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post">
+		<!--             <div class="tm_title"> -->
+		<!--                 <h3>建立新隊伍</h3> -->
+		<!--             </div>  oninvalid="setCustomValidity('不能为空')" oninput="setCustomValidity('')"-->
+		<fieldset>
+			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
+		</fieldset>
+		<fieldset>
+			<input placeholder="輸入隊員姓名或電子郵件" name="" type="text" tabindex="2">
+		</fieldset>
+		<fieldset>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath}/_10_team_page/assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
+				</span>
+					<div class="descrip" id="">所有人都可以自由加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath}/_10_team_page/assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
+				</span>
+					<div class="descrip" id="">所有人都可以申請加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath}/_10_team_page/assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
+				</span>
+					<div class="descrip" id="">只有被邀請的成員才可以加入這個隊伍。</div>
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+		</fieldset>
+	</form>
+	<!-- dialog -->
 
+	<script>
+		// initial start
+		$(function()
+		{
+			// team dialog
+			var dialog;
+
+			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+
+			//新增事件
+			$("#add_teammember").button().on("click", function()
+			{
+				dialog.dialog("open");
+			});
+
+			// team dialog end    
+
+			// initial end
+		});
+	</script>
 
 </body>
 </html>
