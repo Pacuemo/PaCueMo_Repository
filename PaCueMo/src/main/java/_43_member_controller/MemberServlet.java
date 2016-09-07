@@ -20,7 +20,7 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
 import _43_member_service.MemberService;
 import _9_41_member_model.MemberVO;
 
-@WebServlet(urlPatterns = { "/_03_member/activate.do", "/_03_member/deactivate.do", "/_03_member/connect.do", "/_03_member/mypage.do" })
+@WebServlet(urlPatterns = { "/_03_member/activate.do", "/_03_member/deactivate.do", "/_03_member/connect.do", "/_03_member/overview.do" })
 public class MemberServlet extends HttpServlet
 {
 
@@ -29,18 +29,18 @@ public class MemberServlet extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		System.out.println("call MemberServlet doGet");
+		System.out.println(request.getServletPath());
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 		MemberService ms;
-
-		System.out.println("test");
 
 		if (memberVO != null)
 		{
 			ms = new MemberService();
 			HashMap<String, List<String>> map = ms.showAllFriends(memberVO.getMemberId());
 			request.setAttribute("friends", map);
-			request.getRequestDispatcher("/_03_member/myPage.jsp").forward(request, response);
+			request.getRequestDispatcher("/_03_member/accountoverview.jsp").forward(request, response);
 			return;
 
 		}
@@ -50,6 +50,7 @@ public class MemberServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		System.out.println("call MemberServlet doPost");
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
