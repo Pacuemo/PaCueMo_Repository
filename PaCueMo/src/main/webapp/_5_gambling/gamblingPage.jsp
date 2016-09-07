@@ -70,8 +70,18 @@
 						</div>
        					<div id="tableDiv">
        						<table id="myTable" class="table">
-       							<c:set var="startNum" value="0"/>
-       							<c:set var="endNum"   value="2"/>
+       							
+       							<c:choose>
+       								<c:when test="${funFlag=='byTeamName'}">
+	       								<c:set var="startNum" value="0"/>
+	     								<c:set var="endNum"   value="4"/>
+       								</c:when>
+       								<c:otherwise>
+       									<c:set var="startNum" value="0"/>
+       									<c:set var="endNum"   value="2"/>
+       								</c:otherwise>
+       							</c:choose>
+       							
        							<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}" varStatus="vs">
        								<tr align='center' valign='middle'>
 										<td><img width="150" class="img-rounded" alt="away"    src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
@@ -240,7 +250,7 @@
 		                			'class' : "btn btn-danger",
 		                			'click' : function()
 		                			 {
-		                				 alert('hi');
+		                				 alert($(this).attr('id'));
 		                				 myDialog.dialog("close");
 		                			 }
 	                		 },
