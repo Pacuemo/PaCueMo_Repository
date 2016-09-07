@@ -40,7 +40,7 @@ public class TeamServlet extends HttpServlet
 			try
 			{
 //				Integer teamId = Integer.valueOf(req.getParameter("teamId"));
-				Integer teamId = 4;//測試!!! TEST TEST TEST
+				Integer teamId = 4;						//測試!!! TEST TEST TEST
 				teamService = new TeamService();
 				teamVO = teamService.getOne(teamId);
 				req.setAttribute("teamVO", teamVO); //setAtt
