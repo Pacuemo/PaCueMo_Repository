@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import _00_config.RootConfig;
 import _10_team_service.TeamService;
@@ -85,7 +83,7 @@ public class TeamServlet extends HttpServlet
 	{
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-		WebApplicationContext context = new AnnotationConfigWebApplicationContext();
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		Boolean error = false;
 		TeamService teamService = null;
 		TeamVO teamVO = null;
