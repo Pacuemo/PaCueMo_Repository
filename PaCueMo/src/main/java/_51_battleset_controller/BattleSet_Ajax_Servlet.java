@@ -95,13 +95,12 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				// *************************
 				// ********【Ajax】*********
 				// *************************
-//				System.out.println(list.size() + " 筆");
 				Gson gson = new Gson();
 				String ans = gson.toJson(list);
 				System.out.println(" 本頁筆數 " + list.size() + " 筆");
 				System.out.println(ans);
 				out.println(ans);
-//				out.println(ans.toString());
+
 				/*************************** 其他可能的錯誤處理 *************************************/
 			}
 			catch (Exception e)//---處理其他不可預期意外

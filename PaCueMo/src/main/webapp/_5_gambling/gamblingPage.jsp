@@ -92,7 +92,7 @@
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['away'].teamName}</h4></td>
 										<td>
 											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/>
-									    	<input type="hidden" value="${battleSetVO.battleId}"/><!-- 紀錄 battleSetId -->
+									    	<input  type="hidden" value="${battleSetVO.battleId}"/><!-- 紀錄 battleSetId -->
 										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
 										</td>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -182,21 +182,22 @@
             	
        		$(function(){
        			/* ================ 【下注 開始】 ================= */
+       			
+     			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
+         		  $("#awayCoins").spinner({
+                      "step": 100,
+                      "min" : 0
+                  });
+         		  $("#homeCoins").spinner({
+                      "step": 100,
+                      "min" : 0
+                  });
+         		/* ==== ﹝ 下注金額 spinner ﹞ end ==== */
+       			
        			$("#myTable").find('button').click(function(){
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
        				var battleId 	 = inputsHidden[0].value ;
-
-       	  			/* ==== ﹝ 下注金額 spinner ﹞begin ==== */
-           			$("#awayCoins").spinner({
-                        "step": 100,
-                        "min" : 0
-                    });
-           			$("#homeCoins").spinner({
-                        "step": 100,
-                        "min" : 0
-                    });
-           			/* ==== ﹝ 下注金額 spinner ﹞ end ==== */
        				
 	       			 //--- 按下【下注】按鈕ajax撈資料 開始 ---
 	   				 $.ajax({
@@ -425,7 +426,8 @@
 		                		"data":{ "action": actionName , "pageNo":pageNo , "searchName":searchName , "datepickerDate":chooseDate },
 		                		"success":function(data){
 		                			//console.log(data[0]);
-		                			$("#tableDiv").children('.table').remove();// 每次按下換頁，先移除舊資料
+		                			var tableDiv = $("#tableDiv");
+		                			tableDiv.children('.table').remove();// 每次按下換頁，先移除舊資料
 		                			var mytable =  $('<table></table>').addClass("table");
 		        					var mybody  =  $('<tbody></tbody>');
 		        					mytable.append(mybody);
@@ -441,22 +443,86 @@
 										img1.appendTo(cell11);
 										img2.appendTo(cell12);
 										img3.appendTo(cell13);
-										
+									
 										var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
 										var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
 										var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
-										var cell22  =  $('<td></td>').html("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong>");
-						 /* 下注按鈕 */	    cell22.html("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
+										var cell22  =  $('<td></td>').append("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong><p/>");
+	  /*hidden 欄位 紀錄 battleSetId*/      cell22.append("<input  type='hidden' "+" value='"+ obj.battleId +"'/>") 
+ 						/* 下注按鈕 */	    cell22.append("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
 										var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
 										myrow1.append([ cell11 , cell12 , cell13 ]);
 										myrow2.append([ cell21 , cell22 , cell23 ]);
 										
 										myrow1.appendTo(mybody);
 										myrow2.appendTo(mybody);
+									})	
+									tableDiv.append(mytable);// ！--表格建立完成--！
+									
+									/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞開始 ==============*/
+									tableDiv.find('button').click(function(){
+										//================= 
+										alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
+										//=================	       
+       									var battleId = $(this).prev('input').val(); // 呼叫<button>標籤前一個<input type='hidden'...的 value
+					       				
+						       			 //--- 按下【下注】按鈕ajax撈資料 開始 --- ◎◎內層Ajax → 下注 dialog ◎◎
+						   				 $.ajax({
+						   					 "type":"POST",//傳遞方式				
+						               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'BattleSet_Ajax_Servlet.do',
+						               		 "dataType":"json",//Servlet回傳格式
+						               		 "data":{ "action"     : 'queryByBattleSetId' ,  
+						               			 	  "battleId"   :  battleId 
+						               		  },
+						      				 "success":function(dataVO){
+						      					 
+						      					var battleId     = dataVO.battleId;
+						      					var awayName 	 = dataVO.away.teamName ;
+						      					var homeName     = dataVO.home.teamName ;
+						      					var awayLogoUrl  = dataVO.away.teamLogoURL ;
+						      					var homeLogoUrl  = dataVO.home.teamLogoURL ;
+						      					var battleTime   = dataVO.battleTime ; 
+						      					var awayScore    = dataVO.awayScore ; 
+						      					var homeScore    = dataVO.homeScore ;
+						      					var awayBet 	 = dataVO.awaybet ;
+						      					var homeBet 	 = dataVO.homebet ;
+						      					var awayId 	     = dataVO.away.teamID ;
+						      					var homeId 	     = dataVO.home.teamID ;
+						      					  
+						         				console.log("battleId " 	+ battleId);
+						         				console.log("awayName " 	+ awayName);
+						         				console.log("homeName " 	+ homeName);
+						         				console.log("awayLogoUrl " 	+ awayLogoUrl);
+						         				console.log("homeLogoUrl " 	+ homeLogoUrl);
+						         				console.log("battleTime " 	+ battleTime);
+						         				console.log("awayScore " 	+ awayScore);
+						         				console.log("homeScore " 	+ homeScore);
+						         				console.log("awayBet " 		+ awayBet);
+						         				console.log("homeBet " 		+ homeBet);
+						         				console.log("awayId " 		+ awayId);
+						         				console.log("homeId " 		+ homeId);
+						      					  
+						      					$("#battleId_choosed").val(battleId);// input hidden
+						           				$("#awayId").val(awayId);// input hidden
+						           				$("#homeId").val(homeId);// input hidden
+						           				$("#row1 img:eq(0)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  awayLogoUrl);
+						           				$("#row1 img:eq(2)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  homeLogoUrl);
+						           				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
+						           				$("#row2 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeName + "</h4>");
+						           				$("#row3 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>"+ "比賽時間：" + battleTime.substring(0,16) + "</h4>");
+						           				$("#row4 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayScore + "</h4>");
+						           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
+						           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
+						           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
+						       				 }
+						   				 })
+						   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
+										 myDialog.dialog("open");
+											
+										//=================
+									
 									})
-										
-									$("#tableDiv").append(mytable);
-		                	
+									/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞結束 ==============*/
 		                		}
 		                	})
 		        
