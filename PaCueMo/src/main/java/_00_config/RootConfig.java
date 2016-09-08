@@ -21,8 +21,8 @@ import _9_21_club_model.ClubConfig;
 import _9_23_league_model.LeagueConfig;
 
 @Configuration
-@ComponentScan({ "_9_13_invitation_model", "_9_41_member_model", "_9_12_battlerecord_model", "_9_10_team_model", "_12_battlerecord_service", "_10_team_service" })
-@Import({ ClubConfig.class, LeagueConfig.class })
+@ComponentScan({ "_9_41_member_model" })
+@Import({ ClubConfig.class, LeagueConfig.class, StevenScanConfig.class })
 @EnableTransactionManagement
 public class RootConfig
 {

@@ -35,7 +35,7 @@ public class TeamDAO implements TeamDAO_interface
 	}
 
 	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
-	private static final String FIND_TEAMID = "SELECT teamId FROM Team where teamHead = ?";
+	private static final String FIND_TEAMID = "SELECT MAX(teamId) FROM Team where teamHead = ?";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
 	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";

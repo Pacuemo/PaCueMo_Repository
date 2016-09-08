@@ -83,12 +83,13 @@ public class TeamServlet extends HttpServlet
 	{
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		Boolean error = false;
 		TeamService teamService = null;
 		TeamVO teamVO = null;
 		try
 		{
-			teamService = new TeamService();
+			teamService = context.getBean(TeamService.class);
 			teamVO = new TeamVO();
 
 			String teamName = req.getParameter("teamName");
