@@ -314,7 +314,8 @@
     	   				//*****************************************
        		    		//alert($('#myDatepicker').val());
        		    		var chooseDate = $('#myDatepicker').val(); // user 選擇的日期
-       		    		$("#dateForm").attr({"ACTION": "BattleSet_Servlet.do?"+
+       		    		$("#dateForm").attr({"ACTION": "<%=request.getContextPath()%>" + '/_5_gambling/' +
+       		    									   "BattleSet_Servlet.do?"+
        		    							  		   "action=queryByDate"  +
        		    							  		   "&datepickerDate="+ chooseDate +'&funFlag='+ funFlag , 
        		    							 "METHOD":"POST"}).submit();
@@ -357,9 +358,10 @@
 					//alert( funFlag );
 	   				//*****************************************
 					var searchName = $("#searchName").val(); // 搜尋textBox的值(隊名)
-					$('#searchForm').attr({ 'action':'BattleSet_Servlet.do?'+
+					$('#searchForm').attr({ 'ACTION':"<%=request.getContextPath()%>" + '/_5_gambling/' +
+											'BattleSet_Servlet.do?'+
 											'action=queryByName'+'&teamName='+ searchName +'&funFlag='+ funFlag , 
-					  'method':'POST'}).submit();
+					  'METHOD':'POST'}).submit();
 				})
        			/* ==================== 【分頁開始】 =================== */
        			$("#slicePage").paginate({
