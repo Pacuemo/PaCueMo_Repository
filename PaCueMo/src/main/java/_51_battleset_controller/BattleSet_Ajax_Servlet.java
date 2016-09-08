@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
+import _9_41_member_model.MemberVO;
 import _9_51_battleset_model.BattleSetVO;
 
 @WebServlet("/_5_gambling/BattleSet_Ajax_Servlet.do")
@@ -302,7 +304,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		}
 		/*******************/
 		// ************************************************************************************************
-		// ***********************【會員﹝下注後更新﹞battleSetVO 、memberVO資料】*****************************
+		// ***********************【會員﹝下注後更新﹞battleSetVO 、memberVO資料】*************************
 		// ************************************************************************************************
 		if ("gamblingUpdate".equals(action))
 		{
@@ -322,8 +324,8 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				String strAwayScore = request.getParameter("awayScore");
 				String strHomeBet = request.getParameter("homeBet");
 				String strAwayBet = request.getParameter("awayBet");
-				String strHomeCoins = request.getParameter("homeCoins");
-				String strAwayCoins = request.getParameter("awayCoins");
+				String strHomeCoins = request.getParameter("homeCoins"); // 下注金額 
+				String strAwayCoins = request.getParameter("awayCoins"); // 下注金額
 				System.out.println(strBattleId + "  " + strAwayId + "  " + strHomeId + "  "
 						+ strBattleTime + "  " + strAwayScore + "  " + strHomeScore + "  " + strAwayBet + "  " + strHomeBet
 						+ "   " + strAwayCoins + "   " + strHomeCoins);
@@ -444,6 +446,16 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				/*************************** 2.開始 Update 資料 ( jQuery + Ajax : return text ) **********/
 //				BattleSetService svc = new BattleSetService(); // Spring
 //				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
+
+				HttpSession session = request.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK"); // 登入會員的資料
+				Double pocket = memberVO.getMemberPoint();
+				if (pocket - (awayCoins + homeCoins) < 0)
+				{
+					out.println(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
+					return;// 直接返回前頁
+				}
+
 				BattleSetVO bSetVO = new BattleSetVO();
 				bSetVO.setBattleId(battleId);
 				bSetVO.setBattleDateTime(battleTime);
@@ -451,11 +463,9 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				bSetVO.setAwayId(awayId);
 				bSetVO.setHomeScore(homeScore);
 				bSetVO.setAwayScore(awayScore);
-				Double newHomeBet = homeBet + homeCoins; // 更新後的賭金總額
-				Double newAwayBet = awayBet + awayCoins; // 更新後的賭金總額
-				bSetVO.setHomebet(newHomeBet);
-				bSetVO.setAwaybet(newAwayBet);
-				gamblingFacade.updateMemberAndBattleSetCoin(bSetVO); // facade類別控制BattleSet及Member交易
+				bSetVO.setHomebet(homeBet);
+				bSetVO.setAwaybet(awayBet);
+				gamblingFacade.updateMemberAndBattleSetCoin(bSetVO, memberVO, homeCoins, awayCoins); // facade 類別控制 BattleSet 及 Member 交易
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********
