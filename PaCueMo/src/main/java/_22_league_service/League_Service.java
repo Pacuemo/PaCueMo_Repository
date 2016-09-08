@@ -17,14 +17,13 @@ import _9_24_leagueClub_model.LeagueClubVO;
 import _9_25_leagueRecord_model.LeagueRecordDAO_I;
 import _9_25_leagueRecord_model.LeagueRecordVO;
 import _9_26_fightRecord_model.FightRecordDAO_I;
-import _9_26_fightRecord_model.FightRecordVO;
 import _9_31_court_model.CourtDAO;
 import _9_31_court_model.CourtDAO_interface;
 import _9_41_member_model.MemberDAO_interface;
 
 @Component
 @Transactional
-public class _22_league_service
+public class League_Service
 {
 	@Autowired
 	private LeagueDAO_I leagueDao;
@@ -79,26 +78,17 @@ public class _22_league_service
 		return leagueVO;
 	}
 
-//----------------查詢單場賽事------------------
-	public List<FightRecordVO> getOneFightRecords(int fightId)
+//	---------新增聯賽---------
+	public int add_League(LeagueVO leagueVO)
 	{
-		List<FightRecordVO> fightRecordVOs = fightRecordDao.find_All_By_fightId(fightId);
-		System.out.println("成功查詢單場聯賽  球員  紀錄:         " + fightRecordVOs.size() + "    筆-傳入值為聯賽場次Id");
-		for (FightRecordVO vo : fightRecordVOs)
-		{
-			vo.setMemberVO(memberDao.findByPrimaryKey(vo.getClubMemberId()));
-		}
-		System.out.println("成功查詢球員的MemberVO:         " + fightRecordVOs.size() + "    筆-放入單一聯賽球員紀錄VO內");
-		System.out.println("回傳:  " + fightRecordVOs.size() + "     筆聯賽紀錄VOs(內包含多筆單一球員memberVO)");
-		return fightRecordVOs;
+		int success = leagueDao.addOne(leagueVO);
+		System.out.println("成功新增 1 筆聯賽資訊");
+		System.out.println("並回傳整數  " + success);
+		return success;
+
 	}
 
-	//---------新增聯賽---------
-//	public int add_League()
-//	{
-//		leagueDao.addOne(VO);
-//
-//	}
+//------取得某社團多	
 
 	//------交易測試--------
 	@Transactional(rollbackFor = Exception.class)
@@ -111,7 +101,7 @@ public class _22_league_service
 	public static void main(String[] args)
 	{
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
-		_22_league_service dao = context.getBean(_22_league_service.class);
+		League_Service dao = context.getBean(League_Service.class);
 		dao.insert();
 		System.out.println("成功");
 	}

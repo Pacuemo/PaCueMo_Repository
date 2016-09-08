@@ -11,14 +11,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
-import _22_league_service._22_league_service;
+import _22_league_service.FightRecord_Service;
+import _22_league_service.League_Service;
 
 @Controller
 @RequestMapping("/league")
 public class _22_league_controller
 {
 	@Autowired
-	private _22_league_service service;
+	private League_Service leagueService;
+	private FightRecord_Service fightRecordService;
 	@Autowired
 	private Gson gson;
 
@@ -37,7 +39,7 @@ public class _22_league_controller
 	public String getLeagueInfo(HttpServletRequest request)
 	{
 		System.out.println("呼叫league_Controller:/getLeagueInfos 全部聯賽資訊");
-		request.setAttribute("leagues", service.getAll());
+		request.setAttribute("leagues", leagueService.getAll());
 		System.out.println("回傳多筆聯賽資訊 放入Request物件中 Key=leagues");
 		System.out.println("轉入/league/leagueInfo.jsp 顯示聯賽資訊頁面");
 		System.out.println("-------------------------------------------------------");
@@ -52,7 +54,7 @@ public class _22_league_controller
 		System.out.println("呼叫league_Controller:/Info 查詢單一聯賽資訊 傳入聯賽Id:  " + leagueId);
 		System.out.println("回傳單筆聯賽資料 格式JSON");
 		System.out.println("-------------------------------------------------------");
-		return gson.toJson(service.getOne(leagueId));
+		return gson.toJson(leagueService.getOne(leagueId));
 	}
 
 //----------------------查詢單場聯賽紀錄-------------------------------------------------	
@@ -60,7 +62,7 @@ public class _22_league_controller
 	public String getOneFightInfo(@RequestParam("fightId") int fightId, HttpServletRequest request)
 	{
 		System.out.println("呼叫league_Controller:/Info/one 查詢聯賽內單一場次球員資訊 傳入場次Id:  " + fightId);
-		request.setAttribute("fightRecordVOs", service.getOneFightRecords(fightId));
+		request.setAttribute("fightRecordVOs", fightRecordService.get_FightRecords_ByfightId(fightId));
 		System.out.println("回傳多筆單場球員資訊 放入request物件中 Key=fightRecordVOs");
 		System.out.println("轉入/league/recordInfos.jsp 顯示單場球員資訊頁面");
 		System.out.println("-------------------------------------------------------");

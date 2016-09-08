@@ -982,8 +982,8 @@ public class FakeInfoGenerator
 
 //		gambleOrderGenerator();
 
-//		teammemberGenerator();
-		generator.teamGenerator();
+//		generator.teamGenerator();
+		teammemberGenerator();
 
 	}
 }

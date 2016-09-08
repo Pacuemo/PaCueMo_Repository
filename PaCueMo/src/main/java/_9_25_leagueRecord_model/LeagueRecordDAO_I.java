@@ -5,7 +5,7 @@ import java.util.List;
 public interface LeagueRecordDAO_I
 {
 
-	List<LeagueRecordVO> find_One(int clubId);
+	List<LeagueRecordVO> find_One(int leagueId, int clubId);
 
 	List<LeagueRecordVO> find_All(int leagueId);
 
