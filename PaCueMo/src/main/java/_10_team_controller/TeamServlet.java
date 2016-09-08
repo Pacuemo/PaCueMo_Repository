@@ -49,7 +49,7 @@ public class TeamServlet extends HttpServlet
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
 		List<TeamMemberVO> teamMemberList = null;
-		PlayerCardVO playerCardVO = new PlayerCardVO();
+		PlayerCardVO playerCardVO = null;
 		BattleRecordService battleRecordService = null;
 		Integer teamId = 4;								//測試!!! TEST TEST TEST
 		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
@@ -59,19 +59,24 @@ public class TeamServlet extends HttpServlet
 //				teamId = Integer.valueOf(req.getParameter("teamId"));
 				teamService = context.getBean(TeamService.class);
 				battleRecordService = context.getBean(BattleRecordService.class);
+				teamMemberService = context.getBean(TeamMemberService.class);
 				Double attendancePercent = battleRecordService.getAttendancePercent(teamId);
 				Double teamWPCT = battleRecordService.getWPCT(teamId);
 				teamVO = teamService.getOne(teamId);
 				req.setAttribute("teamVO", teamVO); 							//setAtt
 				req.setAttribute("attendancePercent", attendancePercent);		//setAtt
 				req.setAttribute("teamWPCT", teamWPCT);							//setAtt
-				teamMemberService = context.getBean(TeamMemberService.class);
 				teamMemberList = teamMemberService.getOneTeam(teamId);
-				System.out.println(teamVO.getTeamName());
+
+				playerCardVO = new PlayerCardVO();
 				for (TeamMemberVO list : teamMemberList)
 				{
 
+//					if()
+//						req.setAttribute("teamExsist", "Exsist");								//setAtt
 				}
+				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
+				System.out.println("Servlet GET End");
 				req.getRequestDispatcher("/_10_team_page/teampage.jsp").forward(req, resp);
 			}
 			catch (Exception e)

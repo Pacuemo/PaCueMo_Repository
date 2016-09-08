@@ -17,11 +17,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.google.gson.Gson;
 
 import _00_initial_service.GlobalService;
+import _10_Configs.StevenScanConfig;
 import _9_21_club_model.ClubConfig;
 import _9_23_league_model.LeagueConfig;
 
 @Configuration
-@ComponentScan({ "_9_41_member_model" })
+@ComponentScan({ "_9_41_member_model", "_00_initial_service" })
 @Import({ ClubConfig.class, LeagueConfig.class, StevenScanConfig.class })
 @EnableTransactionManagement
 public class RootConfig
