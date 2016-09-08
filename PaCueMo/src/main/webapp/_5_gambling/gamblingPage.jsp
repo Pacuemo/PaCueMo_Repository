@@ -188,11 +188,12 @@
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
             var funFlag = "<%=request.getAttribute("funFlag")%>";    
+           
             //alert( funFlag );
             	
        		$(function(){
        			/* ================ 【下注 開始】 ================= */
-       			/* ==== ﹝ 下注金額 ﹞ ==== */
+       			/* ==== ﹝ 下注金額 ﹞begin ==== */
        			var spinnerAway = $("#awayCoins").spinner({
                     "step": 100,
                     "min" : 0
@@ -215,20 +216,20 @@
 	               		 "data":{ "action"     : 'queryByBattleSetId' ,  
 	               			 	  "battleId"   :  battleId 
 	               		  },
-	      				 "success":function(battleSetVO){
+	      				 "success":function(dataVO){
 	      					 
-	      					var battleId     = battleSetVO.battleId;
-	      					var awayName 	 = battleSetVO.away.teamName ;
-	      					var homeName     = battleSetVO.home.teamName ;
-	      					var awayLogoUrl  = battleSetVO.away.teamLogoURL ;
-	      					var homeLogoUrl  = battleSetVO.home.teamLogoURL ;
-	      					var battleTime   = battleSetVO.battleTime ; 
-	      					var awayScore    = battleSetVO.awayScore ; 
-	      					var homeScore    = battleSetVO.homeScore ;
-	      					var awayBet 	 = battleSetVO.awaybet ;
-	      					var homeBet 	 = battleSetVO.homebet ;
-	      					var awayId 	     = battleSetVO.away.teamID ;
-	      					var homeId 	     = battleSetVO.home.teamID ;
+	      					var battleId     = dataVO.battleId;
+	      					var awayName 	 = dataVO.away.teamName ;
+	      					var homeName     = dataVO.home.teamName ;
+	      					var awayLogoUrl  = dataVO.away.teamLogoURL ;
+	      					var homeLogoUrl  = dataVO.home.teamLogoURL ;
+	      					var battleTime   = dataVO.battleTime ; 
+	      					var awayScore    = dataVO.awayScore ; 
+	      					var homeScore    = dataVO.homeScore ;
+	      					var awayBet 	 = dataVO.awaybet ;
+	      					var homeBet 	 = dataVO.homebet ;
+	      					var awayId 	     = dataVO.away.teamID ;
+	      					var homeId 	     = dataVO.home.teamID ;
 	      					  
 	         				console.log("battleId " 	+ battleId);
 	         				console.log("awayName " 	+ awayName);
@@ -276,7 +277,7 @@
 	                			'click' : function()
 	                			 {
 	                				 alert('hi');	
-	                				 alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
+	                				 //alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
 	                				 //---
 	                				 $.ajax({
 	                					 "type":"POST",//傳遞方式				
@@ -297,7 +298,7 @@
 	                             			 	  "homeCoins"  : $("#homeCoins").val()
 	                             		  },
 	                    				 "success":function(data){
-	                    					 alert("fuck" + data);
+	                    					 alert("fuck " + data);
 	                    				 }
 	                				 })
 	                				 //---
@@ -364,13 +365,13 @@
         					parentDIV.children("button").remove();// 移除→避免backspace建立過多<Button>
         					$.each(data , function(index , obj){	       						
         						var tBtn = $('<button></button>').addClass("list-group-item").text( obj.teamName );
-        						//=== ﹝註冊事件開始﹞===//
+        						//=== ﹝註冊事件開始﹞ ===//
 	       						tBtn.click(function(event){
 	       							event.preventDefault();// 防止Button點擊直接link到空白頁
 	       							$("#searchName").val( tBtn.text() );
 	       							parentDIV.children("button").remove();
 	       						})
-	       						//=== ﹝註冊事件結束﹞===//
+	       						//=== ﹝註冊事件結束﹞ ===//
 	           			    	parentDIV.append(tBtn);        						        					        					
         					})
        					}
@@ -456,6 +457,7 @@
 										var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
 										var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
 										var cell22  =  $('<td></td>').html("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong>");
+						 /* 下注按鈕 */	    cell22.html("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
 										var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
 										myrow1.append([ cell11 , cell12 , cell13 ]);
 										myrow2.append([ cell21 , cell22 , cell23 ]);
