@@ -104,6 +104,12 @@ public class MemberService
 		return map;
 	}
 
+	public int deleteFriend(String memberId, String friendId)
+	{
+
+		return fDao.deleteFriend(memberId, friendId);
+	}
+
 	public static void main(String[] args)
 	{
 		MemberService memberService = new MemberService();
