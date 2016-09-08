@@ -210,7 +210,7 @@
        				var homeName    = inputsHidden[2].value ;
        				var awayLogoUrl = inputsHidden[3].value ;
        				var homeLogoUrl = inputsHidden[4].value ;
-       				var battleTime 	= inputsHidden[5].value ;
+       				var battleTime 	= $("#myDatepicker").val() +" "+ inputsHidden[5].value + ":00"; //補 日期 & 秒數 供 java.sql.TimeStamp.valueOf()
        				var awayScore 	= inputsHidden[6].value ; 
        				var homeScore   = inputsHidden[7].value ;
        				var awayBet 	= inputsHidden[8].value ;
@@ -223,7 +223,7 @@
        				console.log("homeName " 	+ inputsHidden[2].value);
        				console.log("awayLogoUrl " 	+ inputsHidden[3].value);
        				console.log("homeLogoUrl " 	+ inputsHidden[4].value);
-       				console.log("battleTime " 	+ inputsHidden[5].value);
+       				console.log("battleTime " 	+ $("#myDatepicker").val() +" "+ inputsHidden[5].value);
        				console.log("awayScore " 	+ inputsHidden[6].value);
        				console.log("homeScore " 	+ inputsHidden[7].value);
        				console.log("awayBet " 		+ inputsHidden[8].value);
@@ -262,8 +262,7 @@
 		                			'class' : "btn btn-danger",
 		                			'click' : function()
 		                			 {
-		                				 alert('hi');
-		                				
+		                				 alert('hi');		                				 
 		                				 //---
 		                				 $.ajax({
 		                					 "type":"POST",//傳遞方式				
@@ -273,7 +272,7 @@
 		                             			 	  "battleId"   : $("#battleId_choosed").val() ,
 		                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
 		                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
-		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5,14),
+		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5),
 		                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
 		                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
 		                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
