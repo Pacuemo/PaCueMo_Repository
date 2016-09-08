@@ -205,47 +205,60 @@
        			$("#myTable").find('button').click(function(){
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
-       				var battleId 	= inputsHidden[0].value ;
-       				var awayName 	= inputsHidden[1].value ;
-       				var homeName    = inputsHidden[2].value ;
-       				var awayLogoUrl = inputsHidden[3].value ;
-       				var homeLogoUrl = inputsHidden[4].value ;
-       				var battleTime 	= $("#myDatepicker").val() +" "+ inputsHidden[5].value + ":00"; //補 日期 & 秒數 供 java.sql.TimeStamp.valueOf()
-       				var awayScore 	= inputsHidden[6].value ; 
-       				var homeScore   = inputsHidden[7].value ;
-       				var awayBet 	= inputsHidden[8].value ;
-       				var homeBet 	= inputsHidden[9].value ;
-       				var awayId 		= inputsHidden[10].value ;
-       				var homeId 		= inputsHidden[11].value ;
-  					
-       				console.log("battleId " 	+ inputsHidden[0].value);
-       				console.log("awayName " 	+ inputsHidden[1].value);
-       				console.log("homeName " 	+ inputsHidden[2].value);
-       				console.log("awayLogoUrl " 	+ inputsHidden[3].value);
-       				console.log("homeLogoUrl " 	+ inputsHidden[4].value);
-       				console.log("battleTime " 	+ $("#myDatepicker").val() +" "+ inputsHidden[5].value);
-       				console.log("awayScore " 	+ inputsHidden[6].value);
-       				console.log("homeScore " 	+ inputsHidden[7].value);
-       				console.log("awayBet " 		+ inputsHidden[8].value);
-       				console.log("homeBet " 		+ inputsHidden[9].value);
-       				console.log("awayId " 		+ inputsHidden[10].value);
-       				console.log("homeId " 		+ inputsHidden[11].value);
-       				
-       				
-       				$("#battleId_choosed").val(battleId);// input hidden
-       				$("#awayId").val(awayId);// input hidden
-       				$("#homeId").val(homeId);// input hidden
-       				$("#row1 img:eq(0)").attr('src',awayLogoUrl);
-       				$("#row1 img:eq(2)").attr('src',homeLogoUrl);
-       				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
-       				$("#row2 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeName + "</h4>");
-       				$("#row3 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>"+ "比賽時間：" + battleTime.substring(0,16) + "</h4>");
-       				$("#row4 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayScore + "</h4>");
-       				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
-       				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
-       				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
-       				
-       			 	myDialog.dialog("open");
+       				var battleId 	 = inputsHidden[0].value ;
+
+	       			 //--- 按下【下注】按鈕ajax撈資料 開始 ---
+	   				 $.ajax({
+	   					 "type":"POST",//傳遞方式				
+	               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'BattleSet_Ajax_Servlet.do',
+	               		 "dataType":"json",//Servlet回傳格式
+	               		 "data":{ "action"     : 'queryByBattleSetId' ,  
+	               			 	  "battleId"   :  battleId 
+	               		  },
+	      				 "success":function(battleSetVO){
+	      					 
+	      					var battleId     = battleSetVO.battleId;
+	      					var awayName 	 = battleSetVO.away.teamName ;
+	      					var homeName     = battleSetVO.home.teamName ;
+	      					var awayLogoUrl  = battleSetVO.away.teamLogoURL ;
+	      					var homeLogoUrl  = battleSetVO.home.teamLogoURL ;
+	      					var battleTime   = battleSetVO.battleTime ; 
+	      					var awayScore    = battleSetVO.awayScore ; 
+	      					var homeScore    = battleSetVO.homeScore ;
+	      					var awayBet 	 = battleSetVO.awaybet ;
+	      					var homeBet 	 = battleSetVO.homebet ;
+	      					var awayId 	     = battleSetVO.away.teamID ;
+	      					var homeId 	     = battleSetVO.home.teamID ;
+	      					  
+	         				console.log("battleId " 	+ battleId);
+	         				console.log("awayName " 	+ awayName);
+	         				console.log("homeName " 	+ homeName);
+	         				console.log("awayLogoUrl " 	+ awayLogoUrl);
+	         				console.log("homeLogoUrl " 	+ homeLogoUrl);
+	         				console.log("battleTime " 	+ battleTime);
+	         				console.log("awayScore " 	+ awayScore);
+	         				console.log("homeScore " 	+ homeScore);
+	         				console.log("awayBet " 		+ awayBet);
+	         				console.log("homeBet " 		+ homeBet);
+	         				console.log("awayId " 		+ awayId);
+	         				console.log("homeId " 		+ homeId);
+	      					  
+	      					$("#battleId_choosed").val(battleId);// input hidden
+	           				$("#awayId").val(awayId);// input hidden
+	           				$("#homeId").val(homeId);// input hidden
+	           				$("#row1 img:eq(0)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  awayLogoUrl);
+	           				$("#row1 img:eq(2)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  homeLogoUrl);
+	           				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
+	           				$("#row2 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeName + "</h4>");
+	           				$("#row3 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>"+ "比賽時間：" + battleTime.substring(0,16) + "</h4>");
+	           				$("#row4 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayScore + "</h4>");
+	           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
+	           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
+	           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
+	       				 }
+	   				 })
+	   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
+					 myDialog.dialog("open");
        			})
        			/* ================ 【下注 結束】 ================= */
        			/* ================ 【下注 Dialog 開始】 ================= */
@@ -258,38 +271,39 @@
 	                resizable: false,
 	                position: { my: "center", at: "center", of: window }, /* dialog 起始彈出位置 */
 	                buttons:[{
-		                			'text'  : "確認下注",
-		                			'class' : "btn btn-danger",
-		                			'click' : function()
-		                			 {
-		                				 alert('hi');		                				 
-		                				 //---
-		                				 $.ajax({
-		                					 "type":"POST",//傳遞方式				
-		                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
-		                             		 "dataType":"text",//Servlet回傳格式
-		                             		 "data":{ "action"     : 'gamblingUpdate' ,   /* data : 由dialog格子取得場次及輸入的資料 */
-		                             			 	  "battleId"   : $("#battleId_choosed").val() ,
-		                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
-		                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
-		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5),
-		                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
-		                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
-		                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
-		                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
-		                             			 	  "awayId"     : $("#awayId").val(),// input hidden
-		                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
-		                             			 	  "awayCoins"  : $("#awayCoins").val(),
-		                             			 	  "homeCoins"  : $("#homeCoins").val()
-		                             		  },
-		                    				 "success":function(data){
-		                    					 alert("fuck" + data);
-		                    				 }
-		                				 })
-		                				 //---
-		                				 // 關閉 dialog
-		                				 myDialog.dialog("close");
-		                			 }
+	                			'text'  : "確認下注",
+	                			'class' : "btn btn-danger",
+	                			'click' : function()
+	                			 {
+	                				 alert('hi');	
+	                				 alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
+	                				 //---
+	                				 $.ajax({
+	                					 "type":"POST",//傳遞方式				
+	                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
+	                             		 "dataType":"text",//Servlet回傳格式
+	                             		 "data":{ "action"     : 'gamblingUpdate' ,   /* data : 由dialog格子取得場次及輸入的資料 */
+	                             			 	  "battleId"   : $("#battleId_choosed").val() ,
+	                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
+	                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
+	                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5) + ":00" , // 拆掉"比賽時間："字串，並串上 ":00" 秒數供 java.sql.TimeStamp.valueOf()用
+	                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
+	                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
+	                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
+	                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
+	                             			 	  "awayId"     : $("#awayId").val(),// input hidden
+	                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
+	                             			 	  "awayCoins"  : $("#awayCoins").val(),
+	                             			 	  "homeCoins"  : $("#homeCoins").val()
+	                             		  },
+	                    				 "success":function(data){
+	                    					 alert("fuck" + data);
+	                    				 }
+	                				 })
+	                				 //---
+	                				 // 關閉 dialog
+	                				 myDialog.dialog("close");
+	                			 }
 	                		 },
 	                		 {
 	                			 	'text' : "取消",

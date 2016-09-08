@@ -65,6 +65,26 @@ public class BattleSetService
 	//=========================================
 	//============= 進階查詢 ==================
 	//=========================================
+	public Map<String, Object> getOneBattleSetById(Integer battleId) /* 回傳nbaTeamVO物件 */
+	{
+		BattleSetVO bSetVO = bSetDAO.findByPrimaryKey(battleId);
+
+		NBATeamVO awayVO = nbaSvc.getByTeamId(bSetVO.getAwayId());
+		NBATeamVO homeVO = nbaSvc.getByTeamId(bSetVO.getHomeId());
+
+		Map<String, Object> myMap = new HashMap<String, Object>();
+
+		myMap.put("home", homeVO);
+		myMap.put("away", awayVO);
+		myMap.put("battleTime", bSetVO.getBattleDateTime().toString().substring(0, 16));
+		myMap.put("battleId", bSetVO.getBattleId());
+		myMap.put("homeScore", bSetVO.getHomeScore().toString());
+		myMap.put("awayScore", bSetVO.getAwayScore().toString());
+		myMap.put("homebet", bSetVO.getHomebet().toString());
+		myMap.put("awaybet", bSetVO.getAwaybet().toString());
+		return myMap;
+	}
+
 	public List<Map<String, Object>> getLogoURLs(String queryDate)// -----modify:2016/08/12：增加對戰時間 Map<String, NBATeamVO> 改為 Map<String, Object>
 	{
 		List<BattleSetVO> list_BattleSet = bSetDAO.getAll();
@@ -252,6 +272,9 @@ public class BattleSetService
 //		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
 //		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
 
+//=====================【getOneBattleSetById】===========================
+//		Map<String, Object> bSetVO = svc.getOneBattleSetById(314);
+//		System.out.println(((NBATeamVO) bSetVO.get("away")).getTeamName());
 // ====================【getSetsByNameAndPage】==========================
 //		List<Map<String, Object>> list = svc.getSetsByNameAndPage("亞特蘭大老鷹", 1);
 //		for (Map<String, Object> map : list)
