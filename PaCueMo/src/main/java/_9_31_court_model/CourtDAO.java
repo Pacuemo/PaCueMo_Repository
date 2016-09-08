@@ -23,7 +23,7 @@ public class CourtDAO implements CourtDAO_interface
 	private static final String GET_ONE_STMT = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where courtId=?";
 	private static final String DELETE = "DELETE FROM Court where courtId =?";
 	private static final String UPDATE = "UPDATE Court set name=?, courtaddress=?, imgUrl=?, latitude=?, longitude=?, webUrl=?, phone=? where courtId=?";
-	private static final String Get_By_Name = "SELECT * FROM Court where name LIKE ?";
+	private static final String Get_By_Name = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where name like ?";
 
 	@Override
 	public void insert(CourtVO courtVO)

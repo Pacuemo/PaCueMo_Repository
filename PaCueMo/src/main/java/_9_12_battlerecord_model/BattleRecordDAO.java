@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,8 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 
 	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,battleStatus,courtId,battleMode,battleBet,battleDateTime,"
 			+ "result,reportA,reportB) VALUES (?, ?, 0, ?, ?, ?, ?, 0, 0, 0)";
+	private static final String FAKEDATA = "INSERT INTO BattleRecord (teamIdA,teamIdB,battleStatus,courtId,battleMode,battleBet,battleDateTime,"
+			+ "result,reportA,reportB) VALUES (?, ?, 0, ?, ?, ?, ?, ?, 0, 0)";
 	private static final String ACCEPT = "UPDATE BattleRecord set battleStatus=? where battleId = ?";
 	private static final String REPORT_A = "UPDATE BattleRecord set reportA=? where battleId = ?";
 	private static final String REPORT_B = "UPDATE BattleRecord set reportB=? where battleId = ?";
@@ -54,6 +57,12 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	{
 		jdbc.update(INSERT, battleRecordVO.getTeamIdA(), battleRecordVO.getTeamIdB(), battleRecordVO.getCourtId(),
 				battleRecordVO.getBattleMode(), battleRecordVO.getBattleBet(), battleRecordVO.getBattleDateTime());
+	}
+
+	public void addFakeData(BattleRecordVO battleRecordVO)
+	{
+		jdbc.update(FAKEDATA, battleRecordVO.getTeamIdA(), battleRecordVO.getTeamIdB(), battleRecordVO.getCourtId(),
+				battleRecordVO.getBattleMode(), battleRecordVO.getBattleBet(), battleRecordVO.getBattleDateTime(), battleRecordVO.getResult());
 	}
 
 	/*
@@ -161,7 +170,15 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	@Override
 	public Double getAbsencePercent(Integer teamId)
 	{
-		return jdbc.queryForObject(GET_ABSENCE_PERCENT, Double.class, teamId, teamId, teamId, teamId);
+		try
+		{
+			return jdbc.queryForObject(GET_ABSENCE_PERCENT, Double.class, teamId, teamId, teamId, teamId);
+		}
+		catch (DataAccessException e)
+		{
+			return null;
+		}
+
 	}
 
 	/*
@@ -200,7 +217,22 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 
 		try
 		{
-//			dao.add(battleRecordVO);
+
+			for (int i = 1 ; i <= 20 ; i++)
+			{
+				battleRecordVO = new BattleRecordVO();
+				battleRecordVO.setTeamIdA((int) (Math.random() * 5 + 1));
+				battleRecordVO.setTeamIdB((int) (Math.random() * 5 + 1));
+				battleRecordVO.setBattleStatus((int) (Math.random() * 3 + 1));
+				battleRecordVO.setCourtId(1);
+				battleRecordVO.setBattleMode(3);
+				battleRecordVO.setBattleBet((double) 0);
+				battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis()));
+				battleRecordVO.setResult((int) (Math.random() * 6 + 1));
+				((BattleRecordDAO) dao).addFakeData(battleRecordVO);
+
+			}
+
 //			dao.accept_Reject(0, 1);
 //			System.out.println(dao.findById(1).getBattleId() + " " +dao.findById(1).getTeamIdA() );
 

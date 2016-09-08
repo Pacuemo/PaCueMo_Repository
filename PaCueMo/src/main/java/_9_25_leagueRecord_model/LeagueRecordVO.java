@@ -2,8 +2,11 @@ package _9_25_leagueRecord_model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import _9_26_fightRecord_model.FightRecordVO;
 
 @Component("LeagueRecordVO")
 public class LeagueRecordVO implements Serializable
@@ -20,9 +23,11 @@ public class LeagueRecordVO implements Serializable
 	private int scoreA;
 	private int scoreB;
 	private String totalTime;
+	private List<FightRecordVO> fightRecordVOs;
 
 	public LeagueRecordVO()
 	{
+
 	}
 
 	public LeagueRecordVO(int leagueId, int clubIdA, int clubIdB, Date fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
@@ -143,6 +148,16 @@ public class LeagueRecordVO implements Serializable
 	public static long getSerialversionuid()
 	{
 		return serialVersionUID;
+	}
+
+	public List<FightRecordVO> getFightRecordVOs()
+	{
+		return fightRecordVOs;
+	}
+
+	public void setFightRecordVOs(List<FightRecordVO> fightRecordVOs)
+	{
+		this.fightRecordVOs = fightRecordVOs;
 	}
 
 }

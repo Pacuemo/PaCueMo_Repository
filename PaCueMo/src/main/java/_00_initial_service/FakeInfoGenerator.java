@@ -17,8 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.stereotype.Component;
+
+import _00_config.RootConfig;
 import _9_41_member_model.MemberVO;
 
+@Component
 public class FakeInfoGenerator
 {
 
@@ -423,6 +430,7 @@ public class FakeInfoGenerator
 				}
 			}
 		}
+
 	}
 
 //	public static void clubmemberGenerator() throws NumberFormatException, IOException
@@ -931,6 +939,28 @@ public class FakeInfoGenerator
 
 	}
 
+	@Autowired
+	private JdbcOperations jdbc;
+	private static final String get_memberVO = "select memberId from member ";
+
+	public void teamGenerator() throws IOException
+	{
+
+		List<String> memberIds = jdbc.queryForList(get_memberVO, String.class);
+
+		File file = new File("C:\\PaCueMo\\team.txt");
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String sql = null;
+		while ((sql = br.readLine()) != null)
+		{
+			String[] sqls = sql.split(",");
+			int number = Integer.valueOf(sqls[4]);
+
+			String newSQL = sqls[0] + "," + sqls[1] + "," + sqls[2] + "," + sqls[3] + ",'" + memberIds.get(number) + "'," + sqls[5] + ";";
+			System.out.println(newSQL);
+		}
+	}
+
 	public static void main(String[] args) throws NumberFormatException, IOException
 	{
 		/**
@@ -939,10 +969,11 @@ public class FakeInfoGenerator
 		 * Step3 : 在本程式中執行你的方法，將SSMS NEWID() 生成的 memberId 換掉原本的 INSERT 指令
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
-
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
+//		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
 //      club和league部分
 //		clubGenerator();
 
@@ -951,7 +982,8 @@ public class FakeInfoGenerator
 
 //		gambleOrderGenerator();
 
-//		teammemberGenerator();
+//		generator.teamGenerator();
+		teammemberGenerator();
 
 	}
 }

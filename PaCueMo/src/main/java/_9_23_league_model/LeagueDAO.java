@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository("LeagueDAO")
 public class LeagueDAO implements LeagueDAO_I
 {
-
+	@Autowired
 	private JdbcOperations jdbc;
 	private final String Select_All = "select * from league order by startDate desc";
 	private final String Select_One_BY_ID = "select * from league where leagueID = ?";
@@ -24,12 +24,6 @@ public class LeagueDAO implements LeagueDAO_I
 	private final String Delete_One_BY_ID = "delete from league where leagueId =?";
 	private final String Update_One_BY_VO = "update league set leagueName=?,clubAmount=?,startDate=?,endDate=?,courtId=? where leagueId=?";
 	private final String Select_Like_BY_NAME = "select * from league where leagueName LIKE ? order by leagueId asc";
-
-	@Autowired
-	public LeagueDAO(JdbcOperations jdbcOperations)
-	{
-		this.jdbc = jdbcOperations;
-	}
 
 	//查詢BY NAME
 	@Override

@@ -15,19 +15,10 @@ import org.springframework.stereotype.Repository;
 @Repository("LeagueRecordDAO")
 public class LeagueRecordDAO implements LeagueRecordDAO_I
 {
+	@Autowired
 	private JdbcOperations jdbc;
 
-	public LeagueRecordDAO()
-	{
-	}
-
-	@Autowired
-	public LeagueRecordDAO(JdbcOperations jdbc)
-	{
-		this.jdbc = jdbc;
-	}
-
-	private final String Select_One_BY_ClubID = "select * from LeagueRecord where clubIdA = ? OR clubIdB=?";
+	private final String Select_One_BY_ClubID = "select * from LeagueRecord where leagueId=? and (clubIdA = ? OR clubIdB=?)";
 	private final String Select_ALL_BY_leagueId = "select * from LeagueRecord where leagueId = ?";
 	private final String Add_One_BY_VO = "insert into LeagueRecord values (?,?,?,?,?,?,?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueRecord where fightId =?";
@@ -51,9 +42,9 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 	}
 
 	@Override
-	public List<LeagueRecordVO> find_One(int clubId)
+	public List<LeagueRecordVO> find_One(int leagueId, int clubId)
 	{
-		return jdbc.query(Select_One_BY_ClubID, new LeagueRecordDAORowMapper(), clubId, clubId);
+		return jdbc.query(Select_One_BY_ClubID, new LeagueRecordDAORowMapper(), leagueId, clubId, clubId);
 	}
 
 	@Override

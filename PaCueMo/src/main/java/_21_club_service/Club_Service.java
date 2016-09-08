@@ -37,17 +37,24 @@ public class Club_Service
 	//用社團名稱模糊比對
 	public List<ClubVO> searchClub(String name)
 	{
-		return clubDAO.getAll_By_Name(name);
+		List<ClubVO> clubVOs = clubDAO.getAll_By_Name(name);
+		System.out.println("成功查詢社團: " + clubVOs.size() + " 筆-傳入模糊社團名稱");
+		System.out.println("回傳: " + clubVOs.size() + " 筆社團VO");
+		return clubVOs;
+
 	}
 
-	//註冊新社團
+	@Transactional(rollbackFor = Exception.class)
 	public int registerClub(ClubVO clubVO)
 	{
 
 		clubDAO.insert(clubVO);
+		System.out.println("成功新增社團:" + clubVO.getClubName());
 		List<ClubVO> clubVOs = clubDAO.getAll_By_Name(clubVO.getClubName());
-		clubMemberDAO.insert(new ClubMemberVO(clubVOs.get(clubVOs.size() - 1).getClubID(), clubVO.getClubHead(), new Date(System.currentTimeMillis())));
-		return 1;
+		int success = clubMemberDAO.insert(new ClubMemberVO(clubVOs.get(clubVOs.size() - 1).getClubID(), clubVO.getClubHead(), new Date(System.currentTimeMillis())));
+		System.out.println("並同時新增團長至社團成員");
+		System.out.println("回傳新增社團成功數: " + success + " 筆");
+		return success;
 
 	}
 
@@ -56,12 +63,15 @@ public class Club_Service
 	{
 
 		ClubVO clubVO = clubDAO.findByPK(clubId);
+		System.out.println("成功查詢社團:1筆-傳入社團ID");
 		List<ClubMemberVO> clubMemberVOs = clubMemberDAO.getClubAll(clubId);
 		for (ClubMemberVO vo : clubMemberVOs)
 		{
 			vo.setMember(memberDAO.findByPrimaryKey(vo.getClubMemberId()));
 		}
 		clubVO.setClubmembers(clubMemberVOs);
+		System.out.println("成功查詢社團成員: " + clubMemberVOs.size() + " 筆-並放入社團物件中");
+		System.out.println("回傳1筆社團VO");
 		return clubVO;
 	}
 
@@ -69,7 +79,11 @@ public class Club_Service
 	public ClubVO getClub_byMemberId(String memberId)
 	{
 		ClubMemberVO clubMemberVO = clubMemberDAO.findByPK(memberId);
-		return getClub(clubMemberVO.getClubId());
+		System.out.println("成功查詢社團成員:1筆-傳入社團成員Id");
+		ClubVO clubVO = getClub(clubMemberVO.getClubId());
+		System.out.println("成功查詢社團:1筆-傳入社團成員VO內的社團ID");
+		System.out.println("回傳1筆社團VO");
+		return clubVO;
 	}
 
 	//邀請進入社團
@@ -78,11 +92,16 @@ public class Club_Service
 
 		if (clubMemberDAO.findByPK(memberId).getClubMemberId() != null)
 		{
+			System.out.println("查詢社團成員成功-傳入會員Id");
+			System.out.println("回傳字串-fail 不允許申請進入社團");
 			return "fail";
 		}
 		else
 		{
-			clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
+			System.out.println("查詢社團成員失敗-傳入會員Id");
+			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
+			System.out.println("成功新增 " + success + " 筆申請資料");
+			System.out.println("回傳字串-success 允許申請進入社團");
 			return "success";
 		}
 	}
@@ -91,25 +110,33 @@ public class Club_Service
 	public List<ClubApplyVO> get_ClubApply(int clubId)
 	{
 		List<ClubApplyVO> ClubApplyVOs = clubApplyDAO.get_All_ClubId(clubId);
+		System.out.println("成功查詢 " + ClubApplyVOs.size() + " 筆申請資料-傳入社團Id");
 		for (ClubApplyVO vo : ClubApplyVOs)
 		{
 			vo.setMemberVO(memberDAO.findByPrimaryKey(vo.getMemberId()));
 		}
+		System.out.println("成功放入 " + ClubApplyVOs.size() + " 成員VO至社團申請VO");
+		System.out.println("回傳 " + ClubApplyVOs.size() + " 筆社團申請VO");
 		return ClubApplyVOs;
 	}
 
 	//確認加入社團
+	@Transactional(rollbackFor = Exception.class)
 	public String checkJoinClub(int clubId, String memberId)
 	{
 		if (clubMemberDAO.findByPK(memberId).getClubMemberId() != null)
 		{
+			System.out.println("查詢社團成員成功-傳入會員Id");
+			System.out.println("回傳字串-fail 不允許進入新社團");
 			return "fail";
 		}
 		else
 		{
-			ClubMemberVO clubMemberVO = new ClubMemberVO(clubId, memberId, new Date(System.currentTimeMillis()));
-			clubMemberDAO.insert(clubMemberVO);
-			clubApplyDAO.delete_One(clubId, memberId);
+			System.out.println("查詢社團成員失敗-傳入會員Id");
+			int success = clubMemberDAO.insert(new ClubMemberVO(clubId, memberId, new Date(System.currentTimeMillis())));
+			System.out.println("成功新增社團成員 " + success + " 筆");
+			int success1 = clubApplyDAO.delete_One(clubId, memberId);
+			System.out.println("成功刪除申請資料 " + success1 + " 筆-並回傳字傳-success");
 			return "success";
 		}
 	}
@@ -117,32 +144,40 @@ public class Club_Service
 	//刪除加入社團
 	public int deleteJoinClub(int clubId, String memberId)
 	{
-		return clubApplyDAO.delete_One(clubId, memberId);
+		int success = clubApplyDAO.delete_One(clubId, memberId);
+		System.out.println("成功刪除申請資料 " + success + " 筆-並回傳整數:" + success);
+		return success;
 	}
 
 	//邀請加入社團
-	public String inviteJoinClub(int clubId, String memberId, String clubMemberId)
+	public int inviteJoinClub(int clubId, String memberId, String clubMemberId)
 	{
+		int success = 0;
 		try
 		{
-			clubInviteDAO.add_One(new ClubInviteVO(clubId, memberId, clubMemberId, new Date(System.currentTimeMillis())));
+			success = clubInviteDAO.add_One(new ClubInviteVO(clubId, memberId, clubMemberId, new Date(System.currentTimeMillis())));
 		}
 		catch (Exception e)
 		{
-			return "fail";
+			System.out.println("失敗新增邀請會員加入社團 " + success + " 筆(已邀請)-並回傳整數: " + success);
+			return success;
 		}
-		return "success";
+		System.out.println("成功新增邀請會員加入社團 " + success + " 筆-並回傳整數: " + success);
+		return success;
 	}
 
 	//獲取加入社團資訊
 	public List<ClubInviteVO> get_Invite_By_Id(String MemberId)
 	{
 		List<ClubInviteVO> clubInviteVOs = clubInviteDAO.get_All_MemberId(MemberId);
+		System.out.println("成功查詢邀請加入社團資訊 " + clubInviteVOs.size() + " 筆-傳入資料會員Id");
 		for (ClubInviteVO vo : clubInviteVOs)
 		{
 			vo.setClubVO(clubDAO.findByPK(vo.getClubId()));
 			vo.setClubMemberVO(memberDAO.findByPrimaryKey(vo.getClubMemberId()));
 		}
+		System.out.println("並成功放入邀請社團VO及邀請人VO " + clubInviteVOs.size() + " 筆");
+		System.out.println("回傳社團邀請VO " + clubInviteVOs.size() + " 筆");
 		return clubInviteVOs;
 	}
 
@@ -151,12 +186,18 @@ public class Club_Service
 	{
 		if (clubMemberDAO.findByPK(memberId).getClubMemberId() != null)
 		{
+			System.out.println("查詢社團成員成功-傳入會員Id");
+			System.out.println("回傳字串-fail 不允許同意邀請");
 			return "fail";
 		}
 		else
 		{
-			clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
-			clubInviteDAO.delete_One(clubId, memberId);
+			System.out.println("查詢社團成員失敗-傳入會員Id");
+			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
+			System.out.println("成功新增社團申請VO " + success + " 筆");
+			int success2 = clubInviteDAO.delete_One(clubId, memberId);
+			System.out.println("成功刪除社團邀請VO " + success2 + " 筆");
+			System.out.println("回傳字串-success 同意邀請");
 			return "success";
 		}
 	}
@@ -164,7 +205,9 @@ public class Club_Service
 	//刪除邀請
 	public int deleteInvite(int clubId, String memberId)
 	{
-		return clubInviteDAO.delete_One(clubId, memberId);
+		int success = clubInviteDAO.delete_One(clubId, memberId);
+		System.out.println("成功刪除社團邀請VO " + success + " 筆-並回傳整數: " + success);
+		return success;
 	}
 
 	public static void main(String[] args)

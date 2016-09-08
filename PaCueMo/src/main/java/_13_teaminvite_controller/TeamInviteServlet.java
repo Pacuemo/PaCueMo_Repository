@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/InvServlet")
-public class InvitationServlet extends HttpServlet {
+public class TeamInviteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InvitationServlet() {
+    public TeamInviteServlet() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

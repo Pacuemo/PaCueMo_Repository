@@ -1,20 +1,5 @@
-USE MagicJack
-
-/*
-create table Team   --¶¤¥î
-(
-    teamId       /*¶¤¥î½s¸¹*/  INT           NOT NULL IDENTITY PRIMARY KEY,
-	teamName     /*¶¤¥î¦WºÙ*/  NVARCHAR(10)  NOT NULL,
-	createDate   /*³Ğ¥ß®É¶¡*/  DATE          NOT NULL DEFAULT GETDATE(),
-	teamProp     /*¶¤¥î©Ê½è*/  INT           NOT NULL, -- (0)¤½¶},(1)»İ¥Ó½Ğ,(2)¨p±K
-	avgRank	     /*¥­§¡µû¤À*/  decimal(2,1)  , -- ³s¨ì¶¤­ûµû¤À PlayerRank
-	teamHead	 /*¶¤ªø½s¸¹*/  UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES member(memberId),
-	content		 /*¶¤¥îÂ²¤¶*/  NVARCHAR(200) 
-);   
- */
-
-INSERT INTO dbo.team VALUES  ( '°_¥q¿ß', GETDATE(), 1, 0,'  needed type memberId here  ','Hello Everyone')
-INSERT INTO dbo.team VALUES  ( 'ªF°Ï«i¤h', GETDATE(), 0, 0,'','Hello Everyone')
-INSERT INTO dbo.team VALUES  ( '¦Ñ®v»¡ªº¶¤', GETDATE(), 1, 0,'','Hello Everyone')
-INSERT INTO dbo.team VALUES  ( '§A»¡¹ï¤£¶¤', GETDATE(), 3, 0,'','Hello Everyone')
-INSERT INTO dbo.team VALUES  ( 'ªQ¤s¥Ö¥d¥C', GETDATE(), 2, 0,'','Hello Everyone')
+ï»¿INSERT INTO dbo.team VALUES  ( 'èµ·å¸è²“', GETDATE(), 1, 0,14,'Hello Everyone')
+INSERT INTO dbo.team VALUES  ( 'æ±å€å‹‡å£«', GETDATE(), 0, 0,6,'Hello Everyone')
+INSERT INTO dbo.team VALUES  ( 'è€å¸«èªªçš„éšŠ', GETDATE(), 1, 0,1,'Hello Everyone')
+INSERT INTO dbo.team VALUES  ( 'ä½ èªªå°ä¸éšŠ', GETDATE(), 3, 0,21,'Hello Everyone')
+INSERT INTO dbo.team VALUES  ( 'æ¾å±±çš®å¡ä¸˜', GETDATE(), 2, 0,20,'Hello Everyone')

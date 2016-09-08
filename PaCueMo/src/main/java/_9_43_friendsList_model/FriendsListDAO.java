@@ -20,6 +20,7 @@ public class FriendsListDAO implements FriendsListDAO_interface
 
 	private final String GET_ALL_FRIENDS = "SELECT * FROM friendsList WHERE memberId = ? AND memberStatus='1'";
 	private final String GET_ALL_INVITE = "SELECT * FROM friendsList WHERE memberId = ? AND memberStatus='2'";
+	private final String Delete_friend = "DELETE FROM dbo.FriendsList WHERE memberId= ? AND memberFriendId= ? ";
 
 	/* type 1 為朋友 type2 為邀請中 */
 
@@ -200,6 +201,68 @@ public class FriendsListDAO implements FriendsListDAO_interface
 	{
 		FriendsListDAO friendsListDAO = new FriendsListDAO();
 		friendsListDAO.getAllFriendsInvite("B411208D-B026-4973-845E-F4C6DFCDF263");
+	}
+
+	@Override
+	public int deleteFriend(String memberId, String friendId)
+	{
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int result;
+
+		try
+		{
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(Delete_friend);
+
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, friendId);
+
+			result = pstmt.executeUpdate();
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return result;
 	}
 
 }
