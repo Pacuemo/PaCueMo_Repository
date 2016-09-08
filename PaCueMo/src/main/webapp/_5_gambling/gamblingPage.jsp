@@ -92,18 +92,7 @@
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['away'].teamName}</h4></td>
 										<td>
 											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/>
-									    	<input type="hidden" value="${battleSetVO.battleId}"/>
-									    	<input type="hidden" value="${battleSetVO['away'].teamName}"/>
-									    	<input type="hidden" value="${battleSetVO['home'].teamName}"/>							
-									    	<input type="hidden" value="<%=request.getContextPath()%>/_5_gambling${battleSetVO['away'].teamLogoURL}"/>
-									    	<input type="hidden" value="<%=request.getContextPath()%>/_5_gambling${battleSetVO['home'].teamLogoURL}"/>							
-									    	<input type="hidden" value="${battleSetVO.battleTime}"/>							
-									    	<input type="hidden" value="${battleSetVO.awayScore}"/>							
-									    	<input type="hidden" value="${battleSetVO.homeScore}"/>							
-									    	<input type="hidden" value="${battleSetVO.awaybet}"/>							
-									    	<input type="hidden" value="${battleSetVO.homebet}"/>	
-									    	<input type="hidden" value="${battleSetVO['away'].teamID}"/>
-									    	<input type="hidden" value="${battleSetVO['home'].teamID}"/>											
+									    	<input type="hidden" value="${battleSetVO.battleId}"/><!-- 紀錄 battleSetId -->
 										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
 										</td>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -326,7 +315,6 @@
 	
 	            form = myDialog.find("form").on("submit", function (event) {
 	                event.preventDefault();
-	
 	            });
 	
        			/* ================ 【下注 Dialog 結束】 ================= */

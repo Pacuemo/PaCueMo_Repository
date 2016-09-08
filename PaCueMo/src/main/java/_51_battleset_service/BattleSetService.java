@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+
 import _52_nbateam_service.NBATeamService;
 import _9_51_battleset_model.BattleSetDAO;
 import _9_51_battleset_model.BattleSetVO;
@@ -230,6 +233,12 @@ public class BattleSetService
 			myMap.put("away", away);
 			myMap.put("battleTime", battleTime);
 
+			myMap.put("battleId", vo.getBattleId());
+			myMap.put("homeScore", vo.getHomeScore().toString());
+			myMap.put("awayScore", vo.getAwayScore().toString());
+			myMap.put("homebet", vo.getHomebet().toString());
+			myMap.put("awaybet", vo.getAwaybet().toString());
+
 			return_list.add(myMap);
 		}
 
@@ -269,8 +278,8 @@ public class BattleSetService
 
 	public static void main(String[] args)
 	{
-//		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
-//		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
+		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
 
 //=====================【getOneBattleSetById】===========================
 //		Map<String, Object> bSetVO = svc.getOneBattleSetById(314);
@@ -298,11 +307,19 @@ public class BattleSetService
 //			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 //====================【getSetsByDateAndPage】根據日期及分頁編號查詢==========================
-//		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-04", 1);
+//		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-08", 1);
 //		System.out.println(list);
 //		for (Map<String, Object> map : list)
 //		{
-//			System.out.println(((NBATeamVO) map.get("home")).getTeamName() + "     " + ((String) map.get("battleTime")) + "     " + ((NBATeamVO) map.get("away")).getTeamName());
+//			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
+//					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((String) map.get("battleTime")),
+//					((String) map.get("homeScore")),
+//					((String) map.get("awayScore")),
+//					((String) map.get("homebet")),
+//					((String) map.get("awaybet")));
+//			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 //====================【getLogoURLs】==========================
 //		BattleSetService svc = new BattleSetService();

@@ -87,7 +87,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				{
 					e.printStackTrace();
 				}
-				System.out.println("page no = " + pageNo);
+				System.out.println("pageNo = " + pageNo);
 				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
 //				BattleSetService svc = new BattleSetService(); // Spring
 				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
