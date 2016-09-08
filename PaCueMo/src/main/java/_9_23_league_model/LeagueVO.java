@@ -29,6 +29,18 @@ public class LeagueVO implements Serializable
 	{
 	};
 
+	public LeagueVO(String leagueName, Integer clubAmount, Date startDate, Date endDate, Integer placeID, CourtVO courtVO, List<LeagueClubVO> leagueClubVOs, List<LeagueRecordVO> leagueRecordVOs)
+	{
+		this.leagueName = leagueName;
+		this.clubAmount = clubAmount;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.placeID = placeID;
+		this.courtVO = courtVO;
+		this.leagueClubVOs = leagueClubVOs;
+		this.leagueRecordVOs = leagueRecordVOs;
+	}
+
 	public LeagueVO(Integer leagueID, String leagueName, Integer clubAmount, Date startDate, Date endDate, Integer placeID)
 	{
 		this.leagueID = leagueID;

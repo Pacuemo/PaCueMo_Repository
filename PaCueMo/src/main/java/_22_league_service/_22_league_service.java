@@ -40,7 +40,7 @@ public class _22_league_service
 	private MemberDAO_interface memberDao;
 	private CourtDAO_interface courtDao = new CourtDAO();
 
-//---------------全部聯賽-------------
+//---------------查詢全部聯賽-------------
 
 	public List<LeagueVO> getAll()
 	{
@@ -55,7 +55,7 @@ public class _22_league_service
 		return LeagueVOs;
 	}
 
-//-----------------單一聯賽----------------
+//-----------------查詢單一聯賽----------------
 	public LeagueVO getOne(int leagueId)
 	{
 		LeagueVO leagueVO = leagueDao.findOne(leagueId);
@@ -79,7 +79,7 @@ public class _22_league_service
 		return leagueVO;
 	}
 
-//----------------單場賽事------------------
+//----------------查詢單場賽事------------------
 	public List<FightRecordVO> getOneFightRecords(int fightId)
 	{
 		List<FightRecordVO> fightRecordVOs = fightRecordDao.find_All_By_fightId(fightId);
@@ -92,6 +92,13 @@ public class _22_league_service
 		System.out.println("回傳:  " + fightRecordVOs.size() + "     筆聯賽紀錄VOs(內包含多筆單一球員memberVO)");
 		return fightRecordVOs;
 	}
+
+	//---------新增聯賽---------
+//	public int add_League()
+//	{
+//		leagueDao.addOne(VO);
+//
+//	}
 
 	//------交易測試--------
 	@Transactional(rollbackFor = Exception.class)
