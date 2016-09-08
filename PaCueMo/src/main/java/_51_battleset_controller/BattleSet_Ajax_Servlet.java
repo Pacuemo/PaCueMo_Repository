@@ -38,7 +38,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		context = new AnnotationConfigWebApplicationContext();
 //		context.scan("_51_battleset_service");
 //		context.register(BattleSetBeans_Config.class);
-		context.scan("_53_gambling_facade");
+		context.scan("_50_gambling_facade");
 		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
@@ -402,9 +402,9 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				bSetVO.setAwayId(awayId);
 				bSetVO.setHomeScore(homeScore);
 				bSetVO.setAwayScore(awayScore);
-				bSetVO.setHomebet(19000.0);
-//				bSetVO.setAwaybet(awayScore);
-//				gamblingFacade.updateMemberAndBattleSetCoin(vo);
+				bSetVO.setHomebet(homeBet + homeCoins);
+				bSetVO.setAwaybet(awayBet + awayCoins);
+				gamblingFacade.updateMemberAndBattleSetCoin(bSetVO);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********

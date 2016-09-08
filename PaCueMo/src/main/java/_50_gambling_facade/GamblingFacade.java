@@ -36,19 +36,12 @@ public class GamblingFacade
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public String updateMemberAndBattleSetCoin(BattleSetVO vo)
 	{
+		System.out.println(" ======== 呼叫 GamblingFacade → updateMemberAndBattleSetCoin(BattleSetVO vo) 方法 =======");
 		// -- 更新﹝對戰組合﹞主客隊點數 --
-		vo.getBattleId();// pk
-		vo.getBattleDateTime();
-		vo.getAwayId();
-		vo.getHomeId();
-		vo.getAwayScore();
-		vo.getHomeScore();
-		vo.getAwaybet();
-		vo.getHomebet();
 		bSetSvc.updateBattleSet(vo);
 		// -- 更新﹝會員﹞點數 --
 
-		System.out.println(" 0.== call 【GamblingFacade】 == \n 1.== BattleSetVO 點數更新成功！== \n 2.== MemberVO 點數更新成功！== \n ===========================================");
+		System.out.println(" 1.== BattleSetVO 點數更新成功！== \n 2.== MemberVO 點數更新成功！== \n ===========================================");
 		return "success";
 	}
 

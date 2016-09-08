@@ -11,7 +11,7 @@ import _53_goodsorder_service.GoodsOrderBeans_Config;
 import _53_goodsorder_service.GoodsOrderService;
 
 @Configuration
-@ComponentScan({ "_53_gambling_facade" })
+@ComponentScan({ "_50_gambling_facade" })
 @Import({ BattleSetBeans_Config.class, GoodsOrderBeans_Config.class })
 public class GamblingFacade_Config
 {
