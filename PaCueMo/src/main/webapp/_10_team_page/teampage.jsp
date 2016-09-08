@@ -46,7 +46,7 @@ p.tempstyle {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
-	color: #0C5;
+	color: white;
 	font-size: 24px;
 	font-family: "Nunito", sans-serif;
 	font-weight: 300;
@@ -70,8 +70,10 @@ p.tempstyle {
 	text-decoration: none;
 	color: #0C5;
 	border-color: #0C5;
-	background: #FFF;
+	background: white;
 }
+
+
 
 .button span {
 	display: inline-block;
@@ -96,6 +98,7 @@ p.tempstyle {
 	border-right: none;
 	transition: opacity 0.5s, top 0.5s, right 0.5s;
 	transform: rotate(-45deg);
+
 }
 
 .button:hover span, .button:active span {
@@ -146,10 +149,10 @@ p.tempstyle {
 			<!-- Person Details -->
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="${pageContext.request.contextPath }/image/member/theteam/image1.jpg" alt="image1">
+					<img src="${pageContext.request.contextPath }/image/member/${requestScope.teamVO.teamMemberVOs[0].memberVO.memberImgUrl }" alt="image1">
 					<figcaption>
 						<h3 class="margin-bottom-10">
-							April <small>- Programmer</small>
+							${requestScope.teamVO.teamMemberVOs[0].memberVO.memberFirstName } <small>- Programmer</small>
 						</h3>
 						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
 					</figcaption>

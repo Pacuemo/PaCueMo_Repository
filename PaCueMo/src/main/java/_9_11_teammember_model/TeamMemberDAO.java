@@ -21,7 +21,6 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 	public TeamMemberDAO()
 	{
-
 	}
 
 	@Autowired
