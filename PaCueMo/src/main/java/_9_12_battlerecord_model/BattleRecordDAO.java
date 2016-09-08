@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -161,7 +162,15 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	@Override
 	public Double getAbsencePercent(Integer teamId)
 	{
-		return jdbc.queryForObject(GET_ABSENCE_PERCENT, Double.class, teamId, teamId, teamId, teamId);
+		try
+		{
+			return jdbc.queryForObject(GET_ABSENCE_PERCENT, Double.class, teamId, teamId, teamId, teamId);
+		}
+		catch (DataAccessException e)
+		{
+
+		}
+		return null;
 	}
 
 	/*
