@@ -77,6 +77,7 @@ public class MemberServlet extends HttpServlet
 		String sKey = request.getParameter("sKey");
 		String code = request.getParameter("code");
 		String fbId = request.getParameter("facebookId");
+		String friendId = request.getParameter("friendId");
 		MemberService ms;
 		JsonObject jObject;
 
@@ -222,6 +223,47 @@ public class MemberServlet extends HttpServlet
 					{
 						session.removeAttribute("LoginOK");
 						session.setAttribute("LoginOK", memberVO);
+						jObject = new JsonObject();
+						jObject.addProperty("status", "true");
+						out.write(jObject.toString());
+					}
+					else
+					{
+						jObject = new JsonObject();
+						jObject.addProperty("status", "false");
+						out.write(jObject.toString());
+					}
+
+				}
+				else
+				{
+					jObject = new JsonObject();
+					jObject.addProperty("status", "false");
+					out.write(jObject.toString());
+				}
+			}
+			else
+			{
+
+				jObject = new JsonObject();
+				jObject.addProperty("status", "false");
+				out.write(jObject.toString());
+
+			}
+		}
+
+		if ("delete_friend".equals(mode))
+		{
+			if (memberVO != null && friendId != null)
+			{
+				if (friendId.trim().length() > 0)
+				{
+					ms = new MemberService();
+
+					int result = ms.deleteFriend(memberVO.getMemberId(), friendId);
+
+					if (result == 1)
+					{
 						jObject = new JsonObject();
 						jObject.addProperty("status", "true");
 						out.write(jObject.toString());

@@ -101,7 +101,9 @@
 									    	<input type="hidden" value="${battleSetVO.awayScore}"/>							
 									    	<input type="hidden" value="${battleSetVO.homeScore}"/>							
 									    	<input type="hidden" value="${battleSetVO.awaybet}"/>							
-									    	<input type="hidden" value="${battleSetVO.homebet}"/>											
+									    	<input type="hidden" value="${battleSetVO.homebet}"/>	
+									    	<input type="hidden" value="${battleSetVO['away'].teamID}"/>
+									    	<input type="hidden" value="${battleSetVO['home'].teamID}"/>											
 										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
 										</td>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -169,6 +171,8 @@
 	            </table>
 	            
 	            <input id="battleId_choosed" type="hidden" value=""/><!-- <hidden 欄位存放該場次 battleId > -->
+	            <input id="awayId" 			 type="hidden" value=""/><!-- <hidden 欄位存放該場次 awayId > -->
+	            <input id="homeId" 			 type="hidden" value=""/><!-- <hidden 欄位存放該場次 homeId > -->
 	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	        </form>
     	</div>
@@ -206,24 +210,31 @@
        				var homeName    = inputsHidden[2].value ;
        				var awayLogoUrl = inputsHidden[3].value ;
        				var homeLogoUrl = inputsHidden[4].value ;
-       				var battleTime 	= inputsHidden[5].value ;
+       				var battleTime 	= $("#myDatepicker").val() +" "+ inputsHidden[5].value + ":00"; //補 日期 & 秒數 供 java.sql.TimeStamp.valueOf()
        				var awayScore 	= inputsHidden[6].value ; 
        				var homeScore   = inputsHidden[7].value ;
        				var awayBet 	= inputsHidden[8].value ;
        				var homeBet 	= inputsHidden[9].value ;
-  
+       				var awayId 		= inputsHidden[10].value ;
+       				var homeId 		= inputsHidden[11].value ;
+  					
        				console.log("battleId " 	+ inputsHidden[0].value);
        				console.log("awayName " 	+ inputsHidden[1].value);
        				console.log("homeName " 	+ inputsHidden[2].value);
        				console.log("awayLogoUrl " 	+ inputsHidden[3].value);
        				console.log("homeLogoUrl " 	+ inputsHidden[4].value);
-       				console.log("battleTime " 	+ inputsHidden[5].value);
+       				console.log("battleTime " 	+ $("#myDatepicker").val() +" "+ inputsHidden[5].value);
        				console.log("awayScore " 	+ inputsHidden[6].value);
        				console.log("homeScore " 	+ inputsHidden[7].value);
        				console.log("awayBet " 		+ inputsHidden[8].value);
        				console.log("homeBet " 		+ inputsHidden[9].value);
+       				console.log("awayId " 		+ inputsHidden[10].value);
+       				console.log("homeId " 		+ inputsHidden[11].value);
        				
-       				$("#battleId_choosed").val(battleId);
+       				
+       				$("#battleId_choosed").val(battleId);// input hidden
+       				$("#awayId").val(awayId);// input hidden
+       				$("#homeId").val(homeId);// input hidden
        				$("#row1 img:eq(0)").attr('src',awayLogoUrl);
        				$("#row1 img:eq(2)").attr('src',homeLogoUrl);
        				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
@@ -251,21 +262,23 @@
 		                			'class' : "btn btn-danger",
 		                			'click' : function()
 		                			 {
-		                				 alert('hi');
+		                				 alert('hi');		                				 
 		                				 //---
 		                				 $.ajax({
-		                					 "type":"post",//傳遞方式				
+		                					 "type":"POST",//傳遞方式				
 		                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
 		                             		 "dataType":"text",//Servlet回傳格式
-		                             		 "data":{ "action"     : 'gamblingUpdate' , 
+		                             		 "data":{ "action"     : 'gamblingUpdate' ,   /* data : 由dialog格子取得場次及輸入的資料 */
 		                             			 	  "battleId"   : $("#battleId_choosed").val() ,
 		                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
 		                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
-		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5,14),
+		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5),
 		                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
 		                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
 		                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
 		                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
+		                             			 	  "awayId"     : $("#awayId").val(),// input hidden
+		                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
 		                             			 	  "awayCoins"  : $("#awayCoins").val(),
 		                             			 	  "homeCoins"  : $("#homeCoins").val()
 		                             		  },
@@ -314,7 +327,8 @@
     	   				//*****************************************
        		    		//alert($('#myDatepicker').val());
        		    		var chooseDate = $('#myDatepicker').val(); // user 選擇的日期
-       		    		$("#dateForm").attr({"ACTION": "BattleSet_Servlet.do?"+
+       		    		$("#dateForm").attr({"ACTION": "<%=request.getContextPath()%>" + '/_5_gambling/' +
+       		    									   "BattleSet_Servlet.do?"+
        		    							  		   "action=queryByDate"  +
        		    							  		   "&datepickerDate="+ chooseDate +'&funFlag='+ funFlag , 
        		    							 "METHOD":"POST"}).submit();
@@ -357,9 +371,10 @@
 					//alert( funFlag );
 	   				//*****************************************
 					var searchName = $("#searchName").val(); // 搜尋textBox的值(隊名)
-					$('#searchForm').attr({ 'action':'BattleSet_Servlet.do?'+
+					$('#searchForm').attr({ 'ACTION':"<%=request.getContextPath()%>" + '/_5_gambling/' +
+											'BattleSet_Servlet.do?'+
 											'action=queryByName'+'&teamName='+ searchName +'&funFlag='+ funFlag , 
-					  'method':'POST'}).submit();
+					  'METHOD':'POST'}).submit();
 				})
        			/* ==================== 【分頁開始】 =================== */
        			$("#slicePage").paginate({

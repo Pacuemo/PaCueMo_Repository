@@ -18,8 +18,10 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.google.gson.Gson;
 
+import _50_gambling_facade.GamblingFacade;
+import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
-import _53_gambling_facade.GamblingFacade_Config;
+import _9_51_battleset_model.BattleSetVO;
 
 @WebServlet("/_5_gambling/BattleSet_Ajax_Servlet.do")
 public class BattleSet_Ajax_Servlet extends HttpServlet
@@ -28,6 +30,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 
 	private AnnotationConfigWebApplicationContext context;
 	private BattleSetService svc;
+	private GamblingFacade gamblingFacade;
 
 	@Override
 	public void init() throws ServletException
@@ -39,6 +42,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
+		gamblingFacade = (GamblingFacade) context.getBean("gamblingFacade2");// _50_gambling_facade 注入
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -261,23 +265,146 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				PrintWriter out = response.getWriter();/* for Ajax */
 //
 				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String battleId = request.getParameter("battleId");
-				String awayName = request.getParameter("awayName");
-				String homeName = request.getParameter("homeName");
-				String battleTime = request.getParameter("battleTime");
-				String awayScore = request.getParameter("awayScore");
-				String homeScore = request.getParameter("homeScore");
-				String awayBet = request.getParameter("awayBet");
-				String homeBet = request.getParameter("homeBet");
-				String awayCoins = request.getParameter("awayCoins");
-				String homeCoins = request.getParameter("homeCoins");
-
-				System.out.println(battleId + "  " + awayName + "  " + homeName + "  "
+				String strBattleId = request.getParameter("battleId");
+				String strBattleTime = request.getParameter("battleTime");
+				String strHomeId = request.getParameter("homeId");// id
+				String strAwayId = request.getParameter("awayId");// id
+				String strHomeScore = request.getParameter("homeScore");
+				String strAwayScore = request.getParameter("awayScore");
+				String strHomeBet = request.getParameter("homeBet");
+				String strAwayBet = request.getParameter("awayBet");
+				String strHomeCoins = request.getParameter("homeCoins");
+				String strAwayCoins = request.getParameter("awayCoins");
+				System.out.println(strBattleId + "  " + strAwayId + "  " + strHomeId + "  "
+						+ strBattleTime + "  " + strAwayScore + "  " + strHomeScore + "  " + strAwayBet + "  " + strHomeBet
+						+ "   " + strAwayCoins + "   " + strHomeCoins);
+				//--- battleId---
+				Integer battleId = null;
+				try
+				{
+					battleId = Integer.valueOf(strBattleId);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...battleId 型別轉換失敗...");
+					return;
+				}
+				//--- battleTime--- java.sql.Timestamp
+				java.sql.Timestamp battleTime = null;
+				try
+				{
+					battleTime = java.sql.Timestamp.valueOf(strBattleTime);
+				}
+				catch (IllegalArgumentException ex)
+				{
+					out.print("...battleTime 型別轉換失敗...");
+					return;
+				}
+				//--- homeId---
+				Integer homeId = null;
+				try
+				{
+					homeId = Integer.valueOf(strHomeId);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...homeId 型別轉換失敗...");
+					return;
+				}
+				//--- awayId---
+				Integer awayId = null;
+				try
+				{
+					awayId = Integer.valueOf(strAwayId);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...awayId 型別轉換失敗...");
+					return;
+				}
+				//--- homeScore---
+				Integer homeScore = null;
+				try
+				{
+					homeScore = Integer.valueOf(strHomeScore);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...homeScore 型別轉換失敗...");
+					return;
+				}
+				//--- awayScore---
+				Integer awayScore = null;
+				try
+				{
+					awayScore = Integer.valueOf(strAwayScore);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...awayScore 型別轉換失敗...");
+					return;
+				}
+				//--- homeBet--- Double
+				Double homeBet = null;
+				try
+				{
+					homeBet = Double.valueOf(strHomeBet);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...homeBet 型別轉換失敗...");
+					return;
+				}
+				//--- awayBet--- Double
+				Double awayBet = null;
+				try
+				{
+					awayBet = Double.valueOf(strAwayBet);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...awayBet 型別轉換失敗...");
+					return;
+				}
+				//--- homeCoins---
+				Integer homeCoins = null;
+				try
+				{
+					homeCoins = Integer.valueOf(strHomeCoins);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...homeCoins 型別轉換失敗...");
+					return;
+				}
+				//--- awayCoins---
+				Integer awayCoins = null;
+				try
+				{
+					awayCoins = Integer.valueOf(strAwayCoins);
+				}
+				catch (NumberFormatException ex)
+				{
+					out.print("...awayCoins 型別轉換失敗...");
+					return;
+				}
+				System.out.println(" ============= 轉型後: ============= ");
+				System.out.println(battleId + "  " + awayId + "  " + homeId + "  "
 						+ battleTime + "  " + awayScore + "  " + homeScore + "  " + awayBet + "  " + homeBet
-						+ "   " + awayCoins + "   " + homeCoins);
-				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return text ) **********/
-////				BattleSetService svc = new BattleSetService(); // Spring
-////				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
+						+ "   " + awayCoins + "   " + homeCoins + "\n =================");
+				/*************************** 2.開始CRUD資料 ( jQuery + Ajax : return text ) **********/
+//				BattleSetService svc = new BattleSetService(); // Spring
+//				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
+				BattleSetVO bSetVO = new BattleSetVO();
+				bSetVO.setBattleId(battleId);
+				bSetVO.setBattleDateTime(battleTime);
+				bSetVO.setHomeId(homeId);
+				bSetVO.setAwayId(awayId);
+				bSetVO.setHomeScore(homeScore);
+				bSetVO.setAwayScore(awayScore);
+				bSetVO.setHomebet(19000.0);
+//				bSetVO.setAwaybet(awayScore);
+//				gamblingFacade.updateMemberAndBattleSetCoin(vo);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********

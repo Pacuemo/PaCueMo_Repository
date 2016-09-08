@@ -22,7 +22,14 @@
 				<div class="row">
    					<div class="col-sm-12 col-md-8">
 	   					<div class="well card friendlist" id="">
-		   					<h3 class="text-primary1">好友名單</h3>
+	   						<c:choose>
+							<c:when test="${fn:length(friends.ids) > 0}">
+		   					<h3 class="text-primary1">好友名單 <button id="edit-friendlist">edit</button></h3>
+		   					</c:when>
+		   					<c:otherwise>
+		   					<h3 class="text-primary1">好友名單 </h3>
+		   					</c:otherwise>
+		   					</c:choose>
 		   					<div class="row">
 		   					<div class="col-md-6">
 		   					<c:choose>
@@ -132,22 +139,70 @@
 	</div>
 </div>
 </body>
+
+<c:if test="${fn:length(friends.ids) > 0}">
 <script>
-// 	$(function(){
-// 		$(".form-control-static1.test1.f").bind("click",function(){
-// 			$(this).after("<div class='form-control-static1 test1 f'><button style:'color:red'>123</button><button class='cancel' style:'color:blue'>456</button></div>");
-// 			$(this).prop("disabled",true)
-// 		});
+	function addlink(){
+		var id = $(this).val();
+		location.href="#";
+	};
 
-// 	})
 	
-// 	$(document.body).on("click","button.cancel",function(){
-// 			alert("cancel");
-// 			$(this).parent().prev().prop("disabled",false);
-// 			$(this).parent().remove();	
-// 		});
+	
+	$(function(){
+		$(".form-control-static1.test1.f").bind("click",addlink);
+		
+		$(document.body).on("click","#edit-friendlist",function(){
+			$(this).attr("id","complete-edit");
+			$(this).text("complete");
+			$(".form-control-static1.test1.f").unbind("click");
+			$(".form-control-static1.test1.f").bind("click",function(){
+				$(this).after("<div class='form-control-static1 test1 b'><button class='delete' style:'color:red'>刪除</button><button class='cancel' style:'color:blue'>取消</button></div>");
+				$(this).prop("disabled",true)
+			});
+			
+		});
+		
+		$(document.body).on("click","#complete-edit",function(){
+			$(".form-control-static1.test1.b").prev().prop("disabled",false);	
+			$(".form-control-static1.test1.b").remove();
+			$(".form-control-static1.test1.f").unbind("click");
+			$(".form-control-static1.test1.f").bind("click",addlink)
+			$(this).attr("id","edit-friendlist");
+			$(this).text("edit");
+		});
+	
+		
+		
+		$(document.body).on("click","button.cancel",function(){
+			$(this).parent().prev().prop("disabled",false);
+			$(this).parent().remove();	
+		});
+		
+		$(document.body).on("click","button.delete",function(){
+			var id = $(this).parent().prev().val();
+			var outterDiv = $(this).parent().parent();
+			 $.ajax({
+					"type":"post",
+					"url": "",
+					"dataType": "json",
+					"data":{"friendId":id,mode:"delete_friend"},
+					"success":$.proxy(function(data){
+						if(data.status == "true"){
+							outterDiv.remove();
+						}else{
+							alert("error");
+						}		
+					},this)
+				});
+			$(this).parent().prev().prop("disabled",false);
+			$(this).parent().remove();	
+		});
 
+	})
+	
 </script>
+</c:if>
 <c:choose>
 	<c:when test="${empty LoginOK.memberFBId }">
 	<script>

@@ -15,17 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository("LeagueRecordDAO")
 public class LeagueRecordDAO implements LeagueRecordDAO_I
 {
-	private JdbcOperations jdbc;
-
-	public LeagueRecordDAO()
-	{
-	}
-
 	@Autowired
-	public LeagueRecordDAO(JdbcOperations jdbc)
-	{
-		this.jdbc = jdbc;
-	}
+	private JdbcOperations jdbc;
 
 	private final String Select_One_BY_ClubID = "select * from LeagueRecord where clubIdA = ? OR clubIdB=?";
 	private final String Select_ALL_BY_leagueId = "select * from LeagueRecord where leagueId = ?";
