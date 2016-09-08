@@ -1,4 +1,4 @@
-package _13_teaminvite_controller_testtest;
+package _13_teaminvite_controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/InvServlet")
-public class teamInviteServlet extends HttpServlet {
+public class TeamInviteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public teamInviteServlet() {
+    public TeamInviteServlet() {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

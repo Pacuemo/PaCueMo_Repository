@@ -111,6 +111,12 @@ p.tempstyle {
 	border-color: #0C5;
 	right: 0;
 	top: 50%;
+	
+
+}
+.tmimg{
+width: 225px;
+height: 225px;
 }
 </style>
 
@@ -130,11 +136,11 @@ p.tempstyle {
 			</c:choose>
 
 		</h2>
-		<div class="row margin-bottom-10">
+		<div class="row margin-bottom-10" id="show_team_member">
 			<div class="col-sm-2 animate fadeInLeft animated">
 				<p class="margin-bottom-30 tempstyle">${requestScope.teamVO.content}</p>
-				<c:if test="${requestScope.teamOK == null }">
-				<a href="#" class="button"> 
+				<c:if test="${requestScope.teamExsist != 'Exsist' }">
+				<a href="${pageContext.request.contextPath}/spring/team/joinTeam" class="button"> 
 				<span>
 					<c:choose>
 						<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
@@ -147,12 +153,14 @@ p.tempstyle {
 			</div>
 
 			<!-- Person Details -->
+			<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0" >
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
-					<img src="${pageContext.request.contextPath }/image/member/${requestScope.teamVO.teamMemberVOs[0].memberVO.memberImgUrl }" alt="image1">
+					<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
+					
 					<figcaption>
 						<h3 class="margin-bottom-10">
-							${requestScope.teamVO.teamMemberVOs[0].memberVO.memberFirstName } <small>- Programmer</small>
+							${list.memberVO.memberFirstName } <small>- Programmer</small>
 						</h3>
 						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
 					</figcaption>
@@ -170,103 +178,8 @@ p.tempstyle {
 					</ul>
 				</figure>
 			</div>
-			<!-- //Portfolio Item// -->
-			<!-- Person Details -->
-			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
-				<figure>
-					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image2.jpg" alt="image2">
-					<figcaption>
-						<h3 class="margin-bottom-10">
-							Simon <small>- Sales Assistant</small>
-						</h3>
-						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
-					</figcaption>
-					<ul class="list-inline person-details-icons">
-						<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-						</a></li>
-					</ul>
-				</figure>
-			</div>
-			<!-- //Portfolio Item// -->
-			<!-- Person Details -->
-			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
-				<figure>
-					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image3.jpg" alt="image3">
-					<figcaption>
-						<h3 class="margin-bottom-10">
-							Jeff <small>- Support</small>
-						</h3>
-						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
-					</figcaption>
-					<ul class="list-inline person-details-icons">
-						<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-						</a></li>
-					</ul>
-				</figure>
-			</div>
-			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
-				<figure>
-					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image3.jpg" alt="image3">
-					<figcaption>
-						<h3 class="margin-bottom-10">
-							Jeff <small>- Support</small>
-						</h3>
-						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
-					</figcaption>
-					<ul class="list-inline person-details-icons">
-						<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-						</a></li>
-					</ul>
-				</figure>
-			</div>
-			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
-				<figure>
-					<img src="${pageContext.request.contextPath }/_10_team_page/assets/img/theteam/image3.jpg" alt="image3">
-					<figcaption>
-						<h3 class="margin-bottom-10">
-							Jeff <small>- Support</small>
-						</h3>
-						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
-					</figcaption>
-					<ul class="list-inline person-details-icons">
-						<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-						</a></li>
-					</ul>
-				</figure>
-			</div>
-			<!-- //Portfolio Item// -->
+			</c:forEach>
+			
 
 
 		</div>
@@ -312,9 +225,6 @@ p.tempstyle {
 		</div>
 		<hr class="margin-vert-20">
 	</div>
-
-
-
 
 </body>
 </html>

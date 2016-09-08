@@ -1,4 +1,4 @@
-package _00_config;
+package _10_Configs;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
