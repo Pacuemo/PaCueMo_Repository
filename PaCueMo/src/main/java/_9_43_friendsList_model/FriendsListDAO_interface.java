@@ -7,4 +7,6 @@ public interface FriendsListDAO_interface
 	public List<FriendsListVO> getAllFriends(String memberId);
 
 	public List<FriendsListVO> getAllFriendsInvite(String memberId);
+
+	public int deleteFriend(String memberId, String friendId);
 }
