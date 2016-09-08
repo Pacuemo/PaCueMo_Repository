@@ -60,8 +60,24 @@ public class TeamServlet extends HttpServlet
 				teamService = context.getBean(TeamService.class);
 				battleRecordService = context.getBean(BattleRecordService.class);
 				teamMemberService = context.getBean(TeamMemberService.class);
-				Double attendancePercent = battleRecordService.getAttendancePercent(teamId);
-				Double teamWPCT = battleRecordService.getWPCT(teamId);
+				Double attendancePercent = null;
+				Double teamWPCT = null;
+				try
+				{
+					attendancePercent = battleRecordService.getAttendancePercent(teamId);
+				}
+				catch (Exception e)
+				{
+					attendancePercent = 0.0;
+				}
+				try
+				{
+					teamWPCT = battleRecordService.getWPCT(teamId);
+				}
+				catch (Exception e)
+				{
+					teamWPCT = 0.0;
+				}
 				teamVO = teamService.getOne(teamId);
 				req.setAttribute("teamVO", teamVO); 							//setAtt
 				req.setAttribute("attendancePercent", attendancePercent);		//setAtt

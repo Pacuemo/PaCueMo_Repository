@@ -26,6 +26,7 @@ public class ReportServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		System.out.println("post is called");
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -33,6 +34,12 @@ public class ReportServlet extends HttpServlet
 
 		Map<String, String> errorMsg = new HashMap<String, String>();
 		request.setAttribute("ErrorMsg", errorMsg);
+
+		String reportName = request.getParameter("reportName");
+		if (reportName == null || reportName.trim().length() == 0)
+		{
+			errorMsg.put("reportName", "請填入姓名");
+		}
 
 		String reportType = request.getParameter("reportType");
 		if (reportType == null)
