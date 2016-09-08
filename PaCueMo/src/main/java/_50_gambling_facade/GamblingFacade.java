@@ -1,7 +1,5 @@
 package _50_gambling_facade;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,19 +54,19 @@ public class GamblingFacade
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext("_53_gambling_facade");
-		GamblingFacade facade2 = (GamblingFacade) context.getBean("gamblingFacade2");
-		// ========== 【測試更新BattleSetVO】 ==============
-		BattleSetVO bSetVO = new BattleSetVO();
-		bSetVO.setBattleId(1);
-		bSetVO.setBattleDateTime(java.sql.Timestamp.valueOf("2014-04-27 08:05:33"));
-		bSetVO.setHomeId(5);
-		bSetVO.setAwayId(7);
-		bSetVO.setHomeScore(77);
-		bSetVO.setAwayScore(80);
-		bSetVO.setHomebet(98000.0);
-		bSetVO.setAwaybet(97000.0);
-		facade2.updateMemberAndBattleSetCoin(bSetVO);
+//		ApplicationContext context = new AnnotationConfigApplicationContext("_53_gambling_facade");
+//		GamblingFacade facade2 = (GamblingFacade) context.getBean("gamblingFacade2");
+//		// ========== 【測試更新BattleSetVO】 ==============
+//		BattleSetVO bSetVO = new BattleSetVO();
+//		bSetVO.setBattleId(1);
+//		bSetVO.setBattleDateTime(java.sql.Timestamp.valueOf("2014-04-27 08:05:33"));
+//		bSetVO.setHomeId(5);
+//		bSetVO.setAwayId(7);
+//		bSetVO.setHomeScore(77);
+//		bSetVO.setAwayScore(80);
+//		bSetVO.setHomebet(98000.0);
+//		bSetVO.setAwaybet(97000.0);
+//		facade2.updateMemberAndBattleSetCoin(bSetVO);
 
 	}
 }

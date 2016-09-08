@@ -101,7 +101,9 @@
 									    	<input type="hidden" value="${battleSetVO.awayScore}"/>							
 									    	<input type="hidden" value="${battleSetVO.homeScore}"/>							
 									    	<input type="hidden" value="${battleSetVO.awaybet}"/>							
-									    	<input type="hidden" value="${battleSetVO.homebet}"/>											
+									    	<input type="hidden" value="${battleSetVO.homebet}"/>	
+									    	<input type="hidden" value="${battleSetVO['away'].teamID}"/>
+									    	<input type="hidden" value="${battleSetVO['home'].teamID}"/>											
 										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
 										</td>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['home'].teamName}</h4></td>
@@ -169,6 +171,8 @@
 	            </table>
 	            
 	            <input id="battleId_choosed" type="hidden" value=""/><!-- <hidden 欄位存放該場次 battleId > -->
+	            <input id="awayId" 			 type="hidden" value=""/><!-- <hidden 欄位存放該場次 awayId > -->
+	            <input id="homeId" 			 type="hidden" value=""/><!-- <hidden 欄位存放該場次 homeId > -->
 	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	        </form>
     	</div>
@@ -211,7 +215,9 @@
        				var homeScore   = inputsHidden[7].value ;
        				var awayBet 	= inputsHidden[8].value ;
        				var homeBet 	= inputsHidden[9].value ;
-  
+       				var awayId 		= inputsHidden[10].value ;
+       				var homeId 		= inputsHidden[11].value ;
+  					
        				console.log("battleId " 	+ inputsHidden[0].value);
        				console.log("awayName " 	+ inputsHidden[1].value);
        				console.log("homeName " 	+ inputsHidden[2].value);
@@ -222,8 +228,13 @@
        				console.log("homeScore " 	+ inputsHidden[7].value);
        				console.log("awayBet " 		+ inputsHidden[8].value);
        				console.log("homeBet " 		+ inputsHidden[9].value);
+       				console.log("awayId " 		+ inputsHidden[10].value);
+       				console.log("homeId " 		+ inputsHidden[11].value);
        				
-       				$("#battleId_choosed").val(battleId);
+       				
+       				$("#battleId_choosed").val(battleId);// input hidden
+       				$("#awayId").val(awayId);// input hidden
+       				$("#homeId").val(homeId);// input hidden
        				$("#row1 img:eq(0)").attr('src',awayLogoUrl);
        				$("#row1 img:eq(2)").attr('src',homeLogoUrl);
        				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
@@ -252,6 +263,7 @@
 		                			'click' : function()
 		                			 {
 		                				 alert('hi');
+		                				
 		                				 //---
 		                				 $.ajax({
 		                					 "type":"POST",//傳遞方式				
@@ -266,6 +278,8 @@
 		                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
 		                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
 		                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
+		                             			 	  "awayId"     : $("#awayId").val(),// input hidden
+		                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
 		                             			 	  "awayCoins"  : $("#awayCoins").val(),
 		                             			 	  "homeCoins"  : $("#homeCoins").val()
 		                             		  },

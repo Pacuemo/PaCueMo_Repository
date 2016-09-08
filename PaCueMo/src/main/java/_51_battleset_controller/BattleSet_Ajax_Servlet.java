@@ -18,6 +18,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.google.gson.Gson;
 
+import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
 
@@ -28,6 +29,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 
 	private AnnotationConfigWebApplicationContext context;
 	private BattleSetService svc;
+	private GamblingFacade gamblingFacade;
 
 	@Override
 	public void init() throws ServletException
@@ -39,6 +41,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
+		gamblingFacade = (GamblingFacade) context.getBean("gamblingFacade2");// _50_gambling_facade 注入
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -262,22 +265,23 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 //
 				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String battleId = request.getParameter("battleId");
-				String awayName = request.getParameter("awayName");
-				String homeName = request.getParameter("homeName");
 				String battleTime = request.getParameter("battleTime");
-				String awayScore = request.getParameter("awayScore");
+				String homeId = request.getParameter("homeId");// id
+				String awayId = request.getParameter("awayId");// id
 				String homeScore = request.getParameter("homeScore");
-				String awayBet = request.getParameter("awayBet");
+				String awayScore = request.getParameter("awayScore");
 				String homeBet = request.getParameter("homeBet");
-				String awayCoins = request.getParameter("awayCoins");
+				String awayBet = request.getParameter("awayBet");
 				String homeCoins = request.getParameter("homeCoins");
+				String awayCoins = request.getParameter("awayCoins");
 
-				System.out.println(battleId + "  " + awayName + "  " + homeName + "  "
+				System.out.println(battleId + "  " + awayId + "  " + homeId + "  "
 						+ battleTime + "  " + awayScore + "  " + homeScore + "  " + awayBet + "  " + homeBet
 						+ "   " + awayCoins + "   " + homeCoins);
-				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return text ) **********/
+				/*************************** 2.開始CRUD資料 ( jQuery + Ajax : return text ) **********/
 ////				BattleSetService svc = new BattleSetService(); // Spring
 ////				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
+//				gamblingFacade.updateMemberAndBattleSetCoin(vo);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********
