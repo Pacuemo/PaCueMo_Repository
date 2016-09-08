@@ -1,4 +1,4 @@
-package _13_teaminvite_controller;
+package _13_teaminvite_controller_test;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
