@@ -13,17 +13,8 @@ import org.springframework.stereotype.Repository;
 @Repository("FightRecordDAO")
 public class FightRecordDAO implements FightRecordDAO_I
 {
-	private JdbcOperations jdbc;
-
-	public FightRecordDAO()
-	{
-	}
-
 	@Autowired
-	public FightRecordDAO(JdbcOperations jdbc)
-	{
-		this.jdbc = jdbc;
-	}
+	private JdbcOperations jdbc;
 
 	private final String Select_ALL_BY_clubMemberId = "select * from FightRecord where clubMemberId = ?";
 	private final String Select_ALL_BY_fightId = "select * from FightRecord where fightId = ?";
@@ -65,10 +56,6 @@ public class FightRecordDAO implements FightRecordDAO_I
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_26_fightRecord_model.FightRecordDAO_I#find_All_By_clubMemberId(java.lang.String)
-	 */
 	@Override
 	public List<FightRecordVO> find_All_By_clubMemberId(String clubMemberId)
 	{
@@ -76,10 +63,6 @@ public class FightRecordDAO implements FightRecordDAO_I
 		return jdbc.query(Select_ALL_BY_clubMemberId, new FightRecordRowMapper(), clubMemberId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_26_fightRecord_model.FightRecordDAO_I#find_All_By_fightId(int)
-	 */
 	@Override
 	public List<FightRecordVO> find_All_By_fightId(int fightId)
 	{
@@ -87,10 +70,6 @@ public class FightRecordDAO implements FightRecordDAO_I
 		return jdbc.query(Select_ALL_BY_fightId, new FightRecordRowMapper(), fightId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_26_fightRecord_model.FightRecordDAO_I#find_All_By_clubId(int)
-	 */
 	@Override
 	public List<FightRecordVO> find_All_By_clubId(int clubId)
 	{
@@ -98,10 +77,6 @@ public class FightRecordDAO implements FightRecordDAO_I
 		return jdbc.query(Select_ALL_BY_clubId, new FightRecordRowMapper(), clubId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_26_fightRecord_model.FightRecordDAO_I#add_One(_9_26_fightRecord_model.FightRecordVO)
-	 */
 	@Override
 	public int add_One(FightRecordVO fightRecordVO)
 	{
@@ -133,10 +108,6 @@ public class FightRecordDAO implements FightRecordDAO_I
 				fightRecordVO.getScore());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_26_fightRecord_model.FightRecordDAO_I#delete_One(int, java.lang.String)
-	 */
 	@Override
 	public int delete_One(int fightId, String memberId)
 	{
