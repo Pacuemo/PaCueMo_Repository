@@ -7,9 +7,9 @@ public interface ClubDAO_I
 
 	int insert(ClubVO clubVO);
 
-	void delete(int clubId);
+	int delete(int clubId);
 
-	void update(ClubVO clubVO);
+	int update(ClubVO clubVO);
 
 	ClubVO findByPK(int clubId) throws RuntimeException;
 

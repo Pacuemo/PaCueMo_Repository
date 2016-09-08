@@ -1,402 +1,70 @@
 package _9_22_clubMember_model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
-import _00_initial_service.GlobalService;
 
 @Component
 public class ClubMemberDAO implements ClubMemberDAO_I
 {
-
+	@Autowired
+	private JdbcOperations jdbc;
 	private static final String insert_state = "insert into clubMemberTable values (?,?,?)";
 	private static final String delete_state = "delete from clubMemberTable where clubMemberId=?";
 	private static final String get_one_state = "select clubId,clubMemberId,joinDate from clubMemberTable where clubMemberId=? ";
 	private static final String get_all = "select clubId,clubMemberId,joinDate from clubMemberTable ";
 	private static final String get_club_all = "select clubId,clubMemberId,joinDate from clubMemberTable where clubId=? ";
 
-	/*
-	 * (non-Javadoc)
-	 * @see clubMember.model.ClubMemberDAO_I#insert(clubMember.model.ClubMemberVO)
-	 */
-	@Override
-	public void insert(ClubMemberVO clubMemberVO)
+	private static final class ClubMemberRowMapper implements RowMapper<ClubMemberVO>
 	{
-		Connection con = null;
-		PreparedStatement ptsmt = null;
 
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		try
+		@Override
+		public ClubMemberVO mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
 
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			con.setAutoCommit(false);
-			ptsmt = con.prepareStatement(insert_state);
+			return new ClubMemberVO(rs.getInt("clubId"),
+					rs.getString("clubMemberId"),
+					rs.getDate("joinDate"));
+		}
 
-			ptsmt.setInt(1, clubMemberVO.getClubId());
-			ptsmt.setString(2, clubMemberVO.getClubMemberId());
-			ptsmt.setDate(3, clubMemberVO.getJoinDate());
-			ptsmt.executeUpdate();
-			con.commit();
-			System.out.println("新增一筆資料");
-		}
-		catch (SQLException e)
-		{
-			try
-			{
-				con.rollback();
-			}
-			catch (SQLException e1)
-			{
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (ptsmt != null)
-			{
-				try
-				{
-					ptsmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see clubMember.model.ClubMemberDAO_I#delete(int)
-	 */
 	@Override
-	public void delete(String clubMemberID)
+	public int insert(ClubMemberVO clubMemberVO)
 	{
-		Connection con = null;
-		PreparedStatement ptsmt = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			con.setAutoCommit(false);
-			ptsmt = con.prepareStatement(delete_state);
-			ptsmt.setString(1, clubMemberID);
-			ptsmt.executeUpdate();
-			con.commit();
-			System.out.println("刪除一筆資料");
-		}
-		catch (SQLException e)
-		{
-			try
-			{
-				con.rollback();
-			}
-			catch (SQLException e1)
-			{
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (ptsmt != null)
-			{
-				try
-				{
-					ptsmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
+		return jdbc.update(insert_state,
+				clubMemberVO.getClubId(),
+				clubMemberVO.getClubMemberId(),
+				clubMemberVO.getJoinDate());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see clubMember.model.ClubMemberDAO_I#findByPK(int)
-	 */
+	@Override
+	public int delete(String clubMemberID)
+	{
+		return jdbc.update(delete_state, clubMemberID);
+	}
+
 	@Override
 	public ClubMemberVO findByPK(String clubMemberID)
 	{
-		Connection con = null;
-		PreparedStatement ptsmt = null;
-		ResultSet rs = null;
-		ClubMemberVO memberVO = new ClubMemberVO();
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			con.setAutoCommit(false);
-			ptsmt = con.prepareStatement(get_one_state);
-			ptsmt.setString(1, clubMemberID);
-			rs = ptsmt.executeQuery();
-			con.commit();
-			System.out.println("查詢一筆資料");
-			while (rs.next())
-			{
-				memberVO.setClubId(rs.getInt(1));
-				memberVO.setClubMemberId(rs.getString(2));
-				memberVO.setJoinDate(rs.getDate(3));
-			}
-
-		}
-		catch (SQLException e)
-		{
-			try
-			{
-				con.rollback();
-			}
-			catch (SQLException e1)
-			{
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (ptsmt != null)
-			{
-				try
-				{
-					ptsmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-		return memberVO;
+		return jdbc.queryForObject(get_one_state, new ClubMemberRowMapper(), clubMemberID);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see clubMember.model.ClubMemberDAO_I#getAll()
-	 */
 	@Override
 	public List<ClubMemberVO> getAll()
 	{
-		Connection con = null;
-		PreparedStatement ptsmt = null;
-		ResultSet rs = null;
-		List<ClubMemberVO> members = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			members = new LinkedList<ClubMemberVO>();
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			con.setAutoCommit(false);
-			ptsmt = con.prepareStatement(get_all);
-			rs = ptsmt.executeQuery();
-			con.commit();
-			System.out.println("查詢全部資料");
-			while (rs.next())
-			{
-				ClubMemberVO memberVO = new ClubMemberVO();
-				memberVO.setClubId(rs.getInt(1));
-				memberVO.setClubMemberId(rs.getString(2));
-				memberVO.setJoinDate(rs.getDate(3));
-				members.add(memberVO);
-			}
-
-		}
-		catch (SQLException e)
-		{
-			try
-			{
-				con.rollback();
-			}
-			catch (SQLException e1)
-			{
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (ptsmt != null)
-			{
-				try
-				{
-					ptsmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-		return members;
+		return jdbc.query(get_all, new ClubMemberRowMapper());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see clubMember.model.ClubMemberDAO_I#getClubAll(int)
-	 */
 	@Override
 	public List<ClubMemberVO> getClubAll(int clubId)
 	{
-		Connection con = null;
-		PreparedStatement ptsmt = null;
-		ResultSet rs = null;
-		List<ClubMemberVO> members = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			members = new LinkedList<ClubMemberVO>();
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			con.setAutoCommit(false);
-			ptsmt = con.prepareStatement(get_club_all);
-			//��J�e�x��J���
-			ptsmt.setInt(1, clubId);
-			rs = ptsmt.executeQuery();
-			con.commit();
-			System.out.println("查詢單一社團會員資料");
-			while (rs.next())
-			{
-				ClubMemberVO memberVO = new ClubMemberVO();
-				memberVO.setClubId(rs.getInt(1));
-				memberVO.setClubMemberId(rs.getString(2));
-				memberVO.setJoinDate(rs.getDate(3));
-				members.add(memberVO);
-			}
-
-		}
-		catch (SQLException e)
-		{
-			try
-			{
-				con.rollback();
-			}
-			catch (SQLException e1)
-			{
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (ptsmt != null)
-			{
-				try
-				{
-					ptsmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-		return members;
+		return jdbc.query(get_club_all, new ClubMemberRowMapper(), clubId);
 	}
 
 	public static void main(String[] args)
