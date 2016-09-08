@@ -193,21 +193,22 @@
             	
        		$(function(){
        			/* ================ 【下注 開始】 ================= */
-       			/* ==== ﹝ 下注金額 ﹞begin ==== */
-       			var spinnerAway = $("#awayCoins").spinner({
-                    "step": 100,
-                    "min" : 0
-                });
-       			var spinnerHome = $("#homeCoins").spinner({
-                    "step": 100,
-                    "min" : 0
-                });
-       			/* ==== ﹝ 下注金額 ﹞ end ==== */
        			$("#myTable").find('button').click(function(){
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
        				var battleId 	 = inputsHidden[0].value ;
 
+       	  			/* ==== ﹝ 下注金額 spinner ﹞begin ==== */
+           			$("#awayCoins").spinner({
+                        "step": 100,
+                        "min" : 0
+                    });
+           			$("#homeCoins").spinner({
+                        "step": 100,
+                        "min" : 0
+                    });
+           			/* ==== ﹝ 下注金額 spinner ﹞ end ==== */
+       				
 	       			 //--- 按下【下注】按鈕ajax撈資料 開始 ---
 	   				 $.ajax({
 	   					 "type":"POST",//傳遞方式				
