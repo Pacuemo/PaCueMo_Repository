@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-@Repository("TeamInviteDAO")
+@Repository("TeamApplyDAO")
 public class TeamApplyDAO implements TeamApplyDAO_I
 {
 	private JdbcOperations jdbc;
@@ -30,7 +30,8 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	private static final String INSERT = "INSERT INTO TeamApply (teamId, memberId) VALUES (?, ?)";
 	private static final String DELETE = "DELETE FROM TeamApply WHERE teamId = ? and memberId = ?";
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_14_teamapply_model.TeamApplyDAO_I#getByTeam(java.lang.Integer)
 	 */
 	@Override
@@ -39,7 +40,8 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 		return jdbc.query(SELECT_BY_TEAM, new InvitationRowMapper(), teamId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_14_teamapply_model.TeamApplyDAO_I#getByMemberId_ALL(java.lang.String)
 	 */
 	@Override
@@ -48,7 +50,8 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 		return jdbc.query(SELECT_BY_MEMBER_ALL, new InvitationRowMapper(), memberId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_14_teamapply_model.TeamApplyDAO_I#getByMemberId(java.lang.String)
 	 */
 	@Override
@@ -57,7 +60,8 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 		return jdbc.query(SELECT_BY_MEMBER, new InvitationRowMapper(), memberId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_14_teamapply_model.TeamApplyDAO_I#add(_9_14_teamapply_model.TeamApplyVO)
 	 */
 	@Override
@@ -66,7 +70,8 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 		jdbc.update(INSERT, teamApplyVO.getTeamId(), teamApplyVO.getMemberId());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see _9_14_teamapply_model.TeamApplyDAO_I#delete(java.lang.Integer, java.lang.String)
 	 */
 	@Override

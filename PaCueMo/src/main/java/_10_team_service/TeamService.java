@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import _9_10_team_model.TeamDAO;
 import _9_10_team_model.TeamDAO_interface;
 import _9_10_team_model.TeamVO;
-import _9_11_teammember_model.TeamMemberDAO;
 import _9_11_teammember_model.TeamMemberDAO_interface;
+import _9_11_teammember_model.TeamMemberVO;
+import _9_41_member_model.MemberDAO_interface;
 
 @Component
 @Transactional
@@ -24,13 +24,11 @@ public class TeamService
 	private TeamDAO_interface teamDAO;
 	@Autowired
 	private TeamMemberDAO_interface teamMemberDAO;
+	@Autowired
+	private MemberDAO_interface memberDAO;
 
 	public TeamService()
 	{
-		if (null == teamDAO)
-			teamDAO = new TeamDAO();
-		if (null == teamMemberDAO)
-			teamMemberDAO = new TeamMemberDAO();
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -39,6 +37,7 @@ public class TeamService
 		teamDAO.insert(teamVO);
 		Integer teamId = teamDAO.find_TeamId(teamVO.getTeamHead());
 		teamMemberDAO.insert(teamId, teamVO.getTeamHead());
+		System.out.println("creatTeam");
 	}
 
 	public void update(Integer teamId, String teamName, Date createDate, Integer teamProp, String teamHead,
@@ -67,7 +66,14 @@ public class TeamService
 
 	public TeamVO getOne(Integer teamId)
 	{
-		return teamDAO.findByPrimaryKey(teamId);
+		TeamVO teamVO = teamDAO.findByPrimaryKey(teamId);
+		List<TeamMemberVO> teamMemberVOs = teamMemberDAO.getOneTeam(teamId);
+		for (TeamMemberVO list : teamMemberVOs)
+		{
+			list.setMemberVO(memberDAO.findByPrimaryKey(list.getTeamMemberId()));
+		}
+		teamVO.setTeamMemberVOs(teamMemberVOs);
+		return teamVO;
 	}
 
 	public List<TeamVO> getAll()

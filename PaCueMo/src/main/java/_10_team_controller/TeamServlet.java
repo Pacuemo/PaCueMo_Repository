@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import _00_config.RootConfig;
 import _10_team_service.TeamService;
@@ -25,39 +24,48 @@ import _9_42_playerCard_model.PlayerCardVO;
 @WebServlet("/TeamServlet")
 public class TeamServlet extends HttpServlet
 {
+
 	private static final long serialVersionUID = 1L;
+	private AnnotationConfigWebApplicationContext context;
 
 	public TeamServlet()
 	{
 	}
 
+	@Override
+	public void init() throws ServletException
+	{
+		context = new AnnotationConfigWebApplicationContext();
+//		context.scan("");
+		context.register(RootConfig.class);
+		context.refresh();
+	}
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
-		System.out.println("Here is Get");
+		System.out.println("Here is Get");	// 隊伍頁面
 		req.setCharacterEncoding("UTF-8");
-		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		TeamVO teamVO = null;
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
 		List<TeamMemberVO> teamMemberList = null;
 		PlayerCardVO playerCardVO = new PlayerCardVO();
 		BattleRecordService battleRecordService = null;
-
+		Integer teamId = 4;								//測試!!! TEST TEST TEST
 		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
 		{
 			try
 			{
-//				Integer teamId = Integer.valueOf(req.getParameter("teamId"));
-				Integer teamId = 4;						//測試!!! TEST TEST TEST
-				teamService = new TeamService();
+//				teamId = Integer.valueOf(req.getParameter("teamId"));
+				teamService = context.getBean(TeamService.class);
 				battleRecordService = context.getBean(BattleRecordService.class);
 				Double attendancePercent = battleRecordService.getAttendancePercent(teamId);
 				Double teamWPCT = battleRecordService.getWPCT(teamId);
 				teamVO = teamService.getOne(teamId);
 				req.setAttribute("teamVO", teamVO); 							//setAtt
-				req.setAttribute("attendancePercent", attendancePercent);				//setAtt
+				req.setAttribute("attendancePercent", attendancePercent);		//setAtt
 				req.setAttribute("teamWPCT", teamWPCT);							//setAtt
-				teamMemberService = new TeamMemberService();
+				teamMemberService = context.getBean(TeamMemberService.class);
 				teamMemberList = teamMemberService.getOneTeam(teamId);
 				System.out.println(teamVO.getTeamName());
 				for (TeamMemberVO list : teamMemberList)
@@ -65,7 +73,6 @@ public class TeamServlet extends HttpServlet
 
 				}
 				req.getRequestDispatcher("/_10_team_page/teampage.jsp").forward(req, resp);
-
 			}
 			catch (Exception e)
 			{
@@ -81,9 +88,9 @@ public class TeamServlet extends HttpServlet
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
+		System.out.println("這裡是 Post 新增隊伍");
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		Boolean error = false;
 		TeamService teamService = null;
 		TeamVO teamVO = null;
@@ -124,6 +131,7 @@ public class TeamServlet extends HttpServlet
 				System.out.println("error!!!");
 				return;
 			}
+			System.out.println("doPost OK");
 		}
 		catch (Exception e)
 		{

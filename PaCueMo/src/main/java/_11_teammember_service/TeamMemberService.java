@@ -3,22 +3,29 @@ package _11_teammember_service;
 import java.sql.Date;
 import java.util.List;
 
-import _9_11_teammember_model.TeamMemberDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import _9_11_teammember_model.TeamMemberDAO_interface;
 import _9_11_teammember_model.TeamMemberVO;
 
-public class TeamMemberService {
+@Component
+public class TeamMemberService
+{
+	@Autowired
 	private TeamMemberDAO_interface dao;
 
-	public TeamMemberService() {
-		dao = new TeamMemberDAO();
+	public TeamMemberService()
+	{
 	}
 
-	public void add(TeamMemberVO teamMemberVO) {
+	public void add(TeamMemberVO teamMemberVO)
+	{
 		dao.insert(teamMemberVO);
 	}
 
-	public void add(Integer teamId, String teamMemberId, Date joinDate) {
+	public void add(Integer teamId, String teamMemberId, Date joinDate)
+	{
 		TeamMemberVO teamMemberVO = new TeamMemberVO();
 		teamMemberVO.setTeamId(teamId);
 		teamMemberVO.setTeamMemberId(teamMemberId);
@@ -26,11 +33,13 @@ public class TeamMemberService {
 		dao.insert(teamMemberVO);
 	}
 
-	public void update(TeamMemberVO teamMemberVO) {
+	public void update(TeamMemberVO teamMemberVO)
+	{
 		dao.update(teamMemberVO);
 	}
 
-	public void update(Integer teamId, String teamMemberId, Date joinDate) {
+	public void update(Integer teamId, String teamMemberId, Date joinDate)
+	{
 		TeamMemberVO teamMemberVO = new TeamMemberVO();
 		teamMemberVO.setTeamId(teamId);
 		teamMemberVO.setTeamMemberId(teamMemberId);
@@ -38,19 +47,23 @@ public class TeamMemberService {
 		dao.update(teamMemberVO);
 	}
 
-	public void delete(Integer teamId, String teamMemberId) {
+	public void delete(Integer teamId, String teamMemberId)
+	{
 		dao.delete(teamId, teamMemberId);
 	}
 
-	public TeamMemberVO getOne(Integer teamId, String teamMemberId) {
+	public TeamMemberVO getOne(Integer teamId, String teamMemberId)
+	{
 		return dao.findByPrimaryKey(teamId, teamMemberId);
 	}
 
-	public List<TeamMemberVO> getOneTeam(Integer teamId) {
+	public List<TeamMemberVO> getOneTeam(Integer teamId)
+	{
 		return dao.getOneTeam(teamId);
 	}
 
-	public List<TeamMemberVO> getAll() {
+	public List<TeamMemberVO> getAll()
+	{
 		return dao.getAll();
 	}
 
