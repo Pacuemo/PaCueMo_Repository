@@ -5,7 +5,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test02-test.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/test01.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/easy-sidebar.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 

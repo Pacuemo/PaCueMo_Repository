@@ -133,19 +133,19 @@
 </div>
 </body>
 <script>
-	$(function(){
-		$(".form-control-static1.test1.f").bind("click",function(){
-			$(this).after("<div class='form-control-static1 test1 f'><button style:'color:red'>123</button><button class='cancel' style:'color:blue'>456</button></div>");
-			$(this).prop("disabled",true)
-		});
+// 	$(function(){
+// 		$(".form-control-static1.test1.f").bind("click",function(){
+// 			$(this).after("<div class='form-control-static1 test1 f'><button style:'color:red'>123</button><button class='cancel' style:'color:blue'>456</button></div>");
+// 			$(this).prop("disabled",true)
+// 		});
 
-	})
+// 	})
 	
-	$(document.body).on("click","button.cancel",function(){
-			alert("cancel");
-			$(this).parent().prev().prop("disabled",false);
-			$(this).parent().remove();	
-		});
+// 	$(document.body).on("click","button.cancel",function(){
+// 			alert("cancel");
+// 			$(this).parent().prev().prop("disabled",false);
+// 			$(this).parent().remove();	
+// 		});
 
 </script>
 <c:choose>
