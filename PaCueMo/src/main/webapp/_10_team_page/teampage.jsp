@@ -156,8 +156,15 @@ height: 225px;
 			<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0" >
 			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
 				<figure>
+				<c:choose>
+					<c:when test="${list.memberVO.memberImgUrl != null}">
+						<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
+					</c:when>
+					<c:otherwise>
+						<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+					</c:otherwise>
+				</c:choose>
 					<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
-					
 					<figcaption>
 						<h3 class="margin-bottom-10">
 							${list.memberVO.memberFirstName } <small>- Programmer</small>
