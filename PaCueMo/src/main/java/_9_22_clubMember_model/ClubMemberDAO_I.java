@@ -5,9 +5,9 @@ import java.util.List;
 public interface ClubMemberDAO_I
 {
 
-	void insert(ClubMemberVO clubMemberVO);
+	int insert(ClubMemberVO clubMemberVO);
 
-	void delete(String clubMemberID);
+	int delete(String clubMemberID);
 
 	ClubMemberVO findByPK(String clubMemberID);
 

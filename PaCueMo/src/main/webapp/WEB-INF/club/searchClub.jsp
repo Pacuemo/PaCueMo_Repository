@@ -39,7 +39,9 @@
      </s:url>
      <h1>
      <a href="${searchClub}"><c:out value="${club.clubName}"/></a>
+     <c:if test="${not empty LoginOK}">
      <a href="${joinClub}" class="button">加入社團</a>
+     </c:if>
      </h1>
      
      </c:forEach>

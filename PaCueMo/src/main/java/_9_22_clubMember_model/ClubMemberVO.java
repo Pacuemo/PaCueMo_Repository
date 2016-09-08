@@ -3,8 +3,11 @@ package _9_22_clubMember_model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
 import _9_41_member_model.MemberVO;
 
+@Component
 public class ClubMemberVO implements Serializable
 {
 
