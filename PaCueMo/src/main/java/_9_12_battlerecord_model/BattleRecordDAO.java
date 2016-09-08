@@ -168,9 +168,9 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 		}
 		catch (DataAccessException e)
 		{
-
+			return null;
 		}
-		return null;
+
 	}
 
 	/*
@@ -209,7 +209,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 
 		try
 		{
-//			dao.add(battleRecordVO);
+			dao.add(battleRecordVO);
 //			dao.accept_Reject(0, 1);
 //			System.out.println(dao.findById(1).getBattleId() + " " +dao.findById(1).getTeamIdA() );
 
