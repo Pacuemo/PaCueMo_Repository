@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberVO implements Serializable
 {
 
@@ -31,6 +34,29 @@ public class MemberVO implements Serializable
 	public MemberVO()
 	{
 
+	}
+
+	public MemberVO(String memberId, String memberFirstName, String memberLastName, String memberPassword, Date memberBirthday, String memberPhone, String memberMail, String memberImgUrl, double memberPoint, boolean memberHaveCard, String memberFBId, int memberType, Timestamp memberRgDateTime, boolean memberMailStatus, Timestamp memberOutDate, String memberValidateCode, String memberSecretKey, boolean member2StepVerify)
+	{
+		super();
+		this.memberId = memberId;
+		this.memberFirstName = memberFirstName;
+		this.memberLastName = memberLastName;
+		this.memberPassword = memberPassword;
+		this.memberBirthday = memberBirthday;
+		this.memberPhone = memberPhone;
+		this.memberMail = memberMail;
+		this.memberImgUrl = memberImgUrl;
+		this.memberPoint = memberPoint;
+		this.memberHaveCard = memberHaveCard;
+		this.memberFBId = memberFBId;
+		this.memberType = memberType;
+		this.memberRgDateTime = memberRgDateTime;
+		this.memberMailStatus = memberMailStatus;
+		this.memberOutDate = memberOutDate;
+		this.memberValidateCode = memberValidateCode;
+		this.memberSecretKey = memberSecretKey;
+		this.member2StepVerify = member2StepVerify;
 	}
 
 	public String getMemberId()

@@ -70,7 +70,7 @@
         <li role="separator" class="divider"></li>
         <c:if test="${empty LoginOK }">
         <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_02_register/register.jsp" id="nav-link-sign_up" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>
-        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/_01_login/login.jsp" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
+        <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/spring/login/Signin" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="">點數餘額：${LoginOK.memberPoint}點</a></li>
