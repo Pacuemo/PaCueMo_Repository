@@ -18,8 +18,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.google.gson.Gson;
 
+import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
-import _53_gambling_facade.GamblingFacade_Config;
 
 @WebServlet("/_5_gambling/BattleSet_Ajax_Servlet.do")
 public class BattleSet_Ajax_Servlet extends HttpServlet

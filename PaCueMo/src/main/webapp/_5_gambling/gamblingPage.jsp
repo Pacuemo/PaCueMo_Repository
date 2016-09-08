@@ -254,10 +254,10 @@
 		                				 alert('hi');
 		                				 //---
 		                				 $.ajax({
-		                					 "type":"post",//傳遞方式				
+		                					 "type":"POST",//傳遞方式				
 		                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
 		                             		 "dataType":"text",//Servlet回傳格式
-		                             		 "data":{ "action"     : 'gamblingUpdate' , 
+		                             		 "data":{ "action"     : 'gamblingUpdate' ,   /* data : 由dialog格子取得場次及輸入的資料 */
 		                             			 	  "battleId"   : $("#battleId_choosed").val() ,
 		                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
 		                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),

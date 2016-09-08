@@ -1,4 +1,4 @@
-package _53_gambling_facade;
+package _50_gambling_facade;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
