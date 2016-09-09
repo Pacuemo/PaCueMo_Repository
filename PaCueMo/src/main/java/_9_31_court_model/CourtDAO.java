@@ -23,7 +23,7 @@ public class CourtDAO implements CourtDAO_interface
 	private static final String GET_ONE_STMT = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where courtId=?";
 	private static final String DELETE = "DELETE FROM Court where courtId =?";
 	private static final String UPDATE = "UPDATE Court set name=?, courtaddress=?, imgUrl=?, latitude=?, longitude=?, webUrl=?, phone=? where courtId=?";
-	private static final String Get_By_Name = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where name like ?";
+	private static final String GET_BY_NAME = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where name like ?";
 
 	@Override
 	public void insert(CourtVO courtVO)
@@ -363,9 +363,9 @@ public class CourtDAO implements CourtDAO_interface
 	}
 
 	@Override
-	public List<CourtVO> getByName(String name)
+	public List<CourtVO> findByName(String name)
 	{
-		List<CourtVO> list = new ArrayList<CourtVO>();
+		List<CourtVO> list2 = new ArrayList<CourtVO>();
 		CourtVO courtVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -375,7 +375,10 @@ public class CourtDAO implements CourtDAO_interface
 		{
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(Get_By_Name);
+			pstmt = con.prepareStatement(GET_BY_NAME);
+
+			pstmt.setString(2, "%" + name + "%");
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next())
@@ -389,9 +392,7 @@ public class CourtDAO implements CourtDAO_interface
 				courtVO.setLongitue(rs.getDouble("longitude"));
 				courtVO.setWebUrl(rs.getString("webUrl"));
 				courtVO.setPhone(rs.getString("phone"));
-				list.add(courtVO);
 			}
-
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -413,7 +414,7 @@ public class CourtDAO implements CourtDAO_interface
 				}
 				catch (SQLException se)
 				{
-					se.printStackTrace();
+					se.printStackTrace(System.err);
 				}
 			}
 			if (pstmt != null)
@@ -424,7 +425,7 @@ public class CourtDAO implements CourtDAO_interface
 				}
 				catch (SQLException se)
 				{
-					se.printStackTrace();
+					se.printStackTrace(System.err);
 				}
 			}
 			if (con != null)
@@ -433,12 +434,12 @@ public class CourtDAO implements CourtDAO_interface
 				{
 					con.close();
 				}
-				catch (SQLException se)
+				catch (Exception e)
 				{
-					se.printStackTrace();
+					e.printStackTrace(System.err);
 				}
 			}
 		}
-		return list;
+		return list2;
 	}
 }
