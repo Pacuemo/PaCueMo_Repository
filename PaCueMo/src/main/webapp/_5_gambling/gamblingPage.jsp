@@ -10,18 +10,19 @@
     <meta charset="UTF-8">
     <title>NBA 運彩專區</title>
 	
-	 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/advertisment/css/demo.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/advertisment/css/slicebox.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/advertisment/css/custom.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
-     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/reset.css" type="text/css">
-     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/default.css" type="text/css">
-     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/style.css" type="text/css">
-     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/notiny/css/notiny.min.css" type="text/css">
+	 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/demo.css" />
+     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/slicebox.css" />
+     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/custom.css" />
+     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/reset.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
      
+<!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
 	<style type="text/css">
         #dialog-div tr {
             height:50px;
@@ -40,11 +41,11 @@
         	background-color:#2F0000;
         	border:2px groove #3C3C3C;
         }
-        
+        .ui-dialog { z-index: 1000 !important ;}/* 確保 dialog 最上層顯示 */
 	</style>
   </head>
   <body>
-  		<%-- <jsp:include page="myTop.jsp"/> --%>
+  	
 		<jsp:include page="/fragment/top.jsp"/>
 		<jsp:include page="/_5_gambling/sidebar.jsp"/>
 
@@ -112,7 +113,7 @@
     	<!-- ====================================================================== -->
 		<!-- =======================【下注 dialog 開始】=========================== -->
 		<!-- ====================================================================== -->
-		<div id="dialog-div" title="下注場次">
+		<div id="dialog-div" title="下注場次" style="z-index: 9999;">
 	        <form>
 	            <table>
 	                <tr id="row1" align='center' valign='middle' style="height:200px;"><!-- 隊徽 -->
@@ -173,7 +174,7 @@
 	            <form id="credit_card" action="">
 	                  <div class="form-group">
 						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">卡 號</label>
-						  <input placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" maxlength="20"/>
+						  <input placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354"/>
 					  </div>
 	                  <div class="form-group">
 						  <label class="control-label" for="name" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">姓 名</label>
@@ -197,26 +198,29 @@
 					  </div>
 	            </form>
 	    </div>
-    	
+
 		<!-- ***************************【下注 dialog 結束】***************************** -->
 		
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-       <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
-       <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/zebra_datepicker.js"></script>
-       <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/core.js"></script>
-       <script src="<%=request.getContextPath()%>/_5_gambling/notiny/js/notiny.min.js"></script>
-       <script src="<%=request.getContextPath()%>/_5_gambling/credit_card/js/jquery.card.js"></script>
-       <script src="<%=request.getContextPath()%>/_5_gambling/credit_card/js/js_timeStamp.js"></script>
+       <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script> 
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/js/jquery.paginate.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/js/zebra_datepicker.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/js/core.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/js/notiny.min.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/jquery.card.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
+  
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
             var funFlag = "<%=request.getAttribute("funFlag")%>";    
             var myDialog , cardDialog;
             //alert( funFlag );
-            	
+            
        		$(function(){
+       			
        			/* ================ 【下注 開始】 ================= */
        			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
@@ -328,7 +332,7 @@
 	                             			 	  "homeCoins"  : $("#homeCoins").val()
 	                             		  },
 	                    				 "success":function(data){
-	                    					 alert("fuck " + data);
+	                    					 	alert("fuck " + data);
 	                    						$.notiny({/* notiny 特效*/
                         	 	                    theme:'dark',
                         	 	                    text: '下注成功！',
@@ -375,12 +379,13 @@
 	                width: 500,
 	                modal: true,
 	                resizable: false,
-	                position: { my: "left top", at: "right top" ,of: $("#buyCoin") }, /* dialog 起始彈出位置 */
+	                //position: { my: "center", at: "center" ,of: window }, /* dialog 起始彈出位置 */
+	                 position:{my:"left top",at:"left top", of: $("#sidebar")},
 	                buttons:[
 	                          {
-                            	 text   : "確認購買",
+                            	"text"   : "確認購買",
                         	 	'class' : "btn btn-primary",
-                        	 	 click : function (){
+                        	 	"click" : function (){
                         	 		   //alert($(this).prop('tagName') +" 確認" );
                         	 		    var cardNum  = $("input[placeholder='Card number']").val();
                         	 		    var fullName = $("input[placeholder='Full name']").val();
@@ -389,6 +394,7 @@
                         	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
                         	 		    var coin     = $("input[placeholder='代幣數量']").val();
                         	 		    var bookingTime = timeStamp();
+                        	 		    alert(bookingTime);
                         	 			//======================================================
                         	 			//==============【傳送信用卡資訊到servlet】=============
                         	 			//======================================================	
