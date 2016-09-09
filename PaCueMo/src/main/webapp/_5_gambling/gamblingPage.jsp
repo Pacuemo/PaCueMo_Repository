@@ -173,7 +173,7 @@
 	            <form id="credit_card" action="">
 	                  <div class="form-group">
 						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">卡 號</label>
-						  <input placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" maxlength="19"/>
+						  <input placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" maxlength="20"/>
 					  </div>
 	                  <div class="form-group">
 						  <label class="control-label" for="name" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">姓 名</label>
@@ -375,7 +375,7 @@
 	                width: 500,
 	                modal: true,
 	                resizable: false,
-	                position: { my: "top", at: "bottom" ,of: window }, /* dialog 起始彈出位置 */
+	                position: { my: "left top", at: "right top" ,of: $("#buyCoin") }, /* dialog 起始彈出位置 */
 	                buttons:[
 	                          {
                             	 text   : "確認購買",
@@ -388,9 +388,17 @@
                         	 		    var cvc      = $("input[placeholder='CVC']").val();
                         	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
                         	 		    var coin     = $("input[placeholder='代幣數量']").val();
+                        	 		    var bookingTime = timeStamp();
                         	 			//======================================================
                         	 			//==============【傳送信用卡資訊到servlet】=============
                         	 			//======================================================	
+                        	 				console.log(cardNum);
+                        	 				console.log(fullName);
+                        	 				console.log(expire);
+                        	 				console.log(cvc);
+                        	 				console.log(ntd);
+                        	 				console.log(coin);
+                        	 				console.log(bookingTime);
                         	 			$.ajax({
                         	 				"type" : "post",                        	 				
                         	 				"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'GoodsOrder_Servlet.do',
@@ -402,7 +410,7 @@
                         	 						   'cvc'        :   cvc        ,
                         	 						   'NTD'        :   ntd        ,
                         	 						   'coin'        :  coin        ,
-                        	 						   'bookingTime' :  timeStamp()   //下訂時間(call from js_timestamp.js)
+                        	 						   'bookingTime' :  bookingTime   //下訂時間(call from js_timestamp.js)
                         	 				},
                     
                         	 				"success" : function(){/* Servlet回應成功 */
