@@ -1,5 +1,7 @@
 package _00_config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.gson.Gson;
@@ -88,4 +92,19 @@ public class RootConfig
 		return new GoogleAuthenticator();
 	}
 
+	@Bean
+	public MailSender mailSender()
+	{
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		Properties mailProperties = new Properties();
+		mailProperties.put("mail.smtp.auth", "true");
+		mailProperties.put("mail.smtp.starttls.enable", "true");
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		mailSender.setUsername(GlobalService.EMAIL_USERNAME);
+		mailSender.setPassword(GlobalService.EMAIL_PASSWORD);
+		mailSender.setJavaMailProperties(mailProperties);
+		mailSender.setDefaultEncoding("UTF-8");
+		return mailSender;
+	}
 }

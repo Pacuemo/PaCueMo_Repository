@@ -28,6 +28,32 @@ public class LoginService_Spring
 		return null;
 	}
 
+	public MemberVO findbyGUID(String GUID)
+	{
+		MemberVO memberVO = dao.findByPrimaryKey(GUID);
+
+		if (memberVO != null)
+		{
+
+			return memberVO;
+
+		}
+		return null;
+	}
+
+	public MemberVO checkMail(String mail)
+	{
+		MemberVO memberVO = dao.findByUserMail(mail);
+
+		if (memberVO != null)
+		{
+
+			return memberVO;
+
+		}
+		return null;
+	}
+
 	public MemberVO checkFbId(String fbId)
 	{
 		MemberVO memberVO = dao.findByUserFBID(fbId);
@@ -82,4 +108,13 @@ public class LoginService_Spring
 		return null;
 	}
 
+	public int setForgetPasswordInfo(MemberVO memberVO)
+	{
+		return dao.updateForgetPwdByMail(memberVO);
+	}
+
+	public int setNewPassword(MemberVO memberVO)
+	{
+		return dao.updatePasswordByPrimaryKey(memberVO);
+	}
 }

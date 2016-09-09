@@ -604,7 +604,8 @@ a.page-header h1:hover {
 	margin-bottom: 10px;
 	margin-top: 10px;
 	padding-top: 30px;
-	padding-bottom: 30px
+	padding-bottom: 30px;
+	min-height: 200px;
 }
 .well:before, .well:after {
 	content: " ";
