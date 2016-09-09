@@ -20,6 +20,7 @@ public class _22_league_controller
 {
 	@Autowired
 	private League_Service leagueService;
+	@Autowired
 	private FightRecord_Service fightRecordService;
 	@Autowired
 	private Gson gson;
