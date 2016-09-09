@@ -20,7 +20,15 @@
   <body>
   	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
-	<c:forEach items="${sessionScope.fightRecordVOs}" var="fightRecordVO">
+	
+	<div class="table-responsive">
+  <table class="table table-bordered">
+
+
+
+</table>
+</div>
+	<c:forEach items="${requestScope.fightRecordVOs}" var="fightRecordVO">
 	<h1>${fightRecordVO.memberVO.memberLastName}${fightRecordVO.memberVO.memberFirstName}</h1>
 	</c:forEach>
     

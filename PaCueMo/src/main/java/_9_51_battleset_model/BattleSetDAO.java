@@ -6,12 +6,8 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
-
-import _51_battleset_service.BattleSetBeans_Config;
 
 public class BattleSetDAO implements BattleSetDAO_interface
 {
@@ -48,6 +44,10 @@ public class BattleSetDAO implements BattleSetDAO_interface
 	private static final String QUERY_BY_DATE_STMT = "SELECT battleId , battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet "
 			+ "                                          FROM BattleSet "
 			+ "                                          WHERE battleDateTime BETWEEN   ?   AND   ?   ORDER BY battleDateTime DESC";
+
+	private static final String QUERY_BY_DATE_COUNT_STMT = "SELECT count(*)  FROM BattleSet" +
+			"                                             WHERE battleDateTime BETWEEN  ?  AND ? ";
+
 	private static final String QUERY_BY_DATE_PAGE_STMT = ""
 			+ "SELECT battleId , battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet FROM "
 			+ " 		(SELECT ROW_NUMBER() OVER (ORDER BY battleDateTime DESC) AS RowNum , "
@@ -152,6 +152,33 @@ public class BattleSetDAO implements BattleSetDAO_interface
 		return jdbcTemplate.query(QUERY_BY_DATE_STMT, new BattleSetRowMapper(), date1, date2);
 	}
 
+	public Integer getBattleSetsCountByDate(String queryDate)
+	{
+		Calendar calendar = Calendar.getInstance();
+		String[] qDate = queryDate.split("-");
+		Integer yyyy = Integer.valueOf(qDate[0]);
+		Integer mm = Integer.valueOf(qDate[1]);
+		Integer dd = Integer.valueOf(qDate[2]);
+
+		/**
+		 * Calendar.YEAR 代表加減年
+		 * Calendar.MONTH 代表加減月份
+		 * Calendar.DATE 代表加減天數
+		 * Calendar.HOUR 代表加減小時數
+		 * Calendar.MINUTE 代表加減分鐘數
+		 * Calendar.SECOND 代表加減秒數
+		 */
+		calendar.set(yyyy, mm - 1, dd);//設定時間為輸入的QueryDate (※ 注意: Calendar 月份 -1)
+		calendar.add(Calendar.DATE, 1);
+		//----------------------------------
+		String date1 = queryDate;
+		String date2 = (new Date(calendar.getTimeInMillis())).toString();
+//		System.out.println("date1 : ---" + date1);
+//		System.out.println("date2 : ---" + date2);
+		//----------------------------------
+		return jdbcTemplate.queryForObject(QUERY_BY_DATE_COUNT_STMT, new Object[] { date1, date2 }, Integer.class);
+	}
+
 	@Override
 	public List<BattleSetVO> getSetsByDateAndPage(String queryDate, Integer pageNo)
 	{
@@ -205,8 +232,13 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //		System.out.println(date2);
 		//------------------------------------------------------------------
 //【【【【【【【【【【【【【【【 Spring 】】】】】】】】】】】】】】】】】】】】
-		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
-		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
+//		ApplicationContext context = new AnnotationConfigApplicationContext(BattleSetBeans_Config.class);
+//		BattleSetDAO dao = (BattleSetDAO) context.getBean("bSetDAO");
+
+//		---------- 【測試】依日期查詢每日比賽場數 ----------------
+
+//		Integer test = dao.getBattleSetsCountByDate("2016-09-09");
+//		System.out.println("count(*) :  battleSet → " + test + " 筆");
 
 //		----------【teamId】依日期 及 【頁碼】 查詢----------------
 

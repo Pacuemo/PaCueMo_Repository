@@ -26,54 +26,55 @@
 	<!-- ---------------------------------- 【Begin 廣告輪播】 ---------------------------------- -->
 	<div class="container">
 
-        <div class="wrapper">
-
-            <ul id="sb-slider" class="sb-slider">
-                <li>
-                    <a href="http://sports.ltn.com.tw/news/breakingnews/1810875" target="_blank"><img class="test" src="advertisment/images/pic1.jpg" alt="image1" /></a>
-                    <div class="sb-description">
-                        <h3 style="color:yellow;font-family:微軟正黑體;font-weight:700;">NBA》林書豪變籃網一哥 美媒：裁判會吹犯規了吧？</h3>
-                    </div>
-                </li>
-                <li>
-                    <a href="http://nba.udn.com/nba/story/6780/1932790" target="_blank"><img class="test" src="advertisment/images/pic2.jpg" alt="image2" /></a>
-                    <div class="sb-description">
-                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">被柯瑞守住？麥凱倫：不可能</h3>
-                    </div>
-                </li>
-                <li>
-                    <a href="http://nba.udn.com/nba/story/6780/1784243" target="_blank"><img  src="advertisment/images/pic3.jpg" alt="image1"/></a>
-                    <div class="sb-description">
-                        <h3 style="color:orange;font-family:微軟正黑體;font-weight:700;">2016選秀會交易總匯</h3>
-                    </div>
-                </li>
-                <li>
-                    <a href="https://tw.news.yahoo.com/%E5%A5%A7%E9%81%8B%E6%89%93%E5%87%BA%E8%BA%AB%E5%83%B9-%E6%98%93%E5%BB%BA%E8%81%AF%E9%87%8D%E8%BF%94nba%E5%8A%A0%E7%9B%9F%E6%B9%96%E4%BA%BA-094528478--nba.html" target="_blank"><img src="advertisment/images/pic4.jpg" alt="image1" /></a>
-                    <div class="sb-description">
-                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">奧運打出身價 易建聯重返NBA加盟湖人</h3>
-                    </div>
-                </li>
-                <li>
-                    <a href="http://www.storm.mg/article/157222" target="_blank"><img src="advertisment/images/pic5.jpg" alt="image1" /></a>
-                    <div class="sb-description">
-                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">里約奧運》男籃決賽壓軸 美國夢幻隊擊敗塞爾維亞完成三連霸</h3>
-                    </div>
-                </li>
-                <li>
-                    <a href="http://www.dongtw.com/nba-news/20160623/000311754.html" target="_blank"><img src="advertisment/images/pic6.jpg" alt="image1" /></a>
-                    <div class="sb-description">
-                        <h3 style="color:red;font-family:微軟正黑體;font-weight:700;">重磅！公牛尼克5人交易，Rose赴紐約聯手甜瓜</h3>
-                    </div>
-                </li>
-            </ul>
-
-            <div id="shadow" class="shadow"></div>
-
-            <div id="nav-arrows" class="nav-arrows">
-                <a href="#">Next</a>
-                <a href="#">Previous</a>
-            </div>
-
+	        <div class="wrapper">
+	
+	            <ul id="sb-slider" class="sb-slider">
+	                <li>
+	                    <a href="http://sports.ltn.com.tw/news/breakingnews/1810875" target="_blank"><img class="test" src="advertisment/images/pic1.jpg" alt="image1" /></a>
+	                    <div class="sb-description">
+	                        <h3 style="color:yellow;font-family:微軟正黑體;font-weight:700;">NBA》林書豪變籃網一哥 美媒：裁判會吹犯規了吧？</h3>
+	                    </div>
+	                </li>
+	                <li>
+	                    <a href="http://nba.udn.com/nba/story/6780/1932790" target="_blank"><img class="test" src="advertisment/images/pic2.jpg" alt="image2" /></a>
+	                    <div class="sb-description">
+	                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">被柯瑞守住？麥凱倫：不可能</h3>
+	                    </div>
+	                </li>
+	                <li>
+	                    <a href="http://nba.udn.com/nba/story/6780/1784243" target="_blank"><img  src="advertisment/images/pic3.jpg" alt="image1"/></a>
+	                    <div class="sb-description">
+	                        <h3 style="color:orange;font-family:微軟正黑體;font-weight:700;">2016選秀會交易總匯</h3>
+	                    </div>
+	                </li>
+	                <li>
+	                    <a href="https://tw.news.yahoo.com/%E5%A5%A7%E9%81%8B%E6%89%93%E5%87%BA%E8%BA%AB%E5%83%B9-%E6%98%93%E5%BB%BA%E8%81%AF%E9%87%8D%E8%BF%94nba%E5%8A%A0%E7%9B%9F%E6%B9%96%E4%BA%BA-094528478--nba.html" target="_blank"><img src="advertisment/images/pic4.jpg" alt="image1" /></a>
+	                    <div class="sb-description">
+	                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">奧運打出身價 易建聯重返NBA加盟湖人</h3>
+	                    </div>
+	                </li>
+	                <li>
+	                    <a href="http://www.storm.mg/article/157222" target="_blank"><img src="advertisment/images/pic5.jpg" alt="image1" /></a>
+	                    <div class="sb-description">
+	                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">里約奧運》男籃決賽壓軸 美國夢幻隊擊敗塞爾維亞完成三連霸</h3>
+	                    </div>
+	                </li>
+	                <li>
+	                    <a href="http://www.dongtw.com/nba-news/20160623/000311754.html" target="_blank"><img src="advertisment/images/pic6.jpg" alt="image1" /></a>
+	                    <div class="sb-description">
+	                        <h3 style="color:red;font-family:微軟正黑體;font-weight:700;">重磅！公牛尼克5人交易，Rose赴紐約聯手甜瓜</h3>
+	                    </div>
+	                </li>
+	            </ul>
+	
+	            <div id="shadow" class="shadow"></div>
+	
+	            <div id="nav-arrows" class="nav-arrows">
+	                <a href="#">Next</a>
+	                <a href="#">Previous</a>
+	            </div>
+	
+	        </div>
         </div>
         <!-- ---------------------------------- 【end 廣告輪播】 ---------------------------------- -->
         

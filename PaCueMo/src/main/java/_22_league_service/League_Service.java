@@ -70,9 +70,14 @@ public class League_Service
 		System.out.println("並成功透過聯賽社團VOs       " + leagueClubs.size() + "     筆查詢社團VO，且放入聯賽社團VOs");
 		leagueVO.setLeagueClubVOs(leagueClubs);
 		System.out.println("將聯賽社團VOs放入聯賽VO內(聯賽VO內的聯賽社團VOs以完善)");
-		List<LeagueRecordVO> LeagueRecordVO = leagueRecordDao.find_All(leagueId);
-		System.out.println("並成功透過聯賽Id查詢聯賽場次紀錄VOs       " + LeagueRecordVO.size() + "    筆");
-		leagueVO.setLeagueRecordVOs(LeagueRecordVO);
+		List<LeagueRecordVO> leagueRecordVOs = leagueRecordDao.find_All(leagueId);
+		System.out.println("並成功透過聯賽Id查詢聯賽場次紀錄VOs       " + leagueRecordVOs.size() + "    筆");
+		for (LeagueRecordVO vo : leagueRecordVOs)
+		{
+			vo.setClubA(clubDao.findByPK(vo.getClubIdA()));
+			vo.setClubB(clubDao.findByPK(vo.getClubIdB()));
+		}
+		leagueVO.setLeagueRecordVOs(leagueRecordVOs);
 		System.out.println("將聯賽場次紀錄VOs放入聯賽VO內(聯賽VO內的聯賽場次紀錄VOs已完善)");
 		System.out.println("回傳: 1     筆聯賽VO(內包含   參予聯賽社團資訊  及   目前該聯賽場次紀錄)");
 		return leagueVO;

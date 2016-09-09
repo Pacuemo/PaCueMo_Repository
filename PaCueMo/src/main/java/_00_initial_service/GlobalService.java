@@ -26,6 +26,8 @@ public class GlobalService
 	public static final String DB_URL = "jdbc:sqlserver://" + GlobalService.HOST + ":1433;databaseName=MagicJack";
 	public static final String KEY = "KittySnoopyMicky";  //decryptString()用的Key :  16, 24, 32 個字元的Key(預設只能用16位元，若要用24、32，要去Oracle發誓)
 	public static final String DRIVER_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	public static final String EMAIL_USERNAME = "tw50318@gmail.com"; // User
+	public static final String EMAIL_PASSWORD = "pwlxioghjpbpmqfy";
 
 	public String getSystemName()
 	{   //  systemName 

@@ -18,6 +18,8 @@ public interface BattleSetDAO_interface
 
 	public List<BattleSetVO> getSetsByDate(String queryDate);
 
+	public Integer getBattleSetsCountByDate(String queryDate);
+
 	public List<BattleSetVO> getSetsByDateAndPage(String queryDate, Integer pageNo);
 
 	public List<BattleSetVO> getSetsByIdAndPage(Integer teamId, Integer pageNo);

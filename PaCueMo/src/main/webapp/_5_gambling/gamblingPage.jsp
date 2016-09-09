@@ -17,6 +17,7 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/style.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/notiny/css/notiny.min.css" type="text/css">
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
@@ -56,9 +57,6 @@
 	       					<c:choose>
 	       						<c:when test="${funFlag=='byTeamName'}">
 	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryTeamName}</strong></h2>
-	       						</c:when>
-	       						<c:when test="${funFlag=='byDatePicker'}">
-	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryDate}</strong></h2>
 	       						</c:when>
 	       						<c:when test="${empty battleSetList}">
 	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:red;">查無資料</strong></h2>
@@ -110,8 +108,10 @@
        		 
        	   </div>
        </div>
-		
-		<!-- ***************************【下注 dialog 開始】***************************** -->
+
+    	<!-- ====================================================================== -->
+		<!-- =======================【下注 dialog 開始】=========================== -->
+		<!-- ====================================================================== -->
 		<div id="dialog-div" title="下注場次">
 	        <form>
 	            <table>
@@ -165,19 +165,55 @@
 	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	        </form>
     	</div>
+    	<!-- ====================================================================== -->
+		<!-- ==================【 購買點數 - 信用卡 dialog 開始】================== -->
+		<!-- ====================================================================== -->
+		<div id="dialog-card" title="購買點數">
+	            <div class="card-wrapper"></div>
+	            <form id="credit_card" action="">
+	                  <div class="form-group">
+						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">卡 號</label>
+						  <input placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" maxlength="19"/>
+					  </div>
+	                  <div class="form-group">
+						  <label class="control-label" for="name" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">姓 名</label>
+						  <input placeholder="Full name" type="text" name="name" class="form-control" value="科比布萊恩"/>
+					  </div>
+	                  <div class="form-group">
+						  <label class="control-label" for="expiry" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">期 限</label>
+						  <input placeholder="MM/YYYY" type="text" name="expiry" class="form-control" value="07/2018"/>
+					  </div>
+					  <div class="form-group">
+						  <label class="control-label" for="cvc" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;" >代 碼</label>
+						  <input placeholder="CVC" type="text" name="cvc" class="form-control" value="346" pattern=".{3,}"/>
+					  </div>
+					 <div class="form-group col-xs-6">
+						  <label class="control-label" for="NTD" style="font-family:'微軟正黑體';font-weight:bolder;color:#00CACA;font-size:10px">購買金額 (1 NT$ : 100 P)</label>
+						  <input placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990"/>
+					  </div>
+					   <div class="form-group col-xs-6">
+						  <label class="control-label" for="coin" style="font-family:'微軟正黑體';font-weight:bolder;color:#00CACA;font-size:10px;">代幣數量</label>
+						  <input placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" value="99000" style="color:red;"/>
+					  </div>
+	            </form>
+	    </div>
+    	
 		<!-- ***************************【下注 dialog 結束】***************************** -->
-
+		
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/zebra_datepicker.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/core.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/notiny/js/notiny.min.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/credit_card/js/jquery.card.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/credit_card/js/js_timeStamp.js"></script>
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
             var funFlag = "<%=request.getAttribute("funFlag")%>";    
-           
+            var myDialog , cardDialog;
             //alert( funFlag );
             	
        		$(function(){
@@ -254,9 +290,12 @@
        			})
        			/* ================ 【下注 結束】 ================= */
        			/* ================ 【下注 Dialog 開始】 ================= */
-       			var myDialog, form;
+//        		var myDialog, form;
+         		var form;
 	            myDialog = $("#dialog-div").dialog({
 	                autoOpen: false,
+	                show : { effect :'fold', duration: 1000 },
+	                hide : { effect :'slide', duration: 500 },
 	                height: 750,
 	                width: 500,
 	                modal: true,
@@ -290,6 +329,14 @@
 	                             		  },
 	                    				 "success":function(data){
 	                    					 alert("fuck " + data);
+	                    						$.notiny({/* notiny 特效*/
+                        	 	                    theme:'dark',
+                        	 	                    text: '下注成功！',
+                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
+                        	 	                    delay: 1200,
+                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
+                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
+                        	 					});
 	                    				 }
 	                				 })
 	                				 //---
@@ -317,10 +364,105 @@
 	            form = myDialog.find("form").on("submit", function (event) {
 	                event.preventDefault();
 	            });
-	
        			/* ================ 【下注 Dialog 結束】 ================= */
+       			/* ================ 【信用卡 Dialog 開始】 ======================= */
+				var formCard;
+	       		cardDialog = $("#dialog-card").dialog({
+	                autoOpen: false,
+	                show : { effect :'fold' , duration: 1000 },
+	                hide : { effect :'blind', duration: 500 },
+	                height: 815,
+	                width: 500,
+	                modal: true,
+	                resizable: false,
+	                position: { my: "top", at: "bottom" ,of: window }, /* dialog 起始彈出位置 */
+	                buttons:[
+	                          {
+                            	 text   : "確認購買",
+                        	 	'class' : "btn btn-primary",
+                        	 	 click : function (){
+                        	 		   //alert($(this).prop('tagName') +" 確認" );
+                        	 		    var cardNum  = $("input[placeholder='Card number']").val();
+                        	 		    var fullName = $("input[placeholder='Full name']").val();
+                        	 		    var expire   = $("input[placeholder='MM/YYYY']").val();
+                        	 		    var cvc      = $("input[placeholder='CVC']").val();
+                        	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
+                        	 		    var coin     = $("input[placeholder='代幣數量']").val();
+                        	 			//======================================================
+                        	 			//==============【傳送信用卡資訊到servlet】=============
+                        	 			//======================================================	
+                        	 			$.ajax({
+                        	 				"type" : "post",                        	 				
+                        	 				"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'GoodsOrder_Servlet.do',
+                        	 				"data" : { 
+                        	 						   'action'     :  'buyCoins'   , 
+                        	 						   'cardNum'    :   cardNum    ,
+                        	 						   'fullName'   :   fullName   ,
+                        	 						   'expire'     :   expire     ,
+                        	 						   'cvc'        :   cvc        ,
+                        	 						   'NTD'        :   ntd        ,
+                        	 						   'coin'        :  coin        ,
+                        	 						   'bookingTime' :  timeStamp()   //下訂時間(call from js_timestamp.js)
+                        	 				},
+                    
+                        	 				"success" : function(){/* Servlet回應成功 */
+                        	 					alert('hello');
+                        	 					$.notiny({/* notiny 特效*/
+                        	 	                    theme:'dark',
+                        	 	                    text: '訂單成立！',
+                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
+                        	 	                    delay: 1200,
+                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
+                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
+                        	 					});
+                        	 				},
+                        	 				"error" : function(){/* Servlet回應錯誤 */
+                        	 					alert('下訂失敗');
+                        	 				}
+                        	 			})
+                        	 				
+                        	 			//======================================================
+                                    	cardDialog.dialog("close");/*關閉 dialog*/
+								 }
+	                         }  ,
+	                         {
+                        	 	 text  : "取消",
+                        	 	'class' : "btn btn-info",
+                        	 	 click : function (){
+                        	 		 //alert($(this).prop('tagName')+"cancel");                        	 		 
+                                     cardDialog.dialog("close");/*關閉 dialog*/
+								 }
+                         	 }
+	                         
+	               ] ,
+	
+	                close: function () {
+	                	formCard[0].reset();
+	                }
+	            });
+	
+	       		formCard = cardDialog.find("form").on("submit", function (event) {
+	                event.preventDefault();
+	            });
+
+       			/* ================ 【信用卡 Dialog 結束】 ======================= */
+       				
+       				/* key-in 台幣 => 轉代幣  */
+					$("input[placeholder='購買金額(NT)']").keyup(function(){ 
+						$("input[placeholder='代幣數量']").css('color','red').val($(this).val() * 100 /* 代幣比值 */);
+					})
+       			   	//------------ ﹝信用卡本體 開始﹞ --------------
+		            $('#dialog-card').card({
+		                // a selector or DOM element for the container
+		                // where you want the card to appear
+		                container: '.card-wrapper', // *required*
+		                // all of the other options from above
+		            });
+		           //------------ ﹝信用卡本體 結束﹞ --------------
        			
-       			/* ================ 【DatePicker 開始】 ================= */
+       			/* ========================================================================= */
+       			/* ========================= 【DatePicker 開始】 =========================== */
+       			/* ========================================================================= */
        		    $('#myDatepicker').Zebra_DatePicker({
 
        		        always_visible: $('#dateBox') ,
@@ -330,16 +472,50 @@
     	   				funFlag = 'byDatePicker';
     					//alert( funFlag );
     	   				//*****************************************
-       		    		//alert($('#myDatepicker').val());
-       		    		var chooseDate = $('#myDatepicker').val(); // user 選擇的日期
-       		    		$("#dateForm").attr({"ACTION": "<%=request.getContextPath()%>" + '/_5_gambling/' +
-       		    									   "BattleSet_Servlet.do?"+
-       		    							  		   "action=queryByDate"  +
-       		    							  		   "&datepickerDate="+ chooseDate +'&funFlag='+ funFlag , 
-       		    							 "METHOD":"POST"}).submit();
+       		    		var chooseDate = $(this).val(); // user 選擇的日期 
+       		    		// 更改pageHeader日期
+       		    		var pageHeader = $("div.page-header");
+   	       				pageHeader.children('h2').remove();
+   	       				pageHeader.append("<h2><strong style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + chooseDate + "</strong></h2>");	
+
+       		    		$.ajax({
+       		    			"type":"POST",//傳遞方式				
+                    		"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
+                    		"dataType":"text",//Servlet回傳格式
+                    		"data":{ "action" : "queryCountByDate" ,"datepickerDate" : chooseDate },
+           					"success":function(countData){
+
+           						/**【按下Datepicker → 先查詢一次 pageNo=1 】**/
+	           					myAjaxFunction( "BattleSet_Ajax_Servlet.do" , "queryByDateAndPage" , "" , chooseDate , 1 );
+           				
+				           		/* ==================== 【分頁開始】 =================== */
+				           		//....計算總頁數...
+				           		//alert("日期對應的總場數 =  " + countData ); //日期對應的總場數
+          						totalPages = (countData/3 == 0)?(countData/3):(Math.floor(countData/3) + 1 ); /* 總頁數 */
+          						//alert('共 ' + totalPages + '頁');
+           						//-----------------
+				       			$("#slicePage").paginate({		              	             
+						                count: totalPages,/* 總頁數 = 查到的資料/每頁顯示筆數 ， (1)若是由dispatcher跳轉：${battleSetList_len}，(2)若是Ajax查詢到的總筆數，在對應的$.ajax中設定 totalCount 全域變數*/
+						                start: 1,
+						                display: 10,
+						                border: true,
+						                text_color: 'rgb(93, 213, 83)',
+						                background_color: 'rgb(40, 46, 67)',
+						                text_hover_color: 'rgb(234, 57, 57)',
+						                background_hover_color: '#00BBFF',
+						                onChange: function (pageNo) {  /* pageNo → 當前頁數 */   //alert(pageNo); 
+						                	myAjaxFunction( "BattleSet_Ajax_Servlet.do" , "queryByDateAndPage" , "" , chooseDate , pageNo );// 根據點擊頁碼按鈕的 pageNo 查詢
+						                }
+						        });
+				       			/* ==================== 【分頁結束】 =================== */
+           					}
+       		    		})
        		    	}       		      
        			});
-       			/* ================ 【DatePicker 結束】 ================= */
+       			/* ========================================================================= */
+       			/* ========================= 【DatePicker 結束】 =========================== */
+       			/* ========================================================================= */
+       
        			/* ================ 【隊名Auto-complete】 ================= */
 				$("#searchName").keyup(function(){
 					
@@ -368,7 +544,9 @@
 					})
 					
 				})
-				/* ================ 【隊名Auto-complete結束】 ================= */
+				/* ================ 【隊名Auto-complete 結束】 ================= */
+				
+				/* ================ 【隊名搜尋Button發出請求 開始】================= */
 				$("#searchBtn").click(function(){
 					
 	   				//******** 判斷user按下按鈕的flag *********
@@ -381,9 +559,11 @@
 											'action=queryByName'+'&teamName='+ searchName +'&funFlag='+ funFlag , 
 					  'METHOD':'POST'}).submit();
 				})
-       			/* ==================== 【分頁開始】 =================== */
+				/* ================ 【隊名搜尋Button發出請求 結束】================= */
+				
+       			/* ==================== 【分頁開始】由index.html進入時先呼叫這支  =================== */
        			$("#slicePage").paginate({
-		                count: "${battleSetList_len}",/*總資料長度*/
+		                count: "${battleSetList_len}",/* 分頁的總筆數 = 查到的資料/每頁顯示筆數 */
 		                start: 1,
 		                display: 10,
 		                border: true,
@@ -393,143 +573,152 @@
 		                background_hover_color: '#00BBFF',
 		                onChange: function (pageNo) {  /* pageNo → 當前頁數 */   //alert(pageNo); 
 		               
-		                //alert(funFlag); // 判斷使用者按下哪個按鈕
-		                
-		                //===﹝ 根據 funFlag 決定 呼叫哪支 controller 的 action ﹞===
-		                var actionName = "";       
-		                var ajaxUrl    = "";
-		                var searchName = "";
-		                var chooseDate = "";
-		                switch ( funFlag ) {
-							case "byTeamName":
-								actionName = "queryByNameAndPage";
-								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
-								searchName = $("#searchName").val();   // 查詢的隊伍名稱;
-								break;
-							case "byDatePicker":
-								actionName = "queryByDateAndPage";
-								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
-								chooseDate = $("#myDatepicker").val(); // user 選擇的日期
-								break;
-							default:
-								/*=== user都沒選擇動作→直接查〈當天〉===*/
-								actionName = "queryByDateAndPage";
-								ajaxUrl    = "BattleSet_Ajax_Servlet.do";
-								break;
-						}
-		                //====================================================
-		                
-		                	$.ajax({
-		                		"type": "post" ,  //傳遞方式				
-		                		"url" :  "<%=request.getContextPath()%>" + "/_5_gambling/" + ajaxUrl , 
-		                		"dataType":"json",//Servlet回傳格式
-		                		"data":{ "action": actionName , "pageNo":pageNo , "searchName":searchName , "datepickerDate":chooseDate },
-		                		"success":function(data){
-		                			//console.log(data[0]);
-		                			var tableDiv = $("#tableDiv");
-		                			tableDiv.children('.table').remove();// 每次按下換頁，先移除舊資料
-		                			var mytable =  $('<table></table>').addClass("table");
-		        					var mybody  =  $('<tbody></tbody>');
-		        					mytable.append(mybody);
-		        				
-									$.each(data , function( index , obj ){
-										
-										var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
-										var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',      'width':70 });										
-										var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
-										var cell11  =  $('<td></td>');
-										var cell12  =  $('<td></td>');
-										var cell13  =  $('<td></td>');
-										img1.appendTo(cell11);
-										img2.appendTo(cell12);
-										img3.appendTo(cell13);
-									
-										var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-										var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-										var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
-										var cell22  =  $('<td></td>').append("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong><p/>");
-	  /*hidden 欄位 紀錄 battleSetId*/      cell22.append("<input  type='hidden' "+" value='"+ obj.battleId +"'/>") 
- 						/* 下注按鈕 */	    cell22.append("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
-										var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
-										myrow1.append([ cell11 , cell12 , cell13 ]);
-										myrow2.append([ cell21 , cell22 , cell23 ]);
-										
-										myrow1.appendTo(mybody);
-										myrow2.appendTo(mybody);
-									})	
-									tableDiv.append(mytable);// ！--表格建立完成--！
-									
-									/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞開始 ==============*/
-									tableDiv.find('button').click(function(){
-										//================= 
-										alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
-										//=================	       
-       									var battleId = $(this).prev('input').val(); // 呼叫<button>標籤前一個<input type='hidden'...的 value
-					       				
-						       			 //--- 按下【下注】按鈕ajax撈資料 開始 --- ◎◎內層Ajax → 下注 dialog ◎◎
-						   				 $.ajax({
-						   					 "type":"POST",//傳遞方式				
-						               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'BattleSet_Ajax_Servlet.do',
-						               		 "dataType":"json",//Servlet回傳格式
-						               		 "data":{ "action"     : 'queryByBattleSetId' ,  
-						               			 	  "battleId"   :  battleId 
-						               		  },
-						      				 "success":function(dataVO){
-						      					 
-						      					var battleId     = dataVO.battleId;
-						      					var awayName 	 = dataVO.away.teamName ;
-						      					var homeName     = dataVO.home.teamName ;
-						      					var awayLogoUrl  = dataVO.away.teamLogoURL ;
-						      					var homeLogoUrl  = dataVO.home.teamLogoURL ;
-						      					var battleTime   = dataVO.battleTime ; 
-						      					var awayScore    = dataVO.awayScore ; 
-						      					var homeScore    = dataVO.homeScore ;
-						      					var awayBet 	 = dataVO.awaybet ;
-						      					var homeBet 	 = dataVO.homebet ;
-						      					var awayId 	     = dataVO.away.teamID ;
-						      					var homeId 	     = dataVO.home.teamID ;
-						      					  
-						         				console.log("battleId " 	+ battleId);
-						         				console.log("awayName " 	+ awayName);
-						         				console.log("homeName " 	+ homeName);
-						         				console.log("awayLogoUrl " 	+ awayLogoUrl);
-						         				console.log("homeLogoUrl " 	+ homeLogoUrl);
-						         				console.log("battleTime " 	+ battleTime);
-						         				console.log("awayScore " 	+ awayScore);
-						         				console.log("homeScore " 	+ homeScore);
-						         				console.log("awayBet " 		+ awayBet);
-						         				console.log("homeBet " 		+ homeBet);
-						         				console.log("awayId " 		+ awayId);
-						         				console.log("homeId " 		+ homeId);
-						      					  
-						      					$("#battleId_choosed").val(battleId);// input hidden
-						           				$("#awayId").val(awayId);// input hidden
-						           				$("#homeId").val(homeId);// input hidden
-						           				$("#row1 img:eq(0)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  awayLogoUrl);
-						           				$("#row1 img:eq(2)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  homeLogoUrl);
-						           				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
-						           				$("#row2 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeName + "</h4>");
-						           				$("#row3 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>"+ "比賽時間：" + battleTime.substring(0,16) + "</h4>");
-						           				$("#row4 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayScore + "</h4>");
-						           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
-						           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
-						           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
-						       				 }
-						   				 })
-						   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
-										 myDialog.dialog("open");
-											
-										//=================
-									
-									})
-									/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞結束 ==============*/
-		                		}
-		                	})
-		        
+			                //alert(funFlag); // 判斷使用者按下哪個按鈕
+			                //alert(totalCount);
+			                //===﹝ 根據 funFlag 決定 呼叫哪支 controller 的 action ﹞===
+			                var actionName = "";       
+			                var ajaxUrl    = "";
+			                var searchName = "";
+			                var chooseDate = "";
+			                switch ( funFlag ) {
+								case "byTeamName":
+									actionName = "queryByNameAndPage";
+									ajaxUrl    = "BattleSet_Ajax_Servlet.do";
+									searchName = $("#searchName").val();   // 查詢的隊伍名稱;
+									break;
+								/*case "byDatePicker":
+									actionName = "queryByDateAndPage";
+									ajaxUrl    = "BattleSet_Ajax_Servlet.do";
+									chooseDate = $("#myDatepicker").val(); // user 選擇的日期
+									break;*/
+								default:
+									/*=== user都沒選擇動作→直接查〈當天〉===*/
+									actionName = "queryByDateAndPage";
+									ajaxUrl    = "BattleSet_Ajax_Servlet.do";
+									break;
+							}
+	
+			        		myAjaxFunction( ajaxUrl , actionName , searchName , "" , pageNo );// 呼叫﹝撈分頁資料 $.ajax function﹞
+
 		                }
 		        });
        			/* ==================== 【分頁結束】 =================== */
        		})
+       		
+       		//======================================================================================
+       		//=========================【 撈分頁資料 $.ajax function 開始】=========================
+       		//======================================================================================
+       		function myAjaxFunction( var_ajaxUrl , var_actionName , var_searchName , var_searchDate , var_pageNo) {
+
+	            	$.ajax({
+	            		"type": "POST" ,  //傳遞方式				
+	            		"url" :  "<%=request.getContextPath()%>" + "/_5_gambling/" + var_ajaxUrl , 
+	            		"dataType":"json",//Servlet回傳格式
+	            		"data":{ "action": var_actionName , "pageNo":var_pageNo , "searchName": var_searchName , "datepickerDate" : var_searchDate },
+	            		"success":function(data){
+	            			//console.log(data[0]);
+	            			var tableDiv = $("#tableDiv");
+	            			tableDiv.children('.table').remove();// 每次按下換頁，先移除舊資料
+	            			var mytable =  $('<table></table>').addClass("table");
+	    					var mybody  =  $('<tbody></tbody>');
+	    					mytable.append(mybody);
+	    				
+							$.each(data , function( index , obj ){
+								
+								var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
+								var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',      'width':70 });										
+								var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
+								var cell11  =  $('<td></td>');
+								var cell12  =  $('<td></td>');
+								var cell13  =  $('<td></td>');
+								img1.appendTo(cell11);
+								img2.appendTo(cell12);
+								img3.appendTo(cell13);
+							
+								var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
+								var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
+								var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
+								var cell22  =  $('<td></td>').append("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong><p/>");
+/*hidden 欄位 紀錄 battleSetId*/    cell22.append("<input  type='hidden' "+" value='"+ obj.battleId +"'/>") 
+				/* 下注按鈕 */	    cell22.append("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
+								var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
+								myrow1.append([ cell11 , cell12 , cell13 ]);
+								myrow2.append([ cell21 , cell22 , cell23 ]);
+								
+								myrow1.appendTo(mybody);
+								myrow2.appendTo(mybody);
+							})	
+							tableDiv.append(mytable);// ！--表格建立完成--！
+							
+							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞開始 ==============*/
+							tableDiv.find('button').click(function(){
+								//================= 
+								alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
+								//=================	       
+									var battleId = $(this).prev('input').val(); // 呼叫<button>標籤前一個<input type='hidden'...的 value
+			       				
+				       			 //--- 按下【下注】按鈕ajax撈資料 開始 --- ◎◎內層Ajax → 下注 dialog ◎◎
+				   				 $.ajax({
+				   					 "type":"POST",//傳遞方式				
+				               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'BattleSet_Ajax_Servlet.do',
+				               		 "dataType":"json",//Servlet回傳格式
+				               		 "data":{ "action"     : 'queryByBattleSetId' ,  
+				               			 	  "battleId"   :  battleId 
+				               		  },
+				      				 "success":function(dataVO){
+				      					 
+				      					var battleId     = dataVO.battleId;
+				      					var awayName 	 = dataVO.away.teamName ;
+				      					var homeName     = dataVO.home.teamName ;
+				      					var awayLogoUrl  = dataVO.away.teamLogoURL ;
+				      					var homeLogoUrl  = dataVO.home.teamLogoURL ;
+				      					var battleTime   = dataVO.battleTime ; 
+				      					var awayScore    = dataVO.awayScore ; 
+				      					var homeScore    = dataVO.homeScore ;
+				      					var awayBet 	 = dataVO.awaybet ;
+				      					var homeBet 	 = dataVO.homebet ;
+				      					var awayId 	     = dataVO.away.teamID ;
+				      					var homeId 	     = dataVO.home.teamID ;
+				      					  
+				         				console.log("battleId " 	+ battleId);
+				         				console.log("awayName " 	+ awayName);
+				         				console.log("homeName " 	+ homeName);
+				         				console.log("awayLogoUrl " 	+ awayLogoUrl);
+				         				console.log("homeLogoUrl " 	+ homeLogoUrl);
+				         				console.log("battleTime " 	+ battleTime);
+				         				console.log("awayScore " 	+ awayScore);
+				         				console.log("homeScore " 	+ homeScore);
+				         				console.log("awayBet " 		+ awayBet);
+				         				console.log("homeBet " 		+ homeBet);
+				         				console.log("awayId " 		+ awayId);
+				         				console.log("homeId " 		+ homeId);
+				      					  
+				      					$("#battleId_choosed").val(battleId);// input hidden
+				           				$("#awayId").val(awayId);// input hidden
+				           				$("#homeId").val(homeId);// input hidden
+				           				$("#row1 img:eq(0)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  awayLogoUrl);
+				           				$("#row1 img:eq(2)").attr('src', "<%=request.getContextPath()%>" + "/_5_gambling" +  homeLogoUrl);
+				           				$("#row2 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayName + "</h4>");
+				           				$("#row2 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeName + "</h4>");
+				           				$("#row3 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>"+ "比賽時間：" + battleTime.substring(0,16) + "</h4>");
+				           				$("#row4 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayScore + "</h4>");
+				           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
+				           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
+				           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
+				       				 }
+				   				 })
+				   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
+								 myDialog.dialog("open");
+								//=================
+							
+							})
+							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞結束 ==============*/
+	            		}
+	            	})
+			}
+       		//======================================================================================
+       		//=========================【 撈分頁資料 $.ajax function 結束】=========================
+       		//======================================================================================
        </script>
   </body>
 </html>

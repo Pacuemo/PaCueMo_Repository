@@ -63,7 +63,7 @@
                   </li>
                   <li>
                     <label class="sr-only" for="register-email">Email:</label>
-                    <input type="email" id="register-email" name="email" value="" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="../_02_register/checkMail.do?model=checkMail" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
+                    <input type="email" id="register-email" name="email" value="" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="Mailcheck" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
                   </li>
                   <li>
                     <label class="sr-only" for="register-confirm-email">確認電郵:</label>
@@ -112,7 +112,7 @@
               </fieldset>
               <button id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit" >註冊</button>
             </form>
-            <p role="submit" class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="${pageContext.request.contextPath}/_01_login/login.jsp">登入</a> </p>
+            <p role="submit" class="primary"> 已經擁有帳戶？ <a id="register-link-login" data-section="login" href="${pageContext.request.contextPath}/spring/login/Signin">登入</a> </p>
           </div>
         </section>
       </div>
@@ -157,14 +157,22 @@
 				  function(response) {
 					  $.ajax({
 							"type":"post",
-							"url": "../_01_login/login.do",
-							"dataType": "text",
+							"url": "../login/login",
+							"dataType": "json",
 							"data":{"facebookId":response.id,"mode":"fb_Login"},
 							"success":function(data){
-								if( data == "true"){
-									location.href = "../index.jsp";
+								if( data.status == "true"){
+									location.href = "../../index.jsp";
 								}else{
-									location.href = "../_02_register/fbRegister.jsp?facebookId="+response.id+"&lastName="+response.last_name+"&firstName="+response.first_name+"&email="+response.email;
+									var url = 'Fbsignup.jsp';
+									var form = $('<form style="display:none"action="' + url + '" method="post">' +
+									  '<input type="text" name="facebookId" value="' + response.id + '" />' +
+									  '<input type="text" name="lastName" value="' + response.last_name + '" />' +
+									  '<input type="text" name="firstName" value="' + response.first_name + '" />' +
+									  '<input type="text" name="email" value="' + response.email + '" />' +
+									  '</form>');
+									$('body').append(form);
+									form.submit();
 								}		
 							}
 						});
@@ -213,12 +221,12 @@ $(function(){
 						var day = $("#register-dob-day").val();
 						$.ajax({
 							"type":"post",
-							"url": "../_02_register/register.do",
+							"url": "Register",
 							"dataType": "text",
 							"data":{"mail":mail,"password":pwd,"lastName":lastName,"firstName":firstName,"phone":phone,"year":year,"month":month,"day":day,"model":"register"},
 							"success":function(data){
 								if( data == "true"){
-									location.href = "../index.jsp";
+									location.href = "../../index.jsp";
 								}else{
 									
 								}

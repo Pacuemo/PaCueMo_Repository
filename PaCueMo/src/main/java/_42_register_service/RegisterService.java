@@ -2,10 +2,13 @@ package _42_register_service;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
 import _9_41_member_model.MemberDAO;
 import _9_41_member_model.MemberDAO_interface;
 import _9_41_member_model.MemberVO;
 
+@Component
 public class RegisterService
 {
 	private MemberDAO_interface dao;

@@ -93,4 +93,10 @@ public class LeagueRecord_Service
 		return success1;
 	}
 
+//查詢社團聯賽
+	public LeagueRecordVO get_By_FightId(int fightId)
+	{
+		return leagueRecordDAO.find_One(fightId);
+	}
+
 }
