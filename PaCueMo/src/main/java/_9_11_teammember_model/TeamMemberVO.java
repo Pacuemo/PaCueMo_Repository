@@ -11,6 +11,19 @@ public class TeamMemberVO
 	private Date joinDate;
 	private MemberVO memberVO;
 
+	public TeamMemberVO()
+	{
+
+	}
+
+	public TeamMemberVO(Integer teamId, String teamMemberId, Date joinDate)
+	{
+		super();
+		this.teamId = teamId;
+		this.teamMemberId = teamMemberId;
+		this.joinDate = joinDate;
+	}
+
 	public Integer getTeamId()
 	{
 		return teamId;

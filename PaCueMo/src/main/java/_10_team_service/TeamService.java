@@ -35,7 +35,8 @@ public class TeamService
 	public void createTeam(TeamVO teamVO) throws SQLException
 	{
 		teamDAO.insert(teamVO);
-		Integer teamId = teamDAO.find_TeamId(teamVO.getTeamHead());
+		List<Integer> teamIdList = teamDAO.find_TeamId_With_TeamHead(teamVO.getTeamHead());
+		Integer teamId = teamIdList.get(teamIdList.size() - 1);
 		teamMemberDAO.insert(teamId, teamVO.getTeamHead());
 		System.out.println("creatTeam");
 	}

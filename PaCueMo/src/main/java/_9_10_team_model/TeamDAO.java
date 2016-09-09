@@ -35,7 +35,7 @@ public class TeamDAO implements TeamDAO_interface
 	}
 
 	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
-	private static final String FIND_TEAMID = "SELECT MAX(teamId) FROM Team where teamHead = ?";
+	private static final String FIND_TEAMID_WITH_TEAMHEAD = "SELECT teamId FROM Team where teamHead = ?";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
 	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
@@ -57,7 +57,7 @@ public class TeamDAO implements TeamDAO_interface
 //		teamVO.setTeamHead("9");
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(TeamConfig.class);
-		TeamDAO dao = context.getBean(TeamDAO.class);
+		TeamDAO_interface dao = context.getBean(TeamDAO.class);
 
 	}
 
@@ -66,20 +66,26 @@ public class TeamDAO implements TeamDAO_interface
 	 * @see _9_10_team_model.Test#insert(_9_10_team_model.TeamVO)
 	 */
 
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#insert(_9_10_team_model.TeamVO)
+	 */
+	@Override
 	public void insert(TeamVO teamVO)
 	{
 		jdbc.update(INSERT, teamVO.getTeamName(), teamVO.getTeamProp(), teamVO.getTeamHead());
 	}
 
-	public Integer find_TeamId(String teamHead) throws SQLException
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#find_TeamId_With_TeamHead(java.lang.String)
+	 */
+	@Override
+	public List<Integer> find_TeamId_With_TeamHead(String teamHead) throws SQLException
 	{
-		return jdbc.queryForObject(FIND_TEAMID, Integer.class, teamHead);
+		return jdbc.queryForList(FIND_TEAMID_WITH_TEAMHEAD, Integer.class, teamHead);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_10_team_model.Test#createTeam(_9_10_team_model.TeamVO,
-	 * java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#createTeam(_9_10_team_model.TeamVO)
 	 */
 	@Override
 	@SuppressWarnings("resource")
@@ -101,7 +107,7 @@ public class TeamDAO implements TeamDAO_interface
 			pstmt.setString(3, memberId);
 			pstmt.executeUpdate();
 			// 查詢隊伍Id
-			pstmt = con.prepareStatement(FIND_TEAMID);
+			pstmt = con.prepareStatement(FIND_TEAMID_WITH_TEAMHEAD);
 			pstmt.setString(1, memberId);
 			ResultSet rs = pstmt.executeQuery();
 			Integer teamId = null;
@@ -151,9 +157,8 @@ public class TeamDAO implements TeamDAO_interface
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_10_team_model.Test#update(_9_10_team_model.TeamVO)
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#update(_9_10_team_model.TeamVO)
 	 */
 	@Override
 	public void update(TeamVO teamVO)
@@ -207,12 +212,12 @@ public class TeamDAO implements TeamDAO_interface
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_10_team_model.Test#delete(java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#delete(java.lang.Integer)
 	 */
-	@SuppressWarnings("resource")
 	@Override
+	@SuppressWarnings("resource")
+
 	public void delete(Integer teamId)
 	{
 		Connection con = null;
@@ -282,9 +287,8 @@ public class TeamDAO implements TeamDAO_interface
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_10_team_model.Test#findByPrimaryKey(java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#findByPrimaryKey(java.lang.Integer)
 	 */
 	@Override
 	public TeamVO findByPrimaryKey(Integer teamId)
@@ -361,9 +365,8 @@ public class TeamDAO implements TeamDAO_interface
 		return teamVO;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_10_team_model.Test#getAll()
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#getAll()
 	 */
 	@Override
 	public List<TeamVO> getAll()
@@ -441,9 +444,8 @@ public class TeamDAO implements TeamDAO_interface
 		return list;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see _9_10_team_model.Test#getMemsByTeamId(java.lang.Integer)
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#getMemsByTeamId(java.lang.Integer)
 	 */
 	@Override
 	public Set<TeamMemberVO> getMemsByTeamId(Integer teamId)
@@ -519,6 +521,10 @@ public class TeamDAO implements TeamDAO_interface
 		return set;
 	}
 
+	/* (non-Javadoc)
+	 * @see _9_10_team_model.TeamDAO_interface#updateAvg(java.lang.Integer)
+	 */
+	@Override
 	@SuppressWarnings("resource")
 	public void updateAvg(Integer teamId)
 	{

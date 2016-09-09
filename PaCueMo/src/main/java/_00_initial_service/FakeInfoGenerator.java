@@ -975,7 +975,7 @@ public class FakeInfoGenerator
 //		playercardGenerator();
 //		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
 //      club和league部分
-//		clubGenerator();
+		clubGenerator();
 
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
@@ -983,7 +983,7 @@ public class FakeInfoGenerator
 //		gambleOrderGenerator();
 
 //		generator.teamGenerator();
-		teammemberGenerator();
+//		teammemberGenerator();
 
 	}
 }
