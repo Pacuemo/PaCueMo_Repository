@@ -8,19 +8,23 @@ import _9_11_teammember_model.TeamMemberVO;
 
 public interface TeamDAO_interface
 {
-	public void insert(TeamVO teamVO);
 
-	public void createTeam(TeamVO teamVO) throws SQLException;
+	void insert(TeamVO teamVO);
 
-	public void update(TeamVO teamVO);
+	List<Integer> find_TeamId_With_TeamHead(String teamHead) throws SQLException;
 
-	public void delete(Integer teamId);
+	void createTeam(TeamVO teamVO) throws SQLException;
 
-	public TeamVO findByPrimaryKey(Integer teamId);
+	void update(TeamVO teamVO);
 
-	public List<TeamVO> getAll();
+	void delete(Integer teamId);
 
-	public Set<TeamMemberVO> getMemsByTeamId(Integer teamId);
+	TeamVO findByPrimaryKey(Integer teamId);
 
-	public Integer find_TeamId(String teamHead) throws SQLException;
+	List<TeamVO> getAll();
+
+	Set<TeamMemberVO> getMemsByTeamId(Integer teamId);
+
+	void updateAvg(Integer teamId);
+
 }

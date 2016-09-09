@@ -43,7 +43,7 @@ public class TeamServlet extends HttpServlet
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
-		System.out.println("Here is Get");	// 隊伍頁面
+		System.out.println("Go to TeamPage (GET)");	// 隊伍頁面
 		req.setCharacterEncoding("UTF-8");
 		TeamVO teamVO = null;
 		TeamService teamService = null;
@@ -51,11 +51,15 @@ public class TeamServlet extends HttpServlet
 		List<TeamMemberVO> teamMemberList = null;
 		PlayerCardVO playerCardVO = null;
 		BattleRecordService battleRecordService = null;
+		HttpSession session = null;
+		MemberVO memberVO = null;
 		Integer teamId = 4;								//測試!!! TEST TEST TEST
 		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
 		{
 			try
 			{
+				session = req.getSession();
+				memberVO = (MemberVO) session.getAttribute("LoginOK");
 //				teamId = Integer.valueOf(req.getParameter("teamId"));
 				teamService = context.getBean(TeamService.class);
 				battleRecordService = context.getBean(BattleRecordService.class);
@@ -88,12 +92,15 @@ public class TeamServlet extends HttpServlet
 				for (TeamMemberVO list : teamMemberList)
 				{
 
-//					if()
-//						req.setAttribute("teamExsist", "Exsist");								//setAtt
+					if (list.getTeamMemberId() == memberVO.getMemberId())
+					{
+						req.setAttribute("teamExsist", "Exsist");								//setAtt
+					}
 				}
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");
-				req.getRequestDispatcher("/_10_team_page/teampage.jsp").forward(req, resp);
+				System.out.println("-------------------------------------------------------");
+				req.getRequestDispatcher("/WEB-INF/team/teampage.jsp").forward(req, resp);
 			}
 			catch (Exception e)
 			{
@@ -102,7 +109,8 @@ public class TeamServlet extends HttpServlet
 		}
 		else
 		{
-			System.out.println("please pass teamId.");
+			System.out.println("You don't have any Team");
+			req.getRequestDispatcher("/WEB-INF/team/createteam.jsp").forward(req, resp);
 			return;
 		}
 	}
@@ -152,7 +160,9 @@ public class TeamServlet extends HttpServlet
 				System.out.println("error!!!");
 				return;
 			}
-			System.out.println("doPost OK");
+			System.out.println("doPost OK , now  doGET");
+			System.out.println("-------------------------------------------------------");
+			doGet(req, resp);
 		}
 		catch (Exception e)
 		{

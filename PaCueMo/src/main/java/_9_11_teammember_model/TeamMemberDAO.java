@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import _00_initial_service.GlobalService;
@@ -35,6 +36,7 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 	private static final String GET_ONE = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamMemberId = ?";
 	private static final String DELETE = "DELETE FROM TeamMember WHERE teamId = ? AND teamMemberId = ?";
 	private static final String UPDATE = "UPDATE TeamMember set teamMemberId=?, joinDate=? where teamId = ?";
+	private static final String FIND_BY_TEAMMEMBERID = "SELECT * FROM TeamMember WHERE teamMemberId = ?";
 
 	public static void main(String[] args)
 	{
@@ -46,12 +48,20 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#insert(java.lang.Integer, java.lang.String)
+	 */
 	@Override
 	public void insert(Integer teamId, String teamMemberId)
 	{
 		jdbcOperations.update(INSERT, teamId, teamMemberId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#insert(_9_11_teammember_model.TeamMemberVO)
+	 */
 	@Override
 	public void insert(TeamMemberVO teamMemberVO)
 	{
@@ -100,6 +110,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#update(_9_11_teammember_model.TeamMemberVO)
+	 */
 	@Override
 	public void update(TeamMemberVO teamMemberVO)
 	{
@@ -149,6 +163,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#delete(java.lang.Integer, java.lang.String)
+	 */
 	@Override
 	public void delete(Integer teamId, String teamMemberId)
 	{
@@ -200,6 +218,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#findByPrimaryKey(java.lang.Integer, java.lang.String)
+	 */
 	@Override
 	public TeamMemberVO findByPrimaryKey(Integer teamId, String teamMemberId)
 	{
@@ -271,6 +293,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		return teamMemberVO;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#getOneTeam(java.lang.Integer)
+	 */
 	@Override
 	public List<TeamMemberVO> getOneTeam(Integer teamId)
 	{
@@ -343,6 +369,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#getAll()
+	 */
 	@Override
 	public List<TeamMemberVO> getAll()
 	{
@@ -413,6 +443,23 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<TeamMemberVO> findByTeamMemberId(String TeamMemberId)
+	{
+		return jdbcOperations.query(FIND_BY_TEAMMEMBERID, new TeamMemberRowMapper(), TeamMemberId);
+	}
+
+	private static final class TeamMemberRowMapper implements RowMapper<TeamMemberVO>
+	{
+
+		@Override
+		public TeamMemberVO mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			return new TeamMemberVO(rs.getInt("teamId"), rs.getString("teamMemberId"), rs.getDate("joinDate"));
+		}
+
 	}
 
 }

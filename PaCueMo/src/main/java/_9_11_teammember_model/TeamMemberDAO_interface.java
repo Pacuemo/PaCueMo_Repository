@@ -4,18 +4,21 @@ import java.util.List;
 
 public interface TeamMemberDAO_interface
 {
-	public void insert(TeamMemberVO teamMemberVO);
-
-	public void update(TeamMemberVO teamMemberVO);
-
-	public void delete(Integer teamId, String teamMemberId);
-
-	public TeamMemberVO findByPrimaryKey(Integer teamId, String teamMemberId);
-
-	public List<TeamMemberVO> getAll();
-
-	public List<TeamMemberVO> getOneTeam(Integer teamId);
 
 	void insert(Integer teamId, String teamMemberId);
+
+	void insert(TeamMemberVO teamMemberVO);
+
+	void update(TeamMemberVO teamMemberVO);
+
+	void delete(Integer teamId, String teamMemberId);
+
+	TeamMemberVO findByPrimaryKey(Integer teamId, String teamMemberId);
+
+	List<TeamMemberVO> getOneTeam(Integer teamId);
+
+	List<TeamMemberVO> getAll();
+
+	List<TeamMemberVO> findByTeamMemberId(String TeamMemberId);
 
 }

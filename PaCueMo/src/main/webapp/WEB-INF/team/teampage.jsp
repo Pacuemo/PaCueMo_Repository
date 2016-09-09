@@ -7,17 +7,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:url var="home" value="/" scope="request" /> <%--設定home，之後在script可以用--%>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PaCueMo</title>
 <meta charset="utf-8" />
 
-<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/animate.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/font-awesome.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/assets/css/nexus.css">
-<link href="${pageContext.request.contextPath }/_10_team_page/css/jquery-ui.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/animate.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/nexus.css">
 <!--     add icon  		-->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/_10_team_page/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/icon_style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--     add icon  		-->
 
@@ -42,7 +43,7 @@ p.tempstyle {
 /* a    { text-decoration: none; } */
 /* p    { text-align: center; } */
 /* sup  { font-size: 36px; font-weight: 100; line-height: 55px; } */
-.button {
+.join_button {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
@@ -66,7 +67,7 @@ p.tempstyle {
 	transition: all 0.5s;
 }
 
-.button:hover, .button:active {
+.join_button:hover, .join_button:active {
 	text-decoration: none;
 	color: #0C5;
 	border-color: #0C5;
@@ -75,7 +76,7 @@ p.tempstyle {
 
 
 
-.button span {
+.join_button span {
 	display: inline-block;
 	position: relative;
 	padding: 0; padding-right : 0;
@@ -83,7 +84,7 @@ p.tempstyle {
 	padding-right: 0
 }
 
-.button span:after {
+.join_button span:after {
 	content: ' ';
 	position: absolute;
 	top: 0;
@@ -101,11 +102,11 @@ p.tempstyle {
 
 }
 
-.button:hover span, .button:active span {
+.join_button:hover span, .join_button:active span {
 	padding-right: 30px;
 }
 
-.button:hover span:after, .button:active span:after {
+.join_button:hover span:after, .join_button:active span:after {
 	transition: opacity 0.5s, top 0.5s, right 0.5s;
 	opacity: 1;
 	border-color: #0C5;
@@ -115,8 +116,8 @@ p.tempstyle {
 
 }
 .tmimg{
-width: 225px;
-height: 225px;
+width: 233px;
+height: 233px;
 }
 </style>
 
@@ -124,10 +125,11 @@ height: 225px;
 <body>
 
 	<jsp:include page="/fragment/top.jsp" />
-	<jsp:include page="/_10_team_page/fragment/sidebar.jsp" />
-
-
-	<script src="${pageContext.request.contextPath}/_10_team_page/js/jquery-ui.min.js"></script>
+	<jsp:include page="fragment/teamSidebar.jsp" />
+	
+	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
+	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
+	
 	<div class="col-md-12">
 		<h2 class="margin-vert-20" style="color: white;">
 			<c:choose>
@@ -140,15 +142,16 @@ height: 225px;
 			<div class="col-sm-2 animate fadeInLeft animated">
 				<p class="margin-bottom-30 tempstyle">${requestScope.teamVO.content}</p>
 				<c:if test="${requestScope.teamExsist != 'Exsist' }">
-				<a href="${pageContext.request.contextPath}/spring/team/joinTeam" class="button"> 
-				<span>
-					<c:choose>
-						<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
-						<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
-						<c:otherwise>Join</c:otherwise>
-					</c:choose>
-				</span>
-				</a>
+					<a href="#" class="join_button" id="join_team"> 
+					<span>
+					
+						<c:choose>
+							<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
+							<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
+							<c:otherwise>Join</c:otherwise>
+						</c:choose>
+					</span>
+					</a>
 				</c:if>
 			</div>
 
@@ -164,9 +167,8 @@ height: 225px;
 						<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
 					</c:otherwise>
 				</c:choose>
-					<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
 					<figcaption>
-						<h3 class="margin-bottom-10">
+						<h3 class="margin-top-10 margin-bottom-10">
 							${list.memberVO.memberFirstName } <small>- Programmer</small>
 						</h3>
 						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
@@ -232,6 +234,34 @@ height: 225px;
 		</div>
 		<hr class="margin-vert-20">
 	</div>
+<script type="text/javascript">
+$(function (){
+	$("#join_team").click(function(){
+		
+		$.ajax({
+			"type":"get",
+			"url":"${home}spring/team/joinTeam", // home 在 設定
+			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
+					"teamId":"${requestScope.teamVO.teamId}"},
+			"dataType":"text",
+			"success":function(data){
+				alert(data);
+			},
+			"error":function(Error){
+				alert("fuck");
+				console.log(Error);
+			}		
+		})
+		.always(function (){
+			$(this).css("color","white");
+		});
+	}) // joinTeam End
+	
+	
+	
+// End of init
+});
 
+</script>
 </body>
 </html>

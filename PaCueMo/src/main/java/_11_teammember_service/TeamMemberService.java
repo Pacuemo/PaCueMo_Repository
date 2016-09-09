@@ -24,13 +24,9 @@ public class TeamMemberService
 		dao.insert(teamMemberVO);
 	}
 
-	public void add(Integer teamId, String teamMemberId, Date joinDate)
+	public void add(Integer teamId, String teamMemberId)
 	{
-		TeamMemberVO teamMemberVO = new TeamMemberVO();
-		teamMemberVO.setTeamId(teamId);
-		teamMemberVO.setTeamMemberId(teamMemberId);
-		teamMemberVO.setJoinDate(joinDate);
-		dao.insert(teamMemberVO);
+		dao.insert(teamId, teamMemberId);
 	}
 
 	public void update(TeamMemberVO teamMemberVO)
@@ -65,6 +61,11 @@ public class TeamMemberService
 	public List<TeamMemberVO> getAll()
 	{
 		return dao.getAll();
+	}
+
+	public List<TeamMemberVO> findByTeamMemberId(String TeamMemberId)
+	{
+		return dao.findByTeamMemberId(TeamMemberId);
 	}
 
 }
