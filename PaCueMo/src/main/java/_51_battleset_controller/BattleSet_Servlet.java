@@ -139,6 +139,8 @@ public class BattleSet_Servlet extends HttpServlet
 				if (queryTeamName.equals(""))
 				{
 					errorMsgs.add("※ 請輸入現役NBA隊名");
+					request.getRequestDispatcher("/_5_gambling/gamblingPage.jsp").forward(request, response);
+					return;
 				}
 				System.out.println("||| queryTeamName : " + queryTeamName);
 
