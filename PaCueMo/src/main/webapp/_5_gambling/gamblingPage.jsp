@@ -17,6 +17,7 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/datePicker/css/style.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/notiny/css/notiny.min.css" type="text/css">
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
@@ -56,9 +57,6 @@
 	       					<c:choose>
 	       						<c:when test="${funFlag=='byTeamName'}">
 	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryTeamName}</strong></h2>
-	       						</c:when>
-	       						<c:when test="${funFlag=='byDatePicker'}">
-	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:orange;">${queryDate}</strong></h2>
 	       						</c:when>
 	       						<c:when test="${empty battleSetList}">
 	       							<h2><strong style="font-family:微軟正黑體;font-weight:bolder;color:red;">查無資料</strong></h2>
@@ -166,13 +164,13 @@
 	        </form>
     	</div>
 		<!-- ***************************【下注 dialog 結束】***************************** -->
-
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/slicePage/js/jquery.paginate.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/zebra_datepicker.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/datePicker/js/core.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/notiny/js/notiny.min.js"></script>
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -291,6 +289,14 @@
 	                             		  },
 	                    				 "success":function(data){
 	                    					 alert("fuck " + data);
+	                    						$.notiny({/* notiny 特效*/
+                        	 	                    theme:'dark',
+                        	 	                    text: '下注成功！',
+                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
+                        	 	                    delay: 1200,
+                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
+                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
+                        	 					});
 	                    				 }
 	                				 })
 	                				 //---
@@ -319,7 +325,7 @@
 	                event.preventDefault();
 	            });
        			/* ================ 【下注 Dialog 結束】 ================= */
-       			
+
        			/* ========================================================================= */
        			/* ========================= 【DatePicker 開始】 =========================== */
        			/* ========================================================================= */
@@ -332,8 +338,12 @@
     	   				funFlag = 'byDatePicker';
     					//alert( funFlag );
     	   				//*****************************************
-       		    		var chooseDate = $(this).val(); // user 選擇的日期     
-       		    		
+       		    		var chooseDate = $(this).val(); // user 選擇的日期 
+       		    		// 更改pageHeader日期
+       		    		var pageHeader = $("div.page-header");
+   	       				pageHeader.children('h2').remove();
+   	       				pageHeader.append("<h2><strong style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + chooseDate + "</strong></h2>");	
+
        		    		$.ajax({
        		    			"type":"POST",//傳遞方式				
                     		"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
@@ -347,7 +357,7 @@
 				           		/* ==================== 【分頁開始】 =================== */
 				           		//....計算總頁數...
 				           		//alert("日期對應的總場數 =  " + countData ); //日期對應的總場數
-          						totalPages = (countData/3 == 0)?(countData/3):(Math.floor(countData/3) + 1 ); //總頁數
+          						totalPages = (countData/3 == 0)?(countData/3):(Math.floor(countData/3) + 1 ); /* 總頁數 */
            						//-----------------
 				       			$("#slicePage").paginate({		              	             
 						                count: totalPages,/* 總頁數 = 查到的資料/每頁顯示筆數 ， (1)若是由dispatcher跳轉：${battleSetList_len}，(2)若是Ajax查詢到的總筆數，在對應的$.ajax中設定 totalCount 全域變數*/
