@@ -16,7 +16,7 @@ import _10_Configs.StevenWebScanConfig;
 @EnableWebMvc
 //加入需要被裝載的控制器位置
 @Import({ StevenWebScanConfig.class })
-@ComponentScan({ "_21_club_controller", "_22_league_controller" })
+@ComponentScan({ "_21_club_controller", "_22_league_controller", "_41_login_controller" })
 public class WebConfig extends WebMvcConfigurerAdapter
 {
 

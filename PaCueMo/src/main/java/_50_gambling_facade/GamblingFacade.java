@@ -1,10 +1,14 @@
 package _50_gambling_facade;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import _51_battleset_service.BattleSetService;
 import _53_goodsorder_service.GoodsOrderService;
+import _9_41_member_model.MemberDAO_interface_Spring;
+import _9_41_member_model.MemberVO;
 import _9_51_battleset_model.BattleSetVO;
 
 @Transactional
@@ -12,6 +16,7 @@ public class GamblingFacade
 {
 	private BattleSetService bSetSvc;
 	private GoodsOrderService goodsOrderSvc;
+	private MemberDAO_interface_Spring memberDAO;
 
 	public GamblingFacade()
 	{
@@ -29,33 +34,42 @@ public class GamblingFacade
 		this.goodsOrderSvc = goodsOrderSvc;
 	}
 
+	public GamblingFacade(BattleSetService bSetSvc, GoodsOrderService goodsOrderSvc, MemberDAO_interface_Spring memberDAO)
+	{
+		this.bSetSvc = bSetSvc;
+		this.goodsOrderSvc = goodsOrderSvc;
+		this.memberDAO = memberDAO;
+	}
+
 	// readOnly=true : 唯讀,不能更新,刪除
 	// PROPAGATION_REQUIRED	 : 支援現在的交易，如果沒有的話就建立一個新的交易
 	// PROPAGATION_MANDATORY : 方法必須在一個現存的交易中進行，否則丟出例外
 	// @Transactional(rollbackFor=Exception.class) //指定回滾,需要捕獲的例外(throw new Exception(“");)不會回滾
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public String updateMemberAndBattleSetCoin(BattleSetVO vo)
+	public String updateMemberAndBattleSetCoin(BattleSetVO bVO, MemberVO mVO, Integer homeCoins, Integer awayCoins)
 	{
-		// -- 更新﹝對戰組合﹞主客隊點數 --
-		vo.getBattleId();// pk
-		vo.getBattleDateTime();
-		vo.getAwayId();
-		vo.getHomeId();
-		vo.getAwayScore();
-		vo.getHomeScore();
-		vo.getAwaybet();
-		vo.getHomebet();
-		bSetSvc.updateBattleSet(vo);
-		// -- 更新﹝會員﹞點數 --
-
-		System.out.println(" 0.== call 【GamblingFacade】 == \n 1.== BattleSetVO 點數更新成功！== \n 2.== MemberVO 點數更新成功！== \n ===========================================");
+		System.out.println(" ======== 呼叫 GamblingFacade → updateMemberAndBattleSetCoin(BattleSetVO bVO , MemberVO mVO) 方法 =======");
+		// *************** 更新﹝對戰組合﹞主客隊點數 =====
+		bVO.setAwaybet(bVO.getAwaybet() + homeCoins);
+		bVO.setHomebet(bVO.getHomebet() + awayCoins);
+		bSetSvc.updateBattleSet(bVO);
+		System.out.println(" 1.== BattleSetVO 點數更新成功！== \n =========================================");
+		// *************** 更新﹝會員﹞點數 ===============
+		Double newCoins = mVO.getMemberPoint() - (homeCoins + awayCoins);
+		mVO.setMemberPoint(newCoins);
+		memberDAO.updatePointByPrimaryKey(mVO);
+		//---
+		System.out.println(" 2.== MemberVO 點數更新成功！== \n ===========================================");
 		return "success";
 	}
 
 	public static void main(String[] args)
 	{
-//		ApplicationContext context = new AnnotationConfigApplicationContext("_53_gambling_facade");
-//		GamblingFacade facade2 = (GamblingFacade) context.getBean("gamblingFacade2");
+		ApplicationContext context = new AnnotationConfigApplicationContext("_50_gambling_facade");
+		GamblingFacade facadeService = (GamblingFacade) context.getBean("gamblingFacade3");
+		//============== 【測試memberDAO】 =================
+//		int ii = facadeService.testUpdateMemberPoints("jyurjh920790@pchome.com.tw");
+//		System.out.println(" 更新 " + ii + " 筆點數資料");
 //		// ========== 【測試更新BattleSetVO】 ==============
 //		BattleSetVO bSetVO = new BattleSetVO();
 //		bSetVO.setBattleId(1);
@@ -66,7 +80,15 @@ public class GamblingFacade
 //		bSetVO.setAwayScore(80);
 //		bSetVO.setHomebet(98000.0);
 //		bSetVO.setAwaybet(97000.0);
-//		facade2.updateMemberAndBattleSetCoin(bSetVO);
+//		facadeService.updateMemberAndBattleSetCoin(bSetVO);
 
 	}
 }
+
+//// 測試memberDAO spring
+//public int testUpdateMemberPoints(String memberMail)
+//{
+//	MemberVO vo = memberDAO.findByUserMail(memberMail);
+//	vo.setMemberPoint(9999);
+//	return memberDAO.updatePointByPrimaryKey(vo);
+//}

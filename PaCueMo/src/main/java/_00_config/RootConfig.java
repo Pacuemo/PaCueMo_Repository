@@ -15,6 +15,8 @@ import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.warrenstrange.googleauth.GoogleAuthenticator;
 
 import _00_initial_service.GlobalService;
 import _10_Configs.StevenScanConfig;
@@ -23,7 +25,7 @@ import _9_23_league_model.LeagueConfig;
 
 @Configuration
 @ComponentScan({ "_9_41_member_model", "_00_initial_service" })
-@Import({ ClubConfig.class, LeagueConfig.class, StevenScanConfig.class })
+@Import({ ClubConfig.class, LeagueConfig.class, StevenScanConfig.class, LiyideScanConfig.class })
 @EnableTransactionManagement
 public class RootConfig
 {
@@ -72,6 +74,18 @@ public class RootConfig
 	public Gson gson()
 	{
 		return new Gson();
+	}
+
+	@Bean
+	public JsonObject jsonObject()
+	{
+		return new JsonObject();
+	}
+
+	@Bean
+	public GoogleAuthenticator gAuth()
+	{
+		return new GoogleAuthenticator();
 	}
 
 }

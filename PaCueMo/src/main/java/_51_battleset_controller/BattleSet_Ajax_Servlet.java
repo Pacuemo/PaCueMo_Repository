@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
+import _9_41_member_model.MemberVO;
 import _9_51_battleset_model.BattleSetVO;
 
 @WebServlet("/_5_gambling/BattleSet_Ajax_Servlet.do")
@@ -38,7 +40,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		context = new AnnotationConfigWebApplicationContext();
 //		context.scan("_51_battleset_service");
 //		context.register(BattleSetBeans_Config.class);
-		context.scan("_53_gambling_facade");
+		context.scan("_50_gambling_facade");
 		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
@@ -87,7 +89,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				{
 					e.printStackTrace();
 				}
-				System.out.println("page no = " + pageNo);
+				System.out.println("pageNo = " + pageNo);
 				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
 //				BattleSetService svc = new BattleSetService(); // Spring
 				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
@@ -95,13 +97,12 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				// *************************
 				// ********【Ajax】*********
 				// *************************
-//				System.out.println(list.size() + " 筆");
 				Gson gson = new Gson();
 				String ans = gson.toJson(list);
 				System.out.println(" 本頁筆數 " + list.size() + " 筆");
 				System.out.println(ans);
 				out.println(ans);
-//				out.println(ans.toString());
+
 				/*************************** 其他可能的錯誤處理 *************************************/
 			}
 			catch (Exception e)//---處理其他不可預期意外
@@ -251,9 +252,59 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
-
+		/*******************/
 		// ************************************************************************************************
-		// ***********************【會員﹝下注後更新﹞battleSetVO 、memberVO資料】*****************************
+		// **********************【BattleSetId 查詢 場次 及 nbaTeam 物件】*********************************
+		// ************************************************************************************************
+		if ("queryByBattleSetId".equals(action))
+		{
+			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryByBattleSetId");
+
+			try
+			{
+				response.setHeader("content-type", "text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();/* for Ajax */
+
+				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String battleId = request.getParameter("battleId");
+				Integer battleSetId = null;
+				try
+				{
+					battleSetId = Integer.valueOf(battleId);
+				}
+				catch (NumberFormatException e)
+				{
+					System.out.println("--- battleId 轉換失敗 ---");
+					return;
+				}
+
+				System.out.println("battleId === " + battleId);
+
+				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
+				Map<String, Object> bSetVO = svc.getOneBattleSetById(battleSetId);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				// *************************
+				// ********【Ajax】*********
+				// *************************
+				Gson gson = new Gson();
+				String ans = gson.toJson(bSetVO);
+				System.out.println(ans);
+				out.println(ans);
+				return;
+				/*************************** 其他可能的錯誤處理 *************************************/
+			}
+			catch (Exception e)//---處理其他不可預期意外
+			{
+				e.printStackTrace();
+				System.out.println(" \n========== BattleSet_Servlet.java 不可預期意外 ========== ");
+				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");
+				failureView.forward(request, response);
+			}
+
+		}
+		/*******************/
+		// ************************************************************************************************
+		// ***********************【會員﹝下注後更新﹞battleSetVO 、memberVO資料】*************************
 		// ************************************************************************************************
 		if ("gamblingUpdate".equals(action))
 		{
@@ -273,8 +324,8 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				String strAwayScore = request.getParameter("awayScore");
 				String strHomeBet = request.getParameter("homeBet");
 				String strAwayBet = request.getParameter("awayBet");
-				String strHomeCoins = request.getParameter("homeCoins");
-				String strAwayCoins = request.getParameter("awayCoins");
+				String strHomeCoins = request.getParameter("homeCoins"); // 下注金額 
+				String strAwayCoins = request.getParameter("awayCoins"); // 下注金額
 				System.out.println(strBattleId + "  " + strAwayId + "  " + strHomeId + "  "
 						+ strBattleTime + "  " + strAwayScore + "  " + strHomeScore + "  " + strAwayBet + "  " + strHomeBet
 						+ "   " + strAwayCoins + "   " + strHomeCoins);
@@ -392,9 +443,19 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				System.out.println(battleId + "  " + awayId + "  " + homeId + "  "
 						+ battleTime + "  " + awayScore + "  " + homeScore + "  " + awayBet + "  " + homeBet
 						+ "   " + awayCoins + "   " + homeCoins + "\n =================");
-				/*************************** 2.開始CRUD資料 ( jQuery + Ajax : return text ) **********/
+				/*************************** 2.開始 Update 資料 ( jQuery + Ajax : return text ) **********/
 //				BattleSetService svc = new BattleSetService(); // Spring
 //				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
+
+				HttpSession session = request.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK"); // 登入會員的資料
+				Double pocket = memberVO.getMemberPoint();
+				if (pocket - (awayCoins + homeCoins) < 0)
+				{
+					out.println(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
+					return;// 直接返回前頁
+				}
+
 				BattleSetVO bSetVO = new BattleSetVO();
 				bSetVO.setBattleId(battleId);
 				bSetVO.setBattleDateTime(battleTime);
@@ -402,14 +463,13 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				bSetVO.setAwayId(awayId);
 				bSetVO.setHomeScore(homeScore);
 				bSetVO.setAwayScore(awayScore);
-				bSetVO.setHomebet(19000.0);
-//				bSetVO.setAwaybet(awayScore);
-//				gamblingFacade.updateMemberAndBattleSetCoin(vo);
+				bSetVO.setHomebet(homeBet);
+				bSetVO.setAwaybet(awayBet);
+				gamblingFacade.updateMemberAndBattleSetCoin(bSetVO, memberVO, homeCoins, awayCoins); // facade 類別控制 BattleSet 及 Member 交易
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********
 //				// *************************
-
 				out.println(" 回送資料成功!! ");
 				/*************************** 其他可能的錯誤處理 *************************************/
 			}
