@@ -155,9 +155,9 @@ public class BattleSet_Servlet extends HttpServlet
 					return;
 				}
 				int listSize = list.size(); // 總筆數
+				System.out.println("||| 總筆數 : " + list.size());
 
 				// ====== 測試程式 ======
-//				System.out.println("總筆數 : " + list.size());
 //				for (Map<String, Object> map : list)
 //				{
 //					String temp = String.format("%3s %5s %15s %15s %13s %20s %20s %10s %10s",

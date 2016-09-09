@@ -114,6 +114,58 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
+		///
+
+		// ************************************************************************************************
+		// **********************************【依輸入 日期&頁碼 查詢】*************************************
+		// ************************************************************************************************
+		if ("queryCountByDate".equals(action))
+		{
+			System.out.println("=====\n呼叫 【AJAX】 BattleSet_Ajax_Servlet : queryCountByDate");
+
+			try
+			{
+				response.setHeader("content-type", "text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();/* for Ajax */
+
+				/********************* 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String queryDate = request.getParameter("datepickerDate");
+
+				if (queryDate == null || queryDate.trim() == "")
+				{ /* 若 datepicker 沒有日期→設定日期為今天 */
+					java.util.Date today = new java.util.Date(System.currentTimeMillis());
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					queryDate = sdf.format(today);
+				}
+
+				System.out.println(" 查詢日期： " + queryDate);
+
+				/*************************** 2.開始查詢資料 ( jQuery + Ajax : return JSON ) **********/
+//				BattleSetService svc = new BattleSetService(); // Spring
+				Integer count = svc.getCountByDate(queryDate);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				// *************************
+				// ********【Ajax】*********
+				// *************************
+				System.out.println(queryDate + " 總筆數： " + count + " 筆");
+//				Gson gson = new Gson();
+//				String ans = gson.toJson(list);
+//				System.out.println(ans);
+//				out.println("{\"countByDate\":" + "\"" + count + "\"}"); // json
+				out.print(count);
+				/*************************** 其他可能的錯誤處理 *************************************/
+			}
+			catch (Exception e)//---處理其他不可預期意外
+			{
+				e.printStackTrace();
+				System.out.println(" \n========== BattleSet_Servlet.java 不可預期意外 ========== ");
+				RequestDispatcher failureView = request.getRequestDispatcher("xxxxxxxxxx");
+				failureView.forward(request, response);
+			}
+
+		}
+
+		///
 		// ************************************************************************************************
 		// **************************************【依輸入隊名查詢】****************************************
 		// ************************************************************************************************

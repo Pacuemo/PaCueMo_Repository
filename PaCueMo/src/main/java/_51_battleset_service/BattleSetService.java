@@ -65,6 +65,11 @@ public class BattleSetService
 		return list;
 	}
 
+	public Integer getCountByDate(String queryDate)
+	{
+		return bSetDAO.getBattleSetsCountByDate(queryDate);
+	}
+
 	//=========================================
 	//============= 進階查詢 ==================
 	//=========================================
@@ -286,7 +291,9 @@ public class BattleSetService
 	{
 		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_51_battleset_service");
 		BattleSetService svc = (BattleSetService) context.getBean("bSetService");
-
+//=====================【【測試】依日期查詢每日比賽場數=====================【
+//		Integer num = svc.getCountByDate("2016-09-09");
+//		System.out.println("比賽場數：" + num);
 //=====================【getOneBattleSetById】===========================
 //		Map<String, Object> bSetVO = svc.getOneBattleSetById(314);
 //		System.out.println(((NBATeamVO) bSetVO.get("away")).getTeamName());
