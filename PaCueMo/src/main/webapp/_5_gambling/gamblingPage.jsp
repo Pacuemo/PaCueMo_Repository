@@ -256,6 +256,8 @@
          		var form;
 	            myDialog = $("#dialog-div").dialog({
 	                autoOpen: false,
+	                show : { effect :'fold', duration: 1000 },
+	                hide : { effect :'slide', duration: 500 },
 	                height: 750,
 	                width: 500,
 	                modal: true,
@@ -358,6 +360,7 @@
 				           		//....計算總頁數...
 				           		//alert("日期對應的總場數 =  " + countData ); //日期對應的總場數
           						totalPages = (countData/3 == 0)?(countData/3):(Math.floor(countData/3) + 1 ); /* 總頁數 */
+          						alert(totalPages);
            						//-----------------
 				       			$("#slicePage").paginate({		              	             
 						                count: totalPages,/* 總頁數 = 查到的資料/每頁顯示筆數 ， (1)若是由dispatcher跳轉：${battleSetList_len}，(2)若是Ajax查詢到的總筆數，在對應的$.ajax中設定 totalCount 全域變數*/
