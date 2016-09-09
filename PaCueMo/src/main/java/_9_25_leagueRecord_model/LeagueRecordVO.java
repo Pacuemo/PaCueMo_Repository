@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import _9_21_club_model.ClubVO;
 import _9_26_fightRecord_model.FightRecordVO;
 
 @Component("LeagueRecordVO")
@@ -24,6 +25,8 @@ public class LeagueRecordVO implements Serializable
 	private int scoreB;
 	private String totalTime;
 	private List<FightRecordVO> fightRecordVOs;
+	private ClubVO clubA;
+	private ClubVO clubB;
 
 	public LeagueRecordVO()
 	{
@@ -158,6 +161,26 @@ public class LeagueRecordVO implements Serializable
 	public void setFightRecordVOs(List<FightRecordVO> fightRecordVOs)
 	{
 		this.fightRecordVOs = fightRecordVOs;
+	}
+
+	public ClubVO getClubA()
+	{
+		return clubA;
+	}
+
+	public void setClubA(ClubVO clubA)
+	{
+		this.clubA = clubA;
+	}
+
+	public ClubVO getClubB()
+	{
+		return clubB;
+	}
+
+	public void setClubB(ClubVO clubB)
+	{
+		this.clubB = clubB;
 	}
 
 }
