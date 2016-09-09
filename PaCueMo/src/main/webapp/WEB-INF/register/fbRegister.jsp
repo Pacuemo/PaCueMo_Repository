@@ -50,7 +50,7 @@
                   </li>
                   <li>
                     <label class="sr-only" for="register-email">Email:</label>
-                    <input type="email" id="register-email" name="email" value="${param.email}" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="checkMail.do?model=checkMail" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
+                    <input type="email" id="register-email" name="email" value="${param.email}" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="Mailcheck" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
                   </li>
                   <li>
                     <label class="sr-only" for="register-phone">手機號碼:</label>
@@ -133,12 +133,12 @@ $(function(){
 							var fbId = $("#facebookId").val();
 							$.ajax({
 								"type":"post",
-								"url": "../_02_register/register.do",
+								"url": "Register",
 								"dataType": "text",
 								"data":{"mail":mail,"fbId":fbId,"lastName":lastName,"firstName":firstName,"phone":phone,"year":year,"month":month,"day":day,"model":"register_fb"},
 								"success":function(data){
 									if( data == "true"){
-										location.href = "../index.jsp";
+										location.href = "../../index.jsp";
 									}else{
 										
 									}

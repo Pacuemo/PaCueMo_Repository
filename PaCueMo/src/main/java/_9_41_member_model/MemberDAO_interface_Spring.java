@@ -8,9 +8,9 @@ public interface MemberDAO_interface_Spring
 
 	public int insert_fb(MemberVO memberVO);
 
-	public int updatePasswordByMail(String memberMail);
+	public int updateForgetPwdByMail(MemberVO memberVO);
 
-	public int updatePasswordByPrimaryKey(String memberId);
+	public int updatePasswordByPrimaryKey(MemberVO memberVO);
 
 	public int updateTwoStepVerifyByPrimaryKey(MemberVO memberVO);
 

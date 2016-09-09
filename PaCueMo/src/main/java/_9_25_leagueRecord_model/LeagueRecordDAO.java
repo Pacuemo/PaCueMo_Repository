@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -17,9 +18,9 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 {
 	@Autowired
 	private JdbcOperations jdbc;
-
+	private final String Select_One_BY_FightId = "select * from LeagueRecord where fightId=? ";
 	private final String Select_One_BY_ClubID = "select * from LeagueRecord where leagueId=? and (clubIdA = ? OR clubIdB=?)";
-	private final String Select_ALL_BY_leagueId = "select * from LeagueRecord where leagueId = ?";
+	private final String Select_ALL_BY_leagueId = "select * from LeagueRecord where leagueId = ? order by fightid desc";
 	private final String Add_One_BY_VO = "insert into LeagueRecord values (?,?,?,?,?,?,?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueRecord where fightId =?";
 	private final String Update_One_BY_VO = "update LeagueRecord set clubIdA=?,clubIdB=?,fightDateTime=?,rounds=?,scoreA=?,scoreB=?,totalTime=? where fightId=?";
@@ -38,6 +39,19 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 					rs.getInt("scoreA"),
 					rs.getInt("scoreB"),
 					rs.getString("totalTime"));
+		}
+	}
+
+	@Override
+	public LeagueRecordVO find_One(int fightId)
+	{
+		try
+		{
+			return jdbc.queryForObject(Select_One_BY_FightId, new LeagueRecordDAORowMapper(), fightId);
+		}
+		catch (DataAccessException E)
+		{
+			return null;
 		}
 	}
 

@@ -1,7 +1,6 @@
 package _32_report_controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,10 +28,8 @@ public class ReportServlet extends HttpServlet
 		System.out.println("post is called");
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print("");
 
-		Map<String, String> errorMsg = new HashMap<String, String>();
+		Map<String, Object> errorMsg = new HashMap<String, Object>();
 		request.setAttribute("ErrorMsg", errorMsg);
 
 		String reportName = request.getParameter("reportName");

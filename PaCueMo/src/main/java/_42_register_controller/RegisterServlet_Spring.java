@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.JsonObject;
-
+import _00_initial_service.GlobalService;
 import _42_register_service.RegisterService_Spring;
 import _9_41_member_model.MemberVO;
 
@@ -26,9 +25,6 @@ public class RegisterServlet_Spring
 {
 	@Autowired
 	private RegisterService_Spring rs;
-
-	@Autowired
-	private JsonObject jsonObject;
 
 	@Autowired
 	MemberVO mv;
@@ -51,21 +47,20 @@ public class RegisterServlet_Spring
 	@RequestMapping(value = "/Mailcheck", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public void checkMail(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		String model = request.getParameter("model");
 		String mail = request.getParameter("email");
 		PrintWriter out = response.getWriter();
 
-		if ("checkMail".equals(model))
-		{
-			out.write(rs.checkMail(mail));
-		}
+		out.write(rs.checkMail(mail));
+		return;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/Mailcheck", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	public void saveMember(HttpServletRequest request)
+	@RequestMapping(value = "/Register", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	public void saveMember(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+
 		String model = request.getParameter("model");
 		String mail = request.getParameter("mail");
 		String lastName = request.getParameter("lastName");
@@ -76,52 +71,47 @@ public class RegisterServlet_Spring
 		String month = request.getParameter("month");
 		String day = request.getParameter("day");
 		String fbId = request.getParameter("fbId");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+		Date dob = new Date(calendar.getTimeInMillis());
 
 		if ("register".equals(model))
 		{
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-			Date dob = new Date(calendar.getTimeInMillis());
 
-			mv.setMemberMail(mail);
+			mv.setMemberMail(mail.trim());
 			mv.setMemberLastName(lastName);
-
+			mv.setMemberFirstName(firstName);
+			mv.setMemberPhone(phone);
+			mv.setMemberPassword(GlobalService.getMD5Endocing(password));
+			mv.setMemberBirthday(dob);
 			mv = rs.saveMember(mv);
 
-//			
-//			if (mv != null)
-//			{
-//				session.setAttribute("LoginOK", mv);
-//				out.write("true");
-//				return;
-//			}
-//			else
-//			{
-//				out.write("false");
-//				return;
-//			}
-//		}
-//
-//		if ("register_fb".equals(model))
-//		{
-//			Calendar calendar = Calendar.getInstance();
-//			calendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-//			Date dob = new Date(calendar.getTimeInMillis());
-//
-//			mv = ms.saveMember_fb(firstName, lastName, dob, phone, mail, fbId);
-//
-//			if (mv != null)
-//			{
-//				session.setAttribute("LoginOK", mv);
-//				out.write("true");
-//				return;
-//			}
-//			else
-//			{
-//				out.write("false");
-//				return;
-//			}
 		}
+
+		if ("register_fb".equals(model))
+		{
+			mv.setMemberMail(mail.trim());
+			mv.setMemberLastName(lastName);
+			mv.setMemberFirstName(firstName);
+			mv.setMemberPhone(phone);
+			mv.setMemberBirthday(dob);
+			mv.setMemberFBId(fbId);
+			mv = rs.saveMember_fb(mv);
+
+		}
+
+		if (mv != null)
+		{
+			session.setAttribute("LoginOK", mv);
+			out.write("true");
+			return;
+		}
+		else
+		{
+			out.write("false");
+			return;
+		}
+
 	}
 
 }
