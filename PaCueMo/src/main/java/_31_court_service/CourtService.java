@@ -1,6 +1,7 @@
 package _31_court_service;
 
 import java.util.List;
+import java.util.Map;
 
 import _9_31_court_model.CourtDAO;
 import _9_31_court_model.CourtDAO_interface;
@@ -73,24 +74,29 @@ public class CourtService
 	}
 
 	//查詢場地 By Name
-	public List<CourtVO> findNameAll(String name)
+	public List<CourtVO> findByCourtName(String name)
 	{
-		return dao.getByName(name);
+		return dao.findByName(name);
+	}
+
+	public static List<Map<String, Object>> getByName(String queryCourtName)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 //	=========================================================
-//	public List<Map<String, Object>> getByName(String name)
-	{
+//	public List<Map<String, Object>> getByCourtName(String name)
+//	{
 //		List<Map<String, Object>> return_list = new ArrayList<>();
-		try
-		{
-//			name = getByName(name);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
+//		try
+//		{
+//			name = CourtService.getByName(name);
+//		}
+//		catch (Exception e)
+//		{
+//			e.printStackTrace();
 //			return null;
-		}
-
-	}
+//		}
+//	}
 }

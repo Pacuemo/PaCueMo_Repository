@@ -12,7 +12,7 @@ public interface CourtDAO_interface
 
 	public CourtVO findByPrimaryKey(Integer courtId);
 
-	public List<CourtVO> getAll();
+	public List<CourtVO> findByName(String name);
 
-	public List<CourtVO> getByName(String name);
+	public List<CourtVO> getAll();
 }
