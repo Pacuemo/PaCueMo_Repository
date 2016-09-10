@@ -5,13 +5,15 @@ import java.util.List;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
+import _00_initial_service.GlobalService;
 import _9_53_goodsorder_model.GoodsOrderDAO;
+import _9_53_goodsorder_model.GoodsOrderDAO_interface;
 import _9_53_goodsorder_model.GoodsOrderVO;
 
 public class GoodsOrderService
 {
 
-	private GoodsOrderDAO goodsOrderDAO;/* GoodsOrderBeans_Config 注入 */
+	private GoodsOrderDAO_interface goodsOrderDAO;/* GoodsOrderBeans_Config 注入 */
 
 	public GoodsOrderService()
 	{
@@ -58,14 +60,14 @@ public class GoodsOrderService
 
 		//===========【測試】insert test =============
 //		GoodsOrderVO myvo = new GoodsOrderVO();
-//		myvo.setMemberId("AE912E06-9809-4D02-8AB7-01836E6DEB22");
+//		myvo.setMemberId("7DADF962-E537-4559-B2B7-0772EC1A8A4E");
 //		myvo.setCardNum("6587 1111 8888 7777");
 //		myvo.setFullName("哆啦A夢");
 //		myvo.setExpireYY("2022");
 //		myvo.setExpireMM("08");
 //		myvo.setCvc("383");
 //		myvo.setNtdQty(700);
-//		myvo.setCoinQty(7000);
+//		myvo.setCoinQty(7000.0);
 //		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 18:35:54"));
 //		myvo.setIsPay(true);
 //		svc.addGoodsOrder(myvo);
@@ -76,7 +78,7 @@ public class GoodsOrderService
 //		System.out.println(tmp.getFullName() + "   " + tmp.getMemberId() + "   " + tmp.getCardNum());
 
 		//=========== 【測試】 依會員id查詢 =============
-//		List<GoodsOrderVO> list = svc.getOrdersByMemberId("AE912E06-9809-4D02-8AB7-01836E6DEB22");
+//		List<GoodsOrderVO> list = svc.getOrdersByMemberId("7DADF962-E537-4559-B2B7-0772EC1A8A4E");
 //		for (GoodsOrderVO vo : list)
 //		{
 //			System.out.println(vo.getFullName() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vo.getCardNum()) + "   " +
@@ -84,11 +86,12 @@ public class GoodsOrderService
 //		}
 
 		//===========【測試】查多筆 getAllGoodsOrder test =============
-//		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
-//		for (GoodsOrderVO vvo : list)
-//		{
-//			System.out.println(vvo.getFullName() + "   " + vvo.getCvc() + "   " + vvo.getMemberId() + "   " + vvo.getCardNum());
-//		}
+		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
+		for (GoodsOrderVO vvo : list)
+		{
+			System.out.println(vvo.getFullName() + "   " + vvo.getCvc() + "   " + vvo.getMemberId() + "   "
+					+ vvo.getCardNum() + "   " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()));
+		}
 	}
 
 }

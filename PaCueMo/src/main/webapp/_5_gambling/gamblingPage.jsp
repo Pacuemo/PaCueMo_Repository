@@ -169,6 +169,7 @@
 	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	        </form>
     	</div>
+    	<!-- ***************************【下注 dialog 結束】***************************** -->
     	<!-- ====================================================================== -->
 		<!-- ==================【 購買點數 - 信用卡 dialog 開始】================== -->
 		<!-- ====================================================================== -->
@@ -217,12 +218,8 @@
 					  </div>
 	            </form>
 	    </div>
-		<!-- ***************************【下注 dialog 結束】***************************** -->
-		
-		   <button class="btn btn-success" id="demo-4">
-        Success
-    </button>
-		
+	   <!-- ***************************【 購買點數 - 信用卡 dialog 結束】***************************** -->
+
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>

@@ -100,20 +100,20 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
 		//=========== 【測試】 insert test =============
 //		GoodsOrderVO myvo = new GoodsOrderVO();
-//		myvo.setMemberId("EDC33DDF-4B9B-46E5-AD8A-065487694A8C");
-//		myvo.setCardNum(GlobalService.encryptString("4023 0555 7897 3546"));
+//		myvo.setMemberId("7DADF962-E537-4559-B2B7-0772EC1A8A4E");
+//		myvo.setCardNum("4023 1154 3578 9424");
 //		myvo.setFullName("火雲邪神");
 //		myvo.setExpireMM("08");
-//		myvo.setExpireYY("2027");
-//		myvo.setCvc(353);
-//		myvo.setNtdQty(500);
-//		myvo.setCoinQty(5000);
+//		myvo.setExpireYY("2017");
+//		myvo.setCvc("338");
+//		myvo.setNtdQty(50);
+//		myvo.setCoinQty(500.0);
 //		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 17:18:04"));
 //		myvo.setIsPay(true);
 //		dao.insert(myvo);
 		//============ end of insert test ========
 		//=========== 【測試】 依會員id查詢 =============
-//		List<GoodsOrderVO> list = dao.findByMemberId("EDC33DDF-4B9B-46E5-AD8A-065487694A8C");
+//		List<GoodsOrderVO> list = dao.findByMemberId("7DADF962-E537-4559-B2B7-0772EC1A8A4E");
 //		for (GoodsOrderVO vo : list)
 //		{
 //			System.out.println(vo.getFullName() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vo.getCardNum()) + "   " +
@@ -128,8 +128,8 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //		List<GoodsOrderVO> list = dao.getAll();
 //		for (GoodsOrderVO vvo : list)
 //		{
-//			System.out.println(vvo.getFullName() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()) + "   " +
-//					vvo.getExpireYY() + " 年 " + vvo.getExpireMM() + "月   cvc " + vvo.getCvc());
+//			System.out.println(vvo.getFullName() + "    " + vvo.getCardNum() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()) + "   " +
+//					vvo.getExpireYY() + " 年 " + vvo.getExpireMM() + "月   cvc " + vvo.getCvc() + "   " + vvo.getCoinQty());
 //		}
 		//=========== end of getAll test =============
 	}

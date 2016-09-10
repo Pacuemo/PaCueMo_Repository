@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import _53_goodsorder_service.GoodsOrderBeans_Config;
-import _53_goodsorder_service.GoodsOrderService;
+import _50_goodsorder_facade.GoodsOrderFacade;
+import _50_goodsorder_facade.GoodsOrderFacade_Config;
 import _9_41_member_model.MemberVO;
 import _9_53_goodsorder_model.GoodsOrderVO;
 
@@ -23,16 +23,18 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 	private static final long serialVersionUID = 1L;
 
 	private AnnotationConfigWebApplicationContext context;
-	private GoodsOrderService goodsSvc;
+	//private GoodsOrderService goodsSvc;
+	private GoodsOrderFacade buyPointsSvc;
 
 	@Override
 	public void init() throws ServletException
 	{
 		context = new AnnotationConfigWebApplicationContext();
-		context.scan("_53_goodsorder_service");
-		context.register(GoodsOrderBeans_Config.class);
+		context.scan("_50_goodsorder_facade");
+		context.register(GoodsOrderFacade_Config.class);
 		context.refresh();
-		goodsSvc = (GoodsOrderService) context.getBean("goodsService");
+		buyPointsSvc = (GoodsOrderFacade) context.getBean("goodsOrderFacade2");
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -81,10 +83,10 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 					System.out.println(" === GoodsOrder_Servlet.java ====  NTD 轉換數字失敗");
 				}
 
-				Integer coin = null;
+				Double coin = null;
 				try
 				{
-					coin = new Integer(str_coin);
+					coin = new Double(str_coin);
 				}
 				catch (NumberFormatException e)
 				{
@@ -102,22 +104,23 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 				}
 
 				System.out.println("============== 型態轉換後訂單資料： =============");
-				System.out.println(String.format("%10s %10s %10s %10s %10s %10s %10s %10s",
+				System.out.println(String.format("%10s %10s %5s %5s %8s %8s %10s %30s",
 						str_cardNum, str_fullName, str_expireMM, str_expireYY, str_cvc, ntd, coin, bookingTime));
 //				// =================== 格式錯誤驗證交給javascript dialogy做 ===========================
 //				GoodsOrderService svc = new GoodsOrderService();
-				GoodsOrderVO vo = new GoodsOrderVO();
-				vo.setMemberId(memberId);
-				vo.setCardNum(str_cardNum);
-				vo.setFullName(str_fullName);
-				vo.setExpireYY(str_expireYY);
-				vo.setExpireMM(str_expireMM);
-				vo.setCvc(str_cvc);
-				vo.setNtdQty(ntd);
-				vo.setCoinQty(coin);
-				vo.setOrderDateTime(bookingTime);
-				vo.setIsPay(ispay);
-				goodsSvc.addGoodsOrder(vo);
+				GoodsOrderVO gdVO = new GoodsOrderVO();
+				gdVO.setMemberId(memberId);
+				gdVO.setCardNum(str_cardNum);
+				gdVO.setFullName(str_fullName);
+				gdVO.setExpireYY(str_expireYY);
+				gdVO.setExpireMM(str_expireMM);
+				gdVO.setCvc(str_cvc);
+				gdVO.setNtdQty(ntd);
+				gdVO.setCoinQty(coin);
+				gdVO.setOrderDateTime(bookingTime);
+				gdVO.setIsPay(ispay);
+				//goodsSvc.addGoodsOrder(vo);
+				buyPointsSvc.buyPoints(gdVO, memberVO, coin);
 				out.print("success");
 			}
 			catch (Exception e)// 其他可能錯誤處理

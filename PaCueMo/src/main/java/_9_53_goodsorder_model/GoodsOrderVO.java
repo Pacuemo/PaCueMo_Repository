@@ -10,7 +10,7 @@ public class GoodsOrderVO
 	private String expireYY;
 	private String cvc;
 	private Integer ntdQty;
-	private Integer coinQty;
+	private Double coinQty;
 	private java.sql.Timestamp orderDateTime;
 	private Boolean isPay;
 
@@ -99,12 +99,12 @@ public class GoodsOrderVO
 		this.ntdQty = ntdQty;
 	}
 
-	public Integer getCoinQty()
+	public Double getCoinQty()
 	{
 		return coinQty;
 	}
 
-	public void setCoinQty(Integer coinQty)
+	public void setCoinQty(Double coinQty)
 	{
 		this.coinQty = coinQty;
 	}
