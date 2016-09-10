@@ -18,7 +18,8 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
-     
+   
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 	 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP -->
@@ -218,6 +219,10 @@
 	    </div>
 		<!-- ***************************【下注 dialog 結束】***************************** -->
 		
+		   <button class="btn btn-success" id="demo-4">
+        Success
+    </button>
+		
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -228,7 +233,8 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/js/notiny.min.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/jquery.card.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
-  
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -236,8 +242,7 @@
             var myDialog , cardDialog;
             //alert( funFlag );
             
-       		$(function(){
-
+       		$(function(){       
        			/* ================ 【下注 開始】 ================= */
        			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
@@ -530,7 +535,7 @@
                         	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
                         	 		    var coin     = $("input[placeholder='代幣數量']").val();
                         	 		    var bookingTime = timeStamp();
-                        	 		    alert(bookingTime);
+                        	 		    //alert(bookingTime);
                         	 			//======================================================
                         	 			//==============【傳送信用卡資訊到servlet】=============
                         	 			//======================================================	
@@ -545,7 +550,8 @@
                         	 				console.log('bookingTime  ' + bookingTime);
                         	 			$.ajax({
                         	 				"type" : "POST",                        	 				
-                        	 				"url"  :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'GoodsOrder_Servlet.do',
+                        	 				"url"  :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'GoodsOrder_Ajax_Servlet.do',
+                        	 				"dataType":"text",//Servlet回傳格式
                         	 				"data" : { 
                         	 						   'action'      :  'buyCoins'  , 
                         	 						   'cardNum'     :   cardNum    ,
@@ -557,17 +563,15 @@
                         	 						   'coin'        :   coin       ,
                         	 						   'bookingTime' :   bookingTime   //下訂時間(call from js_timestamp.js)
                         	 				},
-                    
-                        	 				"success" : function(){/* Servlet回應成功 */
-                        	 					alert('hello');
-                        	 					$.notiny({/* notiny 特效*/
-                        	 	                    theme:'dark',
-                        	 	                    text: '訂單成立！',
-                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
-                        	 	                    delay: 1200,
-                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
-                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
-                        	 					});
+                        	 				"success" : function(data){/* Servlet回應成功 */
+                        	 					//alert('hello' + data );
+                        	 					BootstrapAlert.success({ //BootstrapAlert 特效
+                        	 			                title: "訂單成立!",
+                        	 			                message: "已為您儲值點數",
+                        	 			                hideTimeout: 1500,
+                        	 			                //parentClass: 'bootstrap-alert',
+                        	 			       			//innerClass:  'bootstrap-alert-message'
+                        	 			        });
                         	 				},
                         	 				"error" : function(){/* Servlet回應錯誤 */
                         	 					alert('下訂失敗');

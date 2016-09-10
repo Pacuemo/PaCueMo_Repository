@@ -63,7 +63,7 @@ public class GoodsOrderService
 //		myvo.setFullName("哆啦A夢");
 //		myvo.setExpireYY("2022");
 //		myvo.setExpireMM("08");
-//		myvo.setCvc(478);
+//		myvo.setCvc("383");
 //		myvo.setNtdQty(700);
 //		myvo.setCoinQty(7000);
 //		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 18:35:54"));
@@ -84,12 +84,10 @@ public class GoodsOrderService
 //		}
 
 		//===========【測試】查多筆 getAllGoodsOrder test =============
-//		GoodsOrderService svc = new GoodsOrderService();
-//
 //		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
 //		for (GoodsOrderVO vvo : list)
 //		{
-//			System.out.println(vvo.getFullName() + "   " + vvo.getMemberId() + "   " + vvo.getCardNum());
+//			System.out.println(vvo.getFullName() + "   " + vvo.getCvc() + "   " + vvo.getMemberId() + "   " + vvo.getCardNum());
 //		}
 	}
 

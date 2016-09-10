@@ -8,7 +8,7 @@ public class GoodsOrderVO
 	private String fullName;
 	private String expireMM;
 	private String expireYY;
-	private Integer cvc;
+	private String cvc;
 	private Integer ntdQty;
 	private Integer coinQty;
 	private java.sql.Timestamp orderDateTime;
@@ -79,12 +79,12 @@ public class GoodsOrderVO
 		this.expireYY = expireYY;
 	}
 
-	public Integer getCvc()
+	public String getCvc()
 	{
 		return cvc;
 	}
 
-	public void setCvc(Integer cvc)
+	public void setCvc(String cvc)
 	{
 		this.cvc = cvc;
 	}

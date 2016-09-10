@@ -18,7 +18,7 @@ public class GoodsOrderRowMapper implements RowMapper<GoodsOrderVO>
 		gdVO.setFullName(rs.getString("fullName"));
 		gdVO.setExpireYY(rs.getString("expireYY"));
 		gdVO.setExpireMM(rs.getString("expireMM"));
-		gdVO.setCvc(rs.getInt("cvc"));
+		gdVO.setCvc(rs.getString("cvc"));
 		gdVO.setNtdQty(rs.getInt("ntdQty"));
 		gdVO.setCoinQty(rs.getInt("coinQty"));
 		gdVO.setOrderDateTime(rs.getTimestamp("orderDateTime"));
