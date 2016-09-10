@@ -2,7 +2,12 @@ package _9_53_goodsorder_model;
 
 import java.util.List;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import _00_initial_service.GlobalService;
+import _53_goodsorder_service.GoodsOrderBeans_Config;
 
 public class GoodsOrderDAO implements GoodsOrderDAO_interface
 {
@@ -11,14 +16,17 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //	String userid = GlobalService.USERID;
 //	String passwd = GlobalService.PASSWORD;
 	//========================================
-	private static final String INSERT_STMT = "INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
-			+ "                                  VALUES   ( ? , ? , ? , ? , ? , ? , ? , ? , ?)";
-	private static final String QUERY_ALL_STMT = "SELECT orderId , memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay "
+	private static final String INSERT_STMT = "INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
+			+ "                                  VALUES   ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+	private static final String GET_ALL_STMT = "SELECT orderId , memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay "
 			+ "                                     FROM GoodsOrder";
 
-	private static final String DELETE_STMT = "DELETE FROM dbo.GoodsOrder WHERE orderId = ?";
-	private static final String GET_ONE_STMT = "SELECT orderId , memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay "
+	private static final String DELETE_STMT = "DELETE FROM GoodsOrder WHERE orderId = ?";
+	private static final String GET_ONE_STMT = "SELECT orderId , memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay "
 			+ "                                   FROM GoodsOrder WHERE orderId = ?";
+	private static final String GET_ALL_BY_MEMBID = "SELECT orderId,memberId,cardNum,fullName,expireYY,expireMM,cvc,ntdQty,coinQty,orderDateTime,isPay "
+			+ "                                        FROM dbo.GoodsOrder WHERE memberId = ?";
+
 	//========================================
 	private JdbcTemplate jdbcTemplate;
 
@@ -32,54 +40,12 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public static void main(String[] args)
-	{
-		//============= 【測試】【信用卡號加密測試】 ===================
-//		String card = "4023 1154 3578 9424";
-//		String str0 = GlobalService.getMD5Endocing(card);
-//		System.out.println("MD5  " + str0 + "   " + str0.length());
-//		String str1 = GlobalService.encryptString(card);
-//		System.out.println(str1 + "   " + str1.length());
-//		String str2 = GlobalService.decryptString(GlobalService.KEY, str1);
-//		System.out.println(str2);
-		//============================================================
-		//=======================【Spring】===========================
-		//============================================================
-//		AbstractApplicationContext context = new AnnotationConfigApplicationContext(GoodsOrderBeans_Config.class);
-//		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
-		//=========== 【測試】 insert test =============
-//		GoodsOrderVO myvo = new GoodsOrderVO();
-//		myvo.setMemberId(120);
-//		myvo.setCardNum(GlobalService.encryptString("4023 0555 7897 3546"));
-//		myvo.setFullName("火雲邪神");
-//		myvo.setExpire("07/2018");
-//		myvo.setCvc(353);
-//		myvo.setNtdQty(500);
-//		myvo.setCoinQty(5000);
-//		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 17:18:04"));
-//		myvo.setIsPay(true);
-//
-//		GoodsOrderDAO dao = new GoodsOrderDAO();
-//		dao.insert(myvo);
-		//============ end of insert test ========
-		//=========== 【測試】 查一筆 =============
-//		System.out.println(dao.findByPrimaryKey(2).getCardNum());
-		//===========【測試】 getAll test =============
-//		GoodsOrderDAO dao = new GoodsOrderDAO();
-//		List<GoodsOrderVO> list = dao.getAll();
-//		for (GoodsOrderVO vvo : list)
-//		{
-//			System.out.println(vvo.getFullName() + "   " + vvo.getCardNum());
-//		}
-		//=========== end of getAll test =============
-	}
-
 	@Override
 	public int insert(GoodsOrderVO vo)
 	{
-		//INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expire ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
+		//"INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
 		int num = jdbcTemplate.update(INSERT_STMT,
-				vo.getMemberId(), vo.getCardNum(), vo.getFullName(), vo.getExpire(), vo.getCvc(),
+				vo.getMemberId(), GlobalService.encryptString(vo.getCardNum()), vo.getFullName(), vo.getExpireYY(), vo.getExpireMM(), vo.getCvc(),
 				vo.getNtdQty(), vo.getCoinQty(), vo.getOrderDateTime(), vo.getIsPay());
 		System.out.println(" ============= 新增GoodsOrder " + num + " 一筆成功 ================");
 		return num;
@@ -106,9 +72,65 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	}
 
 	@Override
-	public List<GoodsOrderVO> getAll()
+	public List<GoodsOrderVO> findByMemberId(String membId)
 	{
-		return jdbcTemplate.query(QUERY_ALL_STMT, new GoodsOrderRowMapper());
+		return jdbcTemplate.query(GET_ALL_BY_MEMBID, new GoodsOrderRowMapper(), membId);
 	}
 
+	@Override
+	public List<GoodsOrderVO> getAll()
+	{
+		return jdbcTemplate.query(GET_ALL_STMT, new GoodsOrderRowMapper());
+	}
+
+	public static void main(String[] args)
+	{
+		//============= 【測試】【信用卡號加密測試】 ===================
+//		String card = "4023 1154 3578 9424";
+//		String str0 = GlobalService.getMD5Endocing(card);
+//		System.out.println("MD5  " + str0 + "   " + str0.length());
+//		String str1 = GlobalService.encryptString(card);
+//		System.out.println(str1 + "   " + str1.length());
+//		String str2 = GlobalService.decryptString(GlobalService.KEY, str1);
+//		System.out.println(str2);
+		//============================================================
+		//=======================【Spring】===========================
+		//============================================================
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(GoodsOrderBeans_Config.class);
+		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
+		//=========== 【測試】 insert test =============
+//		GoodsOrderVO myvo = new GoodsOrderVO();
+//		myvo.setMemberId("EDC33DDF-4B9B-46E5-AD8A-065487694A8C");
+//		myvo.setCardNum(GlobalService.encryptString("4023 0555 7897 3546"));
+//		myvo.setFullName("火雲邪神");
+//		myvo.setExpireMM("08");
+//		myvo.setExpireYY("2027");
+//		myvo.setCvc(353);
+//		myvo.setNtdQty(500);
+//		myvo.setCoinQty(5000);
+//		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 17:18:04"));
+//		myvo.setIsPay(true);
+//		dao.insert(myvo);
+		//============ end of insert test ========
+		//=========== 【測試】 依會員id查詢 =============
+//		List<GoodsOrderVO> list = dao.findByMemberId("EDC33DDF-4B9B-46E5-AD8A-065487694A8C");
+//		for (GoodsOrderVO vo : list)
+//		{
+//			System.out.println(vo.getFullName() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vo.getCardNum()) + "   " +
+//					vo.getExpireYY() + " 年 " + vo.getExpireMM() + "月   cvc " + vo.getCvc());
+//		}
+		//=========== 【測試】 查一筆 =============
+//		GoodsOrderVO orderVO = dao.findByPrimaryKey(2);
+//		System.out.println("卡號 : " + orderVO.getCardNum());
+//		System.out.println("解密卡號 : " + GlobalService.decryptString(GlobalService.KEY, orderVO.getCardNum()));
+		//===========【測試】 getAll test =============
+//		GoodsOrderDAO dao = new GoodsOrderDAO();
+//		List<GoodsOrderVO> list = dao.getAll();
+//		for (GoodsOrderVO vvo : list)
+//		{
+//			System.out.println(vvo.getFullName() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()) + "   " +
+//					vvo.getExpireYY() + " 年 " + vvo.getExpireMM() + "月   cvc " + vvo.getCvc());
+//		}
+		//=========== end of getAll test =============
+	}
 }

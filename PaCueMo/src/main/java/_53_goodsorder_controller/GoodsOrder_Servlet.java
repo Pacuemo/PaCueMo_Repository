@@ -8,11 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import _53_goodsorder_service.GoodsOrderService;
-import _9_53_goodsorder_model.GoodsOrderVO;
+import _9_41_member_model.MemberVO;
 
-@WebServlet("/_01_Gambling/GoodsOrder_Servlet.do")
+@WebServlet("/_5_gambling/GoodsOrder_Servlet.do")
 public class GoodsOrder_Servlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -31,86 +31,86 @@ public class GoodsOrder_Servlet extends HttpServlet
 		//---------------------------------------------------------------------------
 		if ("buyCoins".equals(action))
 		{
-
 			try
 			{
 				//=============== 【session 中get 會員id】 ====================
-//				HttpSession session = request.getSession();
-//				Integer memberId = (Integer) session.getAttribute("memberId");
-				String memberId = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+				HttpSession session = request.getSession();
+				MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+
 				//==== 付款狀態 ===
 				Boolean ispay = true;
-				//=============================================
-				String cardNum = request.getParameter("cardNum");
-				String fullName = request.getParameter("fullName");
-				String expire = request.getParameter("expire");
-				String cvc = request.getParameter("cvc");
-				String NTD = request.getParameter("NTD");
-				String coin = request.getParameter("coin");
-				String bookingTime = request.getParameter("bookingTime");
+//				//=============================================
+				String str_cardNum = request.getParameter("cardNum").trim();
+				String str_fullName = request.getParameter("fullName").trim();
+				String str_expireMM = request.getParameter("expireMM").trim();
+				String str_expireYY = request.getParameter("expireYY").trim();
+				String str_cvc = request.getParameter("cvc").trim();
+				String str_ntd = request.getParameter("ntd").trim();
+				String str_coin = request.getParameter("coin").trim();
+				String str_bookingTime = request.getParameter("bookingTime");
+//				System.out.println(String.format("%10s %10s %10s %10s %10s %10s %10s %10s",
+//						str_cardNum, str_fullName, str_expireMM, str_expireYY, str_cvc, str_ntd, str_coin, str_bookingTime));
 				//=============== 【型態轉換】 ====================
 
-				Integer int_cvc = null;
+				Integer cvc = null;
 				try
 				{
-					int_cvc = Integer.valueOf(cvc);
+					cvc = Integer.valueOf(str_cvc);
 				}
 				catch (NumberFormatException e)
 				{
-					int_cvc = 0;
-					System.out.println(" === GoodsOrder_Servlet.java ==== L52 cvc轉換數字失敗");
+					System.out.println(" === GoodsOrder_Servlet.java ==== cvc 轉換數字失敗");
 				}
-
-				Integer int_NTD = null;
+				Integer ntd = null;
 				try
 				{
-					int_NTD = new Integer(NTD);
+					ntd = new Integer(str_ntd);
 				}
 				catch (NumberFormatException e)
 				{
-					int_NTD = 0;
-					System.out.println(" === GoodsOrder_Servlet.java ==== L64 NTD 轉換數字失敗");
+					System.out.println(" === GoodsOrder_Servlet.java ====  NTD 轉換數字失敗");
 				}
 
-				Integer int_coin = null;
+				Integer coin = null;
 				try
 				{
-					int_coin = new Integer(coin);
+					coin = new Integer(str_coin);
 				}
 				catch (NumberFormatException e)
 				{
-					int_coin = 0;
-					System.out.println(" === GoodsOrder_Servlet.java ==== L74 coin 轉換數字失敗");
+					System.out.println(" === GoodsOrder_Servlet.java ====  coin 轉換數字失敗");
 				}
 
-				java.sql.Timestamp bookingSQLTime = null;
+				java.sql.Timestamp bookingTime = null;
 				try
 				{
-					bookingSQLTime = java.sql.Timestamp.valueOf(bookingTime);
+					bookingTime = java.sql.Timestamp.valueOf(str_bookingTime);
 				}
 				catch (IllegalArgumentException e)
 				{
-					bookingSQLTime = new java.sql.Timestamp(System.currentTimeMillis());
-					System.out.println(" === GoodsOrder_Servlet.java ==== L87 bookingTime 轉換數字失敗");
+					System.out.println(" === GoodsOrder_Servlet.java ====  bookingTime 轉換 sql.Timestamp 失敗");
 				}
 
-				// =================== 格式錯誤驗證交給javascript dialogy做 ===========================
-				GoodsOrderService svc = new GoodsOrderService();
-				GoodsOrderVO vo = new GoodsOrderVO();
-
-				vo.setMemberId(memberId);
-				vo.setCardNum(cardNum);
-				vo.setFullName(fullName);
-				vo.setExpire(expire);
-				vo.setCvc(int_cvc);
-				vo.setNtdQty(int_NTD);
-				vo.setCoinQty(int_coin);
-				vo.setOrderDateTime(bookingSQLTime);
-				vo.setIsPay(ispay);
-				svc.addGoodsOrder(vo);
-
-				out = response.getWriter();
-				out.print("GGG");
+				System.out.println("============== 型態轉換後訂單資料： =============");
+				System.out.println(String.format("%10s %10s %10s %10s %10s %10s %10s %10s",
+						str_cardNum, str_fullName, str_expireMM, str_expireYY, cvc, ntd, coin, bookingTime));
+//				// =================== 格式錯誤驗證交給javascript dialogy做 ===========================
+//				GoodsOrderService svc = new GoodsOrderService();
+//				GoodsOrderVO vo = new GoodsOrderVO();
+//
+//				vo.setMemberId(memberId);
+//				vo.setCardNum(cardNum);
+//				vo.setFullName(fullName);
+//				vo.setExpire(expire);
+//				vo.setCvc(int_cvc);
+//				vo.setNtdQty(int_NTD);
+//				vo.setCoinQty(int_coin);
+//				vo.setOrderDateTime(bookingSQLTime);
+//				vo.setIsPay(ispay);
+//				svc.addGoodsOrder(vo);
+//
+//				out = response.getWriter();
+//				out.print("GGG");
 			}
 			catch (Exception e)// 其他可能錯誤處理
 			{

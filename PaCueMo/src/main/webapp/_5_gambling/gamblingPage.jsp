@@ -191,15 +191,11 @@
 					  <div class="row">
 		                  <div class="form-group col-xs-6">
 							  <label class="control-label" for="expire_mm" style="font-family:'微軟正黑體';font-weight:800;color:orange;">期 限(月)</label>
-							  <select id="expire_mm" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;">
-							  	
-							  </select>
+							  <select id="expire_mm" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"></select>		  
 						  </div>
 						  <div class="form-group col-xs-6">
 							  <label class="control-label" for="expire_yy" style="font-family:'微軟正黑體';font-weight:800;color:orange;">期 限(西元年)</label>
-							  <select id="expire_yy" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;">
-							  	
-							  </select>    
+							  <select id="expire_yy" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"></select>   
 						  </div>
 					  </div>	
 					  <div class="form-group has-success has-feedback">
@@ -241,90 +237,7 @@
             //alert( funFlag );
             
        		$(function(){
-       			
-       			/*=====================【信用卡textBox驗證 開始】=====================*/
-       			var falgNumber=true , flagName=true , flagCvc=true , falgNtd=true;
-       			
-       			var isAllFilled = function(){// 檢查所有欄位是否都填入
-       				return falgNumber && flagName && flagCvc && falgNtd ;
-       			}
-  				$("#cardnumber").click(function(){$(this).val("")}).blur(function(){
-  					if($(this).val()==""){
-						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
-						$(this).parent('div').switchClass('has-success','has-error');
-						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						falgNumber = false;
-					}
-  					else{
-  						$(this).css({'color':'blue' , 'font-style':'normal'});
-  						$(this).parent('div').switchClass('has-error','has-success');
-  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						falgNumber = true;
-  					}
-  					if(isAllFilled()){
-                		$("#confirm").attr("disabled",false);
-                	}else{
-                		$("#confirm").attr("disabled",true);
-                	}
-  				})
-  				$("#fullname").click(function(){$(this).val("")}).blur(function(){
-  					if($(this).val()==""){
-						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
-						$(this).parent('div').switchClass('has-success','has-error');
-						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						flagName = false;
-					}
-  					else{
-  						$(this).css({'color':'blue' , 'font-style':'normal'});
-  						$(this).parent('div').switchClass('has-error','has-success');
-  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						flagName = true;
-  					}
-  					if(isAllFilled()){
-                		$("#confirm").attr("disabled",false);
-                	}else{
-                		$("#confirm").attr("disabled",true);
-                	}
-  				})
-  				$("#cvc").click(function(){$(this).val("")}).blur(function(){
-  					if($(this).val()==""){
-						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
-						$(this).parent('div').switchClass('has-success','has-error');
-						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						flagCvc = false;
-					}
-  					else{
-  						$(this).css({'color':'blue' , 'font-style':'normal'});
-  						$(this).parent('div').switchClass('has-error','has-success');
-  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						flagCvc = true;
-  					}
-  					if(isAllFilled()){
-                		$("#confirm").attr("disabled",false);
-                	}else{
-                		$("#confirm").attr("disabled",true);
-                	}
-  				})
-  				$("#NTD").click(function(){$(this).val("")}).blur(function(){
-  					if($(this).val()==""){
-						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
-						$(this).parent('div').switchClass('has-success','has-error');
-						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						falgNtd = false;
-					}
-  					else{
-  						$(this).css({'color':'blue' , 'font-style':'normal'});
-  						$(this).parent('div').switchClass('has-error','has-success');
-  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						falgNtd = true;
-  					}
-  					if(isAllFilled()){
-                		$("#confirm").attr("disabled",false);
-                	}else{
-                		$("#confirm").attr("disabled",true);
-                	}
-  				})
-  				/*=====================【信用卡textBox驗證 結束】=====================*/
+
        			/* ================ 【下注 開始】 ================= */
        			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
@@ -478,6 +391,91 @@
        				cardDialog.dialog('open');
        			})
        			/* ======== 【購買代幣按鈕】 ======= */
+       			/*=====================【信用卡textBox驗證 開始】=====================*/
+       			var falgNumber=true , flagName=true , flagCvc=true , falgNtd=true;
+       			
+       			var isAllFilled = function(){// 檢查所有欄位是否都填入
+       				return falgNumber && flagName && flagCvc && falgNtd ;
+       			}
+  				$("#cardnumber").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						falgNumber = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						falgNumber = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				$("#fullname").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						flagName = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						flagName = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				$("#cvc").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						flagCvc = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						flagCvc = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				$("#NTD").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						falgNtd = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						falgNtd = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				/*=====================【信用卡textBox驗證 結束】=====================*/
+       			
+       			
        			/* ================ 【信用卡 Dialog 開始】 ======================= */
 				var formCard;
 	       		cardDialog = $("#dialog-card").dialog({
@@ -489,9 +487,14 @@
 	                'modal': true,
 	                'resizable': false,
 	                'open': function(){
-	                	var text_mm = $(this).find("select[id='expire_mm']");
-	                	var text_yy = $(this).find("select[id='expire_yy']");
+	                	var text_mm = $(this).find("select[id='expire_mm']"); //月份下拉選單
+	                	var text_yy = $(this).find("select[id='expire_yy']"); //年份下拉選單
+	                	text_mm.children('option').remove();// -- 移除舊有的 <option> 標籤
+	                	text_yy.children('option').remove();// -- 移除舊有的 <option> 標籤
 	                	for(var mm = 1 ; mm <= 12 ; mm++){
+	                		if(mm < 10){
+	                			mm = "0" + mm; // >10月,補"0"
+	                		}
 	                		var tmp = $("<option></option>").val(mm).text(mm);
 	                		text_mm.append(tmp);
 	                	}
@@ -515,13 +518,14 @@
 	                          {
                            //"disabled" : true , 
                             	   "id" : "confirm",
-	                        	"text"  : "確認購買",
+	                        	 "text" : "確認購買",
                         	 	"class" : "btn btn-primary",
                         	 	"click" : function (){
                         	 		   //alert($(this).prop('tagName') +" 確認" );
                         	 		    var cardNum  = $("input[placeholder='Card number']").val();
                         	 		    var fullName = $("input[placeholder='Full name']").val();
-                        	 		    var expire   = $("input[placeholder='MM/YYYY']").val();
+                        	 		    var expireMM = $("#expire_mm").val();
+                        	 		    var expireYY = $("#expire_yy").val();
                         	 		    var cvc      = $("input[placeholder='CVC']").val();
                         	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
                         	 		    var coin     = $("input[placeholder='代幣數量']").val();
@@ -531,25 +535,27 @@
                         	 			//==============【傳送信用卡資訊到servlet】=============
                         	 			//======================================================	
                         	 				//alert($('#confirm').prop('id'));
-                        	 				console.log(cardNum);
-                        	 				console.log(fullName);
-                        	 				console.log(expire);
-                        	 				console.log(cvc);
-                        	 				console.log(ntd);
-                        	 				console.log(coin);
-                        	 				console.log(bookingTime);
+                        	 				console.log('cardNum  '     + cardNum);
+                        	 				console.log('fullName  '    + fullName);
+                        	 				console.log('expireMM  '    + expireMM);
+                        	 				console.log('expireYY  '    + expireYY);
+                        	 				console.log('cvc  '         + cvc);
+                        	 				console.log('ntd  '         + ntd);
+                        	 				console.log('coin  '        + coin);
+                        	 				console.log('bookingTime  ' + bookingTime);
                         	 			$.ajax({
                         	 				"type" : "POST",                        	 				
-                        	 				"url"  :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'GoodsOrder_Servlet.do',
+                        	 				"url"  :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'GoodsOrder_Servlet.do',
                         	 				"data" : { 
-                        	 						   'action'     :  'buyCoins'   , 
-                        	 						   'cardNum'    :   cardNum    ,
-                        	 						   'fullName'   :   fullName   ,
-                        	 						   'expire'     :   expire     ,
-                        	 						   'cvc'        :   cvc        ,
-                        	 						   'NTD'        :   ntd        ,
-                        	 						   'coin'        :  coin        ,
-                        	 						   'bookingTime' :  bookingTime   //下訂時間(call from js_timestamp.js)
+                        	 						   'action'      :  'buyCoins'  , 
+                        	 						   'cardNum'     :   cardNum    ,
+                        	 						   'fullName'    :   fullName   ,
+                        	 						   'expireMM'    :   expireMM   ,
+                        	 						   'expireYY'    :   expireYY   ,
+                        	 						   'cvc'         :   cvc        ,
+                        	 						   'ntd'         :   ntd        ,
+                        	 						   'coin'        :   coin       ,
+                        	 						   'bookingTime' :   bookingTime   //下訂時間(call from js_timestamp.js)
                         	 				},
                     
                         	 				"success" : function(){/* Servlet回應成功 */

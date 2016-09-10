@@ -642,6 +642,115 @@ public class FakeInfoGenerator
 		}
 	}
 
+	public static void goodsOrderGenerator() throws NumberFormatException, IOException
+	{
+		try
+		{
+			List<String> list = new ArrayList<String>();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement("SELECT memberId FROM dbo.Member");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				String memberId = rs.getString("memberId");
+				list.add(memberId);
+
+			}
+
+			File file = new File("C:\\PaCueMo\\goodsorder.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			String str = "";
+
+			while ((str = br.readLine()) != null)
+			{
+				String str1 = "";
+				String[] strs = str.split(",");
+				for (int i = 0 ; i < strs.length ; i++)
+				{
+					if (i == strs.length - 1)
+					{
+						str1 = str1 + strs[i] + ";";
+					}
+					else if (i == 0)
+					{
+						String[] test = strs[i].split("\\(");
+						int x = Integer.parseInt(test[1].trim()) - 1;
+						str1 = test[0] + "(" + "'" + list.get(x) + "'" + ",";
+
+					}
+					else if (i == 1)
+					{
+						str1 = str1 + "\'" + GlobalService.encryptString(strs[i]) + "\'" + ",";
+						//System.out.println("ggg  " + GlobalService.encryptString(strs[i]));
+					}
+					else
+					{
+						str1 = str1 + strs[i] + ",";
+					}
+
+				}
+
+				System.out.println(str1);
+
+			}
+
+			br.close();
+
+			// Handle any driver errors
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
 	public static void clubmemberGenerator() throws NumberFormatException, IOException
 	{
 
@@ -975,12 +1084,13 @@ public class FakeInfoGenerator
 //		playercardGenerator();
 //		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
 //      club和league部分
-		clubGenerator();
+//		clubGenerator();
 
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
+		goodsOrderGenerator();
 
 //		generator.teamGenerator();
 //		teammemberGenerator();
