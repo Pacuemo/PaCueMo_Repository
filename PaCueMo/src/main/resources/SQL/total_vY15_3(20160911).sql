@@ -333,7 +333,7 @@ CREATE TABLE NBATeam
 -----對戰場次Table-----
 CREATE TABLE BattleSet
 (
-	battleId			/*對戰組合編號*/				int				PRIMARY KEY IDENTITY,
+	battleId				/*對戰組合編號*/				int				PRIMARY KEY IDENTITY,
     battleDateTime		/*對戰時間*/				dateTime		NOT NULL,
 	homeId		        /*主場隊伍編號*/			int				NOT NULL	 FOREIGN KEY REFERENCES NBATeam(teamId),
 	awayId		        /*客場隊伍編號*/			int				NOT NULL	 FOREIGN KEY REFERENCES NBATeam(teamId),
@@ -342,14 +342,14 @@ CREATE TABLE BattleSet
 	homebet	            /*主場隊伍下注總額*/		decimal(10, 2),
 	awaybet	            /*客場隊伍下注總額*/		decimal(10, 2)
 );
------賭博訂單Table-----
+-----賭博訂單交易紀錄Table-----
 CREATE TABLE GambleOrder
 (
     gambleId		/*下注編號*/				 int						IDENTITY		PRIMARY KEY,
 	memberId		/*會員編號*/				 UNIQUEIDENTIFIER			FOREIGN KEY     REFERENCES member(memberId),
 	battleId		/*對戰組合編號*/			 int						NOT NULL		FOREIGN KEY REFERENCES battleSet(battleId),
 	betMoney		/*下注金額*/				 decimal(10, 2)			NOT NULL,
-	betTeam			/*下注(主、客)隊*/     bit					CHECK(betTeam=0 OR betTeam=1) NOT NULL    -- (0)代表主隊, (1)代表客隊
+	betTeam		/*下注(主、客)隊*/		 int						CHECK(betTeam=0 OR betTeam=1) NOT NULL    -- (0)代表主隊, (1)代表客隊
 ); 
 
 ------代幣訂單Table-----
