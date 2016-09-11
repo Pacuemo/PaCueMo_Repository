@@ -19,7 +19,7 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	private static final String INSERT_STMT = "INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
 			+ "                                  VALUES   ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
 	private static final String GET_ALL_STMT = "SELECT orderId , memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay "
-			+ "                                     FROM GoodsOrder";
+			+ "                                     FROM GoodsOrder ORDER BY orderDateTime DESC";
 
 	private static final String DELETE_STMT = "DELETE FROM GoodsOrder WHERE orderId = ?";
 	private static final String GET_ONE_STMT = "SELECT orderId , memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay "
@@ -125,12 +125,12 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //		System.out.println("解密卡號 : " + GlobalService.decryptString(GlobalService.KEY, orderVO.getCardNum()));
 		//===========【測試】 getAll test =============
 //		GoodsOrderDAO dao = new GoodsOrderDAO();
-//		List<GoodsOrderVO> list = dao.getAll();
-//		for (GoodsOrderVO vvo : list)
-//		{
-//			System.out.println(vvo.getFullName() + "    " + vvo.getCardNum() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()) + "   " +
-//					vvo.getExpireYY() + " 年 " + vvo.getExpireMM() + "月   cvc " + vvo.getCvc() + "   " + vvo.getCoinQty());
-//		}
+		List<GoodsOrderVO> list = dao.getAll();
+		for (GoodsOrderVO vvo : list)
+		{
+			System.out.println(vvo.getFullName() + "    " + " 下訂時間 : " + vvo.getOrderDateTime() + " ___ " + vvo.getCardNum() + " 卡號解密: " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()) + "   " +
+					vvo.getExpireYY() + " 年 " + vvo.getExpireMM() + "月   cvc " + vvo.getCvc() + "   " + vvo.getCoinQty());
+		}
 		//=========== end of getAll test =============
 	}
 }
