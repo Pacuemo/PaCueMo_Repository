@@ -81,6 +81,8 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 				catch (NumberFormatException e)
 				{
 					System.out.println(" === GoodsOrder_Servlet.java ====  NTD 轉換數字失敗");
+					out.print("exception");
+					return;
 				}
 
 				Double coin = null;
@@ -91,6 +93,8 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 				catch (NumberFormatException e)
 				{
 					System.out.println(" === GoodsOrder_Servlet.java ====  coin 轉換數字失敗");
+					out.print("exception");
+					return;
 				}
 
 				java.sql.Timestamp bookingTime = null;
@@ -101,6 +105,8 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 				catch (IllegalArgumentException e)
 				{
 					System.out.println(" === GoodsOrder_Servlet.java ====  bookingTime 轉換 sql.Timestamp 失敗");
+					out.print("exception");
+					return;
 				}
 
 				System.out.println("============== 型態轉換後訂單資料： =============");
@@ -121,7 +127,8 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 				gdVO.setIsPay(ispay);
 				//goodsSvc.addGoodsOrder(vo);
 				buyPointsSvc.buyPoints(gdVO, memberVO, coin);
-				out.print("success");
+//				out.print("success");
+				out.print(memberVO.getMemberPoint());
 			}
 			catch (Exception e)// 其他可能錯誤處理
 			{

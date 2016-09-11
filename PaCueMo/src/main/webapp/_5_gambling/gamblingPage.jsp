@@ -1,4 +1,4 @@
-﻿<%@page import="java.util.List"%>
+﻿﻿<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -329,7 +329,7 @@
 	                			'class' : "btn btn-danger",
 	                			'click' : function()
 	                			 {
-	                				 alert('hi');	
+	                				 //alert('hi');	
 	                				 //alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
 	                				 //---
 	                				 $.ajax({
@@ -351,15 +351,29 @@
 	                             			 	  "homeCoins"  : $("#homeCoins").val()
 	                             		  },
 	                    				 "success":function(data){
-	                    					 	//alert("fuck " + data);
-	                    						$.notiny({/* notiny 特效*/
-                        	 	                    theme:'dark',
-                        	 	                    text: '下注成功！',
-                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
-                        	 	                    delay: 1200,
-                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
-                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
-                        	 					});
+												
+												switch(  $.trim(data)  ){
+													case 'shortage':
+														//alert(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
+														BootstrapAlert.alert({
+											                title: "Sorry!",
+											                message: " 餘額不足，請【儲值】或【減少下注金額】 !!! "
+											            });
+													  break;											
+													default:/*下注成功*/
+														alert("Session中會員剩餘點數 : " + data);
+			                    						$.notiny({/* notiny 特效*/
+		                        	 	                    theme:'dark',
+		                        	 	                    text: '下注成功！',
+		                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
+		                        	 	                    delay: 1200,
+		                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
+		                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
+		                        	 					});
+			                    						//【下注成功 → 修改右上方登入會員圖示的點數】
+		 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
+												     break;
+												}
 	                    				 }
 	                				 })
 	                				 //---
@@ -562,13 +576,28 @@
                         	 				},
                         	 				"success" : function(data){/* Servlet回應成功 */
                         	 					//alert('hello' + data );
-                        	 					BootstrapAlert.success({ //BootstrapAlert 特效
-                        	 			                title: "訂單成立!",
-                        	 			                message: "已為您儲值點數",
-                        	 			                hideTimeout: 1500,
-                        	 			                //parentClass: 'bootstrap-alert',
-                        	 			       			//innerClass:  'bootstrap-alert-message'
-                        	 			        });
+
+                        	 					switch(  $.trim(data)  ){
+													case 'exception':
+														//alert(" 下訂發生例外，請稍候 ");
+														BootstrapAlert.alert({
+											                title: "Sorry!",
+											                message: " 下訂發生例外，請稍候 "
+											            });
+													  break;											
+													default:/*下注成功*/
+														//alert("Session中會員剩餘點數 : " + data);
+														BootstrapAlert.warning({ //BootstrapAlert 特效
+		                        	 			                title: "訂單成立!",
+		                        	 			                message: "已為您儲值點數",
+		                        	 			                hideTimeout: 1500,
+		                        	 			                //parentClass: 'bootstrap-alert',
+		                        	 			       			//innerClass:  'bootstrap-alert-message'
+		                        	 			        });
+		                        	 					//【購買點數成功 → 修改右上方登入會員圖示的點數】
+		 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
+												     break;
+												}	         	 			        
                         	 				},
                         	 				"error" : function(){/* Servlet回應錯誤 */
                         	 					alert('下訂失敗');
@@ -807,7 +836,7 @@
 							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞開始 ==============*/
 							tableDiv.find('button').click(function(){
 								//================= 
-								alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
+								//alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
 								//=================	       
 									var battleId = $(this).prev('input').val(); // 呼叫<button>標籤前一個<input type='hidden'...的 value
 			       				
@@ -846,7 +875,8 @@
 				         				console.log("homeBet " 		+ homeBet);
 				         				console.log("awayId " 		+ awayId);
 				         				console.log("homeId " 		+ homeId);
-				      					  
+
+				      					/* 查詢成功→將資料塞到dialog*/  
 				      					$("#battleId_choosed").val(battleId);// input hidden
 				           				$("#awayId").val(awayId);// input hidden
 				           				$("#homeId").val(homeId);// input hidden
