@@ -3,12 +3,13 @@ package _52_nbateam_service;
 import java.util.List;
 
 import _9_52_nbateam_model.NBATeamDAO;
+import _9_52_nbateam_model.NBATeamDAO_interface;
 import _9_52_nbateam_model.NBATeamVO;
 
 // @Service(value = "nbaTeamService")
 public class NBATeamService
 {
-	private NBATeamDAO nbaTeamDAO;
+	private NBATeamDAO_interface nbaTeamDAO;
 
 	public NBATeamService()
 	{

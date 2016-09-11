@@ -2,23 +2,29 @@ package _9_53_goodsorder_model;
 
 public class GoodsOrderVO
 {
-	private int orderId;
+	private Integer orderId;
 	private String memberId;
 	private String cardNum;
 	private String fullName;
-	private String expire;
-	private Integer cvc;
+	private String expireMM;
+	private String expireYY;
+	private String cvc;
 	private Integer ntdQty;
-	private Integer coinQty;
+	private Double coinQty;
 	private java.sql.Timestamp orderDateTime;
 	private Boolean isPay;
 
-	public int getOrderId()
+	public GoodsOrderVO()
+	{
+
+	}
+
+	public Integer getOrderId()
 	{
 		return orderId;
 	}
 
-	public void setOrderId(int orderId)
+	public void setOrderId(Integer orderId)
 	{
 		this.orderId = orderId;
 	}
@@ -53,22 +59,32 @@ public class GoodsOrderVO
 		this.fullName = fullName;
 	}
 
-	public String getExpire()
+	public String getExpireMM()
 	{
-		return expire;
+		return expireMM;
 	}
 
-	public void setExpire(String expire)
+	public void setExpireMM(String expireMM)
 	{
-		this.expire = expire;
+		this.expireMM = expireMM;
 	}
 
-	public Integer getCvc()
+	public String getExpireYY()
+	{
+		return expireYY;
+	}
+
+	public void setExpireYY(String expireYY)
+	{
+		this.expireYY = expireYY;
+	}
+
+	public String getCvc()
 	{
 		return cvc;
 	}
 
-	public void setCvc(Integer cvc)
+	public void setCvc(String cvc)
 	{
 		this.cvc = cvc;
 	}
@@ -83,12 +99,12 @@ public class GoodsOrderVO
 		this.ntdQty = ntdQty;
 	}
 
-	public Integer getCoinQty()
+	public Double getCoinQty()
 	{
 		return coinQty;
 	}
 
-	public void setCoinQty(Integer coinQty)
+	public void setCoinQty(Double coinQty)
 	{
 		this.coinQty = coinQty;
 	}

@@ -44,11 +44,12 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
-		gamblingFacade = (GamblingFacade) context.getBean("gamblingFacade2");// _50_gambling_facade 注入
+		gamblingFacade = (GamblingFacade) context.getBean("gamblingFacade2");// _50_gambling_facade 注入→控管交易
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
 		doPost(request, response);
 	}
 
