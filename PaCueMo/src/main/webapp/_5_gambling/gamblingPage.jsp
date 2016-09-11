@@ -351,7 +351,7 @@
 	                             			 	  "homeCoins"  : $("#homeCoins").val()
 	                             		  },
 	                    				 "success":function(data){
-	                    					 	alert("fuck " + data);
+	                    					 	//alert("fuck " + data);
 	                    						$.notiny({/* notiny 特效*/
                         	 	                    theme:'dark',
                         	 	                    text: '下注成功！',
@@ -372,7 +372,7 @@
 		                			'class': "btn btn-primary",
 		                			'click' : function()
 		                			 {
-		                				 alert('結束');
+		                				 //alert('結束');
 		                				 // 關閉 dialog
 		                				 myDialog.dialog("close");
 		                			 }

@@ -8,6 +8,7 @@ import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 import _9_53_goodsorder_model.GoodsOrderVO;
 
+@Transactional
 public class GoodsOrderFacade
 {
 	private MemberDAO_interface_Spring memberDAO;
