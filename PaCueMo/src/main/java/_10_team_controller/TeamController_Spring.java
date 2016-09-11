@@ -49,7 +49,6 @@ public class TeamController_Spring
 	@RequestMapping(value = "/searchTeam_like", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String searchTeam_like(@RequestParam("teamName") String teamName)
 	{
-
 		return null;
 	}
 
@@ -74,6 +73,22 @@ public class TeamController_Spring
 
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "/createTeamPage")
+	public String createTeamPage(HttpSession session, HttpServletRequest request)
+	{
+		try
+		{
+			List teamList = teamService.getAll();
+			request.setAttribute("teamList", teamList);
+
+		}
+		catch (Exception e)
+		{
+
+		}
+		return "team/createteam";
 	}
 
 }

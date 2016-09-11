@@ -49,7 +49,8 @@
 			<h2 class="h2_tm">推薦隊伍</h2>
 			<table class="table table-hover ">
 				<tbody>
-					<tr><td class="text-success ">111</td></tr>
+<%-- 				<c:forEach items="${requestScope.teamList }"></c:forEach> --%>
+					<tr><td class="text-success "><div class="row">111<button type="button" class="btn btn-success btn-xs">加入</button></div></td></tr>
 				</tbody>
 			</table>
 		</div>
