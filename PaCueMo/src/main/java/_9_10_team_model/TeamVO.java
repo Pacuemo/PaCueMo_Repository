@@ -21,6 +21,22 @@ public class TeamVO implements java.io.Serializable
 	private String content;
 	private List<TeamMemberVO> teamMemberVOs;
 
+	public TeamVO()
+	{
+
+	}
+
+	public TeamVO(Integer teamId, String teamName, Date createDate, Integer teamProp, Double avgRank, String teamHead, String content)
+	{
+		this.teamId = teamId;
+		this.teamName = teamName;
+		this.createDate = createDate;
+		this.teamProp = teamProp;
+		this.avgRank = avgRank;
+		this.teamHead = teamHead;
+		this.content = content;
+	}
+
 	public Integer getTeamId()
 	{
 		return teamId;

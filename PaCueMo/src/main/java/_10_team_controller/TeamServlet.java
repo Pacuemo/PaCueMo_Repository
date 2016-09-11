@@ -45,33 +45,48 @@ public class TeamServlet extends HttpServlet
 	{
 		System.out.println("Go to TeamPage (GET)");	// 隊伍頁面
 		req.setCharacterEncoding("UTF-8");
-		TeamVO teamVO = null;
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
-		List<TeamMemberVO> teamMemberList = null;
-		PlayerCardVO playerCardVO = null;
 		BattleRecordService battleRecordService = null;
-		HttpSession session = null;
+		TeamVO teamVO = null;
 		MemberVO memberVO = null;
-		Integer teamId = 4;								//測試!!! TEST TEST TEST
-		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
+		PlayerCardVO playerCardVO = null;
+		HttpSession session = null;
+		List<TeamMemberVO> teamMemberList = null;
+		List<TeamVO> myTeamList = null;
+		Integer teamId = null;
+
+		//測試!!! TEST TEST TEST
+		if (req.getParameter("teamId") == null)
+		{
+			teamId = 4;
+			System.out.println("Can't get teamId");
+		}
+		else
+		{
+			teamId = Integer.valueOf(req.getParameter("teamId"));
+		}//測試!!! TEST TEST TEST
+
+		if (null != req.getParameter("teamId")) //測試!!! TEST TEST TEST
 		{
 			try
 			{
 				session = req.getSession();
 				memberVO = (MemberVO) session.getAttribute("LoginOK");
-//				teamId = Integer.valueOf(req.getParameter("teamId"));
+				teamId = Integer.valueOf(req.getParameter("teamId"));
 				teamService = context.getBean(TeamService.class);
 				battleRecordService = context.getBean(BattleRecordService.class);
 				teamMemberService = context.getBean(TeamMemberService.class);
 				Double attendancePercent = null;
 				Double teamWPCT = null;
+				String memberId = memberVO.getMemberId();
 				try
 				{
 					attendancePercent = battleRecordService.getAttendancePercent(teamId);
 				}
 				catch (Exception e)
 				{
+					System.out.println("attendancePercent no data!");
 					attendancePercent = 0.0;
 				}
 				try
@@ -80,6 +95,7 @@ public class TeamServlet extends HttpServlet
 				}
 				catch (Exception e)
 				{
+					System.out.println("teamWPCT no data!");
 					teamWPCT = 0.0;
 				}
 				teamVO = teamService.getOne(teamId);
@@ -88,15 +104,21 @@ public class TeamServlet extends HttpServlet
 				req.setAttribute("teamWPCT", teamWPCT);							//setAtt
 				teamMemberList = teamMemberService.getOneTeam(teamId);
 
-				playerCardVO = new PlayerCardVO();
-				for (TeamMemberVO list : teamMemberList)
+				myTeamList = teamService.getMyTeamList(memberId);
+				for (TeamVO list : myTeamList)
 				{
-
-					if (list.getTeamMemberId() == memberVO.getMemberId())
+					if (list.getTeamId() == teamId)
 					{
-						req.setAttribute("teamExsist", "Exsist");								//setAtt
+						req.setAttribute("teamExsist", "Exsist");				//setAtt
 					}
 				}
+//				Need to get average rank
+//				playerCardVO = new PlayerCardVO();
+//				for (TeamMemberVO list : teamMemberList)
+//				{
+//
+//				}
+
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");
 				System.out.println("-------------------------------------------------------");
@@ -110,6 +132,7 @@ public class TeamServlet extends HttpServlet
 		else
 		{
 			System.out.println("You don't have any Team");
+			System.out.println("This code will never run");
 			req.getRequestDispatcher("/WEB-INF/team/createteam.jsp").forward(req, resp);
 			return;
 		}

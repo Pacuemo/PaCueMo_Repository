@@ -156,39 +156,40 @@ height: 233px;
 			</div>
 
 			<!-- Person Details -->
-			<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0" >
-			<div class="col-sm-2 person-details margin-bottom-30 fadeIn animated">
-				<figure>
-				<c:choose>
-					<c:when test="${list.memberVO.memberImgUrl != null}">
-						<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
-					</c:when>
-					<c:otherwise>
-						<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
-					</c:otherwise>
-				</c:choose>
-					<figcaption>
-						<h3 class="margin-top-10 margin-bottom-10">
-							${list.memberVO.memberFirstName } <small>- Programmer</small>
-						</h3>
-						<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
-					</figcaption>
-					<ul class="list-inline person-details-icons">
-						<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-						</a></li>
-						<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-						</a></li>
-					</ul>
-				</figure>
+			<div class="col-sm-10 animate fadeInLeft animated">
+				<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0" >
+				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
+					<figure>
+					<c:choose>
+						<c:when test="${list.memberVO.memberImgUrl != null}">
+							<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
+						</c:when>
+						<c:otherwise>
+							<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+						</c:otherwise>
+					</c:choose>
+						<figcaption>
+							<h3 class="margin-top-10 margin-bottom-10">
+								${list.memberVO.memberFirstName } <small>- Programmer</small>
+							</h3>
+							<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
+						</figcaption>
+						<ul class="list-inline person-details-icons">
+							<li><a href="#"> <i class="fa-lg fa-twitter"></i>
+							</a></li>
+							<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
+							</a></li>
+							<li><a href="#"> <i class="fa-lg fa-facebook"></i>
+							</a></li>
+							<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
+							</a></li>
+							<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
+							</a></li>
+						</ul>
+					</figure>
+				</div>
+				</c:forEach>
 			</div>
-			</c:forEach>
-			
 
 
 		</div>
@@ -250,11 +251,8 @@ $(function (){
 			"error":function(Error){
 				alert("fuck");
 				console.log(Error);
-			}		
+			}
 		})
-		.always(function (){
-			$(this).css("color","white");
-		});
 	}) // joinTeam End
 	
 	

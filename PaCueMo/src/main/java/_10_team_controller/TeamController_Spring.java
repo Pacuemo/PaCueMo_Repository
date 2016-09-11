@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
+import _9_10_team_model.TeamVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -29,7 +30,7 @@ public class TeamController_Spring
 	@ResponseBody
 	public String joinTeam(HttpServletRequest request, Integer teamId, String memberId)
 	{
-		System.out.println("Team_Controller : joinTeam");
+		System.out.println("Team_Controller : joinTeamPage");
 		try
 		{
 			teamMemberService.add(teamId, memberId);
@@ -78,17 +79,23 @@ public class TeamController_Spring
 	@RequestMapping(value = "/createTeamPage")
 	public String createTeamPage(HttpSession session, HttpServletRequest request)
 	{
+		MemberVO memberVO = null;
 		try
 		{
-			List teamList = teamService.getAll();
-			request.setAttribute("teamList", teamList);
-
+			memberVO = (MemberVO) session.getAttribute("LoginOK");
+			List<TeamVO> otherList = teamService.getOtherTeamList(memberVO.getMemberId());
+			request.setAttribute("otherList", otherList);
+			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+			request.setAttribute("myList", myList);
+			return "team/createteam";
 		}
 		catch (Exception e)
 		{
-
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "";
 		}
-		return "team/createteam";
+
 	}
 
 }
