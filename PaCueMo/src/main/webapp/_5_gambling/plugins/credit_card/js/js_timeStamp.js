@@ -21,6 +21,14 @@ function timeStamp() {
 		// If hour is 0, set it to 12  //-------------------------  12小時制
 //		  time[0] = time[0] || 12;
 
+		  //月份、日期→小於10補"0"
+		  for(var j=1 ; j<=2 ; j++){
+			  if( date[j] < 10 )
+			  {
+				  date[j] = "0" + date[j];
+			  }
+		  }
+
 		// If seconds and minutes are less than 10, add a zero
 		  for ( var i = 1; i < 3; i++ ) {
 		    if ( time[i] < 10 ) {

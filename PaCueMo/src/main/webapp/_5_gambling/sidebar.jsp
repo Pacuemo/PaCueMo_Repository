@@ -1,4 +1,4 @@
-﻿<div class="container-fluid"> 
+﻿<div id="sidebar" class="container-fluid"> 
  <nav class="navbar1 navbar-inverse easy-sidebar">
   <div class="container-fluid"> 
     <!-- Brand and toggle get grouped for better mobile display -->
