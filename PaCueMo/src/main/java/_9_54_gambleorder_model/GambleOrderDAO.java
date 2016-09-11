@@ -118,12 +118,12 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 //		GambleOrderVO vvvo = dao.findByPrimaryKey(35);
 //		System.out.println(String.format("%1s %40s %5s %10s %10s", vvvo.getGambleId(), vvvo.getMemberId(), vvvo.getBattleId(), vvvo.getBetMoney(), vvvo.getBetTeam()));
 		//=============== 測試getAll() ================
-//		List<GambleOrderVO> list = dao.getAll();
-//		for (GambleOrderVO vo : list)
-//		{
-//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
-//			System.out.println(tmp);
-//		}
+		List<GambleOrderVO> list = dao.getAll();
+		for (GambleOrderVO vo : list)
+		{
+			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
+			System.out.println(tmp);
+		}
 //		((ConfigurableApplicationContext) context).close();
 	}
 
