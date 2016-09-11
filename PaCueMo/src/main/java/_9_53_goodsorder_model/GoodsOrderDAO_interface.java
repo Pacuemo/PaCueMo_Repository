@@ -14,4 +14,6 @@ public interface GoodsOrderDAO_interface
 
 	public List<GoodsOrderVO> getAll();
 
+	public List<GoodsOrderVO> findByMemberId(String membId);
+
 }

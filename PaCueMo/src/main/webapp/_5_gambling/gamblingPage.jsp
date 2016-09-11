@@ -1,4 +1,4 @@
-﻿<%@page import="java.util.List"%>
+﻿﻿<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -18,9 +18,12 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
-     
-<!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+   
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+	 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
+	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP -->
+     
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
 	<style type="text/css">
@@ -166,44 +169,60 @@
 	            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	        </form>
     	</div>
+    	<!-- ***************************【下注 dialog 結束】***************************** -->
     	<!-- ====================================================================== -->
 		<!-- ==================【 購買點數 - 信用卡 dialog 開始】================== -->
 		<!-- ====================================================================== -->
 		<div id="dialog-card" title="購買點數">
 	            <div class="card-wrapper"></div>
-	            <form id="credit_card" action="">
-	                  <div class="form-group">
-						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">卡 號</label>
-						  <input placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354"/>
+	            <form action="">
+	                  <div class="form-group has-success has-feedback">
+						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:800;color:orange;">卡 號</label>
+						  <input id="cardnumber" placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" style="color:BLUE;font-weight:800;"/>
+					      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+            			  <span class="sr-only">(error)</span>
+					  
 					  </div>
-	                  <div class="form-group">
-						  <label class="control-label" for="name" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">姓 名</label>
-						  <input placeholder="Full name" type="text" name="name" class="form-control" value="科比布萊恩"/>
+	                  <div class="form-group has-success has-feedback">
+						  <label class="control-label" for="fullname" style="font-family:'微軟正黑體';font-weight:800;color:orange;">姓 名</label>
+						  <input id="fullname" placeholder="Full name" type="text" name="name" class="form-control" value="科比布萊恩" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
+					 	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+            			  <span class="sr-only">(error)</span>
 					  </div>
-	                  <div class="form-group">
-						  <label class="control-label" for="expiry" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;">期 限</label>
-						  <input placeholder="MM/YYYY" type="text" name="expiry" class="form-control" value="07/2018"/>
+					
+					  <div class="row">
+		                  <div class="form-group col-xs-6">
+							  <label class="control-label" for="expire_mm" style="font-family:'微軟正黑體';font-weight:800;color:orange;">期 限(月)</label>
+							  <select id="expire_mm" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"></select>		  
+						  </div>
+						  <div class="form-group col-xs-6">
+							  <label class="control-label" for="expire_yy" style="font-family:'微軟正黑體';font-weight:800;color:orange;">期 限(西元年)</label>
+							  <select id="expire_yy" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"></select>   
+						  </div>
+					  </div>	
+					  <div class="form-group has-success has-feedback">
+						  <label class="control-label" for="cvc" style="font-family:'微軟正黑體';font-weight:800;color:orange;" >代 碼(CVC)</label>
+						  <input id="cvc" placeholder="CVC" type="text" name="cvc" class="form-control" value="346" pattern=".{3,}" style="color:BLUE;font-weight:800;"/>
+					  	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+            			  <span class="sr-only">(error)</span>
 					  </div>
-					  <div class="form-group">
-						  <label class="control-label" for="cvc" style="font-family:'微軟正黑體';font-weight:bolder;color:orange;" >代 碼</label>
-						  <input placeholder="CVC" type="text" name="cvc" class="form-control" value="346" pattern=".{3,}"/>
+					 <div class="form-group has-success has-feedback col-xs-6">
+						  <label class="control-label" for="NTD" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px">購買金額 (1 NT$ : 100 P)</label>
+						  <input id="NTD" placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990" style="color:BLUE;font-weight:800;"/>
+					  	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px;"></span>
+            			  <span class="sr-only">(error)</span>
 					  </div>
-					 <div class="form-group col-xs-6">
-						  <label class="control-label" for="NTD" style="font-family:'微軟正黑體';font-weight:bolder;color:#00CACA;font-size:10px">購買金額 (1 NT$ : 100 P)</label>
-						  <input placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990"/>
-					  </div>
-					   <div class="form-group col-xs-6">
-						  <label class="control-label" for="coin" style="font-family:'微軟正黑體';font-weight:bolder;color:#00CACA;font-size:10px;">代幣數量</label>
-						  <input placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" value="99000" style="color:red;"/>
+					  <div class="form-group col-xs-6">
+						  <label class="control-label" for="coin" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px;">代幣數量</label>
+						  <input id="coin" placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" value="99000" style="color:DARKGREEN;font-weight:800;"/>
 					  </div>
 	            </form>
 	    </div>
+	   <!-- ***************************【 購買點數 - 信用卡 dialog 結束】***************************** -->
 
-		<!-- ***************************【下注 dialog 結束】***************************** -->
-		
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
        <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script> 
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/js/jquery.paginate.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/js/zebra_datepicker.js"></script>
@@ -211,7 +230,8 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/js/notiny.min.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/jquery.card.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
-  
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -219,8 +239,7 @@
             var myDialog , cardDialog;
             //alert( funFlag );
             
-       		$(function(){
-       			
+       		$(function(){       
        			/* ================ 【下注 開始】 ================= */
        			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
@@ -310,7 +329,7 @@
 	                			'class' : "btn btn-danger",
 	                			'click' : function()
 	                			 {
-	                				 alert('hi');	
+	                				 //alert('hi');	
 	                				 //alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
 	                				 //---
 	                				 $.ajax({
@@ -332,15 +351,29 @@
 	                             			 	  "homeCoins"  : $("#homeCoins").val()
 	                             		  },
 	                    				 "success":function(data){
-	                    					 	alert("fuck " + data);
-	                    						$.notiny({/* notiny 特效*/
-                        	 	                    theme:'dark',
-                        	 	                    text: '下注成功！',
-                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
-                        	 	                    delay: 1200,
-                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
-                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
-                        	 					});
+												
+												switch(  $.trim(data)  ){
+													case 'shortage':
+														//alert(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
+														BootstrapAlert.alert({
+											                title: "Sorry!",
+											                message: " 餘額不足，請【儲值】或【減少下注金額】 !!! "
+											            });
+													  break;											
+													default:/*下注成功*/
+														alert("Session中會員剩餘點數 : " + data);
+			                    						$.notiny({/* notiny 特效*/
+		                        	 	                    theme:'dark',
+		                        	 	                    text: '下注成功！',
+		                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
+		                        	 	                    delay: 1200,
+		                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
+		                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
+		                        	 					});
+			                    						//【下注成功 → 修改右上方登入會員圖示的點數】
+		 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
+												     break;
+												}
 	                    				 }
 	                				 })
 	                				 //---
@@ -353,7 +386,7 @@
 		                			'class': "btn btn-primary",
 		                			'click' : function()
 		                			 {
-		                				 alert('結束');
+		                				 //alert('結束');
 		                				 // 關閉 dialog
 		                				 myDialog.dialog("close");
 		                			 }
@@ -369,66 +402,202 @@
 	                event.preventDefault();
 	            });
        			/* ================ 【下注 Dialog 結束】 ================= */
+       			/* ======== 【購買代幣按鈕】 ======= */
+       			$("#buyCoin").click(function(){
+       				cardDialog.dialog('open');
+       			})
+       			/* ======== 【購買代幣按鈕】 ======= */
+       			/*=====================【信用卡textBox驗證 開始】=====================*/
+       			var falgNumber=true , flagName=true , flagCvc=true , falgNtd=true;
+       			
+       			var isAllFilled = function(){// 檢查所有欄位是否都填入
+       				return falgNumber && flagName && flagCvc && falgNtd ;
+       			}
+  				$("#cardnumber").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						falgNumber = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						falgNumber = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				$("#fullname").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						flagName = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						flagName = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				$("#cvc").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						flagCvc = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						flagCvc = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				$("#NTD").click(function(){$(this).val("")}).blur(function(){
+  					if($(this).val()==""){
+						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
+						$(this).parent('div').switchClass('has-success','has-error');
+						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
+						falgNtd = false;
+					}
+  					else{
+  						$(this).css({'color':'blue' , 'font-style':'normal'});
+  						$(this).parent('div').switchClass('has-error','has-success');
+  						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
+  						falgNtd = true;
+  					}
+  					if(isAllFilled()){
+                		$("#confirm").attr("disabled",false);
+                	}else{
+                		$("#confirm").attr("disabled",true);
+                	}
+  				})
+  				/*=====================【信用卡textBox驗證 結束】=====================*/
+       			
+       			
        			/* ================ 【信用卡 Dialog 開始】 ======================= */
 				var formCard;
 	       		cardDialog = $("#dialog-card").dialog({
-	                autoOpen: false,
-	                show : { effect :'fold' , duration: 1000 },
-	                hide : { effect :'blind', duration: 500 },
-	                height: 815,
-	                width: 500,
-	                modal: true,
-	                resizable: false,
-	                //position: { my: "center", at: "center" ,of: window }, /* dialog 起始彈出位置 */
-	                 position:{my:"left top",at:"left top", of: $("#sidebar")},
+	                'autoOpen': false,
+	                'show' : { effect :'fold' , duration: 1000 },
+	                'hide' : { effect :'blind', duration: 500 },
+	                'height': 815,
+	                'width': 500,
+	                'modal': true,
+	                'resizable': false,
+	                'open': function(){
+	                	var text_mm = $(this).find("select[id='expire_mm']"); //月份下拉選單
+	                	var text_yy = $(this).find("select[id='expire_yy']"); //年份下拉選單
+	                	text_mm.children('option').remove();// -- 移除舊有的 <option> 標籤
+	                	text_yy.children('option').remove();// -- 移除舊有的 <option> 標籤
+	                	for(var mm = 1 ; mm <= 12 ; mm++){
+	                		if(mm < 10){
+	                			mm = "0" + mm; // >10月,補"0"
+	                		}
+	                		var tmp = $("<option></option>").val(mm).text(mm);
+	                		text_mm.append(tmp);
+	                	}
+	                	for(var yy = 2017 ; yy <= 2027 ; yy++){
+	                		var tmp = $("<option></option>").val(yy).text(yy);
+	                		text_yy.append(tmp);
+	                	}
+	                	if(isAllFilled()){// 檢察dialog欄位是否都輸入
+	                		//$("#confirm").attr("disabled",false);
+	                		$(this).next('div').find('button').attr("disabled",false);
+	                		//alert($(this).next('div').find('button').prop('id'));   // confirm button
+	                	}else{
+	                		//$("#confirm").attr("disabled",true);
+	                		$(this).next('div').find('button').attr("disabled",true); // confirm button
+	                		//alert($(this).next('div').find('button').prop('id'));
+	                	}
+	                },
+	              //position: { my: "center", at: "center" ,of: window }, /* dialog 起始彈出位置 */
+	                position:{my:"left top",at:"left top", of: $("#sidebar")},
 	                buttons:[
 	                          {
-                            	"text"   : "確認購買",
-                        	 	'class' : "btn btn-primary",
+                           //"disabled" : true , 
+                            	   "id" : "confirm",
+	                        	 "text" : "確認購買",
+                        	 	"class" : "btn btn-primary",
                         	 	"click" : function (){
                         	 		   //alert($(this).prop('tagName') +" 確認" );
                         	 		    var cardNum  = $("input[placeholder='Card number']").val();
                         	 		    var fullName = $("input[placeholder='Full name']").val();
-                        	 		    var expire   = $("input[placeholder='MM/YYYY']").val();
+                        	 		    var expireMM = $("#expire_mm").val();
+                        	 		    var expireYY = $("#expire_yy").val();
                         	 		    var cvc      = $("input[placeholder='CVC']").val();
                         	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
                         	 		    var coin     = $("input[placeholder='代幣數量']").val();
                         	 		    var bookingTime = timeStamp();
-                        	 		    alert(bookingTime);
+                        	 		    //alert(bookingTime);
                         	 			//======================================================
                         	 			//==============【傳送信用卡資訊到servlet】=============
                         	 			//======================================================	
-                        	 				console.log(cardNum);
-                        	 				console.log(fullName);
-                        	 				console.log(expire);
-                        	 				console.log(cvc);
-                        	 				console.log(ntd);
-                        	 				console.log(coin);
-                        	 				console.log(bookingTime);
+                        	 				//alert($('#confirm').prop('id'));
+                        	 				console.log('cardNum  '     + cardNum);
+                        	 				console.log('fullName  '    + fullName);
+                        	 				console.log('expireMM  '    + expireMM);
+                        	 				console.log('expireYY  '    + expireYY);
+                        	 				console.log('cvc  '         + cvc);
+                        	 				console.log('ntd  '         + ntd);
+                        	 				console.log('coin  '        + coin);
+                        	 				console.log('bookingTime  ' + bookingTime);
                         	 			$.ajax({
-                        	 				"type" : "post",                        	 				
-                        	 				"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'GoodsOrder_Servlet.do',
+                        	 				"type" : "POST",                        	 				
+                        	 				"url"  :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'GoodsOrder_Ajax_Servlet.do',
+                        	 				"dataType":"text",//Servlet回傳格式
                         	 				"data" : { 
-                        	 						   'action'     :  'buyCoins'   , 
-                        	 						   'cardNum'    :   cardNum    ,
-                        	 						   'fullName'   :   fullName   ,
-                        	 						   'expire'     :   expire     ,
-                        	 						   'cvc'        :   cvc        ,
-                        	 						   'NTD'        :   ntd        ,
-                        	 						   'coin'        :  coin        ,
-                        	 						   'bookingTime' :  bookingTime   //下訂時間(call from js_timestamp.js)
+                        	 						   'action'      :  'buyCoins'  , 
+                        	 						   'cardNum'     :   cardNum    ,
+                        	 						   'fullName'    :   fullName   ,
+                        	 						   'expireMM'    :   expireMM   ,
+                        	 						   'expireYY'    :   expireYY   ,
+                        	 						   'cvc'         :   cvc        ,
+                        	 						   'ntd'         :   ntd        ,
+                        	 						   'coin'        :   coin       ,
+                        	 						   'bookingTime' :   bookingTime   //下訂時間(call from js_timestamp.js)
                         	 				},
-                    
-                        	 				"success" : function(){/* Servlet回應成功 */
-                        	 					alert('hello');
-                        	 					$.notiny({/* notiny 特效*/
-                        	 	                    theme:'dark',
-                        	 	                    text: '訂單成立！',
-                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
-                        	 	                    delay: 1200,
-                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
-                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
-                        	 					});
+                        	 				"success" : function(data){/* Servlet回應成功 */
+                        	 					//alert('hello' + data );
+
+                        	 					switch(  $.trim(data)  ){
+													case 'exception':
+														//alert(" 下訂發生例外，請稍候 ");
+														BootstrapAlert.alert({
+											                title: "Sorry!",
+											                message: " 下訂發生例外，請稍候 "
+											            });
+													  break;											
+													default:/*下注成功*/
+														//alert("Session中會員剩餘點數 : " + data);
+														BootstrapAlert.warning({ //BootstrapAlert 特效
+		                        	 			                title: "訂單成立!",
+		                        	 			                message: "已為您儲值點數",
+		                        	 			                hideTimeout: 1500,
+		                        	 			                //parentClass: 'bootstrap-alert',
+		                        	 			       			//innerClass:  'bootstrap-alert-message'
+		                        	 			        });
+		                        	 					//【購買點數成功 → 修改右上方登入會員圖示的點數】
+		 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
+												     break;
+												}	         	 			        
                         	 				},
                         	 				"error" : function(){/* Servlet回應錯誤 */
                         	 					alert('下訂失敗');
@@ -667,7 +836,7 @@
 							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞開始 ==============*/
 							tableDiv.find('button').click(function(){
 								//================= 
-								alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
+								//alert("battleSetId = " + $(this).prev('input').val()); /* $(this)此時為<button> */
 								//=================	       
 									var battleId = $(this).prev('input').val(); // 呼叫<button>標籤前一個<input type='hidden'...的 value
 			       				
@@ -706,7 +875,8 @@
 				         				console.log("homeBet " 		+ homeBet);
 				         				console.log("awayId " 		+ awayId);
 				         				console.log("homeId " 		+ homeId);
-				      					  
+
+				      					/* 查詢成功→將資料塞到dialog*/  
 				      					$("#battleId_choosed").val(battleId);// input hidden
 				           				$("#awayId").val(awayId);// input hidden
 				           				$("#homeId").val(homeId);// input hidden

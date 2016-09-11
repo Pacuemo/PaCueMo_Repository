@@ -21,7 +21,7 @@
           <li><a href="#">One more separated link</a></li>
         </ul>
       </li>
-      <li><a id="buyCoin" style="font-family:微軟正黑體;color:red;" onclick="cardDialog.dialog('open');">購買代幣</a></li>
+      <li><a id="buyCoin" style="font-family:微軟正黑體;color:red;">購買代幣</a></li>
     </ul>
 
     <!-- 搜尋 開始 -->

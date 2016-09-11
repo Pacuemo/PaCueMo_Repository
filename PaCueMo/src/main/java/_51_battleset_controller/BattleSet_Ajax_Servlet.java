@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
+import _9_41_member_model.MemberDAO_Spring;
+import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 import _9_51_battleset_model.BattleSetVO;
 
@@ -33,6 +35,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 	private AnnotationConfigWebApplicationContext context;
 	private BattleSetService svc;
 	private GamblingFacade gamblingFacade;
+	private MemberDAO_interface_Spring mbDAO;
 
 	@Override
 	public void init() throws ServletException
@@ -44,11 +47,13 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 		context.register(GamblingFacade_Config.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
-		gamblingFacade = (GamblingFacade) context.getBean("gamblingFacade2");// _50_gambling_facade 注入
+		mbDAO = (MemberDAO_Spring) context.getBean("MemberDAO");
+		gamblingFacade = (GamblingFacade) context.getBean("gamblingFacade2");// _50_gambling_facade 注入→控管交易
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
 		doPost(request, response);
 	}
 
@@ -304,7 +309,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
-		/*******************/
+
 		// ************************************************************************************************
 		// **********************【BattleSetId 查詢 場次 及 nbaTeam 物件】*********************************
 		// ************************************************************************************************
@@ -354,7 +359,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
-		/*******************/
+
 		// ************************************************************************************************
 		// ***********************【會員﹝下注後更新﹞battleSetVO 、memberVO資料】*************************
 		// ************************************************************************************************
@@ -504,7 +509,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				Double pocket = memberVO.getMemberPoint();
 				if (pocket - (awayCoins + homeCoins) < 0)
 				{
-					out.println(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
+					out.println("shortage");/* 餘額不足 */
 					return;// 直接返回前頁
 				}
 
@@ -522,7 +527,9 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 //				// *************************
 //				// ********【Ajax】*********
 //				// *************************
-				out.println(" 回送資料成功!! ");
+				System.out.println("下注後Session會員剩餘點數 :  " + memberVO.getMemberPoint());
+//				out.println(" 回送資料成功!! ");
+				out.println(memberVO.getMemberPoint());
 				/*************************** 其他可能的錯誤處理 *************************************/
 			}
 			catch (Exception e)//---處理其他不可預期意外
@@ -534,6 +541,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 			}
 
 		}
+
 	}
 
 }
