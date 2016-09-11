@@ -22,6 +22,8 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 	private static final String INSERT_STMT = "INSERT INTO dbo.GambleOrder ( memberId, battleId, betMoney, betTeam ) VALUES( ?, ?, ? , ? )";
 	private static final String DELETE_STMT = "DELETE FROM GambleOrder WHERE gambleId = ?";
 	private static final String UPDATE_STMT = "UPDATE GambleOrder SET memberId=? , battleId=? , betMoney=? ,betTeam=? WHERE gambleId = ?;";
+	private static final String GET_BY_MB_ID = "SELECT gambleId,memberId,battleId,betMoney,betTeam FROM GambleOrder WHERE memberid = ?";
+	private static final String GET_BY_BATTLE_ID = "SELECT gambleId,memberId,battleId,betMoney,betTeam FROM GambleOrder WHERE battleId = ?";
 
 	public GambleOrderDAO()
 	{
@@ -75,6 +77,16 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 		return JdbcTemplate.query(GET_ALL_STMT, new GambleOrderRowmapper());
 	}
 
+	public List<GambleOrderVO> getByMemberId(String memberId)
+	{
+		return JdbcTemplate.query(GET_BY_MB_ID, new GambleOrderRowmapper(), memberId);
+	}
+
+	public List<GambleOrderVO> getBybattleId(Integer battleId)
+	{
+		return JdbcTemplate.query(GET_BY_BATTLE_ID, new GambleOrderRowmapper(), battleId);
+	}
+
 	private static final class GambleOrderRowmapper implements RowMapper<GambleOrderVO>
 	{
 
@@ -105,7 +117,6 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 //		System.out.println(dao.insert(vvo));
 		//=============== 測試delete() ================
 //		dao.delete(42);
-
 		//=============== 測試 UPDATE ================
 //		GambleOrderVO vvo = new GambleOrderVO();
 //		vvo.setGambleId(35);
@@ -118,12 +129,26 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 //		GambleOrderVO vvvo = dao.findByPrimaryKey(35);
 //		System.out.println(String.format("%1s %40s %5s %10s %10s", vvvo.getGambleId(), vvvo.getMemberId(), vvvo.getBattleId(), vvvo.getBetMoney(), vvvo.getBetTeam()));
 		//=============== 測試getAll() ================
-		List<GambleOrderVO> list = dao.getAll();
-		for (GambleOrderVO vo : list)
-		{
-			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
-			System.out.println(tmp);
-		}
+//		List<GambleOrderVO> list = dao.getAll();
+//		for (GambleOrderVO vo : list)
+//		{
+//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
+//			System.out.println(tmp);
+//		}
+		//=============== 測試 getByMemberId(String memberId) ================
+//		List<GambleOrderVO> list = dao.getByMemberId("84CBDD6A-70CF-4D8F-B119-05958F3B930E");
+//		for (GambleOrderVO vo : list)
+//		{
+//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
+//			System.out.println(tmp);
+//		}
+		//=============== 測試 getByBattleId(Integer battleId) ================		
+//		List<GambleOrderVO> list = dao.getBybattleId(1);
+//		for (GambleOrderVO vo : list)
+//		{
+//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
+//			System.out.println(tmp);
+//		}
 //		((ConfigurableApplicationContext) context).close();
 	}
 
