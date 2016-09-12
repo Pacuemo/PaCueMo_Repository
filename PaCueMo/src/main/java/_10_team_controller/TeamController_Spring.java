@@ -29,6 +29,7 @@ public class TeamController_Spring
 	@RequestMapping(value = "/joinTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
 	public String joinTeam(HttpServletRequest request, HttpSession session, Integer btn_join, String page)
 	{
+		System.out.println("Team_Controller : joinTeam");
 		try
 		{
 			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
@@ -148,6 +149,7 @@ public class TeamController_Spring
 	@RequestMapping(value = "/createTeamPage")
 	public String createTeamPage(HttpSession session, HttpServletRequest request)
 	{
+		System.out.println("Team_Controller : getcreateTeamPage");
 		MemberVO memberVO = null;
 		try
 		{
@@ -159,6 +161,8 @@ public class TeamController_Spring
 			List<Integer> mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberVO.getMemberId());
 			request.setAttribute("mineTeamIdList", mineTeamIdList);
 
+			System.out.println("成功導入");
+			System.out.println("-------------------------------------------------------");
 			return "team/createteam";
 		}
 		catch (Exception e)

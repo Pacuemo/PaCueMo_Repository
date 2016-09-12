@@ -45,25 +45,16 @@ color:white;
 	<div class="row">
 		<div class="col-md-6">
 			<h2 class="h2_tm">您的隊伍：</h2>
-			<c:forEach var="my_list" items="${requestScope.myList }">
+			<c:forEach var="my_list" items="${requestScope.mineTeamVOList }">
 				<div class="row left_div">
 					<div class="col-md-6">
 						<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${my_list.teamId}" class="left_20">${my_list.teamName}</a>
-						<br>
 					</div>
 					<div class="col-md-6">
-						
-						<c:forEach var="mineTeamId" items="${requestScope.mineTeamIdList }">
-							<c:choose>
-								<c:when test="${my_list.teamId == mineTeamId}">
-									<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-										<button type="submit" class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }">解散</button>
-										<input type="hidden" name="page" value="first">
-										<c:set var="flag" value="Y"></c:set>
-									</form>
-								</c:when>
-							</c:choose>
-						</c:forEach>
+						<form action="${pageContext.request.contextPath}/spring/" method="get"> 
+							<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${my_list.teamId }">發出約戰</button>
+							<input type="hidden" name="page" value="first">
+						</form>
 					</div>
 				</div>
 			</c:forEach>

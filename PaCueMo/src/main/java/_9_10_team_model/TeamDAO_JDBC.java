@@ -642,4 +642,11 @@ public class TeamDAO_JDBC implements TeamDAO_interface
 					rs.getDouble("avgRank"), rs.getString("teamHead"), rs.getString("content"));
 		}
 	}
+
+	@Override
+	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1093,7 +1093,7 @@ public class FakeInfoGenerator
 		goodsOrderGenerator();
 
 //		generator.teamGenerator();
-		teammemberGenerator();
+//		teammemberGenerator();
 
 	}
 }

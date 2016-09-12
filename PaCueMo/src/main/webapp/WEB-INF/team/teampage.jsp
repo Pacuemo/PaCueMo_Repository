@@ -59,7 +59,6 @@ p.tempstyle {
 	left: 0;
 	padding: 0px 0;
 	width: 220px;
-	height: 40px;
 	background: #0D6;
 	border: 1px solid #0D6;
 	color: #FFF;
@@ -148,8 +147,8 @@ padding-left: 20px;
 				<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
 				<c:choose>
 					<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
-					<form action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs left_20 margin_left20" name="btn_join" value="${requestScope.teamVO.teamId }" >
+					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${requestScope.teamVO.teamId }" >
 							<c:choose>			
 								<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
 								<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
@@ -160,14 +159,14 @@ padding-left: 20px;
 					</form>
 					</c:when>
 					<c:when test="${requestScope.teamExsist == 'Mine'}">
-					<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs left_20 " name="btn_disband" value="${requestScope.teamVO.teamId }" >解散隊伍</button>
+					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }" >解散隊伍</button>
 						<input type="hidden" name="page" value="main">
 					</form>
 					</c:when>
 					<c:when test="${requestScope.teamExsist == 'Exsist'}">
-					<form action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs left_20 " name="btn_abort" value="${requestScope.teamVO.teamId }" >退出隊伍</button>
+					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs" name="btn_abort" value="${requestScope.teamVO.teamId }" >退出隊伍</button>
 						<input type="hidden" name="page" value="main">
 					</form>
 					</c:when>

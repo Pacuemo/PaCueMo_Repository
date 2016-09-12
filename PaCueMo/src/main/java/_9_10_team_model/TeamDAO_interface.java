@@ -31,4 +31,6 @@ public interface TeamDAO_interface
 
 	List<TeamVO> getMy(String teamMemberId);
 
+	List<TeamVO> find_TeamVO_With_TeamHead(String teamHead);
+
 }

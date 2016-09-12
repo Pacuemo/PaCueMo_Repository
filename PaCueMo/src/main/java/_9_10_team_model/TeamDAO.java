@@ -35,6 +35,7 @@ public class TeamDAO implements TeamDAO_interface
 
 	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
 	private static final String FIND_TEAMID_WITH_TEAMHEAD = "SELECT teamId FROM Team where teamHead = ?";
+	private static final String FIND_TEAMVO_WITH_TEAMHEAD = "SELECT * FROM Team where teamHead = ?";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
 	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
@@ -93,6 +94,12 @@ public class TeamDAO implements TeamDAO_interface
 	public List<Integer> find_TeamId_With_TeamHead(String teamHead)
 	{
 		return jdbc.queryForList(FIND_TEAMID_WITH_TEAMHEAD, Integer.class, teamHead);
+	}
+
+	@Override
+	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	{
+		return jdbc.query(FIND_TEAMVO_WITH_TEAMHEAD, new TeamRowMapper(), teamHead);
 	}
 
 	/*

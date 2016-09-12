@@ -98,4 +98,9 @@ public class TeamService
 	{
 		return teamDAO.find_TeamId_With_TeamHead(teamHead);
 	}
+
+	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	{
+		return teamDAO.find_TeamVO_With_TeamHead(teamHead);
+	}
 }
