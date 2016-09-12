@@ -23,6 +23,7 @@ CREATE TABLE LeagueClub
 (
 	leagueId		/*聯賽編號*/		 INT          NOT NULL	FOREIGN KEY REFERENCES League(LeagueId),
     clubId    		/*球團編號*/		 INT          FOREIGN KEY REFERENCES Club(ClubId),
+	groups          /*組別*/              INT,
     primary key (leagueId,clubId)
 );
 
@@ -571,18 +572,18 @@ INSERT INTO League VALUES ('世界盃',12,'2016-07-01','2016-09-30',1);
 
 --聯賽主表格--
 
-INSERT INTO LeagueClub VALUES (1,1);
-INSERT INTO LeagueClub VALUES (1,2);
-INSERT INTO LeagueClub VALUES (1,3);
-INSERT INTO LeagueClub VALUES (1,4);
-INSERT INTO LeagueClub VALUES (1,5);
-INSERT INTO LeagueClub VALUES (1,6);
-INSERT INTO LeagueClub VALUES (1,7);
-INSERT INTO LeagueClub VALUES (1,8);
-INSERT INTO LeagueClub VALUES (1,9);
-INSERT INTO LeagueClub VALUES (1,10);
-INSERT INTO LeagueClub VALUES (1,11);
-INSERT INTO LeagueClub VALUES (1,12);
+INSERT INTO LeagueClub VALUES (1,1,1);
+INSERT INTO LeagueClub VALUES (1,2,2);
+INSERT INTO LeagueClub VALUES (1,3,3);
+INSERT INTO LeagueClub VALUES (1,4,2);
+INSERT INTO LeagueClub VALUES (1,5,3);
+INSERT INTO LeagueClub VALUES (1,6,4);
+INSERT INTO LeagueClub VALUES (1,7,4);
+INSERT INTO LeagueClub VALUES (1,8,1);
+INSERT INTO LeagueClub VALUES (1,9,4);
+INSERT INTO LeagueClub VALUES (1,10,3);
+INSERT INTO LeagueClub VALUES (1,11,2);
+INSERT INTO LeagueClub VALUES (1,12,1);
 
 
 --單季聯賽表格--

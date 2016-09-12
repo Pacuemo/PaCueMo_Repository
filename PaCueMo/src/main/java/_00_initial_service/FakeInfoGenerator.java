@@ -1099,10 +1099,10 @@ public class FakeInfoGenerator
 //		clubGenerator();
 
 //		clubmemberGenerator();
-//		fightrecoedGenerator();
+		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
-		goodsOrderGenerator();
+//		goodsOrderGenerator();
 
 //		generator.teamGenerator();
 //		teammemberGenerator();

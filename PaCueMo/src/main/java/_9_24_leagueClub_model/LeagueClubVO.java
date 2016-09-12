@@ -13,6 +13,7 @@ public class LeagueClubVO implements Serializable
 
 	int leagueId;
 	int clubId;
+	int groups;
 	ClubVO clubVO;
 
 	public LeagueClubVO()
@@ -24,6 +25,24 @@ public class LeagueClubVO implements Serializable
 	{
 		this.leagueId = leagueId;
 		this.clubId = clubId;
+	}
+
+	public LeagueClubVO(int leagueId, int clubId, int groups)
+	{
+
+		this.leagueId = leagueId;
+		this.clubId = clubId;
+		this.groups = groups;
+	}
+
+	public int getGroups()
+	{
+		return groups;
+	}
+
+	public void setGroups(int groups)
+	{
+		this.groups = groups;
 	}
 
 	public int getLeagueId()

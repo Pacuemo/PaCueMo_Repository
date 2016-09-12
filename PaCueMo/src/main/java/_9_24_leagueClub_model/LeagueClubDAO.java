@@ -46,7 +46,8 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	{
 		return jdbc.update(Add_One_BY_VO,
 				leagueClubVO.getLeagueId(),
-				leagueClubVO.getClubId());
+				leagueClubVO.getClubId(),
+				leagueClubVO.getGroups());
 	}
 
 	//刪除
@@ -63,7 +64,7 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 
 		public LeagueClubVO mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
-			return new LeagueClubVO(rs.getInt(1), rs.getInt(2));
+			return new LeagueClubVO(rs.getInt(1), rs.getInt(2), rs.getInt(3));
 
 		}
 	}
