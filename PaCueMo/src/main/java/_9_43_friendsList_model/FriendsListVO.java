@@ -2,13 +2,29 @@ package _9_43_friendsList_model;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FriendsListVO implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 	private String memberId;
 	private String memberFriendId;
-	private int friendStatus;
+	private int memberStatus;
+
+	public FriendsListVO()
+	{
+
+	}
+
+	public FriendsListVO(String memberId, String memberFriendId, int memberStatus)
+	{
+		super();
+		this.memberId = memberId;
+		this.memberFriendId = memberFriendId;
+		this.memberStatus = memberStatus;
+	}
 
 	public String getMemberId()
 	{
@@ -30,14 +46,14 @@ public class FriendsListVO implements Serializable
 		this.memberFriendId = memberFriendId;
 	}
 
-	public int getFriendStatus()
+	public int getMemberStatus()
 	{
-		return friendStatus;
+		return memberStatus;
 	}
 
-	public void setFriendStatus(int friendStatus)
+	public void setMemberStatus(int memberStatus)
 	{
-		this.friendStatus = friendStatus;
+		this.memberStatus = memberStatus;
 	}
 
 }

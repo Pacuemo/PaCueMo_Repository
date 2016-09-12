@@ -45,33 +45,51 @@ public class TeamServlet extends HttpServlet
 	{
 		System.out.println("Go to TeamPage (GET)");	// 隊伍頁面
 		req.setCharacterEncoding("UTF-8");
-		TeamVO teamVO = null;
 		TeamService teamService = null;
 		TeamMemberService teamMemberService = null;
-		List<TeamMemberVO> teamMemberList = null;
-		PlayerCardVO playerCardVO = null;
 		BattleRecordService battleRecordService = null;
-		HttpSession session = null;
+		TeamVO teamVO = null;
 		MemberVO memberVO = null;
-		Integer teamId = 4;								//測試!!! TEST TEST TEST
-		if (null != req.getAttribute("teamId") || true) //測試!!! TEST TEST TEST
+		PlayerCardVO playerCardVO = null;
+		HttpSession session = null;
+		List<TeamMemberVO> teamMemberList = null;
+		List<TeamVO> myTeamList = null;
+		List<Integer> mineTeamIdList = null;
+		Integer teamId = null;
+
+		//測試!!! TEST TEST TEST
+		if (req.getParameter("teamId") == null)
+		{
+			System.out.println("Can't get teamId");
+		}
+
+		if (null != req.getParameter("teamId") || null != req.getAttribute("teamId")) //測試!!! TEST TEST TEST
 		{
 			try
 			{
 				session = req.getSession();
 				memberVO = (MemberVO) session.getAttribute("LoginOK");
-//				teamId = Integer.valueOf(req.getParameter("teamId"));
+				try
+				{
+					teamId = Integer.valueOf(req.getParameter("teamId"));
+				}
+				catch (Exception e)
+				{
+					teamId = (Integer) req.getAttribute("teamId");
+				}
 				teamService = context.getBean(TeamService.class);
 				battleRecordService = context.getBean(BattleRecordService.class);
 				teamMemberService = context.getBean(TeamMemberService.class);
 				Double attendancePercent = null;
 				Double teamWPCT = null;
+				String memberId = memberVO.getMemberId();
 				try
 				{
 					attendancePercent = battleRecordService.getAttendancePercent(teamId);
 				}
 				catch (Exception e)
 				{
+					System.out.println("attendancePercent no data!");
 					attendancePercent = 0.0;
 				}
 				try
@@ -80,27 +98,59 @@ public class TeamServlet extends HttpServlet
 				}
 				catch (Exception e)
 				{
+					System.out.println("teamWPCT no data!");
 					teamWPCT = 0.0;
 				}
 				teamVO = teamService.getOne(teamId);
+				if (teamVO.getTeamId() == null)
+				{
+					System.out.println("隊伍不存在");
+					resp.sendRedirect(req.getContextPath());
+					return;
+				}
 				req.setAttribute("teamVO", teamVO); 							//setAtt
 				req.setAttribute("attendancePercent", attendancePercent);		//setAtt
 				req.setAttribute("teamWPCT", teamWPCT);							//setAtt
 				teamMemberList = teamMemberService.getOneTeam(teamId);
 
-				playerCardVO = new PlayerCardVO();
-				for (TeamMemberVO list : teamMemberList)
+				Boolean flag = false;
+				myTeamList = teamService.getMyTeamList(memberId);
+				for (TeamVO list : myTeamList)
 				{
-
-					if (list.getTeamMemberId() == memberVO.getMemberId())
+					if (list.getTeamId() == teamId)
 					{
-						req.setAttribute("teamExsist", "Exsist");								//setAtt
+						req.setAttribute("teamExsist", "Exsist");				//setAtt
+						flag = true;
 					}
 				}
+
+				mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberId);
+				for (Integer list : mineTeamIdList)
+				{
+					if (list == teamId)
+					{
+						req.setAttribute("teamExsist", "Mine");					//setAtt
+						flag = true;
+					}
+				}
+
+				if (!flag)
+				{
+					req.setAttribute("teamExsist", "Not_Exsist");				//setAtt
+				}
+
+//				Need to get average rank
+//				playerCardVO = new PlayerCardVO();
+//				for (TeamMemberVO list : teamMemberList)
+//				{
+//
+//				}
+
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");
 				System.out.println("-------------------------------------------------------");
 				req.getRequestDispatcher("/WEB-INF/team/teampage.jsp").forward(req, resp);
+				return;
 			}
 			catch (Exception e)
 			{
@@ -110,6 +160,7 @@ public class TeamServlet extends HttpServlet
 		else
 		{
 			System.out.println("You don't have any Team");
+			System.out.println("This code will never run");
 			req.getRequestDispatcher("/WEB-INF/team/createteam.jsp").forward(req, resp);
 			return;
 		}
@@ -160,9 +211,10 @@ public class TeamServlet extends HttpServlet
 				System.out.println("error!!!");
 				return;
 			}
-			System.out.println("doPost OK , now  doGET");
+			System.out.println("doPost OK");
 			System.out.println("-------------------------------------------------------");
-			doGet(req, resp);
+			req.getRequestDispatcher("/spring/team/createTeamPage").forward(req, resp);
+			return;
 		}
 		catch (Exception e)
 		{

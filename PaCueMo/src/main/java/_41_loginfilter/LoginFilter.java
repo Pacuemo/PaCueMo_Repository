@@ -25,7 +25,8 @@ import _9_41_member_model.MemberVO;
 				@WebInitParam(name = "mustLogin2", value = "/TeamServlet"),
 				@WebInitParam(name = "mustLogin3", value = "/_03_member/*"),
 				@WebInitParam(name = "mustLogin4", value = "/spring/club/apply"),
-				@WebInitParam(name = "mustLogin5", value = "/_5_gambling/*")
+				@WebInitParam(name = "mustLogin5", value = "/_5_gambling/*"),
+				@WebInitParam(name = "mustLogin6", value = "/spring/team/createTeamPage")
 })
 public class LoginFilter implements Filter
 {
