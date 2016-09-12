@@ -22,41 +22,46 @@
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
+	<jsp:include page="navBar.jsp" />
 	<div class="col-md-2" style="margin-top: 30px">
 		<p class="lead" style="color: white; text-align: center">參與社團</p>
 		<div class="list-group">
 			<c:forEach items="${leagueVO.leagueClubVOs}" var="leagueClubVO">
 				<s:url value="/spring/club/getById" var="queryClub">
-				<s:param name="clubId" value="${leagueClubVO.clubId}" >
-				</s:param></s:url>
+					<s:param name="clubId" value="${leagueClubVO.clubId}">
+					</s:param>
+				</s:url>
 				<a href="${queryClub}" class="list-group-item" style="text-align: center">${leagueClubVO.clubVO.clubName}</a>
 			</c:forEach>
 		</div>
 	</div>
 	<div class="col-md-10" style="margin-top: 80px">
-		
-		<div class="row">			
+
+		<div class="row">
 			<c:forEach items="${leagueVO.leagueRecordVOs}" var="leagueRecordVO">
 				<s:url value="/spring/league/Info/one" var="query">
-				<s:param name="fightId" value="${leagueRecordVO.fightId}" >
-				</s:param></s:url>				
-				<div class="col-sm-6 col-lg-4 col-md-6" >
+					<s:param name="fightId" value="${leagueRecordVO.fightId}">
+					</s:param>
+				</s:url>
+				<div class="col-sm-6 col-lg-4 col-md-6 Round${leagueRecordVO.rounds}"  style="display:none;" >
 					<div class="thumbnail">
-						<table style="width:100%"><tr style="vertical-align: center">
-						<td style="padding:0 20px"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width:130px;height:130px"></td>
-						<td style="padding:0 10px"><img src="${pageContext.request.contextPath}/image/vs/VS.png" class="img-circle" style="width:80px;height:80px"></td>
-						<td style="padding:0 20px"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width:130px;height:130px"></td>
-						</tr></table>					
+						<table style="width: 100%">
+							<tr style="vertical-align: center">
+								<td style="padding: 0 20px"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px"></td>
+								<td style="padding: 0 10px"><img src="${pageContext.request.contextPath}/image/vs/VS.png" class="img-circle" style="width: 80px; height: 80px"></td>
+								<td style="padding: 0 20px"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px"></td>
+							</tr>
+						</table>
 						<div class="caption">
-							<h4 style="text-align: left">${leagueRecordVO.clubA.clubName}   得${leagueRecordVO.scoreA}分</h4>
+							<h4 style="text-align: left">${leagueRecordVO.clubA.clubName}得${leagueRecordVO.scoreA}分</h4>
 							<h6 style="text-align: center">VS</h6>
-							<h4 style="text-align: right">${leagueRecordVO.clubB.clubName}    得${leagueRecordVO.scoreB}分</h4>
+							<h4 style="text-align: right">${leagueRecordVO.clubB.clubName}得${leagueRecordVO.scoreB}分</h4>
 							<p>時間:${leagueRecordVO.fightDateTime}</p>
 							<p>第${leagueRecordVO.rounds}輪</p>
 							<p>總時數:${leagueRecordVO.totalTime}</p>
 						</div>
-						<p style="text-align:center">
-							<a href="${query}" class="btn btn-primary">查詢</a>	
+						<p style="text-align: center">
+							<a href="${query}" class="btn btn-primary">查詢</a>
 						</p>
 					</div>
 				</div>
@@ -64,4 +69,43 @@
 		</div>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function()
+	{
+		$("#btn-Round1").click(function(event)
+		{
+			event.preventDefault();
+			$(".Round1").attr("style", "display: block;");
+			$(".Round2").attr("style", "display: none;");
+			$(".Round3").attr("style", "display: none;");
+			$(".Round4").attr("style", "display: none;");
+		});
+		$("#btn-Round2").click(function(event)
+		               		{
+		               			event.preventDefault();
+		               			$(".Round2").attr("style", "display: block;");
+		            			$(".Round1").attr("style", "display: none;");
+		            			$(".Round3").attr("style", "display: none;");
+		            			$(".Round4").attr("style", "display: none;");
+		               		});
+		$("#btn-Round3").click(function(event)
+		               		{
+		               			event.preventDefault();
+		               			$(".Round3").attr("style", "display: block;");
+		            			$(".Round2").attr("style", "display: none;");
+		            			$(".Round1").attr("style", "display: none;");
+		            			$(".Round4").attr("style", "display: none;");
+		               		});
+		$("#btn-Round4").click(function(event)
+		               		{
+		               			event.preventDefault();
+		               			$(".Round4").attr("style", "display: block;");
+		            			$(".Round2").attr("style", "display: none;");
+		            			$(".Round3").attr("style", "display: none;");
+		            			$(".Round1").attr("style", "display: none;");
+		               		});
+
+	})
+</script>
 </html>
