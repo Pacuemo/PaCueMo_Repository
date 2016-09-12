@@ -1101,11 +1101,7 @@ public class FakeInfoGenerator
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
-<<<<<<< HEAD
-		gambleOrderGenerator();
-=======
 //		gambleOrderGenerator();
->>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();
