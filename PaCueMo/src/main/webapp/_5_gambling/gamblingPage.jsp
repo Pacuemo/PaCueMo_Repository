@@ -1,4 +1,4 @@
-﻿﻿<%@page import="java.util.List"%>
+﻿﻿﻿<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -176,17 +176,17 @@
 		<div id="dialog-card" title="購買點數">
 	            <div class="card-wrapper"></div>
 	            <form action="">
-	                  <div class="form-group has-success has-feedback">
+	                  <div class="form-group has-feedback">
 						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:800;color:orange;">卡 號</label>
 						  <input id="cardnumber" placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" style="color:BLUE;font-weight:800;"/>
-					      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+					      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  
 					  </div>
-	                  <div class="form-group has-success has-feedback">
+	                  <div class="form-group has-feedback">
 						  <label class="control-label" for="fullname" style="font-family:'微軟正黑體';font-weight:800;color:orange;">姓 名</label>
-						  <input id="fullname" placeholder="Full name" type="text" name="name" class="form-control" value="科比布萊恩" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
-					 	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+						  <input id="fullname" placeholder="Full name" type="text" name="name" value="科比布萊恩" class="form-control"  style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
+					 	  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
 					
@@ -200,21 +200,21 @@
 							  <select id="expire_yy" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"></select>   
 						  </div>
 					  </div>	
-					  <div class="form-group has-success has-feedback">
+					  <div class="form-group has-feedback">
 						  <label class="control-label" for="cvc" style="font-family:'微軟正黑體';font-weight:800;color:orange;" >代 碼(CVC)</label>
 						  <input id="cvc" placeholder="CVC" type="text" name="cvc" class="form-control" value="346" pattern=".{3,}" style="color:BLUE;font-weight:800;"/>
-					  	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+					  	  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
-					 <div class="form-group has-success has-feedback col-xs-6">
+					 <div class="form-group has-feedback col-xs-6">
 						  <label class="control-label" for="NTD" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px">購買金額 (1 NT$ : 100 P)</label>
 						  <input id="NTD" placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990" style="color:BLUE;font-weight:800;"/>
-					  	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px;"></span>
+					  	  <span class="glyphicon form-control-feedback" aria-hidden="true" style="padding-right:15px;"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
 					  <div class="form-group col-xs-6">
 						  <label class="control-label" for="coin" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px;">代幣數量</label>
-						  <input id="coin" placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" value="99000" style="color:DARKGREEN;font-weight:800;"/>
+						  <input id="coin" placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" style="color:DARKGREEN;font-weight:800;"/>
 					  </div>
 	            </form>
 	    </div>
@@ -408,23 +408,64 @@
        			})
        			/* ======== 【購買代幣按鈕】 ======= */
        			/*=====================【信用卡textBox驗證 開始】=====================*/
-       			var falgNumber=true , flagName=true , flagCvc=true , falgNtd=true;
+       			//  ______________ 檢查所有欄位是否都填入 開始 ______________
+       			var cardnumberInput = $("#cardnumber");
+       			var fullNameInput   = $("#fullname");
+       			var cvcInput        = $("#cvc");
+       			var ntdInput        = $("#NTD");
+       			var coinText        = $("#coin");	
        			
-       			var isAllFilled = function(){// 檢查所有欄位是否都填入
-       				return falgNumber && flagName && flagCvc && falgNtd ;
+       			var isAllFilled = function(){
+
+	       		     if(cardnumberInput.val() == "empty" || cardnumberInput.val() == ""){
+	       		    	 cardnumberInput.parent('div').switchClass('has-success','has-error');
+	       		    	 cardnumberInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+	    			 }else{
+	    				 cardnumberInput.parent('div').switchClass('has-error','has-success');
+	    				 cardnumberInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+	    			 }
+       			     if(fullNameInput.val() == "empty" || fullNameInput.val() == ""){
+       			    	 fullNameInput.parent('div').switchClass('has-success','has-error');
+       			    	 fullNameInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+        			 }else{
+        				 fullNameInput.parent('div').switchClass('has-error','has-success');
+        				 fullNameInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+        			 }
+       			   	 if(cvcInput.val() == "empty" || cvcInput.val() == ""){
+	       			   	 cvcInput.parent('div').switchClass('has-success','has-error');
+	       			 	 cvcInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+      			 	 }else{
+      			 		 cvcInput.parent('div').switchClass('has-error','has-success');
+      			 		 cvcInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+      			 	 }
+      				 if(ntdInput.val() == "empty" || ntdInput.val() == ""){
+      					 ntdInput.parent('div').switchClass('has-success','has-error');
+      					 ntdInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+      					 coinText.val(0);// 點數textBox 設 0
+      			 	 }else{
+      			 		 ntdInput.parent('div').switchClass('has-error','has-success');
+      			 		 ntdInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+      			 		 coinText.val( ntdInput.val() * 100 );// 點數textBox 設 0
+      			 	 }
+ 
+       				 falgNumber = ( cardnumberInput.val() == "empty") ? false : true;
+       				 flagName   = ( fullNameInput.val()   == "empty") ? false : true;
+       				 flagCvc    = ( cvcInput.val()        == "empty") ? false : true;
+       				 falgNtd    = ( ntdInput.val()        == "empty") ? false : true;
+       				 return falgNumber && flagName && flagCvc && falgNtd ;
        			}
+       			//  ______________ 檢查所有欄位是否都填入 結束 ______________
+       			// onClick 、 blur 時動作↓↓↓↓↓↓↓↓↓↓↓
   				$("#cardnumber").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						falgNumber = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						falgNumber = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -437,13 +478,11 @@
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						flagName = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						flagName = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -456,13 +495,12 @@
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						flagCvc = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						flagCvc = true;
+  						//flagCvc = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -470,25 +508,36 @@
                 		$("#confirm").attr("disabled",true);
                 	}
   				})
-  				$("#NTD").click(function(){$(this).val("")}).blur(function(){
+  				$("#NTD").click(function(){$(this).val("");$("#coin").val(0)}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						falgNtd = false;
+						//falgNtd = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						falgNtd = true;
+  						//falgNtd = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				})
+  				}).keyup(function(){ return ValidateFloat2(this,$(this).val())} /*可以輸入小數點（限制小數點後一位)*/)
+  				
+  				
+  				/*格式驗證function : 可以輸入小數點（限制小數點後一位)*/
+  				function ValidateFloat2(e, pnumber)
+				{
+				    if (!/^\d+[.]?[1-9]?$/.test(pnumber))
+				    {
+				        e.value = /\d+[.]?[1-9]?/.exec(e.value);
+				    }
+				    return false;
+				}
   				/*=====================【信用卡textBox驗證 結束】=====================*/
        			
        			
