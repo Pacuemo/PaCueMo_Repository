@@ -18,7 +18,7 @@ import _00_initial_service.GlobalService;
 @Repository("TeamMemberDAO")
 public class TeamMemberDAO implements TeamMemberDAO_interface
 {
-	private JdbcOperations jdbcOperations;
+	private JdbcOperations jdbc;
 
 	public TeamMemberDAO()
 	{
@@ -27,24 +27,24 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 	@Autowired
 	public TeamMemberDAO(JdbcOperations jdbcOperations)
 	{
-		this.jdbcOperations = jdbcOperations;
+		this.jdbc = jdbcOperations;
 	}
 
 	private static final String INSERT = "INSERT INTO TeamMember (teamId,teamMemberId) VALUES (?, ?)";
 	private static final String GET_ALL = "SELECT teamId,teamMemberId,joinDate FROM TeamMember order by teamMemberId";
 	private static final String GET_ONE_TEAMS = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamId = ?";
 	private static final String GET_ONE = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamMemberId = ?";
-	private static final String DELETE = "DELETE FROM TeamMember WHERE teamId = ? AND teamMemberId = ?";
+	private static final String DELETE_ONE = "DELETE FROM TeamMember WHERE teamId = ? AND teamMemberId = ?";
+	private static final String DELETE_ALL = "DELETE FROM TeamMember WHERE teamId = ?";
 	private static final String UPDATE = "UPDATE TeamMember set teamMemberId=?, joinDate=? where teamId = ?";
 	private static final String FIND_BY_TEAMMEMBERID = "SELECT * FROM TeamMember WHERE teamMemberId = ?";
 
 	public static void main(String[] args)
 	{
-		// TeamMemberVO teamMemberVO = new TeamMemberVO();
-		// teamMemberVO.setTeamId(6);
-		// teamMemberVO.setTeamMemberId(9);
-		// teamMemberVO.setIsCaptain(false);
-		// new TeamMemberDAO().insert(teamMemberVO);
+		TeamMemberVO teamMemberVO = new TeamMemberVO();
+		teamMemberVO.setTeamId(1);
+		teamMemberVO.setTeamMemberId("5D364BF9-CA21-4788-96EF-C1CF92F630B6");
+		new TeamMemberDAO().insert(teamMemberVO);
 
 	}
 
@@ -55,7 +55,7 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 	@Override
 	public void insert(Integer teamId, String teamMemberId)
 	{
-		jdbcOperations.update(INSERT, teamId, teamMemberId);
+		jdbc.update(INSERT, teamId, teamMemberId);
 	}
 
 	/*
@@ -168,7 +168,7 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 	 * @see _9_11_teammember_model.TeamMemberDAO_interface2#delete(java.lang.Integer, java.lang.String)
 	 */
 	@Override
-	public void delete(Integer teamId, String teamMemberId)
+	public void deleteOne(Integer teamId, String teamMemberId)
 	{
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -178,9 +178,9 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 			Class.forName(GlobalService.DRIVER_NAME);
 			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
 
-			pstmt = con.prepareStatement(DELETE);
+			pstmt = con.prepareStatement(DELETE_ONE);
 			pstmt.setInt(1, teamId);
-			pstmt.setString(1, teamMemberId);
+			pstmt.setString(2, teamMemberId);
 			pstmt.executeUpdate();
 		}
 		catch (SQLException e)
@@ -216,6 +216,12 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 				}
 			}
 		}
+	}
+
+	@Override
+	public void deleteAll(Integer teamId)
+	{
+		jdbc.update(DELETE_ALL, teamId);
 	}
 
 	/*
@@ -448,7 +454,7 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 	@Override
 	public List<TeamMemberVO> findByTeamMemberId(String TeamMemberId)
 	{
-		return jdbcOperations.query(FIND_BY_TEAMMEMBERID, new TeamMemberRowMapper(), TeamMemberId);
+		return jdbc.query(FIND_BY_TEAMMEMBERID, new TeamMemberRowMapper(), TeamMemberId);
 	}
 
 	private static final class TeamMemberRowMapper implements RowMapper<TeamMemberVO>

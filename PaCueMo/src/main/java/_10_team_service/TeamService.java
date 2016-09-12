@@ -60,8 +60,10 @@ public class TeamService
 		teamDAO.update(teamVO);
 	}
 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void delete(Integer teamId)
 	{
+		teamMemberDAO.deleteAll(teamId);
 		teamDAO.delete(teamId);
 	}
 
@@ -90,5 +92,10 @@ public class TeamService
 	public List<TeamVO> getMyTeamList(String teamMemberId)
 	{
 		return teamDAO.getMy(teamMemberId);
+	}
+
+	public List<Integer> find_TeamId_With_TeamHead(String teamHead)
+	{
+		return teamDAO.find_TeamId_With_TeamHead(teamHead);
 	}
 }

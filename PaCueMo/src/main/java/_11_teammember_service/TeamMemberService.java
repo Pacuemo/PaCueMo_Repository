@@ -43,9 +43,14 @@ public class TeamMemberService
 		dao.update(teamMemberVO);
 	}
 
-	public void delete(Integer teamId, String teamMemberId)
+	public void deleteOne(Integer teamId, String teamMemberId)
 	{
-		dao.delete(teamId, teamMemberId);
+		dao.deleteOne(teamId, teamMemberId);
+	}
+
+	public void deleteAll(Integer teamId)
+	{
+		dao.deleteAll(teamId);
 	}
 
 	public TeamMemberVO getOne(Integer teamId, String teamMemberId)

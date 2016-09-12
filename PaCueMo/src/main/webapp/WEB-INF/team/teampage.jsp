@@ -116,8 +116,11 @@ p.tempstyle {
 
 }
 .tmimg{
-width: 233px;
-height: 233px;
+width: 182.8px;
+height: 182.8px;
+}
+.left_20{
+padding-left: 20px; 
 }
 </style>
 
@@ -129,34 +132,50 @@ height: 233px;
 	
 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="margin-vert-20 left_20" style="color: white;">
+				<c:choose>
+					<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
+					<c:otherwise>TeamName !</c:otherwise>
+				</c:choose>
+			</h2>
+		</div>
+	</div>
 	
-	<div class="col-md-12">
-		<h2 class="margin-vert-20" style="color: white;">
-			<c:choose>
-				<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
-				<c:otherwise>TeamName !</c:otherwise>
-			</c:choose>
-
-		</h2>
 		<div class="row margin-bottom-10" id="show_team_member">
-			<div class="col-sm-2 animate fadeInLeft animated">
-				<p class="margin-bottom-30 tempstyle">${requestScope.teamVO.content}</p>
-				<c:if test="${requestScope.teamExsist != 'Exsist' }">
-					<a href="#" class="join_button" id="join_team"> 
-					<span>
-					
-						<c:choose>
-							<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
-							<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
-							<c:otherwise>Join</c:otherwise>
-						</c:choose>
-					</span>
-					</a>
-				</c:if>
+			<div class="col-sm-2 col-md-2 animate fadeInLeft animated">
+				<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
+				<c:choose>
+					<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
+					<form action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs left_20 margin_left20" name="btn_join" value="${requestScope.teamVO.teamId }" >
+							<c:choose>			
+								<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
+								<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
+								<c:otherwise>私密</c:otherwise>
+							</c:choose>
+						</button>
+						<input type="hidden" name="page" value="main">
+					</form>
+					</c:when>
+					<c:when test="${requestScope.teamExsist == 'Mine'}">
+					<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs left_20 " name="btn_disband" value="${requestScope.teamVO.teamId }" >解散隊伍</button>
+						<input type="hidden" name="page" value="main">
+					</form>
+					</c:when>
+					<c:when test="${requestScope.teamExsist == 'Exsist'}">
+					<form action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs left_20 " name="btn_abort" value="${requestScope.teamVO.teamId }" >退出隊伍</button>
+						<input type="hidden" name="page" value="main">
+					</form>
+					</c:when>
+				</c:choose>
 			</div>
 
 			<!-- Person Details -->
-			<div class="col-sm-10 animate fadeInLeft animated">
+			<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
 				<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0" >
 				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
 					<figure>
@@ -190,13 +209,12 @@ height: 233px;
 				</div>
 				</c:forEach>
 			</div>
-
-
 		</div>
-
-		<hr class="margin-bottom-30">
+	
 
 		<div class="row">
+		<div class="col-md-12"><hr class="margin-bottom-30"></div>
+		
 			<div class="col-md-6" style="color: white">
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, laboriosam, quod odit quo quos itaque repellat quaerat a ad alias. Vel, nostrum id ab velit veritatis consequatur fugit sequi esse. Maecenas congue dui id posuere fermentum.</p>
 				<div class="row">
@@ -234,14 +252,14 @@ height: 233px;
 			</div>
 		</div>
 		<hr class="margin-vert-20">
-	</div>
+	
 <script type="text/javascript">
 $(function (){
 	$("#join_team").click(function(){
 		
 		$.ajax({
-			"type":"get",
-			"url":"${home}spring/team/joinTeam", // home 在 設定
+			"type":"post",
+			"url":"${home}spring/team/joinTeam", // home 在 head
 			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
 					"teamId":"${requestScope.teamVO.teamId}"},
 			"dataType":"text",
@@ -253,9 +271,43 @@ $(function (){
 				console.log(Error);
 			}
 		})
-	}) // joinTeam End
+	}) // join team End
 	
+$("#abort_team").click(function(){
+		
+		$.ajax({
+			"type":"get",
+			"url":"${home}spring/team/abortTeam", // home 在 head
+			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
+					"teamId":"${requestScope.teamVO.teamId}"},
+			"dataType":"text",
+			"success":function(data){
+				alert(data);
+			},
+			"error":function(Error){
+				alert("fuck");
+				console.log(Error);
+			}
+		})
+	}) // abort team End
 	
+$("#disband_team").click(function(){
+		
+		$.ajax({
+			"type":"get",
+			"url":"${home}spring/team/disband_team", // home 在 head
+			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
+					"teamId":"${requestScope.teamVO.teamId}"},
+			"dataType":"text",
+			"success":function(data){
+				alert(data);
+			},
+			"error":function(Error){
+				alert("fuck");
+				console.log(Error);
+			}
+		})
+	}) // disband team End
 	
 // End of init
 });
