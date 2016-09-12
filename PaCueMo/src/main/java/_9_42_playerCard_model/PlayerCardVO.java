@@ -22,6 +22,30 @@ public class PlayerCardVO implements Serializable
 	private int playerWIS;
 	private int playerCHA;
 
+	public PlayerCardVO()
+	{
+		super();
+	}
+
+	public PlayerCardVO(String memberId, Boolean playerGender, double playerHeight, double playerWeight, String playerPosition, Boolean playerHand, String playerNote, String playerLoation, int playerSTR, int playerCON, int playerDEX, int playerINT, int playerWIS, int playerCHA)
+	{
+		super();
+		this.memberId = memberId;
+		this.playerGender = playerGender;
+		this.playerHeight = playerHeight;
+		this.playerWeight = playerWeight;
+		this.playerPosition = playerPosition;
+		this.playerHand = playerHand;
+		this.playerNote = playerNote;
+		this.playerLoation = playerLoation;
+		this.playerSTR = playerSTR;
+		this.playerCON = playerCON;
+		this.playerDEX = playerDEX;
+		this.playerINT = playerINT;
+		this.playerWIS = playerWIS;
+		this.playerCHA = playerCHA;
+	}
+
 	public String getMemberId()
 	{
 		return memberId;
