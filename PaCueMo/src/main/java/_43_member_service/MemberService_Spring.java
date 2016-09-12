@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
-import _9_43_friendsList_model.FriendsListDAO_interface;
+import _9_43_friendsList_model.FriendsListDAO_interface_Spring;
 import _9_43_friendsList_model.FriendsListVO;
 
 @Component
@@ -18,20 +20,22 @@ public class MemberService_Spring
 	@Autowired
 	private MemberDAO_interface_Spring dao;
 	@Autowired
-	private FriendsListDAO_interface fDao;
+	private FriendsListDAO_interface_Spring fDao;
 
-	public void activateTwoStepVerification(MemberVO memberVO)
+	public int activateTwoStepVerification(MemberVO memberVO)
 	{
-		dao.updateTwoStepVerifyByPrimaryKey(memberVO);
+		return dao.updateTwoStepVerifyByPrimaryKey(memberVO);
 	}
 
-	public void connectFbAccount(MemberVO memberVO)
+	public int connectFbAccount(MemberVO memberVO)
 	{
 
 		if (dao.findByUserFBID(memberVO.getMemberFBId()) == null)
 		{
-			dao.updateFbIdByPrimaryKey(memberVO);
+			return dao.updateFbIdByPrimaryKey(memberVO);
 		}
+
+		return 0;
 	}
 
 	public HashMap<String, List<String>> showAllFriends(String memberId)
@@ -88,10 +92,22 @@ public class MemberService_Spring
 		return map;
 	}
 
+	@Transactional
 	public int deleteFriend(String memberId, String friendId)
 	{
+		FriendsListVO member = new FriendsListVO();
+		member.setMemberId(memberId);
+		member.setMemberFriendId(friendId);
+		FriendsListVO friend = new FriendsListVO();
+		friend.setMemberId(friendId);
+		friend.setMemberFriendId(memberId);
 
-		return fDao.deleteFriend(memberId, friendId);
+		if (fDao.deleteFriend(member) == fDao.deleteFriend(friend))
+		{
+			return 1;
+		}
+		return 0;
+
 	}
 
 	public static void main(String[] args)
