@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import _00_config.RootConfig;
+
 @Repository("ClubDAO")
 public class ClubDAO implements ClubDAO_I
 {
@@ -91,7 +93,7 @@ public class ClubDAO implements ClubDAO_I
 	{
 //		ClubDAO_I dao = new ClubDAO();
 
-		ApplicationContext context = new AnnotationConfigApplicationContext(ClubConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		ClubDAO_I dao = (ClubDAO) context.getBean("ClubDAO");
 //		ClubVO clubVO = dao.findByPK(1);
 //

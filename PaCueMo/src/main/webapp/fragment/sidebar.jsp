@@ -67,5 +67,12 @@
 		$('html').on('swipeleft', function(){
 		    $('body').removeClass('toggled');
 		});
+		/* -----------【阻止 submit END!!!】------------------- */
+
+		
+		$
+		
+
+		
 	})
 </script>

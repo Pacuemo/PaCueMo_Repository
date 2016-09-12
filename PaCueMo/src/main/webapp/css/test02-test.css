@@ -3476,7 +3476,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 }
 .navbar {
 	position: relative;
-	min-height: 80px;
+	min-height: 70px;
 	margin-bottom: 0;
 	border: 1px solid transparent
 }

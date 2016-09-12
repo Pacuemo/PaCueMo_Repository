@@ -51,7 +51,7 @@ color:white;
 						<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${my_list.teamId}" class="left_20">${my_list.teamName}</a>
 					</div>
 					<div class="col-md-6">
-						<form action="${pageContext.request.contextPath}/spring/" method="get"> 
+						<form action="${pageContext.request.contextPath}/spring/battle_rec/letsbattle" method="get"> 
 							<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${my_list.teamId }">發出約戰</button>
 							<input type="hidden" name="page" value="first">
 						</form>

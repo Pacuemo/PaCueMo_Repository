@@ -81,6 +81,12 @@ public class Club_Service
 		ClubMemberVO clubMemberVO = clubMemberDAO.findByPK(memberId);
 		System.out.println("成功查詢社團成員:1筆-傳入社團成員Id");
 		ClubVO clubVO = getClub(clubMemberVO.getClubId());
+		List<ClubMemberVO> clubMembers = clubMemberDAO.getClubAll(clubVO.getClubID());
+		for (ClubMemberVO vo : clubMembers)
+		{
+			vo.setMember(memberDAO.findByPrimaryKey(vo.getClubMemberId()));
+		}
+		clubVO.setClubmembers(clubMembers);
 		System.out.println("成功查詢社團:1筆-傳入社團成員VO內的社團ID");
 		System.out.println("回傳1筆社團VO");
 		return clubVO;
