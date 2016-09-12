@@ -11,7 +11,7 @@ import _52_nbateam_service.NbaTeamBeans_Config;
 import _9_51_battleset_model.BattleSetDAO;
 
 @Configuration
-@ComponentScan({ "_9_51_battleset_model", "_51_battleset_service" })
+@ComponentScan({ "_9_51_battleset_model", "_51_battleset_service", "_59_task_routine" })
 @Import({ NbaTeamBeans_Config.class }) /* jdbcTemplate、dataSource 、NBATeamService */
 public class BattleSetBeans_Config
 {
@@ -30,4 +30,9 @@ public class BattleSetBeans_Config
 		return new BattleSetService(bSetDAO, nbaSvc);
 	}
 
+//	@Bean
+//	public RoutineTask routineTask(BattleSetService battleSetSvc)
+//	{
+//		return new RoutineTask(battleSetSvc);
+//	}
 }
