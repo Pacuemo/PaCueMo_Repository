@@ -1,25 +1,22 @@
-﻿﻿﻿<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
  
 <!DOCTYPE html>
 <html>
   <head>
+  <%@ page import="java.util.List" %>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
     <title>NBA 運彩專區</title>
 	
-<%-- 	 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/demo.css" /> --%>
-<%--     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/slicebox.css" /> --%>
-<%--     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/custom.css" /> --%>
      <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
    
-<!--      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <%-- 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP --> --%>
@@ -48,9 +45,8 @@
 	</style>
   </head>
   <body>
-		<jsp:include page="/fragment/top.jsp"/>
-		<jsp:include page="/_5_gambling/sidebar.jsp"/>
-
+  <jsp:include page="/fragment/top.jsp"/>
+  <jsp:include page="/_5_gambling/sidebar.jsp"/>
        <div class="container">
        		<div class="row">
        			<div class="col-md-2"></div>       	
@@ -360,7 +356,7 @@
 											            });
 													  break;											
 													default:/*下注成功*/
-														alert("Session中會員剩餘點數 : " + data);
+														//alert("Session中會員剩餘點數 : " + data);
 			                    						$.notiny({/* notiny 特效*/
 		                        	 	                    theme:'dark',
 		                        	 	                    text: '下注成功！',
@@ -472,6 +468,7 @@
                 		$("#confirm").attr("disabled",true);
                 	}
   				})
+  				
   				$("#fullname").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
@@ -488,7 +485,8 @@
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				})
+  				}).keyup(function(){ return ValidateChi_Eng(this,$(this).val())} /*限定中英文*/)
+  				
   				$("#cvc").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
@@ -499,7 +497,6 @@
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						//flagCvc = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -512,13 +509,11 @@
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						//falgNtd = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						//falgNtd = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -534,6 +529,15 @@
 				    if (!/^\d+[.]?[1-9]?$/.test(pnumber))
 				    {
 				        e.value = /\d+[.]?[1-9]?/.exec(e.value);
+				    }
+				    return false;
+				}
+  				/*格式驗證function : 只可輸入中英文*/
+  				function ValidateChi_Eng(e, input)
+				{
+				    if (!/^[\u0391-\uFFE5A-Za-z]+$/.test(input))
+				    {
+				        e.value = /^[\u0391-\uFFE5A-Za-z]+$/.exec(e.value);
 				    }
 				    return false;
 				}
