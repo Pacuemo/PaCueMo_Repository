@@ -226,7 +226,7 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/jquery.card.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
-
+	   <script src="<%=request.getContextPath()%>/_5_gambling/util_js/util.js"></script>
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -252,7 +252,7 @@
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
        				var battleId 	 = inputsHidden[0].value ;
-       				
+       				        				
 	       			 //--- 按下【下注】按鈕ajax撈資料 開始 ---
 	   				 $.ajax({
 	   					 "type":"POST",//傳遞方式				
@@ -301,7 +301,17 @@
 	           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
 	           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
 	           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
-	       				 }
+	       				 
+	         				 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+	           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) ){
+	           					//alert("大於");
+	           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+	           				 }else{
+	           					//alert("小於");
+	           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+	           				 }
+	    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+       					 }
 	   				 })
 	   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
 					 myDialog.dialog("open");
@@ -320,6 +330,7 @@
 	                resizable: false,
 	                position: { my: "center", at: "center", of: window }, /* dialog 起始彈出位置 */
 	                buttons:[{
+	                			'id'    : 'confirmBet',
 	                			'text'  : "確認下注",
 	                			'class' : "btn btn-danger",
 	                			'click' : function()
@@ -941,7 +952,19 @@
 				           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
 				           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
 				           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
-				       				 }
+				       				 
+				   				 
+				         				/*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+				           				if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) ){
+				           					//alert("大於");
+				           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+				           				}else{
+				           					//alert("小於");
+				           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+				           				}
+				    					/*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+				   				 
+				   				 	 }
 				   				 })
 				   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
 								 myDialog.dialog("open");
@@ -951,7 +974,7 @@
 							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞結束 ==============*/
 	            		}
 	            	})
-			}
+			}      				      			
        		//======================================================================================
        		//=========================【 撈分頁資料 $.ajax function 結束】=========================
        		//======================================================================================
