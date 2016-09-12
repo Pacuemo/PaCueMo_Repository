@@ -16,7 +16,7 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
    
-<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <%-- 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP --> --%>
@@ -302,13 +302,16 @@
 	           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
 	           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
 	       				 
+	           	
 	         				 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
-	           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) ){
-	           					//alert("大於");
+	           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
+	           					//alert("距比賽開始 < 10分鐘，不可下注");
 	           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
 	           				 }else{
-	           					//alert("小於");
+	           					//alert("距比賽開始 > 10分鐘，可下注");
 	           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
 	           				 }
 	    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
        					 }
@@ -954,15 +957,17 @@
 				           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
 				       				 
 				   				 
-				         				/*─────── 判斷目前時間vs比賽時間 開始 ─────── */
-				           				if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) ){
-				           					//alert("大於");
+				           			 	 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+				           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
+				           					//alert("距比賽開始 < 10分鐘，不可下注");
 				           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
-				           				}else{
-				           					//alert("小於");
+				           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+				           				 }else{
+				           					//alert("距比賽開始 > 10分鐘，可下注");
 				           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
-				           				}
-				    					/*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+				           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
+				           				 }
+				    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
 				   				 
 				   				 	 }
 				   				 })
