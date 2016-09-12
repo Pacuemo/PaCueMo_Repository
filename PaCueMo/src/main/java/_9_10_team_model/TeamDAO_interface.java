@@ -27,4 +27,8 @@ public interface TeamDAO_interface
 
 	void updateAvg(Integer teamId);
 
+	List<TeamVO> getOther(String teamMemberId);
+
+	List<TeamVO> getMy(String teamMemberId);
+
 }

@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:url var="home" value="/" scope="request" /> <%--設定home，之後在script可以用--%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -21,6 +22,10 @@
 .h2_tm {
 	margin-left: 20px;
 	color: white;
+}
+
+.left_20{
+margin-left: 20px;
 }
 </style>
 
@@ -40,9 +45,36 @@
 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 
-	<h2 class="h2_tm">您尚未加入任何隊伍</h2>
-
-
+	<div class="row">
+		<div class="col-md-6" >
+		<c:choose >
+			<c:when test="${requestScope.myList[0].teamId == null }">
+				<h2 class="h2_tm">您尚未加入任何隊伍</h2>
+			</c:when>
+			<c:otherwise>
+				<h2 class="h2_tm">您的隊伍：</h2>
+				<c:forEach var="my_list" items="${requestScope.myList }">
+					<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${my_list.teamId}" class="left_20">${my_list.teamName}</a><br>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+			<button id="create-team" class="left_20">Create new Team</button>
+		</div>
+<!-- 		right side 			-->
+		<div class="col-md-6">
+			<h2 class="h2_tm">推薦隊伍</h2>
+			<table class="table table-hover " >
+				<tbody>
+				<c:forEach var="ot_list" items="${requestScope.otherList }" >
+					<tr><td class="text-success "><div class="row">
+						<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
+						<button type="button" class="btn btn-success btn-xs left_20" name="btn_teamId" value="${ot_list.teamId }" >加入</button>
+					</div></td></tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post">
 		<!--             <div class="tm_title"> -->
@@ -56,19 +88,19 @@
 		</fieldset>
 		<fieldset>
 			<div class="div_pri_tm">
-				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
+				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
 				</span>
 					<div class="descrip" id="">所有人都可以自由加入這個隊伍。</div>
 				</label>
 			</div>
 			<div class="div_pri_tm">
-				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
+				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
 				</span>
 					<div class="descrip" id="">所有人都可以申請加入這個隊伍。</div>
 				</label>
 			</div>
 			<div class="div_pri_tm">
-				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
+				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
 				</span>
 					<div class="descrip" id="">只有被邀請的成員才可以加入這個隊伍。</div>
 				</label>
@@ -80,7 +112,7 @@
 	</form>
 
 
-	<button id="create-team">Create new user</button>
+	
 
 
 	<script>
@@ -93,13 +125,32 @@
 			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
 
 			//新增事件
-			$("#create-team").button().on("click", function()
+			$("#create-team").on("click", function()
 			{
 				dialog.dialog("open");
-			});
+			}); // team dialog end  
 
-			// team dialog end    
-
+			// join team start
+			$("button[name='btn_teamId']").click(function(){
+// 				alert(this.value + " = " + $(this).val());
+				
+				$.ajax({
+					"type":"get",
+					"url":"${home}spring/team/joinTeam", // home 在 設定
+					"data":{"memberId":"${sessionScope.LoginOK.memberId}",
+							"teamId":$(this).val()},
+					"dataType":"text",
+					"success":function(data){
+						alert(data);
+					},
+					"error":function(Error){
+						alert("fuck");
+						console.log(Error);
+					}
+				})
+			}) // joinTeam End
+			
+			
 			// initial end
 		});
 	</script>

@@ -81,4 +81,14 @@ public class TeamService
 	{
 		return teamDAO.getAll();
 	}
+
+	public List<TeamVO> getOtherTeamList(String teamMemberId)
+	{
+		return teamDAO.getOther(teamMemberId);
+	}
+
+	public List<TeamVO> getMyTeamList(String teamMemberId)
+	{
+		return teamDAO.getMy(teamMemberId);
+	}
 }
