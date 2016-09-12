@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import _9_25_leagueRecord_model.LeagueRecordDAO;
+import _9_21_club_model.ClubDAO_I;
+import _9_25_leagueRecord_model.LeagueRecordDAO_I;
 import _9_25_leagueRecord_model.LeagueRecordVO;
-import _9_26_fightRecord_model.FightRecordDAO;
+import _9_26_fightRecord_model.FightRecordDAO_I;
 import _9_26_fightRecord_model.FightRecordVO;
 
 @Component
@@ -16,9 +17,11 @@ import _9_26_fightRecord_model.FightRecordVO;
 public class LeagueRecord_Service
 {
 	@Autowired
-	private LeagueRecordDAO leagueRecordDAO;
+	private LeagueRecordDAO_I leagueRecordDAO;
 	@Autowired
-	private FightRecordDAO fightRecordDao;
+	private FightRecordDAO_I fightRecordDao;
+	@Autowired
+	private ClubDAO_I clubDao;
 
 //新增聯賽紀錄(賽程表)
 	@Transactional(rollbackFor = Exception.class)
@@ -96,7 +99,10 @@ public class LeagueRecord_Service
 //查詢社團聯賽
 	public LeagueRecordVO get_By_FightId(int fightId)
 	{
-		return leagueRecordDAO.find_One(fightId);
+		LeagueRecordVO leagueRecordVO = leagueRecordDAO.find_One(fightId);
+		leagueRecordVO.setClubA(clubDao.findByPK(leagueRecordVO.getClubIdA()));
+		leagueRecordVO.setClubB(clubDao.findByPK(leagueRecordVO.getClubIdB()));
+		return leagueRecordVO;
 	}
 
 }
