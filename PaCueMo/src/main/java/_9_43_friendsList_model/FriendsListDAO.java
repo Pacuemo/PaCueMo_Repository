@@ -53,7 +53,7 @@ public class FriendsListDAO implements FriendsListDAO_interface
 				friendsListVO = new FriendsListVO();
 				friendsListVO.setMemberId(rs.getString(1));
 				friendsListVO.setMemberFriendId(rs.getString(2));
-				friendsListVO.setFriendStatus(rs.getInt(3));
+				friendsListVO.setMemberStatus(rs.getInt(3));
 				list.add(friendsListVO);
 
 			}
@@ -139,7 +139,7 @@ public class FriendsListDAO implements FriendsListDAO_interface
 				friendsListVO = new FriendsListVO();
 				friendsListVO.setMemberId(rs.getString(1));
 				friendsListVO.setMemberFriendId(rs.getString(2));
-				friendsListVO.setFriendStatus(rs.getInt(3));
+				friendsListVO.setMemberStatus(rs.getInt(3));
 				list.add(friendsListVO);
 
 			}

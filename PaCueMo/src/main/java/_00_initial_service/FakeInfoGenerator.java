@@ -14,15 +14,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Component;
 
-import _00_config.RootConfig;
 import _9_41_member_model.MemberVO;
 
 @Component
@@ -975,22 +975,34 @@ public class FakeInfoGenerator
 
 			}
 
-			for (int i = 1 ; i <= number ; i++)
+			Set<String> friends = new LinkedHashSet<String>();
+
+			String friendId = null;
+
+			while (true)
+			{
+				friendId = list.get((int) (Math.random() * 144));
+				if (myId != friendId)
+				{
+					friends.add(friendId);
+				}
+				if (friends.size() == number)
+				{
+					break;
+				}
+			}
+
+			for (String fid : friends)
 			{
 
-				String friendId = null;
-
-				while (true)
-				{
-					friendId = list.get((int) (Math.random() * 144));
-					if (myId != friendId)
-						break;
-				}
-
 				String str = String.format("INSERT INTO dbo.FriendsList( memberId, memberFriendId, memberStatus ) "
-						+ "VALUES ('%s','%s',%s)", myId, friendId, 1);
+						+ "VALUES ('%s','%s',%s)", myId, fid, 1);
+
+				String str1 = String.format("INSERT INTO dbo.FriendsList( memberId, memberFriendId, memberStatus ) "
+						+ "VALUES ('%s','%s',%s)", fid, myId, 1);
 
 				System.out.println(str);
+				System.out.println(str1);
 			}
 
 			// Handle any driver errors
@@ -1078,10 +1090,10 @@ public class FakeInfoGenerator
 		 * Step3 : 在本程式中執行你的方法，將SSMS NEWID() 生成的 memberId 換掉原本的 INSERT 指令
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
-		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
+//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+//		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
-//		playercardGenerator();
+		playercardGenerator();
 //		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
 //      club和league部分
 //		clubGenerator();
@@ -1089,7 +1101,11 @@ public class FakeInfoGenerator
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
+<<<<<<< HEAD
 		gambleOrderGenerator();
+=======
+//		gambleOrderGenerator();
+>>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();

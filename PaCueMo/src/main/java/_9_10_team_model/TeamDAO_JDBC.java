@@ -13,29 +13,26 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
 import _00_initial_service.GlobalService;
 import _9_11_teammember_model.TeamMemberVO;
 
-@Repository("TeamDAO")
-public class TeamDAO implements TeamDAO_interface
+public class TeamDAO_JDBC implements TeamDAO_interface
 {
 	private JdbcOperations jdbc;
 
-	public TeamDAO()
+	public TeamDAO_JDBC()
 	{
 	}
 
 	@Autowired
-	public TeamDAO(JdbcOperations jdbc)
+	public TeamDAO_JDBC(JdbcOperations jdbc)
 	{
 		this.jdbc = jdbc;
 	}
 
 	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
 	private static final String FIND_TEAMID_WITH_TEAMHEAD = "SELECT teamId FROM Team where teamHead = ?";
-	private static final String FIND_TEAMVO_WITH_TEAMHEAD = "SELECT * FROM Team where teamHead = ?";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
 	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
@@ -94,12 +91,6 @@ public class TeamDAO implements TeamDAO_interface
 	public List<Integer> find_TeamId_With_TeamHead(String teamHead)
 	{
 		return jdbc.queryForList(FIND_TEAMID_WITH_TEAMHEAD, Integer.class, teamHead);
-	}
-
-	@Override
-	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
-	{
-		return jdbc.query(FIND_TEAMVO_WITH_TEAMHEAD, new TeamRowMapper(), teamHead);
 	}
 
 	/*
@@ -239,7 +230,71 @@ public class TeamDAO implements TeamDAO_interface
 	@Override
 	public void delete(Integer teamId)
 	{
-		jdbc.update(DELETE_TEAM, teamId);
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try
+		{
+			Class.forName(GlobalService.DRIVER_NAME);
+			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con.setAutoCommit(false);
+			// 先刪除TeamMember
+			pstmt = con.prepareStatement(DELETE_TEAM_MEMBERS);
+			pstmt.setInt(1, teamId);
+			pstmt.executeUpdate();
+			// 再刪除 Team
+			pstmt = con.prepareStatement(DELETE_TEAM);
+			pstmt.setInt(1, teamId);
+			pstmt.executeUpdate();
+
+			con.commit();
+			con.setAutoCommit(true);
+		}
+		catch (SQLException e)
+		{
+			if (con != null)
+			{
+				try
+				{
+					con.rollback();
+				}
+				catch (SQLException excep)
+				{
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 
 	/*
@@ -586,5 +641,12 @@ public class TeamDAO implements TeamDAO_interface
 			return new TeamVO(rs.getInt("teamId"), rs.getString("teamName"), rs.getDate("createDate"), rs.getInt("teamProp"),
 					rs.getDouble("avgRank"), rs.getString("teamHead"), rs.getString("content"));
 		}
+	}
+
+	@Override
+	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
