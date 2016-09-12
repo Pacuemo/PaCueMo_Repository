@@ -1093,7 +1093,7 @@ public class FakeInfoGenerator
 //		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 //		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
-		playercardGenerator();
+//		playercardGenerator();
 //		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
 //      club和league部分
 //		clubGenerator();
@@ -1102,7 +1102,7 @@ public class FakeInfoGenerator
 //		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
-//		goodsOrderGenerator();
+		goodsOrderGenerator();
 
 //		generator.teamGenerator();
 //		teammemberGenerator();

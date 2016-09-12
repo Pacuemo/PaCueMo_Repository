@@ -169,7 +169,7 @@ h1 {
 						<c:forEach items="${requestScope.fightRecordVOs}" var="fightRecordVO">
 							<c:if test="${fightRecordVO.clubId== leagueRecordVO.clubIdB}">
 								<tr>
-									<td><img class="img-rounded" style="width: 28px; height: 28px" src="${pageContext.request.contextPath}/image/member/${fightRecordVO.memberVO.memberImgUrl}"><img></td>
+									<td><img class="img-rounded" style="width: 28px; height: 28px" src="${pageContext.request.contextPath}/image/member/${fightRecordVO.memberVO.memberImgUrl}" ><img></td>
 									<td>${fightRecordVO.memberVO.memberLastName}${fightRecordVO.memberVO.memberFirstName}</td>
 									<td>${fightRecordVO.gamePlayer}</td>
 									<td>${fightRecordVO.position}</td>

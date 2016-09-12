@@ -21,6 +21,6 @@
   <body>
     <jsp:include page="/fragment/top.jsp"/>
    <jsp:include page="sidebar.jsp"/>
-       <h1 id="G" >別再抱大腿啦</h1>
+       <h1 id="G"  >別再抱大腿啦</h1>
   </body>
 </html>
