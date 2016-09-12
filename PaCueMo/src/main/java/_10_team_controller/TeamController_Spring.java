@@ -27,13 +27,14 @@ public class TeamController_Spring
 	private TeamService teamService;
 
 	@RequestMapping(value = "/joinTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
-	@ResponseBody
-	public String joinTeam(HttpServletRequest request, Integer teamId, String memberId)
+	public String joinTeam(HttpServletRequest request, HttpSession session, Integer btn_join, String page)
 	{
-		System.out.println("Team_Controller : joinTeamPage");
+		System.out.println("Team_Controller : joinTeam");
 		try
 		{
-			teamMemberService.add(teamId, memberId);
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+			System.out.println(btn_join);
+			teamMemberService.add(btn_join, memberVO.getMemberId());
 		}
 		catch (Exception e)
 		{
@@ -41,9 +42,78 @@ public class TeamController_Spring
 			System.out.println("fuck");
 			return "有隊伍加不了(不會顯示這按鈕)";
 		}
-		System.out.println("Test End");
+		System.out.println("加入成功");
 		System.out.println("-------------------------------------------------------");
-		return "Test success";
+		if (page.equals("main"))
+		{
+			System.out.println("forward main");
+			request.setAttribute("teamId", btn_join);	//set Att
+			return "forward:/TeamServlet";
+		}
+		else
+		{
+			System.out.println("forward ctp");
+			return "forward:createTeamPage";
+		}
+	}
+
+	@RequestMapping(value = "/abortTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
+	public String abortTeam(HttpServletRequest request, HttpSession session, String page, Integer btn_abort)
+	{
+		System.out.println("Team_Controller : abortTeam");
+		try
+		{
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+			teamMemberService.deleteOne(btn_abort, memberVO.getMemberId());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "???";
+		}
+		System.out.println("退出成功");
+		System.out.println("-------------------------------------------------------");
+		if (page.equals("main"))
+		{
+			System.out.println("forward main");
+			request.setAttribute("teamId", btn_abort);	//set Att
+			return "forward:/TeamServlet";
+		}
+		else
+		{
+			System.out.println("forward ctp");
+			return "forward:createTeamPage";
+		}
+	}
+
+	@RequestMapping(value = "/disbandTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
+	public String disbandTeam(HttpServletRequest request, Integer btn_disband, String memberId, String page)
+	{
+		System.out.println("Team_Controller : disbandTeam");
+		try
+		{
+			teamService.delete(btn_disband);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "???";
+		}
+		System.out.println("解散成功");
+		System.out.println("-------------------------------------------------------");
+		if (page.equals("main"))
+		{
+			System.out.println("forward main");
+			request.setAttribute("teamId", btn_disband);	//set Att
+			return "forward:/TeamServlet";
+		}
+		else
+		{
+			System.out.println("forward ctp");
+			return "forward:createTeamPage";
+		}
 	}
 
 	@ResponseBody
@@ -79,6 +149,7 @@ public class TeamController_Spring
 	@RequestMapping(value = "/createTeamPage")
 	public String createTeamPage(HttpSession session, HttpServletRequest request)
 	{
+		System.out.println("Team_Controller : getcreateTeamPage");
 		MemberVO memberVO = null;
 		try
 		{
@@ -87,6 +158,11 @@ public class TeamController_Spring
 			request.setAttribute("otherList", otherList);
 			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
 			request.setAttribute("myList", myList);
+			List<Integer> mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberVO.getMemberId());
+			request.setAttribute("mineTeamIdList", mineTeamIdList);
+
+			System.out.println("成功導入");
+			System.out.println("-------------------------------------------------------");
 			return "team/createteam";
 		}
 		catch (Exception e)

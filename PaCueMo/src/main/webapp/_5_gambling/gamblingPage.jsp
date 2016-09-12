@@ -1,28 +1,25 @@
-﻿﻿<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
  
 <!DOCTYPE html>
 <html>
   <head>
+  <%@ page import="java.util.List" %>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
     <title>NBA 運彩專區</title>
 	
-	 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/demo.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/slicebox.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/custom.css" />
      <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
    
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-	 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
-	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+<!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+<!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<%-- 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP --> --%>
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
@@ -48,10 +45,8 @@
 	</style>
   </head>
   <body>
-  	
-		<jsp:include page="/fragment/top.jsp"/>
-		<jsp:include page="/_5_gambling/sidebar.jsp"/>
-
+  <jsp:include page="/fragment/top.jsp"/>
+  <jsp:include page="/_5_gambling/sidebar.jsp"/>
        <div class="container">
        		<div class="row">
        			<div class="col-md-2"></div>       	
@@ -93,7 +88,7 @@
        								<tr align='center' valign='middle'>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['away'].teamName}</h4></td>
 										<td>
-											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/>
+											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/><p/>
 									    	<input  type="hidden" value="${battleSetVO.battleId}"/><!-- 紀錄 battleSetId -->
 										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
 										</td>
@@ -176,17 +171,17 @@
 		<div id="dialog-card" title="購買點數">
 	            <div class="card-wrapper"></div>
 	            <form action="">
-	                  <div class="form-group has-success has-feedback">
+	                  <div class="form-group has-feedback">
 						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:800;color:orange;">卡 號</label>
 						  <input id="cardnumber" placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" style="color:BLUE;font-weight:800;"/>
-					      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+					      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  
 					  </div>
-	                  <div class="form-group has-success has-feedback">
+	                  <div class="form-group has-feedback">
 						  <label class="control-label" for="fullname" style="font-family:'微軟正黑體';font-weight:800;color:orange;">姓 名</label>
-						  <input id="fullname" placeholder="Full name" type="text" name="name" class="form-control" value="科比布萊恩" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
-					 	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+						  <input id="fullname" placeholder="Full name" type="text" name="name" value="科比布萊恩" class="form-control"  style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
+					 	  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
 					
@@ -200,21 +195,21 @@
 							  <select id="expire_yy" class="form-control" style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"></select>   
 						  </div>
 					  </div>	
-					  <div class="form-group has-success has-feedback">
+					  <div class="form-group has-feedback">
 						  <label class="control-label" for="cvc" style="font-family:'微軟正黑體';font-weight:800;color:orange;" >代 碼(CVC)</label>
 						  <input id="cvc" placeholder="CVC" type="text" name="cvc" class="form-control" value="346" pattern=".{3,}" style="color:BLUE;font-weight:800;"/>
-					  	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+					  	  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
-					 <div class="form-group has-success has-feedback col-xs-6">
+					 <div class="form-group has-feedback col-xs-6">
 						  <label class="control-label" for="NTD" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px">購買金額 (1 NT$ : 100 P)</label>
 						  <input id="NTD" placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990" style="color:BLUE;font-weight:800;"/>
-					  	  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px;"></span>
+					  	  <span class="glyphicon form-control-feedback" aria-hidden="true" style="padding-right:15px;"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
 					  <div class="form-group col-xs-6">
 						  <label class="control-label" for="coin" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px;">代幣數量</label>
-						  <input id="coin" placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" value="99000" style="color:DARKGREEN;font-weight:800;"/>
+						  <input id="coin" placeholder="代幣數量" type="text" name="coin" class="form-control" readonly="readonly" style="color:DARKGREEN;font-weight:800;"/>
 					  </div>
 	            </form>
 	    </div>
@@ -231,7 +226,7 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/jquery.card.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
-
+	   <script src="<%=request.getContextPath()%>/_5_gambling/util_js/util.js"></script>
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -257,7 +252,7 @@
        				//alert($(this)); // <button>
        				var inputsHidden = $(this).siblings('input:hidden'); // <button> 同層的所有 <input hidden..>       
        				var battleId 	 = inputsHidden[0].value ;
-       				
+       				        				
 	       			 //--- 按下【下注】按鈕ajax撈資料 開始 ---
 	   				 $.ajax({
 	   					 "type":"POST",//傳遞方式				
@@ -306,7 +301,20 @@
 	           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
 	           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
 	           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
-	       				 }
+	       				 
+	           	
+	         				 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+	           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
+	           					//alert("距比賽開始 < 10分鐘，不可下注");
+	           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+	           				 }else{
+	           					//alert("距比賽開始 > 10分鐘，可下注");
+	           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
+	           				 }
+	    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+       					 }
 	   				 })
 	   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
 					 myDialog.dialog("open");
@@ -325,6 +333,7 @@
 	                resizable: false,
 	                position: { my: "center", at: "center", of: window }, /* dialog 起始彈出位置 */
 	                buttons:[{
+	                			'id'    : 'confirmBet',
 	                			'text'  : "確認下注",
 	                			'class' : "btn btn-danger",
 	                			'click' : function()
@@ -361,7 +370,7 @@
 											            });
 													  break;											
 													default:/*下注成功*/
-														alert("Session中會員剩餘點數 : " + data);
+														//alert("Session中會員剩餘點數 : " + data);
 			                    						$.notiny({/* notiny 特效*/
 		                        	 	                    theme:'dark',
 		                        	 	                    text: '下注成功！',
@@ -408,23 +417,64 @@
        			})
        			/* ======== 【購買代幣按鈕】 ======= */
        			/*=====================【信用卡textBox驗證 開始】=====================*/
-       			var falgNumber=true , flagName=true , flagCvc=true , falgNtd=true;
+       			//  ______________ 檢查所有欄位是否都填入 開始 ______________
+       			var cardnumberInput = $("#cardnumber");
+       			var fullNameInput   = $("#fullname");
+       			var cvcInput        = $("#cvc");
+       			var ntdInput        = $("#NTD");
+       			var coinText        = $("#coin");	
        			
-       			var isAllFilled = function(){// 檢查所有欄位是否都填入
-       				return falgNumber && flagName && flagCvc && falgNtd ;
+       			var isAllFilled = function(){
+
+	       		     if(cardnumberInput.val() == "empty" || cardnumberInput.val() == ""){
+	       		    	 cardnumberInput.parent('div').switchClass('has-success','has-error');
+	       		    	 cardnumberInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+	    			 }else{
+	    				 cardnumberInput.parent('div').switchClass('has-error','has-success');
+	    				 cardnumberInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+	    			 }
+       			     if(fullNameInput.val() == "empty" || fullNameInput.val() == ""){
+       			    	 fullNameInput.parent('div').switchClass('has-success','has-error');
+       			    	 fullNameInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+        			 }else{
+        				 fullNameInput.parent('div').switchClass('has-error','has-success');
+        				 fullNameInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+        			 }
+       			   	 if(cvcInput.val() == "empty" || cvcInput.val() == ""){
+	       			   	 cvcInput.parent('div').switchClass('has-success','has-error');
+	       			 	 cvcInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+      			 	 }else{
+      			 		 cvcInput.parent('div').switchClass('has-error','has-success');
+      			 		 cvcInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+      			 	 }
+      				 if(ntdInput.val() == "empty" || ntdInput.val() == ""){
+      					 ntdInput.parent('div').switchClass('has-success','has-error');
+      					 ntdInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
+      					 coinText.val(0);// 點數textBox 設 0
+      			 	 }else{
+      			 		 ntdInput.parent('div').switchClass('has-error','has-success');
+      			 		 ntdInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
+      			 		 coinText.val( ntdInput.val() * 100 );// 點數textBox 設 0
+      			 	 }
+ 
+       				 falgNumber = ( cardnumberInput.val() == "empty") ? false : true;
+       				 flagName   = ( fullNameInput.val()   == "empty") ? false : true;
+       				 flagCvc    = ( cvcInput.val()        == "empty") ? false : true;
+       				 falgNtd    = ( ntdInput.val()        == "empty") ? false : true;
+       				 return falgNumber && flagName && flagCvc && falgNtd ;
        			}
+       			//  ______________ 檢查所有欄位是否都填入 結束 ______________
+       			// onClick 、 blur 時動作↓↓↓↓↓↓↓↓↓↓↓
   				$("#cardnumber").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						falgNumber = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						falgNumber = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -432,37 +482,35 @@
                 		$("#confirm").attr("disabled",true);
                 	}
   				})
+  				
   				$("#fullname").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						flagName = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						flagName = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				})
+  				}).keyup(function(){ return ValidateChi_Eng(this,$(this).val())} /*限定中英文*/)
+  				
   				$("#cvc").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						flagCvc = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						flagCvc = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
@@ -470,25 +518,43 @@
                 		$("#confirm").attr("disabled",true);
                 	}
   				})
-  				$("#NTD").click(function(){$(this).val("")}).blur(function(){
+  				$("#NTD").click(function(){$(this).val("");$("#coin").val(0)}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
 						$(this).parent('div').switchClass('has-success','has-error');
 						$(this).next('span').switchClass('glyphicon-ok','glyphicon-remove');
-						falgNtd = false;
 					}
   					else{
   						$(this).css({'color':'blue' , 'font-style':'normal'});
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
-  						falgNtd = true;
   					}
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				})
+  				}).keyup(function(){ return ValidateFloat2(this,$(this).val())} /*可以輸入小數點（限制小數點後一位)*/)
+  				
+  				
+  				/*格式驗證function : 可以輸入小數點（限制小數點後一位)*/
+  				function ValidateFloat2(e, pnumber)
+				{
+				    if (!/^\d+[.]?[1-9]?$/.test(pnumber))
+				    {
+				        e.value = /\d+[.]?[1-9]?/.exec(e.value);
+				    }
+				    return false;
+				}
+  				/*格式驗證function : 只可輸入中英文*/
+  				function ValidateChi_Eng(e, input)
+				{
+				    if (!/^[\u0391-\uFFE5A-Za-z]+$/.test(input))
+				    {
+				        e.value = /^[\u0391-\uFFE5A-Za-z]+$/.exec(e.value);
+				    }
+				    return false;
+				}
   				/*=====================【信用卡textBox驗證 結束】=====================*/
        			
        			
@@ -889,7 +955,21 @@
 				           				$("#row4 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeScore + "</h4>");
 				           				$("#row5 td:eq(0)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + awayBet + "</h4>");
 				           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
-				       				 }
+				       				 
+				   				 
+				           			 	 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+				           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
+				           					//alert("距比賽開始 < 10分鐘，不可下注");
+				           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+				           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+				           				 }else{
+				           					//alert("距比賽開始 > 10分鐘，可下注");
+				           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+				           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
+				           				 }
+				    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+				   				 
+				   				 	 }
 				   				 })
 				   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
 								 myDialog.dialog("open");
@@ -899,7 +979,7 @@
 							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞結束 ==============*/
 	            		}
 	            	})
-			}
+			}      				      			
        		//======================================================================================
        		//=========================【 撈分頁資料 $.ajax function 結束】=========================
        		//======================================================================================

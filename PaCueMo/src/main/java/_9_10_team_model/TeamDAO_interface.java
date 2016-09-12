@@ -11,7 +11,7 @@ public interface TeamDAO_interface
 
 	void insert(TeamVO teamVO);
 
-	List<Integer> find_TeamId_With_TeamHead(String teamHead) throws SQLException;
+	List<Integer> find_TeamId_With_TeamHead(String teamHead);
 
 	void createTeam(TeamVO teamVO) throws SQLException;
 
@@ -30,5 +30,7 @@ public interface TeamDAO_interface
 	List<TeamVO> getOther(String teamMemberId);
 
 	List<TeamVO> getMy(String teamMemberId);
+
+	List<TeamVO> find_TeamVO_With_TeamHead(String teamHead);
 
 }

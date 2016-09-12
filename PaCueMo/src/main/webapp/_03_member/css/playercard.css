@@ -109,12 +109,94 @@
     -webkit-appearance: none;
     padding: 1em .75em .6875em;
     width: 100%;
+    height: 3em;
 }
 .reboot input:not([type='radio']), .reboot textarea {
     background-color: #FFF;
     border: 1px solid #dfe0e6;
     color: #1c1c1f;
-    font-size: .9375em;
     line-height: normal;
     margin: 0;
 }
+
+.reboot fieldset {
+    border: 0;
+    margin: 0 2px;
+    padding: 0;
+}
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: .35em .625em .75em;
+}
+
+.reboot fieldset li {
+    display: block;
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.reboot fieldset ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.reboot .name {
+    display: inline-block;
+    vertical-align: top;
+    width: 49.5%;
+}
+
+.reboot .register-dob {
+    text-align: justify;
+    line-height: 0;
+}
+
+
+.reboot label {
+    color: #88898c;
+    display: block;
+    font-size: .9375em;
+    text-align: left;
+}
+
+.reboot form {
+    position: relative;
+}
+
+.reboot .controls-dob .dob {
+    text-transform: capitalize;
+}
+
+.reboot select {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #FFF;
+    border: 1px solid #dfe0e6;
+    color: #88898c;
+    font-size: .9375em;
+    height: 3em;
+    margin: 0;
+    padding: .625em .625em .625em;
+    width: 100%;
+}
+
+.reboot .controls-dob .controls {
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+}
+
+.reboot .controls-dob1 .controls {
+    display: inline-block;
+    vertical-align: top;
+    width: 16%;
+}
+
+.reboot .controls-dob1 .dob {
+    text-transform: capitalize;
+}
+

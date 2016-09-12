@@ -11,7 +11,7 @@ public interface TeamMemberDAO_interface
 
 	void update(TeamMemberVO teamMemberVO);
 
-	void delete(Integer teamId, String teamMemberId);
+	void deleteOne(Integer teamId, String teamMemberId);
 
 	TeamMemberVO findByPrimaryKey(Integer teamId, String teamMemberId);
 
@@ -20,5 +20,7 @@ public interface TeamMemberDAO_interface
 	List<TeamMemberVO> getAll();
 
 	List<TeamMemberVO> findByTeamMemberId(String TeamMemberId);
+
+	void deleteAll(Integer teamId);
 
 }
