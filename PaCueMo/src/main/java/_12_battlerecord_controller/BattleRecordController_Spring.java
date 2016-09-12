@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
@@ -23,7 +24,7 @@ public class BattleRecordController_Spring
 	@Autowired
 	private TeamService teamService;
 
-	@RequestMapping(value = "/getMainPage")
+	@RequestMapping(value = "/introduce") //Page
 	public String getMainPage(HttpSession session, HttpServletRequest request)
 	{
 		System.out.println("BattleRecord_Controller : getMainPage");
@@ -46,7 +47,7 @@ public class BattleRecordController_Spring
 		return "battle_rec/tmbattle";
 	}
 
-	@RequestMapping(value = "/getLetsBattlePage")
+	@RequestMapping(value = "/letsbattle", method = RequestMethod.GET) //Page
 	public String getLetsBattlePage(HttpSession session, HttpServletRequest request)
 	{
 		System.out.println("BattleRecord_Controller : getLetsBattlePage");
