@@ -56,6 +56,11 @@ public class GambleOrderService
 		return gambleOrderDAO.getAll();
 	}
 
+	public List<GambleOrderVO> getOrdersByMemberId(String memberId)
+	{
+		return gambleOrderDAO.getByMemberId(memberId);
+	}
+
 	public List<MemberVO> getMembersByBattleId(Integer BattleId)// 根據battleId查詢所有下注該場的會員VO
 	{
 		List<MemberVO> returnList = new ArrayList<>();
@@ -110,7 +115,7 @@ public class GambleOrderService
 //		List<GambleOrderVO> list = svc.getAll();
 //		for (GambleOrderVO vo : list)
 //		{
-//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetMoney(), vo.getBetTeam());
+//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetHome(), vo.getBetAway());
 //			System.out.println(tmp);
 //		}
 		//========= 【測試】getMembersByBattleId() ==========
@@ -120,11 +125,11 @@ public class GambleOrderService
 //			System.out.println(vo.getMemberFirstName() + " " + vo.getMemberLastName());
 //		}
 		//========= 【測試】getBattleSetsByMbId() ==========
-		List<BattleSetVO> list = svc.getBattleSetsByMbId("382F736E-F2BF-48C7-8A60-466FD01AE887");
-		for (BattleSetVO vo : list)
-		{
-			System.out.println(vo.getBattleDateTime() + " " + vo.getBattleId());
-		}
+//		List<BattleSetVO> list = svc.getBattleSetsByMbId("382F736E-F2BF-48C7-8A60-466FD01AE887");
+//		for (BattleSetVO vo : list)
+//		{
+//			System.out.println(vo.getBattleDateTime() + " " + vo.getBattleId());
+//		}
 	}
 
 }

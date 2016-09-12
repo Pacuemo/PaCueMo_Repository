@@ -65,6 +65,11 @@ public class BattleSetService
 		return list;
 	}
 
+	public List<BattleSetVO> getAllBattleSetByDate(String queryDate)
+	{
+		return bSetDAO.getSetsByDate(queryDate);
+	}
+
 	public Integer getCountByDate(String queryDate)
 	{
 		return bSetDAO.getBattleSetsCountByDate(queryDate);

@@ -5,8 +5,8 @@ public class GambleOrderVO
 	private Integer gambleId;
 	private String memberId;
 	private Integer battleId;
-	private Double betMoney;
-	private Integer betTeam;
+	private Double betHome;
+	private Double betAway;
 
 	public Integer getGambleId()
 	{
@@ -38,24 +38,24 @@ public class GambleOrderVO
 		this.battleId = battleId;
 	}
 
-	public Double getBetMoney()
+	public Double getBetHome()
 	{
-		return betMoney;
+		return betHome;
 	}
 
-	public void setBetMoney(Double betMoney)
+	public void setBetHome(Double betHome)
 	{
-		this.betMoney = betMoney;
+		this.betHome = betHome;
 	}
 
-	public Integer getBetTeam()
+	public Double getBetAway()
 	{
-		return betTeam;
+		return betAway;
 	}
 
-	public void setBetTeam(Integer betTeam)
+	public void setBetAway(Double betAway)
 	{
-		this.betTeam = betTeam;
+		this.betAway = betAway;
 	}
 
 }
