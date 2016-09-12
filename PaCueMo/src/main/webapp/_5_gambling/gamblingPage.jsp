@@ -10,19 +10,19 @@
     <meta charset="UTF-8">
     <title>NBA 運彩專區</title>
 	
-	 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/demo.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/slicebox.css" />
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/custom.css" />
+<%-- 	 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/demo.css" /> --%>
+<%--     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/slicebox.css" /> --%>
+<%--     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/custom.css" /> --%>
      <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
    
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-	 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
-	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP -->
+<!--      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
+<!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+<!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<%-- 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP --> --%>
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
@@ -48,7 +48,6 @@
 	</style>
   </head>
   <body>
-  	
 		<jsp:include page="/fragment/top.jsp"/>
 		<jsp:include page="/_5_gambling/sidebar.jsp"/>
 
@@ -93,7 +92,7 @@
        								<tr align='center' valign='middle'>
 										<td><h4 style="font-family:微軟正黑體;font-weight:bolder;color:white;">${battleSetVO['away'].teamName}</h4></td>
 										<td>
-											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/>
+											<Strong class='glyphicon glyphicon-time' style="padding-right:5px;color:white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/><p/>
 									    	<input  type="hidden" value="${battleSetVO.battleId}"/><!-- 紀錄 battleSetId -->
 										    <button type="button" class="btn btn-warning" style="width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;">下 注</button>
 										</td>

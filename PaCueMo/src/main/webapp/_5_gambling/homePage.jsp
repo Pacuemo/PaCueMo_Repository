@@ -10,14 +10,14 @@
 	 <title>NBA 運彩專區</title>
      
      <link rel="shortcut icon" href="../favicon.ico">
-     <link rel="stylesheet" type="text/css" href="advertisment/css/demo.css" />
-     <link rel="stylesheet" type="text/css" href="advertisment/css/slicebox.css" />
-     <link rel="stylesheet" type="text/css" href="advertisment/css/custom.css" />
+     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/demo.css" />
+     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/slicebox.css" />
+     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/css/custom.css" />
      
      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><!-- BOOTSTRAP -->
   	
-  	 <script type="text/javascript" src="advertisment/js/modernizr.custom.46884.js"></script>
+  	 <script type="text/javascript" src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/js/modernizr.custom.46884.js"></script>
   </head>
   <body>
   
@@ -30,19 +30,19 @@
 	
 	            <ul id="sb-slider" class="sb-slider">
 	                <li>
-	                    <a href="http://sports.ltn.com.tw/news/breakingnews/1810875" target="_blank"><img class="test" src="advertisment/images/pic1.jpg" alt="image1" /></a>
+	                    <a href="http://sports.ltn.com.tw/news/breakingnews/1810875" target="_blank"><img class="test" src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/images/pic1.jpg" alt="image1" /></a>
 	                    <div class="sb-description">
 	                        <h3 style="color:yellow;font-family:微軟正黑體;font-weight:700;">NBA》林書豪變籃網一哥 美媒：裁判會吹犯規了吧？</h3>
 	                    </div>
 	                </li>
 	                <li>
-	                    <a href="http://nba.udn.com/nba/story/6780/1932790" target="_blank"><img class="test" src="advertisment/images/pic2.jpg" alt="image2" /></a>
+	                    <a href="http://nba.udn.com/nba/story/6780/1932790" target="_blank"><img class="test" src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/images/pic2.jpg" alt="image2" /></a>
 	                    <div class="sb-description">
 	                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">被柯瑞守住？麥凱倫：不可能</h3>
 	                    </div>
 	                </li>
 	                <li>
-	                    <a href="http://nba.udn.com/nba/story/6780/1784243" target="_blank"><img  src="advertisment/images/pic3.jpg" alt="image1"/></a>
+	                    <a href="http://nba.udn.com/nba/story/6780/1784243" target="_blank"><img  src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/images/pic3.jpg" alt="image1"/></a>
 	                    <div class="sb-description">
 	                        <h3 style="color:orange;font-family:微軟正黑體;font-weight:700;">2016選秀會交易總匯</h3>
 	                    </div>
@@ -54,13 +54,13 @@
 	                    </div>
 	                </li>
 	                <li>
-	                    <a href="http://www.storm.mg/article/157222" target="_blank"><img src="advertisment/images/pic5.jpg" alt="image1" /></a>
+	                    <a href="http://www.storm.mg/article/157222" target="_blank"><img src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/images/pic5.jpg" alt="image1" /></a>
 	                    <div class="sb-description">
 	                        <h3 style="color:blue;font-family:微軟正黑體;font-weight:700;">里約奧運》男籃決賽壓軸 美國夢幻隊擊敗塞爾維亞完成三連霸</h3>
 	                    </div>
 	                </li>
 	                <li>
-	                    <a href="http://www.dongtw.com/nba-news/20160623/000311754.html" target="_blank"><img src="advertisment/images/pic6.jpg" alt="image1" /></a>
+	                    <a href="http://www.dongtw.com/nba-news/20160623/000311754.html" target="_blank"><img src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/images/pic6.jpg" alt="image1" /></a>
 	                    <div class="sb-description">
 	                        <h3 style="color:red;font-family:微軟正黑體;font-weight:700;">重磅！公牛尼克5人交易，Rose赴紐約聯手甜瓜</h3>
 	                    </div>
@@ -81,7 +81,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="advertisment/js/jquery.slicebox.js"></script>  
+	<script type="text/javascript" src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/js/jquery.slicebox.js"></script>  
 	<script type="text/javascript">
 	
 	/* ========================================【Begin 廣告輪播】============================================= */
