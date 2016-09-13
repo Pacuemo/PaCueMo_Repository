@@ -45,7 +45,8 @@ public class FakeInfoGenerator
 	static PreparedStatement pstmt = null;
 	static ResultSet rs = null;
 	static String driver = GlobalService.DRIVER_NAME;
-	static String url = GlobalService.DB_URL;
+	//static String url = GlobalService.DB_URL;
+	static String url = "jdbc:sqlserver://" + GlobalService.HOST + ":1433;databaseName=MagicJack_main";
 	static String userid = GlobalService.USERID;
 	static String passwd = GlobalService.PASSWORD;
 	static List<String> list;
@@ -1094,12 +1095,12 @@ public class FakeInfoGenerator
 //		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-//		friendListGenerator("B411208D-B026-4973-845E-F4C6DFCDF263", 20);
+//		friendListGenerator("83FC7025-12AA-43B0-8162-E27226D92C67", 20);
 //      club和league部分
 //		clubGenerator();
 
 //		clubmemberGenerator();
-		fightrecoedGenerator();
+//		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
 //		goodsOrderGenerator();
