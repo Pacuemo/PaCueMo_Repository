@@ -32,11 +32,11 @@ public class ReportServlet extends HttpServlet
 		Map<String, Object> errorMsg = new HashMap<String, Object>();
 		request.setAttribute("ErrorMsg", errorMsg);
 
-		String reportName = request.getParameter("reportName");
-		if (reportName == null || reportName.trim().length() == 0)
-		{
-			errorMsg.put("reportName", "請填入姓名");
-		}
+//		String reportName = request.getParameter("reportName");
+//		if (reportName == null || reportName.trim().length() == 0)
+//		{
+//			errorMsg.put("reportName", "請填入姓名");
+//		}
 
 		String reportType = request.getParameter("reportType");
 		if (reportType == null)

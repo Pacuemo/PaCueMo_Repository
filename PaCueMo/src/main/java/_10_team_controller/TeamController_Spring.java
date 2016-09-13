@@ -103,17 +103,19 @@ public class TeamController_Spring
 		}
 		System.out.println("解散成功");
 		System.out.println("-------------------------------------------------------");
-		if (page.equals("main"))
-		{
-			System.out.println("forward main");
-			request.setAttribute("teamId", btn_disband);	//set Att
-			return "forward:/TeamServlet";
-		}
-		else
-		{
-			System.out.println("forward ctp");
-			return "forward:createTeamPage";
-		}
+//		if (page.equals("main"))
+//		{
+//			System.out.println("forward main");
+//			request.setAttribute("teamId", btn_disband);	//set Att
+//			return "forward:/TeamServlet";
+//		}
+//		else
+//		{
+//			System.out.println("forward ctp");
+//			return "forward:createTeamPage";
+//		}
+		System.out.println("forward ctp");
+		return "forward:createTeamPage";
 	}
 
 	@ResponseBody
