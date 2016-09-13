@@ -126,14 +126,13 @@ public class GamblingFacade
 					// ────────────────────────────────────────
 					// ────── 設定每個會員要分派(update)的點數值 ──────
 					// ────────────────────────────────────────
-					mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);// 該會員原本的點數 + 總Bouns
+					mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);//更新結算點數 = 該會員原本的點數 + 總Bouns
 					memberDAO.updatePointByPrimaryKey(mbVO);
 					System.err.println("=================================【 更新 " + mbVO.getMemberFirstName() + " 點數: " + (mbVO.getMemberPoint()) + " "
 							+ "\t賺：" + (bonusTotal - (orderVO.getBetHome() + orderVO.getBetAway())) + "】===============================================");
 				}
 			}
 		}
-//		gambleSvc.getMembersByBattleId(BattleId)
 		return "success";
 	}
 
