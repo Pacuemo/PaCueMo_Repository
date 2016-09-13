@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
+import _31_court_service.CourtService;
 import _9_10_team_model.TeamVO;
 import _9_41_member_model.MemberVO;
 
@@ -23,6 +27,21 @@ public class BattleRecordController_Spring
 	private TeamMemberService teamMemberService;
 	@Autowired
 	private TeamService teamService;
+	@Autowired
+	private Gson gson;
+
+	@ResponseBody
+	@RequestMapping(value = "/getCourtVOs", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String getCourtVOs(String address)
+	{
+		System.out.println("BattleRecord_Controller : getCourtVO");
+
+		CourtService courtService = new CourtService();
+		System.out.println("回傳場地VOs 格式JSON");
+
+		System.out.println("-------------------------------------------------------");
+		return gson.toJson(courtService.findByCourtName(address));
+	}
 
 	@RequestMapping(value = "/introduce") //Page
 	public String getMainPage(HttpSession session, HttpServletRequest request)

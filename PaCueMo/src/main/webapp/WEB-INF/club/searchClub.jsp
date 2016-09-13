@@ -30,7 +30,7 @@
    <jsp:include page="sidebar.jsp"/>
     <div id="info">
      <c:forEach items="${requestScope.club}" var="club">
-     <s:url value="/spring/club/getById" var="searchClub">
+     <s:url value="/spring/club/getClubById" var="searchClub">
      <s:param name="clubId" value="${club.clubID}"/>
      </s:url>
      <s:url value="/spring/club/apply" var="joinClub">
@@ -52,29 +52,29 @@
    $(function(){
     	  
 // 	------查詢社團---------
-	   $("h1 a:first-child").click(function(e){
-     		  e.preventDefault();
-    		  $.ajax({
-    			  url:$(this).attr("href"),
-    			  type:'get',
-    			  success:function(clubVO){	 
-    				  $("#info").text("");
-    				  $.each(clubVO.clubmembers,function(index,value){
-    				  $("<h1></h1>").text(value.member.memberFirstName).appendTo($("#info"));
-    				  });   				  
-    			  }
-    		  })
-    	  }
-    	  );
+// 	   $("h1 a:first-child").click(function(e){
+//      		  e.preventDefault();
+//     		  $.ajax({
+//     			  url:$(this).attr("href"),
+//     			  type:'get',
+//     			  success:function(clubVO){	 
+//     				  $("#info").text("");
+//     				  $.each(clubVO.clubmembers,function(index,value){
+//     				  $("<h1></h1>").text(value.member.memberFirstName).appendTo($("#info"));
+//     				  });   				  
+//     			  }
+//     		  })
+//     	  }
+//     	  );
 //     	  ------加入社團申請-------
-    	  $("h1 a:last-child").click(function(e){
-    		  e.preventDefault();
-    		  $.ajax({
-    			  url:$(this).attr("href"),
-    			  type:'get',
-    			  success:function(message){
+//     	  $("h1 a:last-child").click(function(e){
+//     		  e.preventDefault();
+//     		  $.ajax({
+//     			  url:$(this).attr("href"),
+//     			  type:'get',
+//     			  success:function(message){
 //     	
-    				  alert(message.status);
+//     				  alert(message.status);
 //     				  $("#info").text("");
 //     				  $.each(clubVO.clubmembers,function(index,value){
 //     				  $("<h1></h1>").text(value.member.memberFirstName).appendTo($("#info"));

@@ -24,6 +24,7 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 	private final String Add_One_BY_VO = "insert into LeagueRecord values (?,?,?,?,?,?,?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueRecord where fightId =?";
 	private final String Update_One_BY_VO = "update LeagueRecord set clubIdA=?,clubIdB=?,fightDateTime=?,rounds=?,scoreA=?,scoreB=?,totalTime=? where fightId=?";
+	private final String Select_WinCount_By_ID = "SELECT COUNT(*) FROM leagueRecord where winner=?";
 
 	private static final class LeagueRecordDAORowMapper implements RowMapper<LeagueRecordVO>
 	{
@@ -85,6 +86,19 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 	public int delete_One(int fightId)
 	{
 		return jdbc.update(Delete_One_BY_ID, fightId);
+	}
+
+	@Override
+	public int win_Count(int clubId)
+	{
+		try
+		{
+			return jdbc.queryForObject(Select_WinCount_By_ID, Integer.class, clubId);
+		}
+		catch (DataAccessException e)
+		{
+			return 0;
+		}
 	}
 
 	@Override
