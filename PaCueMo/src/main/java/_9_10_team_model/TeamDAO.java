@@ -33,7 +33,7 @@ public class TeamDAO implements TeamDAO_interface
 		this.jdbc = jdbc;
 	}
 
-	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead) VALUES (?, ?, ?)";
+	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead,content) VALUES (?, ?, ?, ?)";
 	private static final String FIND_TEAMID_WITH_TEAMHEAD = "SELECT teamId FROM Team where teamHead = ?";
 	private static final String FIND_TEAMVO_WITH_TEAMHEAD = "SELECT * FROM Team where teamHead = ?";
 	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
@@ -83,7 +83,7 @@ public class TeamDAO implements TeamDAO_interface
 	@Override
 	public void insert(TeamVO teamVO)
 	{
-		jdbc.update(INSERT, teamVO.getTeamName(), teamVO.getTeamProp(), teamVO.getTeamHead());
+		jdbc.update(INSERT, teamVO.getTeamName(), teamVO.getTeamProp(), teamVO.getTeamHead(), teamVO.getContent());
 	}
 
 	/*

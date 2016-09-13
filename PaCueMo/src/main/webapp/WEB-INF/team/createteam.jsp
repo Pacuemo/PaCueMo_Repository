@@ -116,7 +116,7 @@ height: 50px;
 			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
 		</fieldset>
 		<fieldset>
-			<input placeholder="輸入隊員姓名或電子郵件" name="" type="text" tabindex="2">
+			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
 		</fieldset>
 		<fieldset>
 			<div class="div_pri_tm">
