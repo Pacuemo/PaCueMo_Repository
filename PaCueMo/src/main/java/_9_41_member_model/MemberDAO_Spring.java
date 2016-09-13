@@ -33,6 +33,7 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 	private static final String UPDATE_FORGETPWD_BY_MAIL = "UPDATE dbo.Member SET memberOutDate = ?, memberValidateCode = ? WHERE memberMail = ?";
 	private static final String UPDATE_IMG = "UPDATE dbo.Member SET memberImgUrl = ? WHERE memberId = ?";
 	private static final String UPDATE_POINT = "UPDATE dbo.Member SET memberPoint = ? WHERE memberId = ?";
+	private static final String UPDATE_PLAYERCARD = "UPDATE dbo.Member SET memberHaveCard = ? WHERE memberId = ?";
 
 	@Autowired
 	public MemberDAO_Spring(JdbcOperations jdbcOperations)
@@ -109,6 +110,14 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 		return jdbc.update(UPDATE_FBID,
 				memberVO.getMemberFBId(),
 				memberVO.getMemberImgUrl(),
+				memberVO.getMemberId());
+	}
+
+	@Override
+	public int updatePlayercard(MemberVO memberVO)
+	{
+		return jdbc.update(UPDATE_PLAYERCARD,
+				memberVO.getMemberHaveCard(),
 				memberVO.getMemberId());
 	}
 

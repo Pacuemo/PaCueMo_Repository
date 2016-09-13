@@ -61,7 +61,7 @@
       <ul class="nav navbar-nav navbar-right nav-main">
 
 
-        <li> <a href="" id="nav-link-playercard" > 球員卡</a> </li>
+        <li> <a href="${pageContext.request.contextPath}/spring/playercard/Myplayercard" id="nav-link-playercard" > 球員卡</a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/battle_rec/introduce" id="nav-link-battle" > 約戰 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/team/createTeamPage" id="nav-link-team" > 隊伍</a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/league/introduce" id="nav-link-league" > 聯賽 </a> </li>

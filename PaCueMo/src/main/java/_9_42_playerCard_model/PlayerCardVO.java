@@ -2,6 +2,9 @@ package _9_42_playerCard_model;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PlayerCardVO implements Serializable
 {
 
@@ -14,7 +17,7 @@ public class PlayerCardVO implements Serializable
 	private String playerPosition;
 	private Boolean playerHand;
 	private String playerNote;
-	private String playerLoation;
+	private String playerLocation;
 	private int playerSTR;
 	private int playerCON;
 	private int playerDEX;
@@ -37,7 +40,7 @@ public class PlayerCardVO implements Serializable
 		this.playerPosition = playerPosition;
 		this.playerHand = playerHand;
 		this.playerNote = playerNote;
-		this.playerLoation = playerLoation;
+		this.playerLocation = playerLoation;
 		this.playerSTR = playerSTR;
 		this.playerCON = playerCON;
 		this.playerDEX = playerDEX;
@@ -116,14 +119,14 @@ public class PlayerCardVO implements Serializable
 		this.playerNote = playerNote;
 	}
 
-	public String getPlayerLoation()
+	public String getPlayerLocation()
 	{
-		return playerLoation;
+		return playerLocation;
 	}
 
-	public void setPlayerLoation(String playerLoation)
+	public void setPlayerLocation(String playerLoation)
 	{
-		this.playerLoation = playerLoation;
+		this.playerLocation = playerLoation;
 	}
 
 	public int getPlayerSTR()
