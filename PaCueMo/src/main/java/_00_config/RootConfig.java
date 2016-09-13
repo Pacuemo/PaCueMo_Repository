@@ -53,7 +53,9 @@ public class RootConfig
 
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName(GlobalService.DRIVER_NAME);
-		ds.setUrl(GlobalService.DB_URL);
+//		ds.setUrl(GlobalService.DB_URL);
+		//MAGICJACK_MAIN
+		ds.setUrl("jdbc:sqlserver://" + GlobalService.HOST + ":1433;databaseName=MagicJack_main");
 		ds.setUsername(GlobalService.USERID);
 		ds.setPassword(GlobalService.PASSWORD);
 		ds.setInitialSize(5);
