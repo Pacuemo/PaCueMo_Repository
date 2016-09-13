@@ -13,20 +13,20 @@
 	<jsp:include page="/fragment/sidebar.jsp" />
 	<div id="dialog" title="問題回報">	
 		<form method="get">
-			<table border="1" class="tablesize">
-				<tr>
+			<table class="tablesize">
+				<tr class="trsize">
 					<td class="title">
 						<label for="reportType">問題類型</label>
 					</td>
 					<td class="title">
 						<select required="required" id="reportType">
-							<option disabled="disabled" selected="selected">請選擇</option>
+							<option disabled="disabled" selected="selected" class="form-control">請選擇</option>
 							<option>場地資訊不符</option>
 							<option>其他</option>							
 						</select>
 					</td>
 				</tr>
-				<tr>
+				<tr class="trsize">
 					<td class="title">
 						<label for="context">內容描述</label>
 					</td>
@@ -44,7 +44,7 @@
 	<script>
 		$(function()
 		{
-			$("#dialog").dialog({ autoOpen : true, height : 500, width : 700, show : { effect : "blind", duration : 1000 }, position: { my: "center", at: "left+600px top+500px ", of: window  } });
+			$("#dialog").dialog({ autoOpen : true, height : 450, width : 600, show : { effect : "blind", duration : 1000 }, position: { my: "center", at: "left+600px top+500px ", of: window  } });
 		});
 	</script>
 </body>

@@ -6,6 +6,7 @@
 
 .title {
 	text-align: center;
+	border: 2px solid;
 }
 
 .textsize{
@@ -14,10 +15,11 @@
 	width: 300px;
 	font-size: 14px;
 	border-radius: 5px;
-	
+	margin: auto;	
 }
 
 .tablesize{
 	height: 300px;
-	width: 500px;	
+	width: 500px;
+	border: 2px solid;
 }
