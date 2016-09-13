@@ -4,5 +4,7 @@ public interface PlayerCardDAO_interface
 {
 	public int insertPlayerCard(PlayerCardVO playerCardVO);
 
+	public int updatePlayerCard(PlayerCardVO playerCardVO);
+
 	public PlayerCardVO getPlayerCardById(String memberId);
 }
