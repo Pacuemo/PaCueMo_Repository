@@ -89,30 +89,47 @@ public class GamblingFacade
 			Integer battleId = vo.getBattleId();
 			Double homeBet = vo.getHomebet();
 			Double awayBet = vo.getAwaybet();
-			Double total = Double.parseDouble(df.format((homeBet + awayBet) * commission)); // 官方抽20%
-			Double oddsHome = Double.parseDouble(df.format(total / homeBet)); // 賠率
-			Double oddsAway = Double.parseDouble(df.format(total / awayBet)); // 賠率
-			System.out.println(String.format("%3s \t %10s %8s %5s %10s %10s  \t total:%8s \t odds:%5s %5s",
-					vo.getBattleId(), vo.getBattleDateTime(), vo.getHomeId(), vo.getAwayId(), vo.getHomebet(), vo.getAwaybet(),
-					total, oddsHome, oddsAway));
+			Double total = Double.parseDouble(df.format((homeBet + awayBet) * (1 - commission))); // 官方抽20%
+			Double oddsHome = Double.parseDouble(df.format(total / homeBet)); // 主隊賠率
+			Double oddsAway = Double.parseDouble(df.format(total / awayBet)); // 客隊賠率
+			System.out.println(
+					String.format("%3s \t %10s %5s %5s %10s %10s \t total(抽 20%% 後):%-10s  odds:%5s(主賠) %5s(客賠)",
+							vo.getBattleId(),
+							vo.getBattleDateTime(),
+							vo.getHomeId(),
+							vo.getAwayId(),
+							vo.getHomebet(),
+							vo.getAwaybet(),
+							total,
+							oddsHome,
+							oddsAway));
 
 			List<MemberVO> mbList = gambleSvc.getMembersByBattleId(battleId);
 			for (MemberVO mbVO : mbList)
 			{
-				System.err.println(String.format("%3s %8s", mbVO.getMemberFirstName(), mbVO.getMemberPoint()) + "\t");
+				System.err.println(String.format("◎◎◎%3s %8s", mbVO.getMemberFirstName(), mbVO.getMemberPoint()) + "\t" + mbVO.getMemberMail());
 				List<GambleOrderVO> orderList = gambleSvc.getOrdersByMemberId(mbVO.getMemberId());
 				for (GambleOrderVO orderVO : orderList)
 				{
-					System.out.print("\t\t" + orderVO.getBetHome() + "\t" + orderVO.getBetAway() + "\t\t");
-					Double bonusHome = (orderVO.getBetHome() * oddsHome);
-					Double bonusAway = (orderVO.getBetAway() * oddsAway);
-					Double bonusTotal = bonusHome + bonusAway;
-					String str = String.format("bonusHome : %5s \t bonusAway : %5s \t bonusTotal: %5s ", bonusHome, bonusAway, (bonusTotal));
-					System.out.println(str);
-//					System.out.println("bonusHome : " + bonusHome + "   " + "bonusAway : " + bonusAway + "   total:  " + (bonusHome + bonusAway));
-					mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);// 原本的點數 + Bouns
+					Double betHome = orderVO.getBetHome();// user在本場次 主隊 的下注點數
+					Double betAway = orderVO.getBetAway();// user在本場次 客隊 的下注點數
+					Double totalBet = betHome + betAway; // user在本場次 總共 的下注點數
+					System.out.print("\t" + betHome + "\t" + betAway + "\t" + "本場次下注總額：" + totalBet + " ||| ");
+					Double bonusHome = (orderVO.getBetHome() * oddsHome);// 下主隊獲得的點數
+					Double bonusAway = (orderVO.getBetAway() * oddsAway);// 下客隊獲得的點數
+					Double bonusTotal = bonusHome + bonusAway;// user在本廠總共可獲得的點數
+					System.out.println(
+							String.format("\t bonusHome : %5s \t bonusAway : %5s \t bonusTotal: %5s ",
+									bonusHome,
+									bonusAway,
+									(bonusTotal)));
+					// ────────────────────────────────────────
+					// ────── 設定每個會員要分派(update)的點數值 ──────
+					// ────────────────────────────────────────
+					mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);// 該會員原本的點數 + 總Bouns
 					memberDAO.updatePointByPrimaryKey(mbVO);
-					System.err.println("==========================================【 更新 " + mbVO.getMemberFirstName() + " 點數" + (mbVO.getMemberPoint()) + " 】===============================================");
+					System.err.println("=================================【 更新 " + mbVO.getMemberFirstName() + " 點數: " + (mbVO.getMemberPoint()) + " "
+							+ "\t賺：" + (bonusTotal - (orderVO.getBetHome() + orderVO.getBetAway())) + "】===============================================");
 				}
 			}
 		}
@@ -124,9 +141,9 @@ public class GamblingFacade
 	{
 		ApplicationContext context = new AnnotationConfigApplicationContext("_50_gambling_facade");
 		GamblingFacade facadeService = (GamblingFacade) context.getBean("gamblingFacade4");
-		//============== 【測試 splitPayoff()】 =================
+		//============== 【測試 splitPayoff() 分派點數】 =================
 		facadeService.splitPayoff("2016-09-13", 0.2f);
-		//============== 【測試 memberDAO】 =================
+		//============== 【測試 memberDAO】 ==============================
 //		int ii = facadeService.testUpdateMemberPoints("jyurjh920790@pchome.com.tw");
 //		System.out.println(" 更新 " + ii + " 筆點數資料");
 //		// ========== 【測試更新BattleSetVO】 ==============
