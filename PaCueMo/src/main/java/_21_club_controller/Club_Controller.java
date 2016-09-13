@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import _21_club_service.Club_Service;
+import _22_league_service.LeagueRecord_Service;
 import _9_21_club_model.ClubVO;
 import _9_41_member_model.MemberVO;
 
@@ -27,6 +28,8 @@ import _9_41_member_model.MemberVO;
 @RequestMapping(value = "/club")
 public class Club_Controller
 {
+	@Autowired
+	private LeagueRecord_Service leagueRecordService;
 	@Autowired
 	private Club_Service service;
 	@Autowired
@@ -133,12 +136,27 @@ public class Club_Controller
 
 	@ResponseBody
 	@RequestMapping(value = "/getById", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String get_Club_By_Id(@RequestParam("clubId") int clubId)
+	public String get_By_Id(@RequestParam("clubId") int clubId)
 	{
 		System.out.println("呼叫Club_Controller:/getById 查詢社團 傳入社團ID");
 		System.out.println("回傳單筆社團資料 格式JSON");
 		System.out.println("-------------------------------------------------------");
 		return gson.toJson(service.getClub(clubId));
+	}
+
+	@RequestMapping(value = "/getClubById", method = RequestMethod.GET)
+	public String get_Club_By_Id(@RequestParam("clubId") int clubId, HttpServletRequest request)
+	{
+		System.out.println("呼叫Club_Controller:/getClubById 查詢社團 傳入社團ID");
+		ClubVO clubVO = service.getClub(clubId);
+		Map<String, Integer> winCount = new HashMap<String, Integer>();
+		int win = leagueRecordService.win_Count(clubId);
+		int lose = clubVO.getLeagueRecordVOs().size() - win;
+		winCount.put("win", win);
+		winCount.put("lose", lose);
+		request.setAttribute("ClubVO", clubVO);
+		request.setAttribute("winCount", winCount);
+		return "/club/clubIntro";
 	}
 
 	@RequestMapping(value = "/searchName", method = RequestMethod.GET)

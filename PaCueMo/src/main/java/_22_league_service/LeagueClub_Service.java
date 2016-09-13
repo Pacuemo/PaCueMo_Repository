@@ -33,6 +33,13 @@ public class LeagueClub_Service
 		return success;
 	}
 
+//	查詢社團參加多少聯賽
+	public List<LeagueClubVO> get_All_By_ClubId(int clubId)
+	{
+
+		return leagueClubDao.get_ClubVOs_By_ClubId(clubId);
+	}
+
 	//--------刪除參加社團--------
 	public int delete_league_club(int leagueId, int clubId)
 	{

@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import _9_22_clubMember_model.ClubMemberVO;
+import _9_25_leagueRecord_model.LeagueRecordVO;
 
 @Component
 public class ClubVO implements Serializable
@@ -21,9 +22,9 @@ public class ClubVO implements Serializable
 	private String clubImageName;
 	private Date clubDate;
 	private String clubHead;
-
 	private int clubProp;
 	private List<ClubMemberVO> clubmembers;
+	private List<LeagueRecordVO> LeagueRecordVOs;
 
 	public ClubVO()
 	{
@@ -109,6 +110,16 @@ public class ClubVO implements Serializable
 	public void setClubmembers(List<ClubMemberVO> clubmembers)
 	{
 		this.clubmembers = clubmembers;
+	}
+
+	public List<LeagueRecordVO> getLeagueRecordVOs()
+	{
+		return LeagueRecordVOs;
+	}
+
+	public void setLeagueRecordVOs(List<LeagueRecordVO> leagueRecordVOs)
+	{
+		LeagueRecordVOs = leagueRecordVOs;
 	}
 
 }

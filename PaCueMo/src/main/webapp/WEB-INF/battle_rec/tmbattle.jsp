@@ -37,11 +37,10 @@ td {
 	color: white;
 }
 
-.weather{
-margin: 0px;
-margin-right: 0px;
+.weather {
+	margin: 0px;
+	margin-right: 0px;
 }
-
 </style>
 
 
@@ -50,7 +49,7 @@ margin-right: 0px;
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	<div class="row">
 		<div class="col-md-6">
 			<h2 class="h2_tm">您的隊伍：</h2>
@@ -70,23 +69,23 @@ margin-right: 0px;
 
 		</div>
 		<div class="col-md-6">
-			<div class="col-md-8">
+			<div class="col-md-12">		
+				<div class="col-md-9">
+				
+				</div>
+				<div class="col-md-3">
+					<div id="cont_ca9ddef90f63f255a3e37230d88fb6e7">
+						<script type="text/javascript" async src="https://www.theweather.com/wid_loader/ca9ddef90f63f255a3e37230d88fb6e7"></script>
+					</div>
+				</div>
 			</div>
-			<div class="col-md-4">
-				<div id="cont_ca9ddef90f63f255a3e37230d88fb6e7"><script type="text/javascript" async src="https://www.theweather.com/wid_loader/ca9ddef90f63f255a3e37230d88fb6e7"></script></div>
-			
-			
-			</div>
-			
 
 
 
 		</div>
 	</div>
 
-<script type="text/javascript">
-$("#cont_ca9ddef90f63f255a3e37230d88fb6e7").css("margin-right" , "0px");
-</script>
+
 
 
 </body>
