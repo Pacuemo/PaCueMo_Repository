@@ -83,12 +83,13 @@
 
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2" for="address">地址：</label> <label class="col-sm-10" style="text-align: right;" for="address">請輸入地址</label>
+					<div class="col-sm-2"><label class="col-sm-2" for="address">地址：</label></div>
+				 
 					<input class="form-control" id="address" placeholder="地址"> 
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Password</label>
-					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					<input class="form-control" id="exampleInputPassword1" placeholder="Password">
 				</div>
 				<div class="form-group">
 					<label for="exampleInputFile">File input</label> <input type="file" id="exampleInputFile">
@@ -150,7 +151,7 @@
 	 		"dataType":"json",
 	 		"success":function(data){
 	 			
-	 			$("#address").autocomplete( "option", "source", data.name );
+	 			$("#address").autocomplete( "option", "source", availableTags  );
 	 		}
 	 	});
 	 
