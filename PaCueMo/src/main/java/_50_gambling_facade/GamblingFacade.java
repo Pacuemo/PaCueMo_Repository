@@ -142,7 +142,7 @@ public class GamblingFacade
 		ApplicationContext context = new AnnotationConfigApplicationContext("_50_gambling_facade");
 		GamblingFacade facadeService = (GamblingFacade) context.getBean("gamblingFacade4");
 		//============== 【測試 splitPayoff() 分派點數】 =================
-		facadeService.splitPayoff("2016-09-13", 0.2f);
+//		facadeService.splitPayoff("2016-09-13", 0.2f);
 		//============== 【測試 memberDAO】 ==============================
 //		int ii = facadeService.testUpdateMemberPoints("jyurjh920790@pchome.com.tw");
 //		System.out.println(" 更新 " + ii + " 筆點數資料");
