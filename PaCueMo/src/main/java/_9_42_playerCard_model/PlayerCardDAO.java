@@ -17,6 +17,8 @@ public class PlayerCardDAO implements PlayerCardDAO_interface
 			+ "playerLoation ,playerSTR ,playerCON ,playerDEX ,playerINT ,playerWIS ,playerCHA) "
 			+ "VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,? )";
 	private final String GET_ONE_STMT = "SELECT * FROM PlayerCard WHERE memberId = ?";
+	private final String UPDATE_ONE_STMT = "UPDATE dbo.PlayerCard SET  playerGender = ?, playerHeight = ?, playerWeight = ?, playerPosition = ?, "
+			+ "playerHand = ?, playerNote = ?, playerLoation = ?, playerSTR = ?, playerCON = ?, playerDEX = ?, playerINT = ?, playerWIS = ?, playerCHA = ? WHERE memberId = ?";
 
 	public PlayerCardDAO(JdbcOperations jdbc)
 	{
@@ -55,6 +57,26 @@ public class PlayerCardDAO implements PlayerCardDAO_interface
 
 			return null;
 		}
+	}
+
+	@Override
+	public int updatePlayerCard(PlayerCardVO playerCardVO)
+	{
+		return jdbc.update(UPDATE_ONE_STMT,
+				playerCardVO.getPlayerGender(),
+				playerCardVO.getPlayerHeight(),
+				playerCardVO.getPlayerWeight(),
+				playerCardVO.getPlayerPosition(),
+				playerCardVO.getPlayerHand(),
+				playerCardVO.getPlayerNote(),
+				playerCardVO.getPlayerLocation(),
+				playerCardVO.getPlayerSTR(),
+				playerCardVO.getPlayerCON(),
+				playerCardVO.getPlayerDEX(),
+				playerCardVO.getPlayerINT(),
+				playerCardVO.getPlayerWIS(),
+				playerCardVO.getPlayerCHA(),
+				playerCardVO.getMemberId());
 	}
 
 	private static final class PlayerCardRowMapper implements RowMapper<PlayerCardVO>
