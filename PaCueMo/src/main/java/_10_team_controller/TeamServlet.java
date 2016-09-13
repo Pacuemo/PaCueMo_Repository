@@ -191,6 +191,22 @@ public class TeamServlet extends HttpServlet
 
 			String teamProp = req.getParameter("teamProp");
 			teamVO.setTeamProp(Integer.valueOf(teamProp));
+			String content = null;
+			try
+			{
+				content = req.getParameter("content");
+				if (content.equals(""))
+				{
+					System.out.println("未輸入隊伍簡介: 歡迎加入 (default)");
+					content = "歡迎加入";
+				}
+			}
+			catch (Exception e)
+			{
+				System.out.println("(ERROR) 隊伍簡介: 歡迎加入 (default)");
+				content = "歡迎加入";
+			}
+			teamVO.setContent(content);
 
 			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 			String teamMemberId = memberVO.getMemberId();

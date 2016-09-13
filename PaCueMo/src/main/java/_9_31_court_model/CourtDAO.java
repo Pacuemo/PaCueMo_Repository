@@ -377,7 +377,7 @@ public class CourtDAO implements CourtDAO_interface
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_BY_NAME);
 
-			pstmt.setString(2, "%" + name + "%");
+			pstmt.setString(1, "%" + name + "%");
 
 			rs = pstmt.executeQuery();
 

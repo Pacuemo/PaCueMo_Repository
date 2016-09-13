@@ -7,7 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<c:url var="home" value="/" scope="request" /> <%--設定home，之後在script可以用--%>
+<c:url var="home" value="/" scope="request" />
+<%--設定home，之後在script可以用--%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PaCueMo</title>
@@ -73,12 +74,11 @@ p.tempstyle {
 	background: white;
 }
 
-
-
 .join_button span {
 	display: inline-block;
 	position: relative;
-	padding: 0; padding-right : 0;
+	padding: 0;
+	padding-right: 0;
 	transition: padding-right 0.5s;
 	padding-right: 0
 }
@@ -98,7 +98,6 @@ p.tempstyle {
 	border-right: none;
 	transition: opacity 0.5s, top 0.5s, right 0.5s;
 	transform: rotate(-45deg);
-
 }
 
 .join_button:hover span, .join_button:active span {
@@ -111,15 +110,19 @@ p.tempstyle {
 	border-color: #0C5;
 	right: 0;
 	top: 50%;
-	
+}
 
+.tmimg {
+	width: 182.8px;
+	height: 182.8px;
 }
-.tmimg{
-width: 182.8px;
-height: 182.8px;
+
+.left_20 {
+	padding-left: 20px;
 }
-.left_20{
-padding-left: 20px; 
+
+.mar_0{
+margin: 0px;
 }
 </style>
 
@@ -128,28 +131,40 @@ padding-left: 20px;
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="fragment/teamSidebar.jsp" />
-	
+
 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 	<div class="row">
 		<div class="col-md-12">
-			<h2 class="margin-vert-20 left_20" style="color: white;">
-				<c:choose>
-					<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
-					<c:otherwise>TeamName !</c:otherwise>
-				</c:choose>
-			</h2>
-		</div>
-	</div>
-	
-		<div class="row margin-bottom-10" id="show_team_member">
-			<div class="col-sm-2 col-md-2 animate fadeInLeft animated">
-				<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
+			<div class="col-md-10">
+				<h2 style="color: white;">
+					<c:choose>
+						<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
+						<c:otherwise>TeamName !</c:otherwise>
+					</c:choose>
+				</h2>
+			</div>
+			<div class="col-md-2">
 				<c:choose>
 					<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
+						<form class="left_20" action="${pageContext.request.contextPath}/spring/battle_rec/letsbattle" method="get">
+							<button type="submit" class="btn btn-danger btn-xs left_20" name="btn_battle" value="${requestScope.teamVO.teamId }">約戰</button>
+							<input type="hidden" name="page" value="main">
+						</form>
+					</c:when>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+
+	<div class="row margin-bottom-10" id="show_team_member">
+		<div class="col-sm-2 col-md-2 animate fadeInLeft animated">
+			<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
+			<c:choose>
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${requestScope.teamVO.teamId }" >
-							<c:choose>			
+						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${requestScope.teamVO.teamId }">
+							<c:choose>
 								<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
 								<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
 								<c:otherwise>私密</c:otherwise>
@@ -157,35 +172,35 @@ padding-left: 20px;
 						</button>
 						<input type="hidden" name="page" value="main">
 					</form>
-					</c:when>
-					<c:when test="${requestScope.teamExsist == 'Mine'}">
+				</c:when>
+				<c:when test="${requestScope.teamExsist == 'Mine'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }" >解散隊伍</button>
+						<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }">解散隊伍</button>
 						<input type="hidden" name="page" value="main">
 					</form>
-					</c:when>
-					<c:when test="${requestScope.teamExsist == 'Exsist'}">
+				</c:when>
+				<c:when test="${requestScope.teamExsist == 'Exsist'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs" name="btn_abort" value="${requestScope.teamVO.teamId }" >退出隊伍</button>
+						<button type="submit" class="btn btn-success btn-xs" name="btn_abort" value="${requestScope.teamVO.teamId }">退出隊伍</button>
 						<input type="hidden" name="page" value="main">
 					</form>
-					</c:when>
-				</c:choose>
-			</div>
+				</c:when>
+			</c:choose>
+		</div>
 
-			<!-- Person Details -->
-			<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
-				<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0" >
+		<!-- Person Details -->
+		<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
+			<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
 				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
 					<figure>
-					<c:choose>
-						<c:when test="${list.memberVO.memberImgUrl != null}">
-							<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
-						</c:when>
-						<c:otherwise>
-							<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
-						</c:otherwise>
-					</c:choose>
+						<c:choose>
+							<c:when test="${list.memberVO.memberImgUrl != null}">
+								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
+							</c:when>
+							<c:otherwise>
+								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+							</c:otherwise>
+						</c:choose>
 						<figcaption>
 							<h3 class="margin-top-10 margin-bottom-10">
 								${list.memberVO.memberFirstName } <small>- Programmer</small>
@@ -206,111 +221,102 @@ padding-left: 20px;
 						</ul>
 					</figure>
 				</div>
-				</c:forEach>
+
+			</c:forEach>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<hr class="margin-bottom-30">
+		</div>
+
+		<div class="col-md-6" style="color: white">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, laboriosam, quod odit quo quos itaque repellat quaerat a ad alias. Vel, nostrum id ab velit veritatis consequatur fugit sequi esse. Maecenas congue dui id posuere fermentum.</p>
+			<div class="row">
+				<div class="col-sm-3">
+					<span class="fa-stack fa-2x margin-vert-30 margin-horiz-40 hidden-xs animate fadeInLeft"> <i class="fa fa-circle fa-stack-2x color-gray-light"></i> <i class="fa fa-cogs fa-stack-1x fa-inverse"></i>
+					</span>
+				</div>
+				<div class="col-sm-9">
+					<h3 class="margin-vert-10">Pellentesque iaculis</h3>
+					<p>Lorem Ipsum is simply dummy text of Lorem the printing and typesettings. Aliquam dictum nulla eu varius porta. Maecenas congue dui id posuere fermentum.</p>
+				</div>
 			</div>
 		</div>
-	
-
-		<div class="row">
-		<div class="col-md-12"><hr class="margin-bottom-30"></div>
-		
-			<div class="col-md-6" style="color: white">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, laboriosam, quod odit quo quos itaque repellat quaerat a ad alias. Vel, nostrum id ab velit veritatis consequatur fugit sequi esse. Maecenas congue dui id posuere fermentum.</p>
-				<div class="row">
-					<div class="col-sm-3">
-						<span class="fa-stack fa-2x margin-vert-30 margin-horiz-40 hidden-xs animate fadeInLeft"> <i class="fa fa-circle fa-stack-2x color-gray-light"></i> <i class="fa fa-cogs fa-stack-1x fa-inverse"></i>
-						</span>
-					</div>
-					<div class="col-sm-9">
-						<h3 class="margin-vert-10">Pellentesque iaculis</h3>
-						<p>Lorem Ipsum is simply dummy text of Lorem the printing and typesettings. Aliquam dictum nulla eu varius porta. Maecenas congue dui id posuere fermentum.</p>
-					</div>
-				</div>
+		<div class="col-md-6" style="color: white">
+			<!-- Progress Bars -->
+			<h3 class="progress-label">
+				出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
+			</h3>
+			<div class="progress progress-sm">
+				<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.attendancePercent}%"></div>
 			</div>
-			<div class="col-md-6" style="color: white">
-				<!-- Progress Bars -->
-				<h3 class="progress-label">
-					出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
-				</h3>
-				<div class="progress progress-sm">
-					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.attendancePercent}%"></div>
-				</div>
-				<h3 class="progress-label">
-					評價 <span class="pull-right">82%</span>
-				</h3>
-				<div class="progress progress-sm">
-					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: 82%"></div>
-				</div>
-				<h3 class="progress-label">
-					勝率 <span class="pull-right">${requestScope.teamWPCT}%</span>
-				</h3>
-				<div class="progress progress-sm">
-					<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.teamWPCT}%"></div>
-				</div>
-				<!-- End Progress Bars -->
+			<h3 class="progress-label">
+				評價 <span class="pull-right">82%</span>
+			</h3>
+			<div class="progress progress-sm">
+				<div class="progress-bar progress-bar-primary" role="progressbar" style="width: 82%"></div>
 			</div>
+			<h3 class="progress-label">
+				勝率 <span class="pull-right">${requestScope.teamWPCT}%</span>
+			</h3>
+			<div class="progress progress-sm">
+				<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.teamWPCT}%"></div>
+			</div>
+			<!-- End Progress Bars -->
 		</div>
-		<hr class="margin-vert-20">
-	
-<script type="text/javascript">
-$(function (){
-	$("#join_team").click(function(){
-		
-		$.ajax({
-			"type":"post",
-			"url":"${home}spring/team/joinTeam", // home 在 head
-			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
-					"teamId":"${requestScope.teamVO.teamId}"},
-			"dataType":"text",
-			"success":function(data){
-				alert(data);
-			},
-			"error":function(Error){
-				alert("fuck");
-				console.log(Error);
-			}
-		})
-	}) // join team End
-	
-$("#abort_team").click(function(){
-		
-		$.ajax({
-			"type":"get",
-			"url":"${home}spring/team/abortTeam", // home 在 head
-			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
-					"teamId":"${requestScope.teamVO.teamId}"},
-			"dataType":"text",
-			"success":function(data){
-				alert(data);
-			},
-			"error":function(Error){
-				alert("fuck");
-				console.log(Error);
-			}
-		})
-	}) // abort team End
-	
-$("#disband_team").click(function(){
-		
-		$.ajax({
-			"type":"get",
-			"url":"${home}spring/team/disband_team", // home 在 head
-			"data":{"memberId":"${sessionScope.LoginOK.memberId}",
-					"teamId":"${requestScope.teamVO.teamId}"},
-			"dataType":"text",
-			"success":function(data){
-				alert(data);
-			},
-			"error":function(Error){
-				alert("fuck");
-				console.log(Error);
-			}
-		})
-	}) // disband team End
-	
-// End of init
-});
+	</div>
+	<hr class="margin-vert-20">
 
-</script>
+	<script type="text/javascript">
+		$(function()
+		{
+			$("#join_team").click(function()
+			{
+
+				$.ajax({ "type" : "post", "url" : "${home}spring/team/joinTeam", // home 在 head
+				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
+				{
+					alert(data);
+				}, "error" : function(Error)
+				{
+					alert("fuck");
+					console.log(Error);
+				} })
+			}) // join team End
+
+			$("#abort_team").click(function()
+			{
+
+				$.ajax({ "type" : "get", "url" : "${home}spring/team/abortTeam", // home 在 head
+				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
+				{
+					alert(data);
+				}, "error" : function(Error)
+				{
+					alert("fuck");
+					console.log(Error);
+				} })
+			}) // abort team End
+
+			$("#disband_team").click(function()
+			{
+
+				$.ajax({ "type" : "get", "url" : "${home}spring/team/disband_team", // home 在 head
+				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
+				{
+					alert(data);
+				}, "error" : function(Error)
+				{
+					alert("fuck");
+					console.log(Error);
+				} })
+			}) // disband team End
+
+			// End of init
+		});
+	</script>
 </body>
 </html>
