@@ -133,6 +133,7 @@ public class GamblingFacade
 				}
 			}
 		}
+		System.out.println("●●●●●●●●●●●【分派獎金完成】●●●●●●●●●●●●");
 		return "success";
 	}
 
