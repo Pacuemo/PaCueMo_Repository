@@ -61,14 +61,14 @@
       <ul class="nav navbar-nav navbar-right nav-main">
 
 
-        <li> <a href="" id="nav-link-playercard" > 球員卡</a> </li>
+        <li> <a href="${pageContext.request.contextPath}/spring/playercard/Myplayercard" id="nav-link-playercard" > 球員卡</a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/battle_rec/introduce" id="nav-link-battle" > 約戰 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/team/createTeamPage" id="nav-link-team" > 隊伍</a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/league/introduce" id="nav-link-league" > 聯賽 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/spring/club/introduce" id="nav-link-club">社團 </a> </li>
         <li> <a href="${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate" id="nav-link-lottery">運彩 </a> </li>
-        <li> <a href="" id="nav-link-court">場地 </a> </li>
-        <li> <a href="" id="nav-link-report" > 問題回報 </a> </li>       
+        <li> <a href="${pageContext.request.contextPath}/_3_view/courtQuery.jsp" id="nav-link-court">場地 </a> </li>
+        <li> <a href="${pageContext.request.contextPath}/_3_view/report.jsp" id="nav-link-report" > 問題回報 </a> </li>       
         <li role="separator" class="divider"></li>
         <c:if test="${empty LoginOK }">
         <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/spring/register/Signup" id="nav-link-sign_up" id="nav-link-sign_up" style="animation-delay: 85ms;"> 註冊 </a> </li>

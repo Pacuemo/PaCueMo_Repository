@@ -30,6 +30,7 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	private final String Select_ALL_BY_ID = "select * from LeagueClub where LeagueId =?";
 	private final String Add_One_BY_VO = "insert into LeagueClub values (?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueClub where leagueId=? and clubId =?";
+	private final String Select_fightId_By_ClubId = "select * from LeagueClub where clubId=?";
 
 	//查詢全部
 	@Override
@@ -38,6 +39,12 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 		Object[] queryState = { leagueId };
 		int[] queryType = { Types.INTEGER };
 		return jdbc.query(Select_ALL_BY_ID, queryState, queryType, new LeagueClubRowMap());
+	}
+
+	@Override
+	public List<LeagueClubVO> get_ClubVOs_By_ClubId(int clubId)
+	{
+		return jdbc.query(Select_fightId_By_ClubId, new LeagueClubRowMap(), clubId);
 	}
 
 	//新增

@@ -15,6 +15,8 @@ public interface LeagueRecordDAO_I
 
 	int update_One(LeagueRecordVO VO);
 
+	int win_Count(int clubId);
+
 	LeagueRecordVO find_One(int fightId);
 
 }

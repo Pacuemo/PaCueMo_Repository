@@ -27,7 +27,9 @@ import _9_41_member_model.MemberVO;
 				@WebInitParam(name = "mustLogin4", value = "/spring/club/apply"),
 				@WebInitParam(name = "mustLogin5", value = "/_5_gambling/*"),
 				@WebInitParam(name = "mustLogin6", value = "/spring/team/createTeamPage"),
-				@WebInitParam(name = "mustLogin6", value = "/spring/battle_rec/introduce")
+				@WebInitParam(name = "mustLogin6", value = "/spring/battle_rec/introduce"),
+				@WebInitParam(name = "mustLogin7", value = "/spring/playercard/Myplayercard"),
+				@WebInitParam(name = "mustLogin8", value = "/spring/battle_rec/introduce")
 })
 public class LoginFilter implements Filter
 {
@@ -78,7 +80,7 @@ public class LoginFilter implements Filter
 					{
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}
-					resp.sendRedirect(contextPath + "/_01_login/login.jsp");
+					resp.sendRedirect(contextPath + "/spring/login/Signin");
 					return;
 				}
 			}

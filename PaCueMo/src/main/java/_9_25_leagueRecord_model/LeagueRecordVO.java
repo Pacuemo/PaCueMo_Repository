@@ -24,6 +24,7 @@ public class LeagueRecordVO implements Serializable
 	private int scoreA;
 	private int scoreB;
 	private String totalTime;
+	private int winner;
 	private List<FightRecordVO> fightRecordVOs;
 	private ClubVO clubA;
 	private ClubVO clubB;
@@ -43,6 +44,14 @@ public class LeagueRecordVO implements Serializable
 		this.scoreA = scoreA;
 		this.scoreB = scoreB;
 		this.totalTime = totalTime;
+		if (scoreA > scoreB)
+		{
+			this.winner = clubIdA;
+		}
+		else
+		{
+			this.winner = clubIdB;
+		}
 	}
 
 	public LeagueRecordVO(int fightId, int leagueId, int clubIdA, int clubIdB, Date fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
@@ -56,6 +65,14 @@ public class LeagueRecordVO implements Serializable
 		this.scoreA = scoreA;
 		this.scoreB = scoreB;
 		this.totalTime = totalTime;
+		if (scoreA > scoreB)
+		{
+			this.winner = clubIdA;
+		}
+		else
+		{
+			this.winner = clubIdB;
+		}
 	}
 
 	public int getFightId()
@@ -181,6 +198,16 @@ public class LeagueRecordVO implements Serializable
 	public void setClubB(ClubVO clubB)
 	{
 		this.clubB = clubB;
+	}
+
+	public int getWinner()
+	{
+		return winner;
+	}
+
+	public void setWinner(int winner)
+	{
+		this.winner = winner;
 	}
 
 }

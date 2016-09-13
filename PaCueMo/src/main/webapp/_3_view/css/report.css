@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+.ui-widget {
+	z-index: 1000000 !important; The default is 100. !important overrides the default.
+}
+
+.title {
+	text-align: center;
+	border: 2px solid;
+}
+
+.textsize{
+	resize: none;
+	height: 200px;
+	width: 300px;
+	font-size: 14px;
+	border-radius: 5px;
+	margin: auto;	
+}
+
+.tablesize{
+	height: 300px;
+	width: 500px;
+	border: 2px solid;
+}

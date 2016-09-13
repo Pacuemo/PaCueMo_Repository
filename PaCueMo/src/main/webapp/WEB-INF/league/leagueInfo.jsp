@@ -40,7 +40,7 @@
 							<p>${leagueVO.courtVO.name}</p>
 							<p>獎金 $100,000,000</p>
 							<p>
-								<a href="${query}" class="btn btn-primary">查詢</a>
+								<a href="${query}" class="btn btn-primary" style="background-color: black">查詢</a>
 <!-- 							<a href="#" class="btn btn-default">More Info</a> -->
 							</p>
 						</div>

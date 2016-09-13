@@ -23,7 +23,7 @@
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
-	<jsp:include page="navBar.jsp" />
+	<jsp:include page="MyClubNavBar.jsp" />
 
 
 	<!-- 	------------------profile div--------------------------- -->
