@@ -206,6 +206,7 @@ padding-left: 20px;
 						</ul>
 					</figure>
 				</div>
+				
 				</c:forEach>
 			</div>
 		</div>
