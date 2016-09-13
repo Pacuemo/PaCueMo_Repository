@@ -77,6 +77,9 @@ public class GamblingFacade
 		return "success";
 	}
 
+	//==========================================================================================
+	//================================【自動分派彩金】==========================================
+	//==========================================================================================
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public String splitPayoff(String queryDate, Float commission)
 	{
@@ -84,22 +87,43 @@ public class GamblingFacade
 		// 
 		List<BattleSetVO> bSetList = bSetSvc.getAllBattleSetByDate(queryDate);
 		DecimalFormat df = new DecimalFormat("##.00");
-		for (BattleSetVO vo : bSetList)
+		for (BattleSetVO bSetVO : bSetList)
 		{
-			Integer battleId = vo.getBattleId();
-			Double homeBet = vo.getHomebet();
-			Double awayBet = vo.getAwaybet();
+			Integer battleId = bSetVO.getBattleId();
+			Double homeBet = bSetVO.getHomebet();
+			Double awayBet = bSetVO.getAwaybet();
 			Double total = Double.parseDouble(df.format((homeBet + awayBet) * (1 - commission))); // 官方抽20%
 			Double oddsHome = Double.parseDouble(df.format(total / homeBet)); // 主隊賠率
 			Double oddsAway = Double.parseDouble(df.format(total / awayBet)); // 客隊賠率
+
+			// ====================================================================
+			// =====【更新比分為0的比賽場次】---- 產生不重複的 score 並 UPDATE ====
+			// ====================================================================
+			Integer homeScore = bSetVO.getHomeScore();
+			Integer awayScore = bSetVO.getAwayScore();
+			if (homeScore == 0 || awayScore == 0)
+			{
+				homeScore = (int) (Math.random() * (100 - 50 + 1)) + 50;// 50~100 之間亂數
+				awayScore = (int) (Math.random() * (100 - 50 + 1)) + 50;
+				while (homeScore == awayScore)
+				{
+					homeScore = (int) (Math.random() * (100 - 50 + 1)) + 50;
+				}
+			}
+			bSetVO.setHomeScore(homeScore);
+			bSetVO.setAwayScore(awayScore);
+			bSetSvc.updateBattleSet(bSetVO);
+			// ====================================================================
 			System.out.println(
-					String.format("%3s \t %10s %5s %5s %10s %10s \t total(抽 20%% 後):%-10s  odds:%5s(主賠) %5s(客賠)",
-							vo.getBattleId(),
-							vo.getBattleDateTime(),
-							vo.getHomeId(),
-							vo.getAwayId(),
-							vo.getHomebet(),
-							vo.getAwaybet(),
+					String.format("%3s \t %10s ﹝%3s : %-3s﹞ %5s %5s %10s %10s \t total(抽 20%% 後):%-10s  odds:%5s(主賠) %5s(客賠)",
+							bSetVO.getBattleId(),
+							bSetVO.getBattleDateTime(),
+							bSetVO.getHomeScore(),
+							bSetVO.getAwayScore(),
+							bSetVO.getHomeId(),
+							bSetVO.getAwayId(),
+							bSetVO.getHomebet(),
+							bSetVO.getAwaybet(),
 							total,
 							oddsHome,
 							oddsAway));
@@ -114,7 +138,8 @@ public class GamblingFacade
 					Double betHome = orderVO.getBetHome();// user在本場次 主隊 的下注點數
 					Double betAway = orderVO.getBetAway();// user在本場次 客隊 的下注點數
 					Double totalBet = betHome + betAway; // user在本場次 總共 的下注點數
-					System.out.print("\t" + betHome + "\t" + betAway + "\t" + "本場次下注總額：" + totalBet + " ||| ");
+					//System.out.print("\t" + betHome + "\t" + betAway + "\t" + "本場次下注總額：" + totalBet + " ||| ");
+					System.out.print(String.format("\t%6s %6s \t本次下注總額：%-7s |||", betHome, betAway, totalBet));
 					Double bonusHome = (orderVO.getBetHome() * oddsHome);// 下主隊獲得的點數
 					Double bonusAway = (orderVO.getBetAway() * oddsAway);// 下客隊獲得的點數
 					Double bonusTotal = bonusHome + bonusAway;// user在本廠總共可獲得的點數
@@ -122,25 +147,34 @@ public class GamblingFacade
 							String.format("\t bonusHome : %5s \t bonusAway : %5s \t bonusTotal: %5s ",
 									bonusHome,
 									bonusAway,
-									(bonusTotal)));
+									bonusTotal));
 					// ────────────────────────────────────────
 					// ────── 設定每個會員要分派(update)的點數值 ──────
 					// ────────────────────────────────────────
 					mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);//更新結算點數 = 該會員原本的點數 + 總Bouns
 					memberDAO.updatePointByPrimaryKey(mbVO);
 					System.err.println("=================================【 更新 " + mbVO.getMemberFirstName() + " 點數: " + (mbVO.getMemberPoint()) + " "
-							+ "\t賺：" + (bonusTotal - (orderVO.getBetHome() + orderVO.getBetAway())) + "】===============================================");
+							+ "\t賺：" + (bonusTotal - (orderVO.getBetHome() + orderVO.getBetAway())) + " 】===============================================");
 				}
 			}
 		}
+		System.out.println("●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●");
 		System.out.println("●●●●●●●●●●●【分派獎金完成】●●●●●●●●●●●●");
+		System.out.println("●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●");
 		return "success";
+	}
+
+	public void test()
+	{
+		System.out.println("facadeService.test()：GGGGGGGGGGGGGGGGGGGGGGGGGGG");
 	}
 
 	public static void main(String[] args)
 	{
 		ApplicationContext context = new AnnotationConfigApplicationContext("_50_gambling_facade");
 		GamblingFacade facadeService = (GamblingFacade) context.getBean("gamblingFacade4");
+		//====================【測試 組裝成功】=========================
+		//facadeService.test();
 		//============== 【測試 splitPayoff() 分派點數】 =================
 //		facadeService.splitPayoff("2016-09-13", 0.2f);
 		//============== 【測試 memberDAO】 ==============================
