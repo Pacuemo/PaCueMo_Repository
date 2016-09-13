@@ -194,26 +194,87 @@
 					
 					$("#str,#con,#dex,#int,#wis,#cha ").bind("change",function(){
 						var p = 20-$("#str").val()-$("#con").val()-$("#dex").val()-$("#int").val()-$("#wis").val()-$("#cha").val();
-						if(p>=0){
-							$("#point").attr("style","color:green")
-							$("#point").html("能力值：(剩餘"+p+"點)(上限20點)");
+						var str = $("#str").val();
+						var con = $("#con").val();
+						var dex = $("#dex").val();
+						var inte = $("#int").val();
+						var wis = $("#wis").val();
+						var cha = $("#cha").val();
+						if(str != null){
+							var str1 = parseInt(str, 10) + parseInt(p, 10);
 						}else{
-							$("#point").attr("style","color:red")
-							$("#point").html("能力值：(剩餘"+p+"點)(上限20點)");
+							var str1 = parseInt(p, 10);
 						}
+						if(con != null){
+							var con1 = parseInt(con, 10) + parseInt(p, 10);
+						}else{
+							var con1 = parseInt(p, 10);
+						}
+						if(dex != null){
+							var dex1 = parseInt(dex, 10) + parseInt(p, 10);
+						}else{
+							var dex1 = parseInt(p, 10);
+						}
+						if(inte != null){
+							var inte1 = parseInt(inte, 10) + parseInt(p, 10);
+						}else{
+							var inte1 = parseInt(p, 10);
+						}
+						if(wis != null){
+							var wis1 = parseInt(wis, 10) + parseInt(p, 10);
+						}else{
+							var wis1 = parseInt(p, 10);
+						}
+						if(cha != null){
+							var cha1 = parseInt(cha, 10) + parseInt(p, 10);
+						}else{
+							var cha1 = parseInt(p, 10);
+						}
+
+						$("#str>option:gt(1)").remove();
+						$("#con>option:gt(1)").remove();
+						$("#dex>option:gt(1)").remove();
+						$("#int>option:gt(1)").remove();
+						$("#wis>option:gt(1)").remove();
+						$("#cha>option:gt(1)").remove();
+
+						for(var p = 1; p<=str1; p++){
+					  		var tmp = $("<option></option>").val(p).text(p);
+							$("#str").append(tmp);
+						};
+						$("#str").val(str);
+					  	for(var p = 1; p<=con1; p++){
+					  		var tmp = $("<option></option>").val(p).text(p);
+							$("#con").append(tmp);
+						};
+						$("#con").val(con);
+					  	for(var p = 1; p<=dex1; p++){
+					  		var tmp = $("<option></option>").val(p).text(p);
+							$("#dex").append(tmp);
+						};
+						$("#dex").val(dex);
+					  	for(var p = 1; p<=inte1; p++){
+					  		var tmp = $("<option></option>").val(p).text(p);
+							$("#int").append(tmp);
+						};
+						$("#int").val(inte);
+					  	for(var p = 1; p<=wis1; p++){
+					  		var tmp = $("<option></option>").val(p).text(p);
+							$("#wis").append(tmp);
+						};
+						$("#wis").val(wis);
+					  	for(var p = 1; p<=cha1; p++){
+					  		var tmp = $("<option></option>").val(p).text(p);
+							$("#cha").append(tmp);
+						};
+						$("#cha").val(cha);
+
 						
 					});
 		        },
 		        buttons: {
 		          "建立球員卡": function(){
-		        	  var p = 20-$("#str").val()-$("#con").val()-$("#dex").val()-$("#int").val()-$("#wis").val()-$("#cha").val();
-		        	  if(p<0){
-		        		  alert("您的剩餘點數小於零")
-		        	  }else if(p>0){
-		        		  alert("您的點數尚未分配完成")
-		        	  }else{
-		        		  
-		        	  }
+		        	  
 		        	  
 		          },
 		          "取消": function() {

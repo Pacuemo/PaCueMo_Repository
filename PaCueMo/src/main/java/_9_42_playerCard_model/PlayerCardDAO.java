@@ -34,7 +34,7 @@ public class PlayerCardDAO implements PlayerCardDAO_interface
 				playerCardVO.getPlayerPosition(),
 				playerCardVO.getPlayerHand(),
 				playerCardVO.getPlayerNote(),
-				playerCardVO.getPlayerLoation(),
+				playerCardVO.getPlayerLocation(),
 				playerCardVO.getPlayerSTR(),
 				playerCardVO.getPlayerCON(),
 				playerCardVO.getPlayerDEX(),

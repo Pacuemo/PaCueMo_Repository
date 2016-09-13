@@ -14,13 +14,13 @@ import java.util.Timer;
 public class TimerManager
 {
 	//時間間隔
-	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 一天
+	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 時間間隔﹝一天﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public TimerManager()
 	{
-		/*** 設定每日00:00執行方法 ***/
-		Calendar calendar = getCalendarWithTime(23, 53, 50);//時、分、秒  ──  24h制
+		/*** 設定每日 00:00:00 執行方法 ***/
+		Calendar calendar = getCalendarWithTime(17, 56, 30);//【設定每天的幾點執行】時、分、秒  ──  24h制
 		Date dateMain = calendar.getTime(); //第一次執行任務的時間
 
 		System.out.println("TimerManager ── " + sdf.format(dateMain));
@@ -32,14 +32,13 @@ public class TimerManager
 			dateMain = this.addDay(dateMain, 1);
 			System.out.println("TimerManager ── " + sdf.format(dateMain));
 		}
-
+		/*************** MainTimer *********************/
 		Timer timerMain = new Timer();
-
 		RoutineTask task = new RoutineTask(); //TimerTask
 		//============================================================
 		//=== 安排指定的任務在指定的時間開始進行重复的固定延遲執行 ===
 		//============================================================
-		timerMain.schedule(task, dateMain, PERIOD_DAY);
+		timerMain.schedule(task, dateMain, PERIOD_DAY); // ※Main Timer
 
 	}
 

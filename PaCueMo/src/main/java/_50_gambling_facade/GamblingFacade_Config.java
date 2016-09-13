@@ -15,7 +15,7 @@ import _54_gambleorder_service.GambleOrderService;
 import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Configuration
-@ComponentScan({ "_50_gambling_facade" })
+@ComponentScan({ "_50_gambling_facade", "_59_task_routine" })
 @Import({ BattleSetBeans_Config.class, GoodsOrderBeans_Config.class, GambleOrderBeans_Config.class, LiyideScanConfig.class })
 public class GamblingFacade_Config
 {

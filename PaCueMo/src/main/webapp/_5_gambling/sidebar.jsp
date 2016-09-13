@@ -27,7 +27,7 @@
     <!-- 搜尋 開始 -->
     <form id="searchForm" class="navbar-form navbar-left" role="search">
       <div class="form-group">
-        <input id="searchName" type="text" value="${queryTeamName}" class="form-control" placeholder="Search"/>
+        <input id="searchName" type="text" value="${queryTeamName}" class="form-control" placeholder="Search" autocomplete="off"/>
       </div>
       <button id="searchBtn" type="submit" class="btn btn-default">Submit</button>
     </form>

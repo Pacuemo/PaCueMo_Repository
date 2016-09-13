@@ -20,6 +20,8 @@ public interface MemberDAO_interface_Spring
 
 	public int updateMemberImg(MemberVO memberVO);
 
+	public int updatePlayercard(MemberVO memberVO);
+
 	public MemberVO findByPrimaryKey(String memberId);
 
 	public MemberVO findByUserMail(String memberMail);
