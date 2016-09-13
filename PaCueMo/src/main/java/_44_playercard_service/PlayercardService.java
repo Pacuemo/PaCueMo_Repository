@@ -33,4 +33,9 @@ public class PlayercardService
 	{
 		return dao.getPlayerCardById(memberId);
 	}
+
+	public int updatePlayercard(PlayerCardVO playerCardVO)
+	{
+		return dao.updatePlayerCard(playerCardVO);
+	}
 }

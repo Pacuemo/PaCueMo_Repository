@@ -117,7 +117,12 @@
                       <div class="name">
                         <label class="sr-only" for="playercard-gender">性別:</label>
                        <div class="controls">
+                       <c:if test="${LoginOK.memberHaveCard == false }">
                         <select id="gender" class="dob" name="userGender" required data-msg-required="請選擇您的性別">
+                       </c:if>
+                       <c:if test="${LoginOK.memberHaveCard == true }">
+                        <select id="gender" class="dob" name="userGender" required data-msg-required="請選擇您的性別" disabled="">
+                       </c:if>
                           <option value="" selected="" disabled="">性別</option>
                           <option value="1">男</option>
                           <option value="2">女</option>
@@ -248,6 +253,8 @@
 		  			var wis = $("#wis").val();
 		  			var cha = $("#cha").val();
 		  			var note = $("#note").val();
+		  			var p = 20-$("#str").val()-$("#con").val()-$("#dex").val()-$("#int").val()-$("#wis").val()-$("#cha").val();
+		  			if(p==0){
 					  $.ajax({
 							"type":"post",
 							"url": "Addplayercard",
@@ -261,7 +268,10 @@
 									alert("error");
 								}		
 							}
-						});	
+						});
+		  			}else{
+		  				alert("您的點數還沒用完")
+		  			}
 		  		},
 		  });
 		
@@ -483,9 +493,11 @@
 		  			var wis = $("#wis").val();
 		  			var cha = $("#cha").val();
 		  			var note = $("#note").val();
+		  			var p = 20-$("#str").val()-$("#con").val()-$("#dex").val()-$("#int").val()-$("#wis").val()-$("#cha").val();
+		  			if(p==0){
 					  $.ajax({
 							"type":"post",
-							"url": "Addplayercard",
+							"url": "Updateplayercard",
 							"dataType": "text",
 							"data":{"height":height,"weight":weight,"position":position,"location":location,"gender":gender,"hand":hand,"str":str,"dex":dex,"con":con,"inte":inte,"wis":wis,"cha":cha,"note":note},
 							"success":function(data){
@@ -496,7 +508,10 @@
 									alert("error");
 								}		
 							}
-						});	
+						});
+		  			}else{
+		  				alert("您的點數還沒用完")
+		  			}
 		  		},
 		  });
 		
@@ -642,7 +657,7 @@
 					});
 		        },
 		        buttons: {
-		          "建立球員卡": function(){
+		          "修改球員卡": function(){
 		        	  $("#playercard").submit();
 		        	  
 		          },
