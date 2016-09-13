@@ -39,9 +39,9 @@
 	</listener>
 	
 	<!-- 固定時間觸發事件的的事件監聽器 -->
-	<listener>
-	 	<listener-class>_59_task_routine.RoutineTaskListener</listener-class>
-	</listener>
+<!-- 	<listener> -->
+<!-- 	 	<listener-class>_59_task_routine.RoutineTaskListener</listener-class> -->
+<!-- 	</listener> -->
 	
 	<!-- 宣告Spring DispatcherServlet -->
 	<servlet>
