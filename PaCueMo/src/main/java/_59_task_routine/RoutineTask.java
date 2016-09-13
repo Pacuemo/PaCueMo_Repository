@@ -54,7 +54,7 @@ public class RoutineTask extends TimerTask
 
 			Date querydate = Calendar.getInstance().getTime();
 			//querydate = RoutineTask.addDay(querydate, -1);// 若設定自動執行的時間為 00:00:00 ，查詢場次的日期必須減一天 【TimerManager → getCalendarWithTime(0, 0, 0)】
-			sdf.applyPattern(format1);// yyyy-MM-dd
+			sdf.applyPattern(format1);// 使用 "yyyy-MM-dd" 格式
 			String querydateStr = sdf.format(querydate).toString();
 			System.out.println("查詢時間 ：" + querydateStr);
 
@@ -66,7 +66,8 @@ public class RoutineTask extends TimerTask
 		}
 		catch (Exception e)
 		{
-			System.out.println("-------------發生例外狀況--------------");
+			//System.out.println("-------------發生例外狀況--------------");
+			System.out.println("-------------﹝分派點數﹞發生例外狀況--------------");
 			e.printStackTrace();
 		}
 	}
