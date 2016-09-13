@@ -226,6 +226,7 @@ CREATE TABLE LeagueClub
 (
 	leagueId		/*聯賽編號*/		 INT          NOT NULL	FOREIGN KEY REFERENCES League(LeagueId),
     clubId    		/*球團編號*/		 INT          FOREIGN KEY REFERENCES Club(ClubId),
+	groups          /*組別*/              INT,
     primary key (leagueId,clubId)
 );
 
