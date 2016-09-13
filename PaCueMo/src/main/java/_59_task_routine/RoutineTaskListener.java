@@ -11,7 +11,7 @@ public class RoutineTaskListener implements ServletContextListener
 	public void contextInitialized(ServletContextEvent sce)
 	{
 		System.out.println("應用程式───誕生");
-		new TimerManager();
+		new TimerManager();// 應用程式誕生時產生 TimerManager 管理所有 TimerTask
 	}
 
 	@Override

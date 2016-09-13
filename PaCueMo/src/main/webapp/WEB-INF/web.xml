@@ -38,7 +38,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- 固定時間觸發事件的的事件監聽器 -->
+	<!-- 固定時間觸發事件的的事件監聽器 (已在 _59_task_routine.RoutineTaskListener 宣告 @@WebListener) -->
 <!-- 	<listener> -->
 <!-- 	 	<listener-class>_59_task_routine.RoutineTaskListener</listener-class> -->
 <!-- 	</listener> -->

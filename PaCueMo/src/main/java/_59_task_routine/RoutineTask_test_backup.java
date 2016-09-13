@@ -3,6 +3,8 @@ package _59_task_routine;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
+import _51_battleset_service.BattleSetService;
+import _9_52_nbateam_model.NBATeamVO;
 
 /**
  * 在 TimerManager 这个类里面，大家一定要注意 时间点的问题。如果你设定在凌晨2点执行任务。但你是在2点以后
@@ -22,33 +26,38 @@ import _50_gambling_facade.GamblingFacade_Config;
  * @author wls
  *
  */
-@Component(value = "taskRoutine")
-public class RoutineTask extends TimerTask
+@Component(value = "taskPerDay")
+public class RoutineTask_test_backup extends TimerTask
 {
+	@Autowired
+	private BattleSetService battleSetSvc;
 	@Autowired
 	private GamblingFacade gamblingFacade4; /* 變數名一定要叫 gamblingFacade4 → 因為GamblingFacade_Config定義太多型態相同的GamblingFacade */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String format1 = "yyyy-MM-dd";
 
-	public RoutineTask()
+	public RoutineTask_test_backup()
 	{
 
 	}
 
-	/********************************************
-	 ** 撰寫每日要routine的動作寫在 run() 裡面 **
-	 ********************************************/
 	@Override
 	public void run()
 	{
-		distributPointTask();// 定時分派賭金(點數)的task
+		/*** 撰寫每日要routine的動作 ***/
+		testTask();// 測試查詢BattleSet
 	}
 
-	private void distributPointTask()// 定時分派賭金(點數)的task
+	private void distributPointTask()
+	{
+
+	}
+
+	private void testTask()// 測試：查詢對戰組合
 	{
 		ApplicationContext context = new AnnotationConfigApplicationContext(GamblingFacade_Config.class);
-		RoutineTask routineTask = (RoutineTask) context.getBean("taskRoutine");
-		System.out.println(" ****** 執行當前的時間 " + sdf.format(Calendar.getInstance().getTime()) + " ****** ");
+		RoutineTask_test_backup routineTask = (RoutineTask_test_backup) context.getBean("taskPerDay");
+		System.out.println(" ****** 執行當前的時間" + sdf.format(Calendar.getInstance().getTime()) + " ****** ");
 		try
 		{
 			//routineTask.gamblingFacade4.test(); // 測試組裝成功
@@ -57,9 +66,15 @@ public class RoutineTask extends TimerTask
 			sdf.applyPattern(format1);// 使用 "yyyy-MM-dd" 格式
 			String querydateStr = sdf.format(querydate).toString();
 			System.out.println("查詢時間 ：" + querydateStr);
-			/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
-			routineTask.gamblingFacade4.splitPayoff(querydateStr, 0.2f);
-			/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
+
+			List<Map<String, Object>> list = routineTask.battleSetSvc.getSetsByDate(querydateStr);
+			for (Map<String, Object> map : list)
+			{
+				System.out.println(
+						map.get("battleTime") + "   " +
+								((NBATeamVO) map.get("home")).getTeamName() +
+								"  vs  " + ((NBATeamVO) map.get("away")).getTeamName());
+			}
 		}
 		catch (Exception e)
 		{
