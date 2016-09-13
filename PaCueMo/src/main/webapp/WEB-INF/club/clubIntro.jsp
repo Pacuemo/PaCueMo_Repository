@@ -94,7 +94,7 @@
 					<s:param name="clubId" value="${leagueRecordVO.clubIdA}" />
 				</s:url>
 				<s:url value="/spring/club/getClubById" var="searchClubB">
-					<s:param name="clubId" value="${leagueRecordVO.clubIdA}" />
+					<s:param name="clubId" value="${leagueRecordVO.clubIdB}" />
 				</s:url>
 					<div class="col-md-12" style="display: block;">
 						<table style="width: 100%; border: 1px solid grey; margin-bottom: 30px">
