@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
-import _51_battleset_service.BattleSetService;
 
 /**
  * 在 TimerManager 这个类里面，大家一定要注意 时间点的问题。如果你设定在凌晨2点执行任务。但你是在2点以后
@@ -26,8 +25,6 @@ import _51_battleset_service.BattleSetService;
 @Component(value = "taskRoutine")
 public class RoutineTask extends TimerTask
 {
-	@Autowired
-	private BattleSetService battleSetSvc;
 	@Autowired
 	private GamblingFacade gamblingFacade4; /* 變數名一定要叫 gamblingFacade4 → 因為GamblingFacade_Config定義太多型態相同的GamblingFacade */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -44,8 +41,7 @@ public class RoutineTask extends TimerTask
 	@Override
 	public void run()
 	{
-
-		distributPointTask();
+		distributPointTask();// 定時分派賭金(點數)的task
 	}
 
 	private void distributPointTask()// 定時分派賭金(點數)的task
