@@ -165,11 +165,11 @@
                         <label class="sr-only" for="playercard-location">活動地區:</label>
                         <select id="location" class="dob" name="userLocation" required data-msg-required="請選擇您的活動地區">
                           <option value="" selected="" disabled="">活動地區</option>
-                          <option value="臺北市">臺北市</option>
+                          <option value="台北市">台北市</option>
                           <option value="新北市">新北市</option>
                           <option value="桃園市">桃園市</option>
-                          <option value="臺中市">臺中市</option>
-                          <option value="臺南市">臺南市</option>
+                          <option value="台中市">台中市</option>
+                          <option value="台南市">台南市</option>
                           <option value="高雄市">高雄市</option>
                           <option value="基隆市">基隆市</option>
                           <option value="新竹市">新竹市</option>
@@ -183,7 +183,7 @@
                           <option value="屏東縣">屏東縣</option>
                           <option value="宜蘭縣">宜蘭縣</option>
                           <option value="花蓮縣">花蓮縣</option>
-                          <option value="臺東縣">臺東縣</option>
+                          <option value="台東縣">台東縣</option>
                           <option value="澎湖縣">澎湖縣</option>
                         </select>
                       </div>
