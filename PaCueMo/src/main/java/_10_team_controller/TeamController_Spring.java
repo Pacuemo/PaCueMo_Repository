@@ -33,7 +33,6 @@ public class TeamController_Spring
 		try
 		{
 			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
-			System.out.println(btn_join);
 			teamMemberService.add(btn_join, memberVO.getMemberId());
 		}
 		catch (Exception e)

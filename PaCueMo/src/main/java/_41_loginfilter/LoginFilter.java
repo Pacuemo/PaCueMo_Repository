@@ -27,9 +27,9 @@ import _9_41_member_model.MemberVO;
 				@WebInitParam(name = "mustLogin4", value = "/spring/club/apply"),
 				@WebInitParam(name = "mustLogin5", value = "/_5_gambling/*"),
 				@WebInitParam(name = "mustLogin6", value = "/spring/team/createTeamPage"),
-				@WebInitParam(name = "mustLogin6", value = "/spring/battle_rec/introduce"),
-				@WebInitParam(name = "mustLogin7", value = "/spring/playercard/Myplayercard"),
-				@WebInitParam(name = "mustLogin8", value = "/spring/battle_rec/introduce")
+				@WebInitParam(name = "mustLogin7", value = "/spring/battle_rec/introduce"),
+				@WebInitParam(name = "mustLogin8", value = "/spring/playercard/Myplayercard"),
+				@WebInitParam(name = "mustLogin9", value = "/spring/battle_rec/introduce")
 })
 public class LoginFilter implements Filter
 {
