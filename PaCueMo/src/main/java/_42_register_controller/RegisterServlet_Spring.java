@@ -72,7 +72,7 @@ public class RegisterServlet_Spring
 		String day = request.getParameter("day");
 		String fbId = request.getParameter("fbId");
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+		calendar.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
 		Date dob = new Date(calendar.getTimeInMillis());
 
 		if ("register".equals(model))
