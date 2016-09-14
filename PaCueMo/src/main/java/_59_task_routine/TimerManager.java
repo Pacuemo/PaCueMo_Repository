@@ -14,14 +14,14 @@ import java.util.Timer;
 public class TimerManager
 {
 	//時間間隔
-//	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 時間間隔﹝一天﹞
-	private static final long PERIOD_DAY = 10 * 60 * 1000; // 時間間隔﹝十分鐘﹞
+	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 時間間隔﹝一天﹞
+//	private static final long PERIOD_DAY = 10 * 60 * 1000; // 時間間隔﹝十分鐘﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public TimerManager()
 	{
 		/*** 設定每日 00:00:00 執行方法 ***/
-		Calendar calendar = getCalendarWithTime(23, 14, 50);//【設定每天的幾點執行】時、分、秒  ──  24h制
+		Calendar calendar = getCalendarWithTime(0, 34, 50);//【設定每天的幾點執行】時、分、秒  ──  24h制
 		Date dateMain = calendar.getTime(); //第一次執行任務的時間
 
 //		System.out.println("TimerManager ── " + sdf.format(dateMain));
