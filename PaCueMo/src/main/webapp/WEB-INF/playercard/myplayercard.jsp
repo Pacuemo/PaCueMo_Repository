@@ -6,7 +6,7 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>我的球員卡</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/playercard.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
     <style>
@@ -24,7 +24,7 @@
 			<div class="col-sm-12">
 				<div class="page-header">
 	    			<h1 class="title">我的球員卡</h1>
-	    			<button id="btn-update-playercard"></button>
+	    			<button class="btn btn-secondary btn-sm btn-block center-block update" id="btn-update-playercard">修改球員卡</button>
 	  			</div>
 				<div class="row">
 				    <div class="col-sm-12 col-md-12">
@@ -58,6 +58,13 @@
 							<span class="position"> ${Playercard.playerPosition}</span>
 							<span class="height">${Playercard.playerHeight}</span>
 							<span class="weight">${Playercard.playerWeight}</span>
+							<c:if test="${Playercard.playerHand == true}">
+							<span class="hand">Left</span>
+							</c:if>
+							<c:if test="${Playercard.playerHand == false}">
+							<span class="hand">Right</span>
+							</c:if>
+							<span class="note">${Playercard.playerNote}</span>
 							</div>
 	   					</div>	
 	   					</div>
@@ -537,7 +544,7 @@
 		  			$("#location").val("${Playercard.playerLocation}");
 		  			$("#hand").val(hand);
 		  			$("#gender").val(gender);
-		  			$("#note").val(${Playercard.playerNote});
+		  			$("#note").val("${Playercard.playerNote}");
 					var str = ${Playercard.playerSTR};
 					var con = ${Playercard.playerDEX};
 					var dex = ${Playercard.playerCON};

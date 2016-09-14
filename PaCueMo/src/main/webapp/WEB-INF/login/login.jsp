@@ -114,7 +114,7 @@
 								$('body').append(form);
 								form.submit();
 							}else{
-								var url = '../../_02_register/fbRegister.jsp';
+								var url = '../../spring/register/Fbsignup';
 								var form = $('<form style="display:none"action="' + url + '" method="post">' +
 								  '<input type="text" name="facebookId" value="' + response.id + '" />' +
 								  '<input type="text" name="lastName" value="' + response.last_name + '" />' +
