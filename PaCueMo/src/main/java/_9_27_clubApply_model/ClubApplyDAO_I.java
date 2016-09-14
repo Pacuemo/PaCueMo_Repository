@@ -21,4 +21,6 @@ public interface ClubApplyDAO_I
 
 	int change_checked(int clubId);
 
+	List<ClubApplyVO> get_All_memberId(String memberId);
+
 }

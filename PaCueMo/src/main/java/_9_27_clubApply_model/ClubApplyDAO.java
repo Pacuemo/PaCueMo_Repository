@@ -20,6 +20,7 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 	private static final String delete_One_By_Id = "delete from clubApply where clubId=? AND memberId=?";
 	private static final String check_Count = "select count(*) from clubApply where checked !=1 AND clubId=?";
 	private static final String check_change = " UPDATE ClubApply SET checked=1 WHERE clubId=?";
+	private static final String get_All_By_memberId = "select * from clubApply where memberId=?";
 
 	private static final class ClubApplyRowMapper implements RowMapper<ClubApplyVO>
 	{
@@ -30,7 +31,8 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 			return new ClubApplyVO(
 					rs.getInt("clubId"),
 					rs.getString("memberId"),
-					rs.getDate("applyDate"));
+					rs.getDate("applyDate"),
+					rs.getInt("checked"));
 		}
 
 	}
@@ -87,6 +89,14 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 	public List<ClubApplyVO> get_All_ClubId(int ClubId)
 	{
 		return jdbc.query(get_All_By_ClubId, new ClubApplyRowMapper(), ClubId);
+	}
+
+	//透過memberId查詢
+
+	@Override
+	public List<ClubApplyVO> get_All_memberId(String memberId)
+	{
+		return jdbc.query(get_All_By_memberId, new ClubApplyRowMapper(), memberId);
 	}
 
 	@Override
