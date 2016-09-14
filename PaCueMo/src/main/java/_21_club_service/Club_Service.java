@@ -110,11 +110,29 @@ public class Club_Service
 		return clubVO;
 	}
 
+	//get社團資訊by clubMemberID
+	public ClubVO getClub_by_Login(String memberId)
+	{
+
+		ClubMemberVO clubMemberVO = clubMemberDAO.findByPK(memberId);
+		if (clubMemberVO != null)
+		{
+			System.out.println("成功查詢社團成員:1筆-傳入社團成員Id");
+			ClubVO clubVO = getClub(clubMemberVO.getClubId());
+			System.out.println("回傳1筆社團VO");
+			return clubVO;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	//邀請進入社團
 	public String applyClub(int clubId, String memberId)
 	{
 
-		if (clubMemberDAO.findByPK(memberId).getClubMemberId() != null)
+		if (clubMemberDAO.findByPK(memberId) != null)
 		{
 			System.out.println("查詢社團成員成功-傳入會員Id");
 			System.out.println("回傳字串-fail 不允許申請進入社團");
@@ -124,9 +142,17 @@ public class Club_Service
 		{
 			System.out.println("查詢社團成員失敗-傳入會員Id");
 			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
-			System.out.println("成功新增 " + success + " 筆申請資料");
-			System.out.println("回傳字串-success 允許申請進入社團");
-			return "success";
+			if (success == 1)
+			{
+				System.out.println("成功新增 " + success + " 筆申請資料");
+				System.out.println("回傳字串-success 允許申請進入社團");
+				return "success";
+			}
+			else
+			{
+				System.out.println("回傳字串-already 已申請進入社團");
+				return "already";
+			}
 		}
 	}
 
@@ -148,7 +174,7 @@ public class Club_Service
 	@Transactional(rollbackFor = Exception.class)
 	public String checkJoinClub(int clubId, String memberId)
 	{
-		if (clubMemberDAO.findByPK(memberId).getClubMemberId() != null)
+		if (clubMemberDAO.findByPK(memberId) != null)
 		{
 			System.out.println("查詢社團成員成功-傳入會員Id");
 			System.out.println("回傳字串-fail 不允許進入新社團");
@@ -166,11 +192,25 @@ public class Club_Service
 	}
 
 	//刪除加入社團
-	public int deleteJoinClub(int clubId, String memberId)
+	public String deleteJoinClub(int clubId, String memberId)
 	{
 		int success = clubApplyDAO.delete_One(clubId, memberId);
 		System.out.println("成功刪除申請資料 " + success + " 筆-並回傳整數:" + success);
-		return success;
+		return "success";
+	}
+
+//計算未讀訊息有多少
+	public int count_Checked(int clubId)
+	{
+		return clubApplyDAO.count_checked(clubId);
+
+	}
+
+//改變未讀狀態
+	public int change_checked(int clubId)
+	{
+		return clubApplyDAO.change_checked(clubId);
+
 	}
 
 	//邀請加入社團

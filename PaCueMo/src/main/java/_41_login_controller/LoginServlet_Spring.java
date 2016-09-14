@@ -24,7 +24,9 @@ import com.google.gson.JsonObject;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 
 import _00_initial_service.GlobalService;
+import _21_club_service.Club_Service;
 import _41_login_service.LoginService_Spring;
+import _9_21_club_model.ClubVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -34,6 +36,8 @@ public class LoginServlet_Spring
 
 	@Autowired
 	private LoginService_Spring ls;
+	@Autowired
+	private Club_Service club_Service;
 
 	@Autowired
 	private JsonObject jsonObject;
@@ -118,6 +122,11 @@ public class LoginServlet_Spring
 		if (mv != null)
 		{
 			session.setAttribute("LoginOK", mv);
+			ClubVO clubVO = club_Service.getClub_by_Login(mv.getMemberId());
+			if (clubVO != null)
+			{
+				session.setAttribute("MyClub", clubVO);
+			}
 			if (requestURI == null)
 			{
 				jsonObject.addProperty("status", "true");

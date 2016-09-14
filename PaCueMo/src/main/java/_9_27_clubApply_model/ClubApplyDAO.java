@@ -14,10 +14,12 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 {
 	@Autowired
 	private JdbcOperations jdbc;
-	private static final String add_One_By_Id = "insert into clubApply values(?,?,?)";
+	private static final String add_One_By_Id = "insert into clubApply values(?,?,?,?)";
 	private static final String get_All_By_MemberId = "select * from ClubApply where memberId=?";
 	private static final String get_All_By_ClubId = "select * from clubApply where clubId=?";
 	private static final String delete_One_By_Id = "delete from clubApply where clubId=? AND memberId=?";
+	private static final String check_Count = "select count(*) from clubApply where checked !=1 AND clubId=?";
+	private static final String check_change = " UPDATE ClubApply SET checked=1 WHERE clubId=?";
 
 	private static final class ClubApplyRowMapper implements RowMapper<ClubApplyVO>
 	{
@@ -41,10 +43,17 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 	@Override
 	public int add_One(ClubApplyVO VO)
 	{
-		return jdbc.update(add_One_By_Id,
-				VO.getClubId(),
-				VO.getMemberId(),
-				VO.getApplyDate());
+		try
+		{
+			return jdbc.update(add_One_By_Id,
+					VO.getClubId(),
+					VO.getMemberId(),
+					VO.getApplyDate(), 0);
+		}
+		catch (Exception e)
+		{
+			return 0;
+		}
 	}
 
 	//刪除
@@ -78,5 +87,25 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 	public List<ClubApplyVO> get_All_ClubId(int ClubId)
 	{
 		return jdbc.query(get_All_By_ClubId, new ClubApplyRowMapper(), ClubId);
+	}
+
+	@Override
+	public int count_checked(int clubId)
+	{
+		try
+		{
+			return jdbc.queryForObject(check_Count, Integer.class, clubId);
+		}
+		catch (Exception e)
+		{
+			return 0;
+		}
+
+	}
+
+	@Override
+	public int change_checked(int clubId)
+	{
+		return jdbc.update(check_change, clubId);
 	}
 }

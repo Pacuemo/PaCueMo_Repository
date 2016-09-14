@@ -14,6 +14,7 @@ public class ClubApplyVO
 	private String memberId;
 	private Date applyDate;
 	private MemberVO memberVO;
+	private int checked;
 
 	public ClubApplyVO()
 	{
@@ -25,6 +26,7 @@ public class ClubApplyVO
 		this.clubId = clubId;
 		this.memberId = memberId;
 		this.applyDate = applyDate;
+		this.checked = 0;
 	}
 
 	public int getClubId()
@@ -65,6 +67,16 @@ public class ClubApplyVO
 	public void setMemberVO(MemberVO memberVO)
 	{
 		this.memberVO = memberVO;
+	}
+
+	public int getChecked()
+	{
+		return checked;
+	}
+
+	public void setChecked(int checked)
+	{
+		this.checked = checked;
 	}
 
 }

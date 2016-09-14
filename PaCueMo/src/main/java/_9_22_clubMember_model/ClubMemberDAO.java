@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -52,7 +53,14 @@ public class ClubMemberDAO implements ClubMemberDAO_I
 	@Override
 	public ClubMemberVO findByPK(String clubMemberID)
 	{
-		return jdbc.queryForObject(get_one_state, new ClubMemberRowMapper(), clubMemberID);
+		try
+		{
+			return jdbc.queryForObject(get_one_state, new ClubMemberRowMapper(), clubMemberID);
+		}
+		catch (DataAccessException e)
+		{
+			return null;
+		}
 	}
 
 	@Override
