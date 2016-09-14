@@ -9,24 +9,19 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-@Repository("TeamApplyDAO")
+@Repository
 public class TeamApplyDAO implements TeamApplyDAO_I
 {
+	@Autowired
 	private JdbcOperations jdbc;
 
 	public TeamApplyDAO()
 	{
 	}
 
-	@Autowired
-	public TeamApplyDAO(JdbcOperations jdbc)
-	{
-		this.jdbc = jdbc;
-	}
-
-	private static final String SELECT_BY_TEAM = "SELECT * FROM TeamApply WHERE teamId = ? AND invstatus = 0";
+	private static final String SELECT_BY_TEAM = "SELECT * FROM TeamApply WHERE teamId = ? AND applystatus = 0";
 	private static final String SELECT_BY_MEMBER_ALL = "SELECT * FROM TeamApply WHERE memberId = ?";
-	private static final String SELECT_BY_MEMBER = "SELECT * FROM TeamApply WHERE memberId = ? AND invstatus = 0";
+	private static final String SELECT_BY_MEMBER_APPLYING = "SELECT * FROM TeamApply WHERE memberId = ? AND applystatus = 0";
 	private static final String INSERT = "INSERT INTO TeamApply (teamId, memberId) VALUES (?, ?)";
 	private static final String DELETE = "DELETE FROM TeamApply WHERE teamId = ? and memberId = ?";
 
@@ -37,7 +32,7 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	@Override
 	public List<TeamApplyVO> getByTeam(Integer teamId)
 	{
-		return jdbc.query(SELECT_BY_TEAM, new InvitationRowMapper(), teamId);
+		return jdbc.query(SELECT_BY_TEAM, new TeamApplyRowMapper(), teamId);
 	}
 
 	/*
@@ -47,7 +42,7 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	@Override
 	public List<TeamApplyVO> getByMemberId_ALL(String memberId)
 	{
-		return jdbc.query(SELECT_BY_MEMBER_ALL, new InvitationRowMapper(), memberId);
+		return jdbc.query(SELECT_BY_MEMBER_ALL, new TeamApplyRowMapper(), memberId);
 	}
 
 	/*
@@ -55,9 +50,10 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	 * @see _9_14_teamapply_model.TeamApplyDAO_I#getByMemberId(java.lang.String)
 	 */
 	@Override
-	public List<TeamApplyVO> getByMemberId(String memberId)
+	public List<TeamApplyVO> getByMemberId_Applying(String memberId)
 	{
-		return jdbc.query(SELECT_BY_MEMBER, new InvitationRowMapper(), memberId);
+		System.out.println("TeamApplyDAO" + memberId);
+		return jdbc.query(SELECT_BY_MEMBER_APPLYING, new TeamApplyRowMapper(), memberId);
 	}
 
 	/*
@@ -80,18 +76,13 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 		jdbc.update(DELETE, teamId, memberId);
 	}
 
-	private static final class InvitationRowMapper implements RowMapper<TeamApplyVO>
+	private static final class TeamApplyRowMapper implements RowMapper<TeamApplyVO>
 	{
 		@Override
 		public TeamApplyVO mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
-			return new TeamApplyVO(rs.getInt("teamId"), rs.getString("memberId"), rs.getInt("invstatus"), rs.getDate("inviteDate"));
+			return new TeamApplyVO(rs.getInt("teamId"), rs.getString("memberId"), rs.getInt("applystatus"), rs.getDate("applyDate"));
 		}
-	}
-
-	public static void main(String[] args)
-	{
-
 	}
 
 }

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component("TeamApplyVO")
+@Component
 public class TeamApplyVO implements java.io.Serializable
 {
 	private static final long serialVersionUID = 1L;

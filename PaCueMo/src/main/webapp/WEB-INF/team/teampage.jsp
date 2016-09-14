@@ -161,27 +161,40 @@ margin: 0px;
 		<div class="col-sm-2 col-md-2 animate fadeInLeft animated">
 			<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
 			<c:choose>
-				<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist_public'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
 						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${requestScope.teamVO.teamId }">
-							<c:choose>
-								<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
-								<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
-								<c:otherwise>私密</c:otherwise>
-							</c:choose>
+								加入隊伍		
 						</button>
 						<input type="hidden" name="page" value="main">
 					</form>
 				</c:when>
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist_protect'}">
+					<form class="left_20" action="${pageContext.request.contextPath}/spring/tm_apply/applyTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_apply" value="${requestScope.teamVO.teamId }">
+								申請加入
+						</button>
+						<input type="hidden" name="page" value="main">
+					</form>
+				</c:when>
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist_applying'}">
+						<a href="#" class="btn btn-warning btn-xs left_20 disabled" role="button">
+								申請中...
+						</a>
+				</c:when>
 				<c:when test="${requestScope.teamExsist == 'Mine'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }">解散隊伍</button>
+						<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }">
+								解散隊伍
+						</button>
 						<input type="hidden" name="page" value="main">
 					</form>
 				</c:when>
 				<c:when test="${requestScope.teamExsist == 'Exsist'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs" name="btn_abort" value="${requestScope.teamVO.teamId }">退出隊伍</button>
+						<button type="submit" class="btn btn-success btn-xs" name="btn_abort" value="${requestScope.teamVO.teamId }">
+								退出隊伍
+						</button>
 						<input type="hidden" name="page" value="main">
 					</form>
 				</c:when>

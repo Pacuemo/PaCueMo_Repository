@@ -9,7 +9,7 @@ public interface TeamApplyDAO_I
 
 	List<TeamApplyVO> getByMemberId_ALL(String memberId);
 
-	List<TeamApplyVO> getByMemberId(String memberId);
+	List<TeamApplyVO> getByMemberId_Applying(String memberId);
 
 	void add(TeamApplyVO teamApplyVO);
 

@@ -2,6 +2,7 @@ package _10_team_service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,12 +92,28 @@ public class TeamService
 
 	public List<TeamVO> getMyTeamList(String teamMemberId)
 	{
-		return teamDAO.getMy(teamMemberId);
+		try
+		{
+			return teamDAO.getMy(teamMemberId);
+		}
+		catch (Exception e)
+		{
+			System.out.println("JoinedTeam no data!");
+			return new ArrayList<TeamVO>();
+		}
 	}
 
 	public List<Integer> find_TeamId_With_TeamHead(String teamHead)
 	{
-		return teamDAO.find_TeamId_With_TeamHead(teamHead);
+		try
+		{
+			return teamDAO.find_TeamId_With_TeamHead(teamHead);
+		}
+		catch (Exception e)
+		{
+			System.out.println("MineTeam no data!");
+			return new ArrayList<Integer>();
+		}
 	}
 
 	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
