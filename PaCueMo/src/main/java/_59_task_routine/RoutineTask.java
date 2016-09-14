@@ -53,7 +53,7 @@ public class RoutineTask extends TimerTask
 
 	@GET /* 前端Ajax_LongPolling.js持續監控本方法，當每日執行時間一到，flag_isUpdate=="start_Update" ，進行更新動作 */
 	@Produces("text/plain;charset=UTF-8")
-	public String distributPointTask()// 定時分派賭金(點數)的task
+	public String distributPointTask()// 定時分派賭金(點數)的task→RESTful service，由前端ajax持續監控
 	{
 		synchronized (flag_isUpdate)
 		{
