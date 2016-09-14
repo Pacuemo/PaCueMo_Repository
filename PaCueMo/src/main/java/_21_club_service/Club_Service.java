@@ -199,6 +199,20 @@ public class Club_Service
 		return "success";
 	}
 
+//計算未讀訊息有多少
+	public int count_Checked(int clubId)
+	{
+		return clubApplyDAO.count_checked(clubId);
+
+	}
+
+//改變未讀狀態
+	public int change_checked(int clubId)
+	{
+		return clubApplyDAO.change_checked(clubId);
+
+	}
+
 	//邀請加入社團
 	public int inviteJoinClub(int clubId, String memberId, String clubMemberId)
 	{

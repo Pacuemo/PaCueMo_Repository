@@ -13,7 +13,6 @@
 	padding: 8px 8px;
 }
 
-
 .agree {
 	background-color: #4CAF50;
 	color: white;
@@ -40,14 +39,18 @@
 	opacity: 0.8;
 }
 
-.agree:disabled,.delete:disabled {
+.agree:disabled, .delete:disabled {
 	pointer-events: none;
 	cursor: default;
 	background-color: gray;
 	cursor: not-allowed;
 }
 
-
+.badge {
+	background-color: #00cc00;
+	padding: 5px 10px;
+	margin-left: 80px;
+}
 </style>
 <div class="container-fluid">
 	<nav class="navbar1 navbar-inverse easy-sidebar">
@@ -62,7 +65,7 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="${pageContext.request.contextPath}/spring/club/login">我的社團 <span class="sr-only">(current)</span></a></li>
-				<li id="check-apply" style="display: none"><a id="apply-ajax" href="${pageContext.request.contextPath}/spring/club/applyCheck?clubId=${MyClub.clubID}">社員申請</a></li>
+				<li id="check-apply" style="display: none"><a id="apply-ajax" href="${pageContext.request.contextPath}/spring/club/applyCheck?clubId=${MyClub.clubID}">社員申請<span class="badge"></span></a></li>
 			</ul>
 
 			<!-- 搜尋 開始 -->
@@ -112,14 +115,46 @@
 		if (memberId == clubHead)
 		{
 			$("#check-apply").attr("style", "display: block");
-		}
+			check_count();
 
-		// ---------------------------------------------------------------------------------
+		}
+		// ---------------------拿到未讀數目------------------
+		function check_count()
+		{
+			$.ajax({ url : "${pageContext.request.contextPath}/spring/club/countChecked?clubId=${MyClub.clubID}", dataType : "json", success : function(message)
+			{
+				if (message != 0)
+				{
+					$(".badge").text(message);
+				}
+				else
+				{
+					$(".badge").empty();
+				}
+			} });
+
+		}
+		// ---------------------拿到未讀數目------------------
+		
+		//---------------------改變未讀狀態為已讀---------------
+		
+    function check_chage()
+		{
+			$.ajax({ url : "${pageContext.request.contextPath}/spring/club/countChange?clubId=${MyClub.clubID}", dataType : "json", success : function(message)
+			{		
+					$(".badge").empty();
+				}
+			}) };
+	
+		
+			//---------------------改變未讀狀態為已讀---------------	
+		// --dialog設定---------------------------------------------------------------------
 
 		$("#dialog").dialog({ autoOpen : false, height : 400, width : 400, modal : true, close : function(event, ui)
 		{
 			$('#apply-ajax').attr("href", "${pageContext.request.contextPath}/spring/club/applyCheck?clubId=${MyClub.clubID}");
 			$('#dialog').html("");
+			check_count();
 		}, position : { my : "center", at : "center", of : window } });
 
 		// ---------------------------------------------------------------------------------
@@ -130,8 +165,8 @@
 			event.preventDefault();
 
 			$.ajax({ "type" : "GET", //傳遞方式				
-			"url" : $(this).attr("href"), "dataType" : "json",//Servlet回傳格式
-			"success" : function(data)
+			url : $(this).attr("href"), "dataType" : "json",//Servlet回傳格式
+			success : function(data)
 			{
 				$('#apply-ajax').attr("href", "#");
 				var applyDiv = $('<div></div>').appendTo("#dialog");
@@ -150,7 +185,7 @@
 
 							switch ($.trim(message.status)) {
 								case "success":
-									BootstrapAlert.success({ title : "Congrat!", message : "成功新增一名社團成員!!!!" });		
+									BootstrapAlert.success({ title : "Congrat!", message : "成功新增一名社團成員!!!!" });
 									break;
 								case "already":
 									BootstrapAlert.alert({ title : "Sorry!", message : "該會員已有社團，新增失敗" });
@@ -178,8 +213,8 @@
 					});
 				});
 			} });
-			$("#dialog").dialog("open");
-
+			check_chage();
+			$("#dialog").dialog("open");	
 		});
 
 		// ---------------------------------------------------------------------------------

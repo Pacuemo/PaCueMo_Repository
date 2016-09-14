@@ -155,6 +155,22 @@ public class Club_Controller
 		return gson.toJson(message);
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "countChecked", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String countChecked(@RequestParam("clubId") int clubId)
+	{
+		int msg = service.count_Checked(clubId);
+		return gson.toJson(msg);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "countChange", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String countChange(@RequestParam("clubId") int clubId)
+	{
+		int msg = service.change_checked(clubId);
+		return gson.toJson(msg);
+	}
+
 //-----------------------社團申請-------------------------------	
 //------------------------查詢------------------------------------	
 	@ResponseBody
