@@ -306,73 +306,7 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 	@Override
 	public List<TeamMemberVO> getOneTeam(Integer teamId)
 	{
-		List<TeamMemberVO> list = new ArrayList<TeamMemberVO>();
-		TeamMemberVO teamMemberVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(GET_ONE_TEAMS);
-			pstmt.setInt(1, teamId);
-			rs = pstmt.executeQuery();
-
-			while (rs.next())
-			{
-				teamMemberVO = new TeamMemberVO();
-				teamMemberVO.setTeamId(rs.getInt("teamId"));
-				teamMemberVO.setTeamMemberId(rs.getString("teamMemberId"));
-				teamMemberVO.setJoinDate(rs.getDate("joinDate"));
-				list.add(teamMemberVO);
-			}
-		}
-		catch (SQLException e)
-		{
-			throw new RuntimeException("A database error occured. " + e.getMessage());
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
+		return jdbc.query(GET_ONE_TEAMS, new TeamMemberRowMapper(), teamId);
 	}
 
 	/*

@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("TeamApplyDAO")
 public class TeamApplyDAO implements TeamApplyDAO_I
 {
 	@Autowired
@@ -24,6 +24,7 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	private static final String SELECT_BY_MEMBER_APPLYING = "SELECT * FROM TeamApply WHERE memberId = ? AND applystatus = 0";
 	private static final String INSERT = "INSERT INTO TeamApply (teamId, memberId) VALUES (?, ?)";
 	private static final String DELETE = "DELETE FROM TeamApply WHERE teamId = ? and memberId = ?";
+	private static final String UPDATE = "UPDATE TeamApply SET applystatus = ? WHERE teamId = ? AND memberId = ?";
 
 	/*
 	 * (non-Javadoc)
@@ -52,7 +53,6 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	@Override
 	public List<TeamApplyVO> getByMemberId_Applying(String memberId)
 	{
-		System.out.println("TeamApplyDAO" + memberId);
 		return jdbc.query(SELECT_BY_MEMBER_APPLYING, new TeamApplyRowMapper(), memberId);
 	}
 
@@ -74,6 +74,12 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	public void delete(Integer teamId, String memberId)
 	{
 		jdbc.update(DELETE, teamId, memberId);
+	}
+
+	@Override
+	public void update(Integer invstatus, Integer teamId, String memberId)
+	{
+		jdbc.update(UPDATE, invstatus, teamId, memberId);
 	}
 
 	private static final class TeamApplyRowMapper implements RowMapper<TeamApplyVO>

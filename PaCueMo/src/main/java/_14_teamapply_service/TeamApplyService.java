@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import _9_10_team_model.TeamDAO_interface;
 import _9_11_teammember_model.TeamMemberDAO_interface;
@@ -14,7 +13,6 @@ import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberDAO_interface;
 
 @Component
-@Transactional
 public class TeamApplyService
 {
 
@@ -36,6 +34,7 @@ public class TeamApplyService
 		TeamApplyVO teamApplyVO = new TeamApplyVO();
 		teamApplyVO.setTeamId(teamId);
 		teamApplyVO.setMemberId(memberId);
+		System.out.println("add        :    " + (null == teamApplyDAO));
 		teamApplyDAO.add(teamApplyVO);
 	}
 
@@ -43,7 +42,6 @@ public class TeamApplyService
 	{
 		try
 		{
-			System.out.println("getByMemberId_Applying run");
 			return teamApplyDAO.getByMemberId_Applying(memberId);
 		}
 		catch (Exception e)
@@ -51,5 +49,10 @@ public class TeamApplyService
 			System.out.println("ApplyingTeam no data!");
 			return new ArrayList<TeamApplyVO>();
 		}
+	}
+
+	public void cancel(Integer teamId, String memberId)
+	{
+		teamApplyDAO.delete(teamId, memberId);
 	}
 }

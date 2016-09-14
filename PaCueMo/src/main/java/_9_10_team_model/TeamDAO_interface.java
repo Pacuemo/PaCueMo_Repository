@@ -19,7 +19,7 @@ public interface TeamDAO_interface
 
 	void delete(Integer teamId);
 
-	TeamVO findByPrimaryKey(Integer teamId);
+	TeamVO getTeamById(Integer teamId);
 
 	List<TeamVO> getAll();
 

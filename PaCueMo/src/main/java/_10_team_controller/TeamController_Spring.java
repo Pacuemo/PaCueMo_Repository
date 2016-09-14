@@ -147,31 +147,25 @@ public class TeamController_Spring
 		return null;
 	}
 
-	@RequestMapping(value = "/createTeamPage")
+//------------------------------------------------------------Page------------------------------------------------------------
+
+	@RequestMapping(value = "/createTeamPage")	// Page
 	public String createTeamPage(HttpSession session, HttpServletRequest request)
 	{
 		System.out.println("Team_Controller : getcreateTeamPage");
 		MemberVO memberVO = null;
-		try
-		{
-			memberVO = (MemberVO) session.getAttribute("LoginOK");
-			List<TeamVO> otherList = teamService.getOtherTeamList(memberVO.getMemberId());
-			request.setAttribute("otherList", otherList);
-			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
-			request.setAttribute("myList", myList);
-			List<Integer> mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberVO.getMemberId());
-			request.setAttribute("mineTeamIdList", mineTeamIdList);
 
-			System.out.println("成功導入");
-			System.out.println("-------------------------------------------------------");
-			return "team/createteam";
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("fuck");
-			return "";
-		}
+		memberVO = (MemberVO) session.getAttribute("LoginOK");
+		List<TeamVO> otherList = teamService.getOtherTeamList(memberVO.getMemberId());
+		request.setAttribute("otherList", otherList);
+		List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+		request.setAttribute("myList", myList);
+		List<Integer> mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberVO.getMemberId());
+		request.setAttribute("mineTeamIdList", mineTeamIdList);
+
+		System.out.println("成功導入");
+		System.out.println("-------------------------------------------------------");
+		return "team/createteam";
 
 	}
 
