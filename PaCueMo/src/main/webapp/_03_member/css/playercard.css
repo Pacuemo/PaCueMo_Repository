@@ -342,8 +342,21 @@ span.weight::before {
     content: 'Weight';
 }
 
+span.hand::before {
+    content: 'Hand';
+}
+
+span.note::before {
+    content: 'Note';
+}
+
 span.position {
     left: 414px;
+    width: 100px;
+}
+
+span.hand {
+    left: 673px;
     width: 100px;
 }
 
@@ -357,7 +370,12 @@ span.weight {
     width: 75px;
 }
 
-span.position, span.height, span.weight {
+span.note {
+    left: 414px;
+    width: 359px;
+}
+
+span.position, span.height, span.weight, span.hand{
     display: block;
     background-color: #fffcfc;
     padding: 28px 0px 6px;
@@ -373,7 +391,23 @@ span.position, span.height, span.weight {
     transform: translateY(-50%);
 }
 
-span.position::before, span.height::before, span.weight::before {
+span.note{
+	display: block;
+    background-color: #fffcfc;
+    padding: 28px 0px 6px;
+    position: relative;
+    top: 110px;
+    font-size: 24px;
+    /* line-height: .75em; */
+    text-align: center;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+span.position::before, span.height::before, span.weight::before, span.hand::before {
     background-color: #d4cece;
     line-height: 24px;
     text-align: center;
@@ -385,10 +419,28 @@ span.position::before, span.height::before, span.weight::before {
     right: 0;
     font-size: 16px;
 }
+ span.note::before{
+    background-color: #d4cece;
+    line-height: 24px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+ }
 
 .info {
     position: relative;
     bottom: 900px;
     left: -250px;
+}
+
+button#btn-update-playercard {
+    position: relative;
+    top: -60px;
+    float: right;
 }
 

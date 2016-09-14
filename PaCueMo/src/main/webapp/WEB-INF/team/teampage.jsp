@@ -121,8 +121,8 @@ p.tempstyle {
 	padding-left: 20px;
 }
 
-.mar_0{
-margin: 0px;
+.mar_0 {
+	margin: 0px;
 }
 </style>
 
@@ -161,15 +161,21 @@ margin: 0px;
 		<div class="col-sm-2 col-md-2 animate fadeInLeft animated">
 			<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
 			<c:choose>
-				<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist_public'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${requestScope.teamVO.teamId }">
-							<c:choose>
-								<c:when test="${requestScope.teamVO.teamProp == 0}">加入隊伍</c:when>
-								<c:when test="${requestScope.teamVO.teamProp == 1}">申請加入</c:when>
-								<c:otherwise>私密</c:otherwise>
-							</c:choose>
-						</button>
+						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${requestScope.teamVO.teamId }">加入隊伍</button>
+						<input type="hidden" name="page" value="main">
+					</form>
+				</c:when>
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist_protect'}">
+					<form class="left_20" action="${pageContext.request.contextPath}/spring/tm_apply/applyTeam" method="get">
+						<button type="submit" class="btn btn-success btn-xs left_20" name="btn_apply" value="${requestScope.teamVO.teamId }">申請加入</button>
+						<input type="hidden" name="page" value="main">
+					</form>
+				</c:when>
+				<c:when test="${requestScope.teamExsist == 'Not_Exsist_applying'}">
+					<form class="left_20" action="${pageContext.request.contextPath}/spring/tm_apply/cancel" method="get">
+						<button type="submit" class="btn btn-warning btn-xs left_20" name="btn_cancel" value="${requestScope.teamVO.teamId }" id="btn_cancle" style="background-color: #F2A359">申請中...</button>
 						<input type="hidden" name="page" value="main">
 					</form>
 				</c:when>
@@ -203,9 +209,28 @@ margin: 0px;
 						</c:choose>
 						<figcaption>
 							<h3 class="margin-top-10 margin-bottom-10">
-								${list.memberVO.memberFirstName } <small>- Programmer</small>
+								${list.memberVO.memberFirstName } 
+								<small>- 
+								<c:choose>
+									<c:when test="${list.playerCardVO.playerPosition == 'PG'}">
+											控球後衛
+									</c:when>
+									<c:when test="${list.playerCardVO.playerPosition == 'SG'}">
+											得分後衛
+									</c:when>
+									<c:when test="${list.playerCardVO.playerPosition == 'SF'}">
+											小前鋒
+									</c:when>
+									<c:when test="${list.playerCardVO.playerPosition == 'PF'}">
+											大前鋒
+									</c:when>
+									<c:when test="${list.playerCardVO.playerPosition == 'C'}">
+											中鋒
+									</c:when>
+								</c:choose>
+								</small>
 							</h3>
-							<span>Nullam id dolor id nibh ultricies vehicula ut id elit.</span>
+							<span>${list.playerCardVO.playerNote}</span>
 						</figcaption>
 						<ul class="list-inline person-details-icons">
 							<li><a href="#"> <i class="fa-lg fa-twitter"></i>
@@ -315,6 +340,18 @@ margin: 0px;
 				} })
 			}) // disband team End
 
+			//set btn_cancle hover
+			$("#btn_cancle").hover(function(){
+// 				$( this ).fadeOut( 100 );
+// 				 $( this ).fadeIn( 500 );
+				 $( this ).html('取消申請');
+				 
+			},function(){
+				$( this ).html('申請中...');
+			})
+				
+			
+			
 			// End of init
 		});
 	</script>

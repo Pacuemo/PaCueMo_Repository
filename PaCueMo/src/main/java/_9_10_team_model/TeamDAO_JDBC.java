@@ -302,7 +302,7 @@ public class TeamDAO_JDBC implements TeamDAO_interface
 	 * @see _9_10_team_model.TeamDAO_interface#findByPrimaryKey(java.lang.Integer)
 	 */
 	@Override
-	public TeamVO findByPrimaryKey(Integer teamId)
+	public TeamVO getTeamById(Integer teamId)
 	{
 		Connection con = null;
 		PreparedStatement pstmt = null;

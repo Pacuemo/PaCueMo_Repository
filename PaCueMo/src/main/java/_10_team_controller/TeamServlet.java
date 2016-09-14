@@ -1,8 +1,8 @@
 package _10_team_controller;
 
 import java.io.IOException;
-import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,16 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import _00_config.RootConfig;
+import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _12_battlerecord_service.BattleRecordService;
+import _14_teamapply_service.TeamApplyService;
 import _9_10_team_model.TeamVO;
-import _9_11_teammember_model.TeamMemberVO;
+import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberVO;
-import _9_42_playerCard_model.PlayerCardVO;
 
 @WebServlet("/TeamServlet")
 public class TeamServlet extends HttpServlet
@@ -27,6 +30,16 @@ public class TeamServlet extends HttpServlet
 
 	private static final long serialVersionUID = 1L;
 	private AnnotationConfigWebApplicationContext context;
+	@Autowired
+	private TeamService teamService;
+	@Autowired
+	private TeamMemberService teamMemberService;
+	@Autowired
+	private BattleRecordService battleRecordService;
+	@Autowired
+	private TeamApplyService teamApplyService;
+	@Autowired
+	private StevenFacade stevenFacade;
 
 	public TeamServlet()
 	{
@@ -41,45 +54,45 @@ public class TeamServlet extends HttpServlet
 		context.refresh();
 	}
 
+	public void init(ServletConfig config) throws ServletException
+	{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
+	}
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		System.out.println("Go to TeamPage (GET)");	// 隊伍頁面
 		req.setCharacterEncoding("UTF-8");
-		TeamService teamService = null;
-		TeamMemberService teamMemberService = null;
-		BattleRecordService battleRecordService = null;
+
 		TeamVO teamVO = null;
 		MemberVO memberVO = null;
-		PlayerCardVO playerCardVO = null;
 		HttpSession session = null;
-		List<TeamMemberVO> teamMemberList = null;
-		List<TeamVO> myTeamList = null;
-		List<Integer> mineTeamIdList = null;
 		Integer teamId = null;
 
-		//測試!!! TEST TEST TEST
-		if (req.getParameter("teamId") == null)
+		try
 		{
-			System.out.println("Can't get teamId");
+			teamId = Integer.valueOf(req.getParameter("teamId"));
+			System.out.println("get teamId from parameter success");
+		}
+		catch (Exception e)
+		{
+			System.out.println("get teamId from parameter failed , try get attribute");
+			teamId = (Integer) req.getAttribute("teamId");
+			System.out.println("get teamId from attribute success");
 		}
 
-		if (null != req.getParameter("teamId") || null != req.getAttribute("teamId")) //測試!!! TEST TEST TEST
+		if (null != req.getParameter("teamId") || null != req.getAttribute("teamId"))
 		{
 			try
 			{
 				session = req.getSession();
 				memberVO = (MemberVO) session.getAttribute("LoginOK");
-				try
-				{
-					teamId = Integer.valueOf(req.getParameter("teamId"));
-				}
-				catch (Exception e)
-				{
-					teamId = (Integer) req.getAttribute("teamId");
-				}
-				teamService = context.getBean(TeamService.class);
-				battleRecordService = context.getBean(BattleRecordService.class);
-				teamMemberService = context.getBean(TeamMemberService.class);
+
+//				teamService = context.getBean(TeamService.class);
+//				battleRecordService = context.getBean(BattleRecordService.class);
+//				teamMemberService = context.getBean(TeamMemberService.class);
 				Double attendancePercent = null;
 				Double teamWPCT = null;
 				String memberId = memberVO.getMemberId();
@@ -101,7 +114,7 @@ public class TeamServlet extends HttpServlet
 					System.out.println("teamWPCT no data!");
 					teamWPCT = 0.0;
 				}
-				teamVO = teamService.getOne(teamId);
+				teamVO = stevenFacade.getTeamById(teamId);
 				if (teamVO.getTeamId() == null)
 				{
 					System.out.println("隊伍不存在");
@@ -111,11 +124,10 @@ public class TeamServlet extends HttpServlet
 				req.setAttribute("teamVO", teamVO); 							//setAtt
 				req.setAttribute("attendancePercent", attendancePercent);		//setAtt
 				req.setAttribute("teamWPCT", teamWPCT);							//setAtt
-				teamMemberList = teamMemberService.getOneTeam(teamId);
 
 				Boolean flag = false;
-				myTeamList = teamService.getMyTeamList(memberId);
-				for (TeamVO list : myTeamList)
+
+				for (TeamVO list : teamService.getMyTeamList(memberId))
 				{
 					if (list.getTeamId() == teamId)
 					{
@@ -124,8 +136,7 @@ public class TeamServlet extends HttpServlet
 					}
 				}
 
-				mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberId);
-				for (Integer list : mineTeamIdList)
+				for (Integer list : teamService.find_TeamId_With_TeamHead(memberId))
 				{
 					if (list == teamId)
 					{
@@ -134,9 +145,26 @@ public class TeamServlet extends HttpServlet
 					}
 				}
 
+//				teamApplyService = new TeamApplyService();
+				for (TeamApplyVO list : teamApplyService.getByMemberId_Applying(memberId))
+				{
+					if (list.getTeamId() == teamId)
+					{
+						req.setAttribute("teamExsist", "Not_Exsist_applying");	//setAtt
+						flag = true;
+					}
+				}
+
 				if (!flag)
 				{
-					req.setAttribute("teamExsist", "Not_Exsist");				//setAtt
+					if (teamVO.getTeamProp() == 0)
+					{
+						req.setAttribute("teamExsist", "Not_Exsist_public");	//setAtt
+					}
+					else if (teamVO.getTeamProp() == 1)
+					{
+						req.setAttribute("teamExsist", "Not_Exsist_protect");	//setAtt
+					}
 				}
 
 //				Need to get average rank

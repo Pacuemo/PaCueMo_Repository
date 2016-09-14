@@ -13,6 +13,10 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import _00_config.RootConfig;
+import _9_10_team_model.TeamDAO;
+import _9_10_team_model.TeamVO;
+
 @Repository("BattleRecordDAO")
 public class BattleRecordDAO implements BattleRecordDAO_I
 {
@@ -31,7 +35,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	private static final String INSERT = "INSERT INTO BattleRecord (teamIdA,teamIdB,battleStatus,courtId,battleMode,battleBet,battleDateTime,"
 			+ "result,reportA,reportB) VALUES (?, ?, 0, ?, ?, ?, ?, 0, 0, 0)";
 	private static final String FAKEDATA = "INSERT INTO BattleRecord (teamIdA,teamIdB,battleStatus,courtId,battleMode,battleBet,battleDateTime,"
-			+ "result,reportA,reportB) VALUES (?, ?, 0, ?, ?, ?, ?, ?, 0, 0)";
+			+ "result,reportA,reportB) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0)";
 	private static final String ACCEPT = "UPDATE BattleRecord set battleStatus=? where battleId = ?";
 	private static final String REPORT_A = "UPDATE BattleRecord set reportA=? where battleId = ?";
 	private static final String REPORT_B = "UPDATE BattleRecord set reportB=? where battleId = ?";
@@ -61,7 +65,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 
 	public void addFakeData(BattleRecordVO battleRecordVO)
 	{
-		jdbc.update(FAKEDATA, battleRecordVO.getTeamIdA(), battleRecordVO.getTeamIdB(), battleRecordVO.getCourtId(),
+		jdbc.update(FAKEDATA, battleRecordVO.getTeamIdA(), battleRecordVO.getTeamIdB(), battleRecordVO.getBattleStatus(), battleRecordVO.getCourtId(),
 				battleRecordVO.getBattleMode(), battleRecordVO.getBattleBet(), battleRecordVO.getBattleDateTime(), battleRecordVO.getResult());
 	}
 
@@ -203,42 +207,52 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 
 	public static void main(String arg[])
 	{
-		BattleRecordVO battleRecordVO = new BattleRecordVO();
-		battleRecordVO.setTeamIdA(4);
-		battleRecordVO.setTeamIdB(3);
-		battleRecordVO.setBattleStatus(0);
-		battleRecordVO.setCourtId(1);
-		battleRecordVO.setBattleMode(3);
-		battleRecordVO.setBattleBet((double) 0);
-		battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis()));
 
-		ApplicationContext context = new AnnotationConfigApplicationContext(BatteleRecordConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		BattleRecordDAO_I dao = context.getBean(BattleRecordDAO.class);
-
+		TeamDAO teamDAO = context.getBean(TeamDAO.class);
+		List<TeamVO> TeamVOs = teamDAO.getAll();
 		try
 		{
-
-			for (int i = 1 ; i <= 20 ; i++)
+			int i = 1;
+			while (i <= 200)
 			{
+				BattleRecordVO battleRecordVO = new BattleRecordVO();
 				battleRecordVO = new BattleRecordVO();
-				battleRecordVO.setTeamIdA((int) (Math.random() * 5 + 1));
-				battleRecordVO.setTeamIdB((int) (Math.random() * 5 + 1));
-				battleRecordVO.setBattleStatus((int) (Math.random() * 3 + 1));
+				Integer teamA = TeamVOs.get((int) (Math.random() * TeamVOs.size())).getTeamId();
+				Integer teamB = TeamVOs.get((int) (Math.random() * TeamVOs.size())).getTeamId();
+				while (teamA == teamB)
+				{
+					teamB = TeamVOs.get((int) (Math.random() * TeamVOs.size())).getTeamId();
+				}
+				battleRecordVO.setTeamIdA(teamA);
+				battleRecordVO.setTeamIdB(teamB);
+				Integer status = (int) (Math.random() * 3 + -1);
+				battleRecordVO.setBattleStatus(status);
+				if (status != 1)
+				{
+					battleRecordVO.setCourtId(1);
+					battleRecordVO.setBattleMode(3);
+					battleRecordVO.setBattleBet(Math.random() * 10000 + 1);
+					battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis() + (long) (Math.random() * 86400000)));
+					battleRecordVO.setResult(0);
+					((BattleRecordDAO) dao).addFakeData(battleRecordVO);
+					i++;
+					continue;
+				}
 				battleRecordVO.setCourtId(1);
 				battleRecordVO.setBattleMode(3);
-				battleRecordVO.setBattleBet((double) 0);
-				battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis()));
+				battleRecordVO.setBattleBet(Math.random() * 10000 + 1);
+				battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis() + (long) (Math.random() * 86400000)));
 				battleRecordVO.setResult((int) (Math.random() * 6 + 1));
 				((BattleRecordDAO) dao).addFakeData(battleRecordVO);
-
+				i++;
 			}
 
 //			dao.accept_Reject(0, 1);
 //			System.out.println(dao.findById(1).getBattleId() + " " +dao.findById(1).getTeamIdA() );
-
-			System.out.println(dao.getAbsencePercent(4));
-
-			System.out.println("good");
+			System.out.println((i - 1) + " 筆資料輸入   success");
+			System.out.println("AbsencePercent : " + dao.getAbsencePercent(4));
 		}
 		catch (Exception e)
 		{

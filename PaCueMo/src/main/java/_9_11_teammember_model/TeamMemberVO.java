@@ -2,14 +2,19 @@ package _9_11_teammember_model;
 
 import java.sql.Date;
 
-import _9_41_member_model.MemberVO;
+import org.springframework.stereotype.Component;
 
+import _9_41_member_model.MemberVO;
+import _9_42_playerCard_model.PlayerCardVO;
+
+@Component
 public class TeamMemberVO
 {
 	private Integer teamId;
 	private String teamMemberId;
 	private Date joinDate;
 	private MemberVO memberVO;
+	private PlayerCardVO playerCardVO;
 
 	public TeamMemberVO()
 	{
@@ -62,6 +67,16 @@ public class TeamMemberVO
 	public void setMemberVO(MemberVO memberVO)
 	{
 		this.memberVO = memberVO;
+	}
+
+	public PlayerCardVO getPlayerCardVO()
+	{
+		return playerCardVO;
+	}
+
+	public void setPlayerCardVO(PlayerCardVO playerCardVO)
+	{
+		this.playerCardVO = playerCardVO;
 	}
 
 }

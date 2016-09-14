@@ -104,6 +104,7 @@ public class MemberServlet_Spring extends HttpServlet
 					jObject.addProperty("url", url);
 					jObject.addProperty("sKey", credentials.getKey());
 					out.write(jObject.toString());
+					return;
 
 				}
 				else
@@ -111,6 +112,7 @@ public class MemberServlet_Spring extends HttpServlet
 					jObject = new JsonObject();
 					jObject.addProperty("status", "false");
 					out.write(jObject.toString());
+					return;
 				}
 			}
 			else
@@ -118,6 +120,7 @@ public class MemberServlet_Spring extends HttpServlet
 				jObject = new JsonObject();
 				jObject.addProperty("status", "false");
 				out.write(jObject.toString());
+				return;
 			}
 		}
 
@@ -133,17 +136,20 @@ public class MemberServlet_Spring extends HttpServlet
 
 					if (isCodeValid)
 					{
-						memberVO.setMemberSecretKey(sKey);
-						memberVO.setMember2StepVerify(true);
+						MemberVO temp = new MemberVO();
+						temp.setMemberId(memberVO.getMemberId());
+						temp.setMemberSecretKey(sKey);
+						temp.setMember2StepVerify(true);
 
-						if (ms.activateTwoStepVerification(memberVO) == 1)
+						if (ms.activateTwoStepVerification(temp) == 1)
 						{
 
-							session.removeAttribute("LoginOK");
-							session.setAttribute("LoginOK", memberVO);
+							memberVO.setMemberSecretKey(sKey);
+							memberVO.setMember2StepVerify(true);
 							jObject = new JsonObject();
 							jObject.addProperty("status", "true");
 							out.write(jObject.toString());
+							return;
 
 						}
 						else
@@ -151,6 +157,7 @@ public class MemberServlet_Spring extends HttpServlet
 							jObject = new JsonObject();
 							jObject.addProperty("status", "false");
 							out.write(jObject.toString());
+							return;
 						}
 					}
 					else
@@ -158,6 +165,7 @@ public class MemberServlet_Spring extends HttpServlet
 						jObject = new JsonObject();
 						jObject.addProperty("status", "false");
 						out.write(jObject.toString());
+						return;
 					}
 
 				}
@@ -166,6 +174,7 @@ public class MemberServlet_Spring extends HttpServlet
 					jObject = new JsonObject();
 					jObject.addProperty("status", "false");
 					out.write(jObject.toString());
+					return;
 				}
 			}
 			else
@@ -174,6 +183,7 @@ public class MemberServlet_Spring extends HttpServlet
 				jObject = new JsonObject();
 				jObject.addProperty("status", "false");
 				out.write(jObject.toString());
+				return;
 
 			}
 		}
@@ -184,17 +194,19 @@ public class MemberServlet_Spring extends HttpServlet
 			{
 				if (memberVO.getMember2StepVerify() == true)
 				{
-					memberVO.setMemberSecretKey(null);
-					memberVO.setMember2StepVerify(false);
+					MemberVO temp = new MemberVO();
+					temp.setMemberId(memberVO.getMemberId());
+					temp.setMemberSecretKey(null);
+					temp.setMember2StepVerify(false);
 
-					if (ms.activateTwoStepVerification(memberVO) == 1)
+					if (ms.activateTwoStepVerification(temp) == 1)
 					{
-
-						session.removeAttribute("LoginOK");
-						session.setAttribute("LoginOK", memberVO);
+						memberVO.setMemberSecretKey(null);
+						memberVO.setMember2StepVerify(false);
 						jObject = new JsonObject();
 						jObject.addProperty("status", "true");
 						out.write(jObject.toString());
+						return;
 
 					}
 					else
@@ -202,6 +214,7 @@ public class MemberServlet_Spring extends HttpServlet
 						jObject = new JsonObject();
 						jObject.addProperty("status", "false");
 						out.write(jObject.toString());
+						return;
 					}
 
 				}
@@ -210,6 +223,7 @@ public class MemberServlet_Spring extends HttpServlet
 					jObject = new JsonObject();
 					jObject.addProperty("status", "false");
 					out.write(jObject.toString());
+					return;
 				}
 			}
 			else
@@ -218,6 +232,7 @@ public class MemberServlet_Spring extends HttpServlet
 				jObject = new JsonObject();
 				jObject.addProperty("status", "false");
 				out.write(jObject.toString());
+				return;
 
 			}
 		}
@@ -228,17 +243,19 @@ public class MemberServlet_Spring extends HttpServlet
 			{
 				if (memberVO.getMemberFBId() == null && fbId.trim().length() > 0)
 				{
-					memberVO.setMemberFBId(fbId);
-					memberVO.setMemberImgUrl(null);
+					MemberVO temp = new MemberVO();
+					temp.setMemberId(memberVO.getMemberId());
+					temp.setMemberFBId(fbId);
+					temp.setMemberImgUrl(null);
 
-					if (ms.connectFbAccount(memberVO) == 1)
+					if (ms.connectFbAccount(temp) == 1)
 					{
-
-						session.removeAttribute("LoginOK");
-						session.setAttribute("LoginOK", memberVO);
+						memberVO.setMemberFBId(fbId);
+						memberVO.setMemberImgUrl(null);
 						jObject = new JsonObject();
 						jObject.addProperty("status", "true");
 						out.write(jObject.toString());
+						return;
 
 					}
 					else
@@ -246,6 +263,7 @@ public class MemberServlet_Spring extends HttpServlet
 						jObject = new JsonObject();
 						jObject.addProperty("status", "false");
 						out.write(jObject.toString());
+						return;
 					}
 
 				}
@@ -254,6 +272,7 @@ public class MemberServlet_Spring extends HttpServlet
 					jObject = new JsonObject();
 					jObject.addProperty("status", "false");
 					out.write(jObject.toString());
+					return;
 				}
 			}
 			else
@@ -262,6 +281,7 @@ public class MemberServlet_Spring extends HttpServlet
 				jObject = new JsonObject();
 				jObject.addProperty("status", "false");
 				out.write(jObject.toString());
+				return;
 
 			}
 		}
@@ -280,12 +300,14 @@ public class MemberServlet_Spring extends HttpServlet
 						jObject = new JsonObject();
 						jObject.addProperty("status", "true");
 						out.write(jObject.toString());
+						return;
 					}
 					else
 					{
 						jObject = new JsonObject();
 						jObject.addProperty("status", "false");
 						out.write(jObject.toString());
+						return;
 					}
 
 				}
@@ -294,6 +316,7 @@ public class MemberServlet_Spring extends HttpServlet
 					jObject = new JsonObject();
 					jObject.addProperty("status", "false");
 					out.write(jObject.toString());
+					return;
 				}
 			}
 			else
@@ -302,6 +325,7 @@ public class MemberServlet_Spring extends HttpServlet
 				jObject = new JsonObject();
 				jObject.addProperty("status", "false");
 				out.write(jObject.toString());
+				return;
 
 			}
 		}
