@@ -5,6 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimerTask;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -22,6 +26,7 @@ import _50_gambling_facade.GamblingFacade_Config;
  * @author wls
  *
  */
+@Path(value = "routineTask") //RESTful
 @Component(value = "taskRoutine")
 public class RoutineTask extends TimerTask
 {
@@ -29,6 +34,7 @@ public class RoutineTask extends TimerTask
 	private GamblingFacade gamblingFacade4; /* 變數名一定要叫 gamblingFacade4 → 因為GamblingFacade_Config定義太多型態相同的GamblingFacade */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String format1 = "yyyy-MM-dd";
+	private static String flag_isUpdate = "yet_update";
 
 	public RoutineTask()
 	{
@@ -41,35 +47,55 @@ public class RoutineTask extends TimerTask
 	@Override
 	public void run()
 	{
-		distributPointTask();// 定時分派賭金(點數)的task
+		flag_isUpdate = "start_Update";
+		//distributPointTask();// 定時分派賭金(點數)的task
 	}
 
-	private void distributPointTask()// 定時分派賭金(點數)的task
+	@GET /* 前端Ajax_LongPolling.js持續監控本方法，當每日執行時間一到，flag_isUpdate=="start_Update" ，進行更新動作 */
+	@Produces("text/plain;charset=UTF-8")
+	public String distributPointTask()// 定時分派賭金(點數)的task
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(GamblingFacade_Config.class);
-		RoutineTask routineTask = (RoutineTask) context.getBean("taskRoutine");
-		System.out.println(" ****** 執行當前的時間 " + sdf.format(Calendar.getInstance().getTime()) + " ****** ");
-		try
+		synchronized (flag_isUpdate)
 		{
-			//routineTask.gamblingFacade4.test(); // 測試組裝成功
-			Date querydate = Calendar.getInstance().getTime();
-			//querydate = addDay(querydate, -1);// 若設定自動執行的時間為 00:00:00 ，查詢場次的日期必須減一天 【TimerManager → getCalendarWithTime(0, 0, 0)】
-			sdf.applyPattern(format1);// 使用 "yyyy-MM-dd" 格式
-			String querydateStr = sdf.format(querydate).toString();
-			System.out.println("查詢時間 ：" + querydateStr);
-			/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
-			routineTask.gamblingFacade4.splitPayoff(querydateStr, 0.2f);
-			/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
-		}
-		catch (Exception e)
-		{
-			System.out.println("-------------﹝RoutineTask.java 查詢對戰組合﹞發生例外狀況--------------");
-			e.printStackTrace();
-		}
-		finally
-		{
-			((ConfigurableApplicationContext) context).close();
-			System.out.println(" =========== ApplicationContext 關閉成功 ===========");
+			if ("start_Update".equals(flag_isUpdate))
+			{
+				//----------------------------------------------------------------
+				ApplicationContext context = new AnnotationConfigApplicationContext(GamblingFacade_Config.class);
+				RoutineTask routineTask = (RoutineTask) context.getBean("taskRoutine");
+				System.out.println(" ****** 執行當前的時間 " + sdf.format(Calendar.getInstance().getTime()) + " ****** ");
+				try
+				{
+//					routineTask.gamblingFacade4.test(); // 測試組裝成功			
+					Date querydate = Calendar.getInstance().getTime();
+					//querydate = addDay(querydate, -1);// 若設定自動執行的時間為 00:00:00 ，查詢場次的日期必須減一天 【TimerManager → getCalendarWithTime(0, 0, 0)】
+					sdf.applyPattern(format1);// 使用 "yyyy-MM-dd" 格式
+					String querydateStr = sdf.format(querydate).toString();
+					System.out.println("查詢時間 ：" + querydateStr);
+					/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
+					routineTask.gamblingFacade4.splitPayoff(querydateStr, 0.2f);
+					/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
+
+					String tmpFlag = flag_isUpdate; // 第一個Ajax請求進入，tmpFlag == "start_Update"
+					flag_isUpdate = "yet_update";// 立即將flag_isUpdate → 設回未更新→以免第2個請求瞬間也進入，造成連續更新資料兩次
+					return tmpFlag;// return "start_Update"
+				}
+				catch (Exception e)
+				{
+					flag_isUpdate = "yet_update";
+					System.out.println("-------------﹝RoutineTask.java 查詢對戰組合﹞發生例外狀況--------------");
+					e.printStackTrace();
+				}
+				finally
+				{
+					((ConfigurableApplicationContext) context).close();
+					System.out.println(" =========== ApplicationContext 關閉成功 ===========");
+				}
+			}
+			else
+			{
+				flag_isUpdate = "yet_update";
+			}
+			return flag_isUpdate;
 		}
 
 	}

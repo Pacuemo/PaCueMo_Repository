@@ -214,6 +214,7 @@
 	            </form>
 	    </div>
 	   <!-- ***************************【 購買點數 - 信用卡 dialog 結束】***************************** -->
+<h5 id="state" style="color:orange;">Test</h5>
 
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -227,6 +228,7 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
 	   <script src="<%=request.getContextPath()%>/_5_gambling/util_js/util.js"></script>
+       <jsp:include page="/_5_gambling/util_js/Ajax_LongPolling.jsp"/><!-- LongPolling(放jquery之後) -->
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -235,6 +237,12 @@
             //alert( funFlag );
             
        		$(function(){       
+       			
+       			/*****************************************************************/ 
+       			/*   背景偷偷做 Ajax_LongPolling.js/jsp 持續發請求給 RoutineTask.java*/ 
+       			/*   → 長連接 效果                                              */ 
+       			/*****************************************************************/
+       			
        			/* ================ 【下注 開始】 ================= */
        			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
