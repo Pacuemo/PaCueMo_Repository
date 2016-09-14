@@ -8,6 +8,11 @@
 <title>帳戶 - Pacuemo</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/member.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
+<style type="text/css">
+    .ui-widget {
+   		z-index:1000000 !important; /* The default is 100. !important overrides the default. */
+	}	
+</style>
 </head>
 <body>
 <jsp:include page="/fragment/top.jsp" />

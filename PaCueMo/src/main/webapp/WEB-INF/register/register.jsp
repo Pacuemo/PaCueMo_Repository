@@ -164,7 +164,7 @@
 								if( data.status == "true"){
 									location.href = "../../index.jsp";
 								}else{
-									var url = 'Fbsignup.jsp';
+									var url = 'Fbsignup';
 									var form = $('<form style="display:none"action="' + url + '" method="post">' +
 									  '<input type="text" name="facebookId" value="' + response.id + '" />' +
 									  '<input type="text" name="lastName" value="' + response.last_name + '" />' +

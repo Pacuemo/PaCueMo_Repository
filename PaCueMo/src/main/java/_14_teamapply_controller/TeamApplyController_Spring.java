@@ -47,16 +47,28 @@ public class TeamApplyController_Spring
 		System.out.println("申請成功");
 		System.out.println("-------------------------------------------------------");
 //		if (page.equals("main")) 目前只有main page 有這功能
-//		{
-//			System.out.println("forward main");
-//			request.setAttribute("teamId", btn_apply);	//set Att
-//			return "forward:/TeamServlet";
-//		}
-//		else
-//		{
-//			System.out.println("forward ctp");
-//			return "forward:createTeamPage";
-//		}
+
+		return "forward:/TeamServlet";
+	}
+
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
+	public String cancle(HttpServletRequest request, HttpSession session, Integer btn_cancel, String page)
+	{
+		System.out.println("Team_Controller : cancel");
+		try
+		{
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+			teamApplyService.cancel(btn_cancel, memberVO.getMemberId());
+			request.setAttribute("teamId", btn_cancel);	//set Att
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "nerver_happen";
+		}
+		System.out.println("取消成功");
+		System.out.println("-------------------------------------------------------");
 		return "forward:/TeamServlet";
 	}
 

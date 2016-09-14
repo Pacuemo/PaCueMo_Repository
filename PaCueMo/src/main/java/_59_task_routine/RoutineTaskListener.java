@@ -2,16 +2,17 @@ package _59_task_routine;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 
-@WebListener
+// @WebListener
 public class RoutineTaskListener implements ServletContextListener
 {
+	TimerManager myTimer = null;
+
 	@Override
 	public void contextInitialized(ServletContextEvent sce)
 	{
 		System.out.println("應用程式───誕生");
-		new TimerManager();// 應用程式誕生時產生 TimerManager 管理所有 TimerTask
+		myTimer = new TimerManager();// 應用程式誕生時產生 TimerManager 管理所有 TimerTask
 	}
 
 	@Override

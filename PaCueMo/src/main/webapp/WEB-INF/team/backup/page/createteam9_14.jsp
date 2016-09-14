@@ -98,16 +98,16 @@ height: 50px;
 						<div class="col-md-6" >
 							<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
 						</div>
-<!-- 						<div class="col-md-6" > -->
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${ot_list.teamId == 0}"> --%>
-<%-- 							<form action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get"> --%>
-<%-- 								<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${ot_list.teamId }" >加入</button> --%>
-<!-- 								<input type="hidden" name="page" value="first"> -->
-<!-- 							</form> -->
-<%-- 							</c:when> --%>
-<%-- 						</c:choose> --%>
-<!-- 						</div> -->
+						<div class="col-md-6" >
+						<c:choose>
+							<c:when test="${ot_list.teamId == 0}">
+							<form action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
+								<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${ot_list.teamId }" >加入</button>
+								<input type="hidden" name="page" value="first">
+							</form>
+							</c:when>
+						</c:choose>
+						</div>
 					</div></td></tr>
 				</c:forEach>
 				</tbody>
