@@ -41,10 +41,17 @@ public class ClubApplyDAO implements ClubApplyDAO_I
 	@Override
 	public int add_One(ClubApplyVO VO)
 	{
-		return jdbc.update(add_One_By_Id,
-				VO.getClubId(),
-				VO.getMemberId(),
-				VO.getApplyDate());
+		try
+		{
+			return jdbc.update(add_One_By_Id,
+					VO.getClubId(),
+					VO.getMemberId(),
+					VO.getApplyDate());
+		}
+		catch (Exception e)
+		{
+			return 0;
+		}
 	}
 
 	//刪除
