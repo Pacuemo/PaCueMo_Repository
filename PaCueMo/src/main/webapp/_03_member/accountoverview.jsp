@@ -8,6 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>帳戶 - Pacuemo</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/member.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
+<style type="text/css">
+    .ui-widget {
+   		z-index:1000000 !important; /* The default is 100. !important overrides the default. */
+	}	
+</style>
 </head>
 <body>
 <jsp:include page="/fragment/top.jsp" />
@@ -37,8 +43,17 @@
 		   					 		<p class="form-control-static">${LoginOK.memberPhone}</p>
 		   					 	</div>
 		   					 </form>
-							 <a href="" class="btn btn-secondary btn-sm btn-block center-block" id="btn-edit-profile">編輯個人檔案</a>
+							 <button class="btn btn-secondary btn-sm btn-block center-block" id="btn-edit-profile">編輯個人檔案</button>
 	   				    </div>			
+	   				    <c:if test="${ empty LoginOK.memberFBId }">
+	   				    <div class="well card profile" id="">
+							<h3 class="text-primary1">上傳修改大頭貼</h3>
+							<div class="form-group">
+		   					 	<label class="control-label"></label>
+		   					</div>
+							<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-photo">上傳修改大頭貼</button>
+						</div>
+						</c:if>
 					 </div>
 					 <div class="col-sm-12 col-md-4">
 					 	<div class="well card profile" id="">
@@ -106,11 +121,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-sm-12">
-		</div>
-	</div>
 </div>
+<c:if test="${ empty LoginOK.memberFBId }">
+<div id="dialog-form" title="Create new user" style="display:none">
+  <form>
+    <fieldset>
+    	<input type="file"/>
+    </fieldset>
+  </form>
+</div>
+</c:if>
+ 
 </body>	
 <c:choose>
 	<c:when test="${empty LoginOK.memberFBId }">
@@ -185,6 +206,36 @@
 				})
 		  
 	  });
+	</script>
+	<script>
+	  $( function() {
+		    dialog = $( "#dialog-form" ).dialog({
+		      autoOpen: false,
+		      height: 400,
+		      width: 350,
+		      modal: true,
+		      buttons: {
+		        "Create an account": function(){
+		        	
+		        },
+		        Cancel: function() {
+		          dialog.dialog( "close" );
+		        }
+		      },
+		      close: function() {
+		        form[ 0 ].reset();
+		      }
+		    });
+		 
+		    form = dialog.find( "form" ).on( "submit", function( event ) {
+		      event.preventDefault();
+		    });
+		 
+		    $( "#btn-photo" ).button().on( "click", function( event ) {
+		      event.preventDefault();
+		      dialog.dialog( "open" );
+		    });
+		  } );
 	</script>
 	</c:when>
 </c:choose>

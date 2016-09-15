@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import _21_club_service.Club_Service;
 import _41_login_service.LoginService;
 import _9_41_member_model.MemberVO;
 
@@ -43,6 +44,7 @@ public class LoginServlet extends HttpServlet
 		LoginService ms;
 		MemberVO mv = null;
 		ms = new LoginService();
+		Club_Service club_Service = new Club_Service();
 
 		if ("normal_Login".equals(mode))
 		{
@@ -75,7 +77,9 @@ public class LoginServlet extends HttpServlet
 
 		if (mv != null)
 		{
+
 			session.setAttribute("LoginOK", mv);
+
 			if (requestURI == null)
 			{
 				out.write("true" + "../index.jsp");

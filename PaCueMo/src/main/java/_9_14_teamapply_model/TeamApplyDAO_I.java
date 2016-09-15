@@ -15,4 +15,6 @@ public interface TeamApplyDAO_I
 
 	void delete(Integer teamId, String memberId);
 
+	void update(Integer invstatus, Integer teamId, String memberId);
+
 }

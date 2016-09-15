@@ -17,4 +17,10 @@ public interface ClubApplyDAO_I
 	//透過clubId查詢
 	List<ClubApplyVO> get_All_ClubId(int ClubId);
 
+	int count_checked(int clubId);
+
+	int change_checked(int clubId);
+
+	List<ClubApplyVO> get_All_memberId(String memberId);
+
 }

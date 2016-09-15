@@ -1,6 +1,7 @@
 package _11_teammember_service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,18 @@ import org.springframework.stereotype.Component;
 
 import _9_11_teammember_model.TeamMemberDAO_interface;
 import _9_11_teammember_model.TeamMemberVO;
+import _9_41_member_model.MemberDAO_interface_Spring;
+import _9_42_playerCard_model.PlayerCardDAO_interface;
 
 @Component
 public class TeamMemberService
 {
 	@Autowired
 	private TeamMemberDAO_interface dao;
+	@Autowired
+	private MemberDAO_interface_Spring memberDAO;
+	@Autowired
+	private PlayerCardDAO_interface playerCardDAO;
 
 	public TeamMemberService()
 	{
@@ -60,7 +67,25 @@ public class TeamMemberService
 
 	public List<TeamMemberVO> getOneTeam(Integer teamId)
 	{
-		return dao.getOneTeam(teamId);
+		System.out.println("TeamMemberService : getOneTeam");
+		List<TeamMemberVO> teamMemberVOs = null;
+		try
+		{
+			teamMemberVOs = dao.getOneTeam(teamId);
+			for (TeamMemberVO teamMemberVO : teamMemberVOs)
+			{
+				teamMemberVO.setMemberVO(memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId()));
+				System.out.println();
+				teamMemberVO.setPlayerCardVO(playerCardDAO.getPlayerCardById(teamMemberVO.getTeamMemberId()));
+			}
+			return teamMemberVOs;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck???");
+			return new ArrayList<TeamMemberVO>();
+		}
 	}
 
 	public List<TeamMemberVO> getAll()

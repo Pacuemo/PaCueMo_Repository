@@ -3,6 +3,7 @@ package _21_club_controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import _21_club_service.Club_Service;
 import _22_league_service.LeagueRecord_Service;
 import _9_21_club_model.ClubVO;
+import _9_27_clubApply_model.ClubApplyVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -123,6 +125,62 @@ public class Club_Controller
 		}
 	}
 
+//-----------------------社團申請-------------------------------
+	@ResponseBody
+	@RequestMapping(value = "applyCheck", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String applyChek(@RequestParam("clubId") int clubId)
+	{
+
+		List<ClubApplyVO> applyList = service.get_ClubApply(clubId);
+		return gson.toJson(applyList);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "applyClubInfo", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String applyClubInfo(@RequestParam("memberId") String memberId)
+	{
+
+		List<ClubApplyVO> applyList = service.get_All_memberId(memberId);
+		return gson.toJson(applyList);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "agreeApply", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String agreeApply(@RequestParam("clubId") int clubId, @RequestParam("memberId") String memberId)
+	{
+		String msg = service.checkJoinClub(clubId, memberId);
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("status", msg);
+		return gson.toJson(message);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "deleteApply", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String deleteApply(@RequestParam("clubId") int clubId, @RequestParam("memberId") String memberId)
+	{
+		String msg = service.deleteJoinClub(clubId, memberId);
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("status", msg);
+		return gson.toJson(message);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "countChecked", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String countChecked(@RequestParam("clubId") int clubId)
+	{
+		int msg = service.count_Checked(clubId);
+		return gson.toJson(msg);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "countChange", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String countChange(@RequestParam("clubId") int clubId)
+	{
+		int msg = service.change_checked(clubId);
+		return gson.toJson(msg);
+	}
+
+//-----------------------社團申請-------------------------------	
 //------------------------查詢------------------------------------	
 	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
@@ -180,12 +238,20 @@ public class Club_Controller
 		if (outCome == "success")
 		{
 			System.out.println("回傳申請成功字串 格式GSON 物件MAP KEY=status");
-			message.put("status", "申請成功");
+			message.put("status", "success");
+			message.put("statusMsg", "申請成功");
 		}
-		else
+		else if (outCome == "fail")
 		{
 			System.out.println("回傳申請失敗字串 格式GSON 物件MAP KEY=status");
-			message.put("status", "申請失敗，請確認是否已有社團");
+			message.put("status", "fail");
+			message.put("statusMsg", "申請失敗，請確認是否已有社團");
+		}
+		else if (outCome == "already")
+		{
+			System.out.println("回傳已經申請字串 格式GSON 物件MAP KEY=status");
+			message.put("status", "already");
+			message.put("statusMsg", "你已申請，請勿重複申請");
 		}
 		System.out.println("-------------------------------------------------------");
 		return gson.toJson(message);

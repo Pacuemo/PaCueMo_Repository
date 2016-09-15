@@ -6,7 +6,7 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>我的球員卡</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/playercard.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">
     <style>
@@ -24,7 +24,7 @@
 			<div class="col-sm-12">
 				<div class="page-header">
 	    			<h1 class="title">我的球員卡</h1>
-	    			<button id="btn-update-playercard"></button>
+	    			<button class="btn btn-secondary btn-sm btn-block center-block update" id="btn-update-playercard">修改球員卡</button>
 	  			</div>
 				<div class="row">
 				    <div class="col-sm-12 col-md-12">
@@ -58,6 +58,13 @@
 							<span class="position"> ${Playercard.playerPosition}</span>
 							<span class="height">${Playercard.playerHeight}</span>
 							<span class="weight">${Playercard.playerWeight}</span>
+							<c:if test="${Playercard.playerHand == true}">
+							<span class="hand">Left</span>
+							</c:if>
+							<c:if test="${Playercard.playerHand == false}">
+							<span class="hand">Right</span>
+							</c:if>
+							<span class="note">${Playercard.playerNote}</span>
 							</div>
 	   					</div>	
 	   					</div>
@@ -158,11 +165,11 @@
                         <label class="sr-only" for="playercard-location">活動地區:</label>
                         <select id="location" class="dob" name="userLocation" required data-msg-required="請選擇您的活動地區">
                           <option value="" selected="" disabled="">活動地區</option>
-                          <option value="臺北市">臺北市</option>
+                          <option value="台北市">台北市</option>
                           <option value="新北市">新北市</option>
                           <option value="桃園市">桃園市</option>
-                          <option value="臺中市">臺中市</option>
-                          <option value="臺南市">臺南市</option>
+                          <option value="台中市">台中市</option>
+                          <option value="台南市">台南市</option>
                           <option value="高雄市">高雄市</option>
                           <option value="基隆市">基隆市</option>
                           <option value="新竹市">新竹市</option>
@@ -176,7 +183,7 @@
                           <option value="屏東縣">屏東縣</option>
                           <option value="宜蘭縣">宜蘭縣</option>
                           <option value="花蓮縣">花蓮縣</option>
-                          <option value="臺東縣">臺東縣</option>
+                          <option value="台東縣">台東縣</option>
                           <option value="澎湖縣">澎湖縣</option>
                         </select>
                       </div>
@@ -537,7 +544,7 @@
 		  			$("#location").val("${Playercard.playerLocation}");
 		  			$("#hand").val(hand);
 		  			$("#gender").val(gender);
-		  			$("#note").val(${Playercard.playerNote});
+		  			$("#note").val("${Playercard.playerNote}");
 					var str = ${Playercard.playerSTR};
 					var con = ${Playercard.playerDEX};
 					var dex = ${Playercard.playerCON};

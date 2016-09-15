@@ -16,7 +16,7 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
    
-<!--      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <%-- 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"><!-- BOOTSTRAP --> --%>
@@ -214,6 +214,7 @@
 	            </form>
 	    </div>
 	   <!-- ***************************【 購買點數 - 信用卡 dialog 結束】***************************** -->
+		<!-- <h5 id="state" style="color:orange;">Test</h5> --><!-- 測試長連線 -->
 
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -227,6 +228,8 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
 	   <script src="<%=request.getContextPath()%>/_5_gambling/util_js/util.js"></script>
+       <jsp:include page="/_5_gambling/util_js/Ajax_LongPolling.jsp"/><!-- LongPolling(放jquery之後) -->
+       
        <script type="text/javascript">
        
        		//=== 偵測user按下哪個按鈕 : funFlag ===
@@ -234,7 +237,12 @@
             var myDialog , cardDialog;
             //alert( funFlag );
             
-       		$(function(){       
+       		$(function(){       		
+       			/**********************************************************************/ 
+       			/*   背景偷偷做 Ajax_LongPolling.js/jsp 持續發請求給 RoutineTask.java */ 
+       			/*   → 長連接 效果                                                   */ 
+       			/**********************************************************************/
+       			
        			/* ================ 【下注 開始】 ================= */
        			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
@@ -656,7 +664,7 @@
 														BootstrapAlert.warning({ //BootstrapAlert 特效
 		                        	 			                title: "訂單成立!",
 		                        	 			                message: "已為您儲值點數",
-		                        	 			                hideTimeout: 1500,
+		                        	 			                hideTimeout: 1800,
 		                        	 			                //parentClass: 'bootstrap-alert',
 		                        	 			       			//innerClass:  'bootstrap-alert-message'
 		                        	 			        });

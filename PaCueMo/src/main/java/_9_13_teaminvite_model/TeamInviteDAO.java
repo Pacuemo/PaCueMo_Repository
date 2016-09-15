@@ -33,6 +33,7 @@ public class TeamInviteDAO implements TeamInviteDAO_I
 	private static final String SELECT_BY_TEAM = "SELECT * FROM TeamInvite WHERE teamId = ? AND invstatus = 0";
 	private static final String INSERT = "INSERT INTO TeamInvite (teamId, memberId, teamMemberId) VALUES (?, ?, ?)";
 	private static final String DELETE = "DELETE FROM TeamInvite WHERE teamId = ? and memberId = ?";
+	private static final String UPDATE = "UPDATE TeamInvite SET applystatus = ? WHERE teamId = ? AND memberId = ? AND teamMemberId =?";
 
 	/*
 	 * (non-Javadoc)
@@ -102,6 +103,11 @@ public class TeamInviteDAO implements TeamInviteDAO_I
 	public void delete(Integer teamId, String memberId)
 	{
 		jdbc.update(DELETE, teamId, memberId);
+	}
+
+	public void update(Integer invstatus, Integer teamId, String memberId, String teamMemberID)
+	{
+		jdbc.update(UPDATE, invstatus, teamId, memberId);
 	}
 
 	private static final class InvitationRowMapper implements RowMapper<TeamInviteVO>

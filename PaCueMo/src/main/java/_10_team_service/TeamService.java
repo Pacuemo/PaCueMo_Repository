@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import _9_10_team_model.TeamDAO_interface;
 import _9_10_team_model.TeamVO;
 import _9_11_teammember_model.TeamMemberDAO_interface;
-import _9_11_teammember_model.TeamMemberVO;
-import _9_41_member_model.MemberDAO_interface;
 
 @Component
 @Transactional
@@ -25,8 +23,6 @@ public class TeamService
 	private TeamDAO_interface teamDAO;
 	@Autowired
 	private TeamMemberDAO_interface teamMemberDAO;
-	@Autowired
-	private MemberDAO_interface memberDAO;
 
 	public TeamService()
 	{
@@ -68,15 +64,11 @@ public class TeamService
 		teamDAO.delete(teamId);
 	}
 
-	public TeamVO getOne(Integer teamId)
+	public TeamVO getTeamById(Integer teamId)
 	{
-		TeamVO teamVO = teamDAO.findByPrimaryKey(teamId);
-		List<TeamMemberVO> teamMemberVOs = teamMemberDAO.getOneTeam(teamId);
-		for (TeamMemberVO list : teamMemberVOs)
-		{
-			list.setMemberVO(memberDAO.findByPrimaryKey(list.getTeamMemberId()));
-		}
-		teamVO.setTeamMemberVOs(teamMemberVOs);
+		System.out.println("TeamService : getOne");
+		TeamVO teamVO = teamDAO.getTeamById(teamId);
+		System.out.println("-------------------------------------------------------");
 		return teamVO;
 	}
 
@@ -87,7 +79,15 @@ public class TeamService
 
 	public List<TeamVO> getOtherTeamList(String teamMemberId)
 	{
-		return teamDAO.getOther(teamMemberId);
+		try
+		{
+			return teamDAO.getOther(teamMemberId);
+		}
+		catch (Exception e)
+		{
+			System.out.println("getOther no data!");
+			return new ArrayList<TeamVO>();
+		}
 	}
 
 	public List<TeamVO> getMyTeamList(String teamMemberId)

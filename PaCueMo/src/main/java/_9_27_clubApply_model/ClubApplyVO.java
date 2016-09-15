@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import _9_21_club_model.ClubVO;
 import _9_41_member_model.MemberVO;
 
 @Component
@@ -14,17 +15,20 @@ public class ClubApplyVO
 	private String memberId;
 	private Date applyDate;
 	private MemberVO memberVO;
+	private int checked;
+	private ClubVO clubVO;
 
 	public ClubApplyVO()
 	{
 
 	}
 
-	public ClubApplyVO(int clubId, String memberId, Date applyDate)
+	public ClubApplyVO(int clubId, String memberId, Date applyDate, int checked)
 	{
 		this.clubId = clubId;
 		this.memberId = memberId;
 		this.applyDate = applyDate;
+		this.checked = checked;
 	}
 
 	public int getClubId()
@@ -65,6 +69,26 @@ public class ClubApplyVO
 	public void setMemberVO(MemberVO memberVO)
 	{
 		this.memberVO = memberVO;
+	}
+
+	public int getChecked()
+	{
+		return checked;
+	}
+
+	public void setChecked(int checked)
+	{
+		this.checked = checked;
+	}
+
+	public ClubVO getClubVO()
+	{
+		return clubVO;
+	}
+
+	public void setClubVO(ClubVO clubVO)
+	{
+		this.clubVO = clubVO;
 	}
 
 }
