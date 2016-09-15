@@ -227,7 +227,8 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 				}
 				battleRecordVO.setTeamIdA(teamA);
 				battleRecordVO.setTeamIdB(teamB);
-				Integer status = (int) (Math.random() * 3 + -1);
+				double status_Random = (Math.random() * 3 + -1);
+				Integer status = (status_Random < 0) ? -1 : (int) status_Random;
 				battleRecordVO.setBattleStatus(status);
 				if (status != 1)
 				{

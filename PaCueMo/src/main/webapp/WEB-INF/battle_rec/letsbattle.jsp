@@ -17,9 +17,8 @@
 }
 
 .teamName {
-	font-size: 36px;
-	margin:0px;
-	color: white;
+	font-size: 32px;
+	margin: 0px;
 }
 
 .margin_form {
@@ -47,136 +46,190 @@
 			<div id="div1"></div>
 		</div>
 		<div class="col-md-8">
-			<form class="form-horizontal margin_form">
+			<div class="content" style="padding-top: 30px">
 
-				<div class="form-group">
-					<h2 class="col-sm-3 col-md-2 control-label teamName color_w">約戰方：</h2>
-					<div class="col-sm-3 col-md-4">
-						<select id="select_teamB" class="form-control" style="margin: 7px;">
-							<option>老師說的隊</option>
+				<div class="page-header">
+					<h1 style="font-size: 36px">隊伍約戰</h1>
+				</div>
+
+				<form name="profile" method="post" action="" id="profile" role="form" novalidate="novalidate">
+
+					<div class="form-group">
+						<div class="col-sm-12 col-md-12" style="padding-left: 0px; padding-bottom: 10px;">
+							<h2 class="col-sm-3 col-md-2 control-label teamName" style="padding-left: 0px;">約戰方：</h2>
+							<div class="col-sm-3 col-md-4">
+								<select id="select_teamB" class="form-control">
+									<option>老師說的隊</option>
+								</select>
+							</div>
+
+							<c:choose>
+								<c:when test="">
+									<label class="col-sm-3 col-md-2 control-label teamName">挑戰方：</label>
+									<div class="col-md-3">
+										<select id="select_teamB" class="form-control" style="margin: 7px;"></select>
+									</div>
+								</c:when>
+								<c:when test="">
+									<label class="col-sm-3 col-md-2 control-label teamName">地點：</label>
+									<div class="col-sm-3 col-md-4">
+										<h2>11</h2>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<h2 class="col-sm-3 col-md-2 control-label teamName">挑戰方：</h2>
+									<div class="col-sm-3 col-md-4">
+										<select id="select_teamB" class="form-control">
+											<option>老師說的隊</option>
+										</select>
+									</div>
+								</c:otherwise>
+							</c:choose>
+
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="profile_gender">對戰模式</label> <select id="profile_gender" name="battleMode" required="" class="form-control">
+							<option value="3">3 vs 3</option>
+							<option value="5" selected="selected">5 vs 5</option>
 						</select>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="profile_postalCode">賭注</label> <input type="text" id="profile_postalCode" name="battleBet" maxlength="8" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<div id="profile_birthdate" class="bootstrap-date row">
+							<div class="col-xs-4">
+								<label class="control-label">場地名稱</label>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">縣、市</label>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">鄉、鎮、區</label>
+							</div>
+						</div>
+						<div id="profile_birthdate" class="bootstrap-date row">
+							<div class="col-xs-4">
+								<select id="courtName" name="courtName" required="" class="form-control valid">
+									<option value="2015">場地名稱</option>
+									<option value="2014">用ajax抓資料</option>
+								</select>
+							</div>
+							<div class="col-xs-4">
+								<select id="courtCity" name="courtCity" required="" class="form-control valid">
+									<option disabled="disabled" selected="selected">全部縣市</option>
+									<option value="2">臺北市</option>
+									<option value="3">新北市</option>
+									<option value="4">桃園市</option>
+									<option value="5">基隆市</option>
+									<option value="6">新竹市</option>
+									<option value="7">新竹縣</option>
+									<option value="8">宜蘭縣</option>
+									<option value="9">苗栗縣</option>
+									<option value="10">臺中市</option>
+									<option value="11">彰化縣</option>
+									<option value="12">南投縣</option>
+									<option value="13">雲林縣</option>
+									<option value="14">嘉義縣</option>
+									<option value="15">嘉義市</option>
+									<option value="16">臺南市</option>
+									<option value="17">屏東縣</option>
+									<option value="18">高雄市</option>
+									<option value="19">花蓮縣</option>
+									<option value="20">臺東縣</option>
+									<option value="21">澎湖縣</option>
+									<option value="22">金門縣</option>
+									<option value="23">連江縣</option></select>
+							</div>
+							<div class="col-xs-4">
+							
+								<select id="profile_birthdate_day" name="profile[birthdate][day]" required="" class="form-control">
+									<option value="1">1</option>
+									<option value="2">2</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div id="profile_birthdate" class="bootstrap-date row">
+							<div class="col-xs-4">
+								<label class="control-label">對戰日期</label>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">時</label>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">分</label>
+							</div>
+						</div>
+						<div id="battleDateTime" class="bootstrap-date row">
+							<div class="col-xs-4">
+<!-- 								點擊後彈出日期選擇器 -->
+								<input type="text" id="battleDate" name="battleDate" readonly="readonly" value="2016-09-15" class="form-control" style="color: black;">
+							</div>
+							<div class="col-xs-4">
+								<select id="battleHr" name="battleHr" required="" class="form-control valid">
+									<option value="1" selected="selected">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">要改成用script寫</option></select>
+							</div>
+							<div class="col-xs-4">
+								<select id="battleMin" name="battleMin" required="" class="form-control">
+										<option value="00" selected="selected">00</option>
+										<option value="05">05</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+								</select>
+							</div>
+						</div>
 					</div>
 
 
 
-					<c:choose>
-						<c:when test="">
-							<label class="col-sm-3 col-md-2 control-label teamName color_w">挑戰方：</label>
-							<div class="col-md-3">
-								<select id="select_teamB" class="form-control" style="margin: 7px;"></select>
-							</div>
-						</c:when>
-						<c:when test="">						
-							<label class="col-sm-3 col-md-2 control-label teamName color_w">地點：</label>
-							<div class="col-sm-3 col-md-4">
-								<h2 >11</h2>
-							</div>
-							</c:when>
-						<c:otherwise>
-							<h2 class="col-sm-3 col-md-2 control-label teamName color_w">挑戰方：</h2>
-							<div class="col-sm-3 col-md-4">
-								<h2 class="teamName">11</h2>
-							</div>
-						</c:otherwise>
-					</c:choose>
+					<!-- 					<div class="form-group"> -->
+					<!-- 						<label class="control-label" for="profile_country">所在國家</label>  -->
+					<!-- 						<select id="profile_country" name="profile[country]" disabled="disabled" required="" class="form-control"> -->
+					<!-- 							<option value="tw">台灣</option> -->
+					<!-- 						</select> <span class="help-block">瀏覽更多<a href="https://support.spotify.com/learn-more/faq/#!/article/How-can-I-change-my-country-setting">更改國家。</a></span> -->
+					<!-- 					</div> -->
+
+					<div class="form-group" style="margin-bottom: 5px;">
+						<span class="help-block" style="text-align: right;margin-bottom: 5px">一旦點擊約戰，即表示你同意 <a href="#">Pacuemo 的條款及細則 </a> 與 <a href="#" target="_blank"> 隱私政策</a></span>
+					</div>
+
+					<div class="row-buttons-bordered" style="margin-top: 20px;">
+						<button type="submit" id="submit" name="submit" class="btn-sm js-gtm-event btn btn-primary">約戰</button>
+						<a id="profile_cancel" name="profile[cancel]" class="btn btn-tertiary btn-sm btn-cancel" onclick="history.back()">取消</a>
+					</div>
+					<input type="hidden" id="profile__token" name="profile[_token]" class="form-control" value="7ToZqqdkScbZNNOmX_N7FmDr8k4gwgD584FfdSjC-0A">
+				</form>
+
+			</div>
 
 
-				</div>
-				<div class="form-group">
-					<div class="col-sm-2"><label class="col-sm-2" for="address">地址：</label></div>
-				 
-					<input class="form-control" id="address" placeholder="地址"> 
-				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
-					<input class="form-control" id="exampleInputPassword1" placeholder="Password">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputFile">File input</label> <input type="file" id="exampleInputFile">
-					<p class="help-block">Example block-level help text here.</p>
-				</div>
-				<div class="checkbox">
-					<label> <input type="checkbox"> Check me out
-					</label>
-				</div>
-				<button type="submit" class="btn btn-success">Submit</button>
-			</form>
-			
-			<hr>
-			
-			<form id="js-register-with-email" novalidate>
-              <div class="hidden ajax-spinner"></div>
-              <div class="js-general-error alert alert-info hidden" data-error="糟糕！發生錯誤，請再次嘗試或到我們的<a href=''>說明中心</a>"></div>
-              <fieldset>
-                <ul>
-                  <li>
-                    <div id="register-dob1" class="register-dob">
-                      <div class="name">
-                        <label class="sr-only" for="register-userLastName">姓氏:</label>
-                        <input type="text" id="register-userLastName" name="userLastName" placeholder="姓氏" required="" data-msg-required="請輸入您的姓氏。"  maxlength="20" autocapitalize="off" autocorrect="off" >
-                      </div>
-                      <div class="name">
-                        <label class="sr-only" for="register-userFirstName">名字:</label>
-                        <input type="text" id="register-userFirstName" name="userFirstName" placeholder="名字" required="" data-msg-required="請輸入您的名字。"  maxlength="20" autocapitalize="off" autocorrect="off">
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <label class="sr-only" for="register-password">密碼:</label>
-                    <input type="password" id="register-password" name="password" placeholder="密碼" required="" data-msg-required="請選擇密碼。" data-rule-minlength="4" data-msg-minlength="你的密碼太短。" maxlength="100" autocomplete="off">
-                  </li>
-                  <li>
-                    <label class="sr-only" for="register-email">Email:</label>
-                    <input type="email" id="register-email" name="email" value="" placeholder="Email" required="" data-msg-required="請輸入你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-remote="../_02_register/checkMail.do?model=checkMail" data-msg-remote="很抱歉，此電郵地址已有用戶使用。" maxlength="100">
-                  </li>
-                  <li>
-                    <label class="sr-only" for="register-confirm-email">確認電郵:</label>
-                    <input type="email" id="register-confirm-email" name="confirm_email" value="" placeholder="確認電郵" required="" data-msg-required="請確認你的電郵地址。" data-msg-email="你所提供的電子郵件無效。" data-rule-equalto="#register-email" data-msg-equalto="電郵地址不符。" maxlength="100">
-                  </li>
-                  <li>
-                    <label class="sr-only" for="register-phone">手機號碼:</label>
-                    <input type="tel" id="register-phone" name="phone" placeholder="手機號碼" pattern="[0-9]*" required="" data-msg-required="請輸入你的手機號碼。" data-rule-minlength="10" data-msg-minlength="你的手機號碼格式不正確。" maxlength="10" autocomplete="off">
-                  </li>
-                  <li id="li-dob" class="controls-dob" data-error-age="很抱歉，你的年齡並不符合 Pacuemo 的規定。">
-                    <label for="register-age">出生日期：</label>
-                    <div id="register-dob" class="register-dob">
-                      <div class="controls controls-year">
-						<select id="register-dob-year" class="dob" name="dob_year" max="2003" data-msg-max="很抱歉，你的年齡並不符合 Pacuemo 的規定。" required data-msg-required="請選擇您出生的年份">
-                          <option value="" selected="" disabled="">年</option>
-                          </select>
-                      </div>
-                      <div class="controls controls-month">
-                        <select id="register-dob-month" class="dob" name="dob_month" required data-msg-required="請選擇您出生的月份">
-                          <option value="" selected="" disabled="">月份</option>
-                          <option value="01">一月</option>
-                          <option value="02">二月</option>
-                          <option value="03">三月</option>
-                          <option value="04">四月</option>
-                          <option value="05">五月</option>
-                          <option value="06">六月</option>
-                          <option value="07">七月</option>
-                          <option value="08">八月</option>
-                          <option value="09">九月</option>
-                          <option value="10">十月</option>
-                          <option value="11">十一月</option>
-                          <option value="12">十二月</option>
-                        </select>
-                      </div>
-                       <div class="controls controls-day">
-						<select id="register-dob-day" class="dob" name="dob_day" required data-msg-required="請選擇您出生的日期">
-                          <option value="" selected="" disabled="">日</option>
-                          </select>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="li-terms-notick">
-                    <p class="notice">透過按註冊，你同意<a href="/tw/legal/end-user-agreement/" target="_blank">Pacuemo 的條款及細則</a>與<a href="/tw/legal/privacy-policy/" target="_blank">私隱政策</a></p>
-                  </li>
-                </ul>
-              </fieldset>
-              <button id="register-button-email-submit" class="btn btn-primary btn-sm btn-block js-signup-email-submit" >註冊</button>
-            </form>
-			
+
 		</div>
 		<div class="col-md-2">
 			<div class="col-md-2"></div>
@@ -191,53 +244,23 @@
 
 
 	<script type="text/javascript">
-	$( function() {
-	 	var datas;
-	 	var availableTags = [
-	 	                    "ActionScript",
-	 	                    "AppleScript",
-	 	                    "Asp",
-	 	                    "BASIC",
-	 	                    "C",
-	 	                    "C++",
-	 	                    "Clojure",
-	 	                    "COBOL",
-	 	                    "ColdFusion",
-	 	                    "Erlang",
-	 	                    "Fortran",
-	 	                    "Groovy",
-	 	                    "Haskell",
-	 	                    "Java",
-	 	                    "JavaScript",
-	 	                    "Lisp",
-	 	                    "Perl",
-	 	                    "PHP",
-	 	                    "Python",
-	 	                    "Ruby",
-	 	                    "Scala",
-	 	                    "Scheme"
-	 	                  ];
-	 	 $( "#address" ).keyup( function ()
+		$(function()
 		{
-	 	$.ajax({
-	 		"type":"get",
-	 		"url" : "${home}spring/battle_rec/getCourtVOs",
-	 		"data" : {"address" : $(this).val() },
-	 		"dataType":"json",
-	 		"success":function(data){
-		 		
-	 			$("#address").autocomplete( "option", "source", availableTags  );
-	 		}
-	 	});
-	 
+			var datas;
+			var availableTags = [ "ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
+			$("#address").keyup(function()
+			{
+				$.ajax({ "type" : "get", "url" : "${home}spring/battle_rec/getCourtVOs", "data" : { "address" : $(this).val() }, "dataType" : "json", "success" : function(data)
+				{
+					console.log(data[0].name)
+					$("#address").autocomplete("option", "source", availableTags);
+				} });
+
+			});
+
+			$("#address").autocomplete({ source : availableTags });
+
 		});
-		
-		
-	    $( "#address" ).autocomplete({
-	      source: availableTags
-	    });
-	    
-	  });
 	</script>
 </body>
 </html>
