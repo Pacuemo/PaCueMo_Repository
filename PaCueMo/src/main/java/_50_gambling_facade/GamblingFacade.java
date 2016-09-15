@@ -19,6 +19,7 @@ import _9_54_gambleorder_model.GambleOrderVO;
 @Transactional
 public class GamblingFacade
 {
+
 	private BattleSetService bSetSvc;
 	private GoodsOrderService goodsOrderSvc;
 	private MemberDAO_interface_Spring memberDAO;
@@ -63,17 +64,25 @@ public class GamblingFacade
 	public String updateMemberAndBattleSetCoin(BattleSetVO bVO, MemberVO mVO, Integer homeCoins, Integer awayCoins)
 	{
 		System.out.println(" ======== 呼叫 GamblingFacade → updateMemberAndBattleSetCoin(BattleSetVO bVO , MemberVO mVO) 方法 =======");
-		// *************** 更新﹝對戰組合﹞主客隊點數 =====
+		// *************** (1). 更新﹝對戰組合﹞主客隊點數 =====
 		bVO.setAwaybet(bVO.getAwaybet() + homeCoins);
 		bVO.setHomebet(bVO.getHomebet() + awayCoins);
 		bSetSvc.updateBattleSet(bVO);
-		System.out.println(" 1.== BattleSetVO 點數更新成功！== \n =========================================");
-		// *************** 更新﹝會員﹞點數 ===============
+		System.out.println(" 1.== GamblingFacade BattleSetVO 點數更新成功！== \n =========================================");
+		// *************** (2). 更新﹝會員﹞點數 ===============
 		Double newCoins = mVO.getMemberPoint() - (homeCoins + awayCoins);
 		mVO.setMemberPoint(newCoins);
 		memberDAO.updatePointByPrimaryKey(mVO);
-		//---
-		System.out.println(" 2.== MemberVO 點數更新成功！== \n ============================================");
+		System.out.println(" 2.== GamblingFacade MemberVO 點數更新成功！== \n ============================================");
+		// *************** (3). 新增﹝GambleOrder﹞一筆 ========
+		GambleOrderVO gamblebVO = new GambleOrderVO();
+		gamblebVO.setMemberId(mVO.getMemberId());
+		gamblebVO.setBattleId(bVO.getBattleId());
+		gamblebVO.setBetHome(Double.valueOf(homeCoins));
+		gamblebVO.setBetAway(Double.valueOf(awayCoins));
+		System.out.print(" 3.== GamblingFacade  ");
+		gambleSvc.addOne(gamblebVO);
+		//=====================================================
 		return "success";
 	}
 
@@ -192,9 +201,9 @@ public class GamblingFacade
 		ApplicationContext context = new AnnotationConfigApplicationContext("_50_gambling_facade");
 		GamblingFacade facadeService = (GamblingFacade) context.getBean("gamblingFacade4");
 		//====================【測試 組裝成功】=========================
-		//facadeService.test();
+//		facadeService.test();
 		//============== 【測試 splitPayoff() 分派點數】 =================
-		facadeService.splitPayoff("2016-09-14", 0.2f);
+//		facadeService.splitPayoff("2016-09-14", 0.2f);
 		//============== 【測試 memberDAO】 ==============================
 //		int ii = facadeService.testUpdateMemberPoints("jyurjh920790@pchome.com.tw");
 //		System.out.println(" 更新 " + ii + " 筆點數資料");

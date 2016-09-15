@@ -21,7 +21,7 @@ public class TimerManager
 	public TimerManager()
 	{
 		/*** 設定每日 00:00:00 執行方法 ***/
-		Calendar calendar = getCalendarWithTime(0, 34, 50);//【設定每天的幾點執行】時、分、秒  ──  24h制
+		Calendar calendar = getCalendarWithTime(16, 36, 50);//【設定每天的幾點執行】時、分、秒  ──  24h制
 		Date dateMain = calendar.getTime(); //第一次執行任務的時間
 
 //		System.out.println("TimerManager ── " + sdf.format(dateMain));

@@ -34,32 +34,22 @@
 	                if (textStatus == "success") { // 請求成功
 	                
 	                	if(data=="start_Update"){
+	                		//alert('fuck');
+	                		BootstrapAlert.info({ //BootstrapAlert 特效
+	 			                title: " 【系統訊息】 ",
+	 			                message: "-- 本日NBA彩金已分配 --",
+	 			                hideTimeout: 5000,
+	 			                //parentClass: 'bootstrap-alert',
+	 			       			//innerClass:  'bootstrap-alert-message'
+	 			        	});
+	 			        	
+	                		// 播放音效
+	             	       (function playAudio() {
+	                           $('<audio id="myAudio"><source src="<%=request.getContextPath()%>/_5_gambling/audio/msn.mp3" type="audio/mpeg"></audio>').appendTo('body');//载入声音文件 
+	                           $('#myAudio')[0].play();  //myAudio為注入audio元件時設定的id
+	                           //$("body>audio").remove();
+	                       })()
 
-							//----------------------------------------
-							 Lobibox.notify(
-					               'success',/*色彩調這裡 warning , error , info ,success*/
-					               {
-					                   class: 'lobibox-notify-info',
-					                   icon: 'glyphicon glyphicon-info-sign',
-					                   title: '【系統公告】',           // Title of notification. Do not include it for default title or set custom string. Set this false to disable title
-					                   size: 'normal',             // normal, mini, large
-					                   //showClass: 'flipInX',       // Show animation class. (Uses animate.css)
-					                   //hideClass: 'zoomOutDown',   // Hide animation class (Uses animate.css)
-					                   icon: true,                 // Icon of notification. Leave as is for default icon or set custom string
-					                   msg: '-- 本日NBA彩金已分配 --',// Message of notification
-					                   img: '<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/photo/kobe.jpg', // Image source string
-					                   closable: true,             // Make notifications closable
-					                   delay: 5000,                // Hide notification after this time (in miliseconds)
-					                   delayIndicator: true,       // Show timer indicator
-					                   closeOnClick: true,         // Close notifications by clicking on them
-					                   width: 600,                 // Width of notification box
-					                   //sound: true,              // Sound of notification. Set this false to disable sound. Leave as is for default sound or set custom soud path
-					                   soundPath: '<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/sounds/',
-					                   sound: 'msn',
-					                   position: "top center"    // Place to show notification. Available options: "top left", "top right", "bottom left", "bottom right"       
-					               }
-					           );
-							//----------------------------------------	        			
 	                	}
 	                
 	                    longPolling(); // 遞迴
