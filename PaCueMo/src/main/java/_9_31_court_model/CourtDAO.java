@@ -392,6 +392,7 @@ public class CourtDAO implements CourtDAO_interface
 				courtVO.setLongitue(rs.getDouble("longitude"));
 				courtVO.setWebUrl(rs.getString("webUrl"));
 				courtVO.setPhone(rs.getString("phone"));
+				list2.add(courtVO);
 			}
 		}
 		catch (ClassNotFoundException e)
