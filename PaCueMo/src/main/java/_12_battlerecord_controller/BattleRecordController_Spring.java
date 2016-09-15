@@ -39,6 +39,7 @@ public class BattleRecordController_Spring
 		CourtService courtService = new CourtService();
 		System.out.println("回傳場地VOs 格式JSON");
 
+		System.out.println(courtService.findByCourtName(address).get(1).getName());
 		System.out.println("-------------------------------------------------------");
 		return gson.toJson(courtService.findByCourtName(address));
 	}
