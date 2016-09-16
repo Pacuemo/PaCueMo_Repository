@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
+import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _9_10_team_model.TeamVO;
@@ -25,6 +28,21 @@ public class TeamController_Spring
 	private TeamMemberService teamMemberService;
 	@Autowired
 	private TeamService teamService;
+	@Autowired
+	private StevenFacade stevenFacade;
+	@Autowired
+	private Gson gson;
+
+	@ResponseBody
+	@RequestMapping(value = "getTeamVO", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String getTeamVO(Integer teamId)
+	{
+		System.out.println("Team_Controller : getTeamVO");
+		System.out.println(gson.toJson(stevenFacade.getTeamById(teamId)));
+		System.out.println("return teamVO jason");
+		System.out.println("-------------------------------------------------------");
+		return gson.toJson(stevenFacade.getTeamById(teamId));
+	}
 
 	@RequestMapping(value = "/joinTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
 	public String joinTeam(HttpServletRequest request, HttpSession session, Integer btn_join, String page)
@@ -121,29 +139,6 @@ public class TeamController_Spring
 	@RequestMapping(value = "/searchTeam_like", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String searchTeam_like(@RequestParam("teamName") String teamName)
 	{
-		return null;
-	}
-
-	@RequestMapping(value = "/clickTeam")
-	public String clickTeam(HttpSession session)
-	{
-		try
-		{
-			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
-			List teamMemberList = teamMemberService.findByTeamMemberId(memberVO.getMemberId());
-			if (teamMemberList.isEmpty())
-			{
-				return "";
-			}
-			else
-			{
-
-			}
-		}
-		catch (Exception e)
-		{
-
-		}
 		return null;
 	}
 

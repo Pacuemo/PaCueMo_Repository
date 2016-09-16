@@ -142,6 +142,13 @@ p.tempstyle {
 						<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
 						<c:otherwise>TeamName !</c:otherwise>
 					</c:choose>
+					<small> - 
+						<c:choose>
+							<c:when test="${requestScope.teamVO.teamProp == 0}"> 公開  <button id="btn_public"> </button></c:when>
+							<c:when test="${requestScope.teamVO.teamProp == 1}"> 需申請 </c:when>
+							<c:when test="${requestScope.teamVO.teamProp == 2}"> 私密 </c:when>							
+						</c:choose>
+					</small>
 				</h2>
 			</div>
 			<div class="col-md-2">
@@ -196,12 +203,12 @@ p.tempstyle {
 
 		<!-- Person Details -->
 		<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
-			<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
+			<c:forEach var="teamMemberVO" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
 				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
 					<figure>
 						<c:choose>
-							<c:when test="${list.memberVO.memberImgUrl != null}">
-								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
+							<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
+								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
 							</c:when>
 							<c:otherwise>
 								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
@@ -209,28 +216,28 @@ p.tempstyle {
 						</c:choose>
 						<figcaption>
 							<h3 class="margin-top-10 margin-bottom-10">
-								${list.memberVO.memberFirstName } 
+								${teamMemberVO.memberVO.memberFirstName } 
 								<small>- 
 								<c:choose>
-									<c:when test="${list.playerCardVO.playerPosition == 'PG'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PG'}">
 											控球後衛
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'SG'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'SG'}">
 											得分後衛
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'SF'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'SF'}">
 											小前鋒
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'PF'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PF'}">
 											大前鋒
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'C'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'C'}">
 											中鋒
 									</c:when>
 								</c:choose>
 								</small>
 							</h3>
-							<span>${list.playerCardVO.playerNote}</span>
+							<span>${teamMemberVO.playerCardVO.playerNote}</span>
 						</figcaption>
 						<ul class="list-inline person-details-icons">
 							<li><a href="#"> <i class="fa-lg fa-twitter"></i>
@@ -350,7 +357,10 @@ p.tempstyle {
 				$( this ).html('申請中...');
 			})
 				
-			
+			// set button icon
+			$( "btn_public" ).button({
+			  	icon: { icon: "ui-icon-gear" }
+			});
 			
 			// End of init
 		});

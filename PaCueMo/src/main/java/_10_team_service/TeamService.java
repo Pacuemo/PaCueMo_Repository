@@ -66,9 +66,9 @@ public class TeamService
 
 	public TeamVO getTeamById(Integer teamId)
 	{
-		System.out.println("TeamService : getOne");
+		System.out.println("TeamService : getTeamById");
 		TeamVO teamVO = teamDAO.getTeamById(teamId);
-		System.out.println("-------------------------------------------------------");
+		System.out.println("TeamService : getTeamById End");
 		return teamVO;
 	}
 
@@ -116,8 +116,8 @@ public class TeamService
 		}
 	}
 
-	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	public List<TeamVO> find_TeamVOs_With_TeamHead(String teamHead)
 	{
-		return teamDAO.find_TeamVO_With_TeamHead(teamHead);
+		return teamDAO.find_TeamVOs_With_TeamHead(teamHead);
 	}
 }

@@ -1,8 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%--use JSTL Standard Syntax--%>
-<%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>
-<%-- for Struts2 --%>
 
 <!DOCTYPE html>
 <html>
@@ -24,6 +21,11 @@
 .margin_form {
 	margin: 15px;
 }
+
+.battle_img{
+width: 40%;
+height: 40%;
+}
 </style>
 <script>
 	
@@ -36,14 +38,40 @@
 
 	<div class="row">
 		<div class="col-md-2">
-			<form style="margin: 0px auto;" name="myData" action="Index.jsp" method="get">
-				<div class="form-group">
-					<input type="text" class="form-control" id="txtSearch" name="keyword" autocomplete="off">
-					<!-- 				    <input type="submit" -->
-					<!-- 						value="送出" class="btn btn-default btn-xs"> -->
+			<c:forEach var="teamMemberVO" items="${requestScope.mineTeamVOs[0].teamMemberVOs}">
+				<div id="div_left" class="col-md-12" style="padding-left: 0px;">
+					<c:choose>
+						<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
+							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
+						</c:when>
+						<c:otherwise>
+							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+						</c:otherwise>
+					</c:choose>
+					<div class="col-md-4 color_w" style="padding-left: 5px;padding-right: 0px">
+						<h3 class="margin-top-10 margin-bottom-10">${teamMemberVO.memberVO.memberFirstName } </h3>
+						<small style="font-size: 100%">&nbsp;&nbsp;&nbsp;&nbsp; - 
+							<c:choose>
+								<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PG'}">
+										控球後衛
+								</c:when>
+								<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'SG'}">
+										得分後衛
+								</c:when>
+								<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'SF'}">
+										小前鋒
+								</c:when>
+								<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PF'}">
+										大前鋒
+								</c:when>
+								<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'C'}">
+										中鋒
+								</c:when>
+							</c:choose>
+						</small>
+					</div>
 				</div>
-			</form>
-			<div id="div1"></div>
+			</c:forEach>
 		</div>
 		<div class="col-md-8">
 			<div class="content" style="padding-top: 30px">
@@ -58,8 +86,17 @@
 						<div class="col-sm-12 col-md-12" style="padding-left: 0px; padding-bottom: 10px;">
 							<h2 class="col-sm-3 col-md-2 control-label teamName" style="padding-left: 0px;">約戰方：</h2>
 							<div class="col-sm-3 col-md-4">
-								<select id="select_teamB" class="form-control">
-									<option>老師說的隊</option>
+								<select id="select_teamA" name="teamIdA" class="form-control">
+									<c:forEach var="mineTeamVO" items="${requestScope.mineTeamVOs }" varStatus="status" >
+										<c:choose>
+											<c:when test="${status.first }">
+												<option value="${mineTeamVO.teamId}" selected="selected">${mineTeamVO.teamName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${mineTeamVO.teamId}">${mineTeamVO.teamName}</option>											
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
 								</select>
 							</div>
 
@@ -90,18 +127,20 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label" for="profile_gender">對戰模式</label> <select id="profile_gender" name="battleMode" required="" class="form-control">
-							<option value="3">3 vs 3</option>
+						<label class="control-label" for="battleMode">對戰模式</label> 
+						<select id="battleMode" name="battleMode" required="" class="form-control">
 							<option value="5" selected="selected">5 vs 5</option>
+							<option value="3">3 vs 3</option>
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label class="control-label" for="profile_postalCode">賭注</label> <input type="text" id="profile_postalCode" name="battleBet" maxlength="8" class="form-control">
+						<label class="control-label" for="battleBet">賭注</label> 
+						<input type="text" id="battleBet" name="battleBet" maxlength="8" class="form-control">
 					</div>
 
 					<div class="form-group">
-						<div id="profile_birthdate" class="bootstrap-date row">
+						<div id="courtId_label" class="bootstrap-date row">
 							<div class="col-xs-4">
 								<label class="control-label">場地名稱</label>
 							</div>
@@ -112,7 +151,10 @@
 								<label class="control-label">鄉、鎮、區</label>
 							</div>
 						</div>
-						<div id="profile_birthdate" class="bootstrap-date row">
+						<div class="col-xs-12">
+								<label class="control-label" style="font-size: 14px">-</label>
+						</div>
+						<div id="courtId_data" class="bootstrap-date row">
 							<div class="col-xs-4">
 								<select id="courtName" name="courtName" required="" class="form-control valid">
 									<option value="2015">場地名稱</option>
@@ -146,10 +188,9 @@
 									<option value="23">連江縣</option></select>
 							</div>
 							<div class="col-xs-4">
-							
-								<select id="profile_birthdate_day" name="profile[birthdate][day]" required="" class="form-control">
-									<option value="1">1</option>
-									<option value="2">2</option>
+								<select id="courtArea" name="courtArea" required="" class="form-control">
+									<option value="0" disabled="disabled" selected="selected">請選擇縣市</option>
+									
 								</select>
 							</div>
 						</div>
@@ -216,7 +257,7 @@
 					<!-- 					</div> -->
 
 					<div class="form-group" style="margin-bottom: 5px;">
-						<span class="help-block" style="text-align: right;margin-bottom: 5px">一旦點擊約戰，即表示你同意 <a href="#">Pacuemo 的條款及細則 </a> 與 <a href="#" target="_blank"> 隱私政策</a></span>
+						<span class="help-block" style="text-align: right;margin-bottom: 5px">一旦點擊約戰，即表示你同意 <a href="#">Pacuemo 的會員條款 </a> 與 <a href="#" target="_blank"> 隱私政策</a></span>
 					</div>
 
 					<div class="row-buttons-bordered" style="margin-top: 20px;">
@@ -246,19 +287,52 @@
 	<script type="text/javascript">
 		$(function()
 		{
-			var datas;
-			var availableTags = [ "ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
-			$("#address").keyup(function()
-			{
-				$.ajax({ "type" : "get", "url" : "${home}spring/battle_rec/getCourtVOs", "data" : { "address" : $(this).val() }, "dataType" : "json", "success" : function(data)
-				{
-					console.log(data[0].name)
-					$("#address").autocomplete("option", "source", availableTags);
-				} });
+			// 
+			var TmVOs = "${requestScope.mineTeamVOs[0].teamMemberVOs[0]}";
+// 			alert(TmVOs);
+			$("#select_teamA").change(function(){
+				$.ajax({
+					"type":"get",
+					"url":"${home}spring/team/getTeamVO", // home 在 head 設定
+					"data":{"teamId":$(this).val()},
+					"dataType":"json",
+					"success":function(data){
+						$("#div_left").empty();
 
+						$.each(data.teamMemberVOs, function(index,array) {
+						var img_src;
+						var h3_name;
+						var small_position;
+							console.log(index + " : " + array);
+							
+							$.each(this, function(key, value) {	
+								console.log(key + " : " + value);
+								if($.trim(key) == "memberVO"){
+									console.log(key + " : " + value.memberImgUrl);
+									if(value.memberImgUrl != null){
+										img_src = value.memberImgUrl;
+									}else{
+										img_src = "user.jpg";
+									}							
+										h3_name = value.memberFirstName;
+								}
+								if($.trim(key) == "playerCardVO"){
+										small_position = value.playerPosition;
+								}
+							});
+								$( "#div_left" ).append( '<img class="battle_img img-circle col-md-8" src="${home}image/member/'+img_src+'" alt="image1">'+ 
+													     '<div class="col-md-4 color_w" style="padding-left: 5px;padding-right: 0px">'+
+														 '<h3 class="margin-top-10 margin-bottom-10">'+h3_name+' </h3>'+
+														 '<small style="font-size: 100%">&nbsp;&nbsp;&nbsp;&nbsp; - '+ small_position +'</small>');
+						});
+					},
+					"error":function(Error){
+						alert("fuck2");
+						console.log(Error);
+					}
+				})
 			});
-
-			$("#address").autocomplete({ source : availableTags });
+			
 
 		});
 	</script>

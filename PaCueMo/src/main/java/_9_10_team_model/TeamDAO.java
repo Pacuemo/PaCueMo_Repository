@@ -97,7 +97,7 @@ public class TeamDAO implements TeamDAO_interface
 	}
 
 	@Override
-	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	public List<TeamVO> find_TeamVOs_With_TeamHead(String teamHead)
 	{
 		return jdbc.query(FIND_TEAMVO_WITH_TEAMHEAD, new TeamRowMapper(), teamHead);
 	}

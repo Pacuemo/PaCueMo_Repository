@@ -172,7 +172,7 @@ height: 50px;
 				
 // 				$.ajax({
 // 					"type":"post",
-// 					"url":"${home}spring/team/joinTeam", // home 在 設定
+// 					"url":"${home}spring/team/joinTeam", // home 在 head 設定
 // 					"data":{"memberId":"${sessionScope.LoginOK.memberId}",
 // 							"teamId":$(this).val()},
 // 					"dataType":"text",
