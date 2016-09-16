@@ -15,6 +15,8 @@
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/notiny/css/notiny.min.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/css/lobibox.min.css" type="text/css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/css/animate.css" type="text/css">
    
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 <!-- 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
@@ -41,7 +43,12 @@
         	background-color:#2F0000;
         	border:2px groove #3C3C3C;
         }
-        .ui-dialog { z-index: 1000 !important ;}/* 確保 dialog 最上層顯示 */
+        .ui-dialog { z-index: 9999 !important ;}/* 確保 dialog 最上層顯示 */
+        
+        div.myImage/*先發球員dialog*/
+		{
+		    display: none;	
+		}
 	</style>
   </head>
   <body>
@@ -213,9 +220,16 @@
 					  </div>
 	            </form>
 	    </div>
-	   <!-- ***************************【 購買點數 - 信用卡 dialog 結束】***************************** -->
+	    <!-- ***************************【 購買點數 - 信用卡 dialog 結束】***************************** -->
+	    
+	    <!-- *************************【先發球員Dialog 開始】******************************* -->
+			<div id="start5" class="myImage" align="center">
+				<table style="display:table-cell;">	
+				</table>
+			</div>
+	    <!-- *************************【先發球員Dialog 結束】******************************* -->
+	    
 		<!-- <h5 id="state" style="color:orange;">Test</h5> --><!-- 測試長連線 -->
-
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -227,24 +241,110 @@
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/jquery.card.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/credit_card/js/js_timeStamp.js"></script>
        <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+       <script src="<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/js/lobibox.js"></script>
 	   <script src="<%=request.getContextPath()%>/_5_gambling/util_js/util.js"></script>
        <jsp:include page="/_5_gambling/util_js/Ajax_LongPolling.jsp"/><!-- LongPolling(放jquery之後) -->
-       
+
        <script type="text/javascript">
-       
        		//=== 偵測user按下哪個按鈕 : funFlag ===
             var funFlag = "<%=request.getAttribute("funFlag")%>";    
             var myDialog , cardDialog;
             //alert( funFlag );
-            
-       		$(function(){       		
-       			/**********************************************************************/ 
-       			/*   背景偷偷做 Ajax_LongPolling.js/jsp 持續發請求給 RoutineTask.java */ 
-       			/*   → 長連接 效果                                                   */ 
-       			/**********************************************************************/
+       		$(function(){       	
+
+           	
+           		
+       			/************************************************************************************/ 
+       			/*   背景偷偷做 Ajax_LongPolling.js/jsp 持續發請求給 RoutineTask.java(RESTservice)  */ 
+       			/*   → 長連接 效果                                                                 */ 
+       			/************************************************************************************/
+
+       			
+       			/* =========================== 【點隊徽顯示先發名單 開始】 ================================ */
+       			
+       			$("#tableDiv > table > tbody > tr:nth-child(odd) td:first-child").click(function(){ //點擊左邊(away)隊徽時
+
+					var awayName = $(this).parent("tr").next('tr').find('h4').eq(0).text();
+					
+					$.ajax({
+						 "type":"POST",//傳遞方式				
+	               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+	               		 "dataType":"json",//Servlet回傳格式
+	               		 "data":{"action" : "starting5" , "searchName" : awayName},
+	      				 "success":function(dataJson){
+	      					//alert(dataJson.start5URL);
+	      					var url_start5 = dataJson.start5URL;
+	      					
+		      				myStart5_Dialog(url_start5);
+			      		 },
+			      		 "error":function(){
+				      			BootstrapAlert.info({ //BootstrapAlert 特效
+		 			                title: "網路忙線中",
+		 			                message: "請稍候",
+		 			                hideTimeout: 1800,
+		 			        	});
+				         }
+					})
+
+           		})
+           		$("#tableDiv > table > tbody > tr:nth-child(odd) td:last-child").click(function(){//點擊右邊(home)隊徽時
+           			var homeName = $(this).parent("tr").next('tr').find('h4').eq(1).text();
+
+					$.ajax({
+						 "type":"POST",//傳遞方式				
+	               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+	               		 "dataType":"json",//Servlet回傳格式
+	               		 "data":{"action" : "starting5" , "searchName" : homeName},
+	      				 "success":function(dataJson){
+	      					//alert(dataJson.start5URL);
+	      					var url_start5 = dataJson.start5URL;
+		      				myStart5_Dialog(url_start5);
+			      		 },
+			      		 "error":function(){
+				      			BootstrapAlert.info({ //BootstrapAlert 特效
+		 			                title: "網路忙線中",
+		 			                message: "請稍候",
+		 			                hideTimeout: 1800,
+		 			        	});
+				         }
+					})
+					
+           		})
+           		var myStart5_Dialog = function( imageURL ){
+
+					var myTable = $("#start5 > table");
+					var myTr    = $("<tr></tr>").attr({"height":"95"});
+					myTr.attr({"align":"center","valign":"middle"}).appendTo( myTable );
+					var cell1   = $("<td></td>").attr({"width":"200px"}).css({"border-bottom" :"1px solid gray"}).appendTo( myTr ); 
+					var cell2   = $("<td></td>").attr({"width":"500px","align":"center"}).css({"border-bottom" :"1px solid gray"}).appendTo( myTr );
+               		
+               		$("<img></img>").attr( {"src" : "<%=request.getContextPath()%>/_5_gambling/image/NBA_teamLogo/" + (imageURL.substr(14)) ,
+               								"width":"80px","text-align":"left"})
+               						.css({"display":"block","margin-left":"0"})
+               		.appendTo( cell1 );
+
+       				$("<img></img>").attr( {"src"   : "<%=request.getContextPath()%>/_5_gambling" + imageURL  , 
+       										"width" : "630px"}).css({"display":"block"})
+       				.appendTo( cell2 );
+       								
+											
+       				$("#start5").css('zIndex',8000).dialog({
+						title: "先發五人",
+    	                show : { effect :'fadeIn', duration: 1000 },
+    	                hide : { effect :'fadeOut', duration: 500 },
+         	            //height: 400,
+    	                width: 580,
+    	                resizable: "auto",
+    	                position: { my: "left bottom", at: "center center", of: $("#dialog-div") },
+    	                close:function(){
+							$(this).find("tr").remove();// 關閉時移除舊的先發名單
+        	            }
+           			});
+                }
+       			/* =========================== 【點隊徽顯示先發名單 結束】 ================================ */
+
        			
        			/* ================ 【下注 開始】 ================= */
-       			
      			 /* ==== ﹝ 下注金額 spinner ﹞begin === */
          		  $("#awayCoins").spinner({
                       "step": 100,
@@ -346,56 +446,69 @@
 	                			'class' : "btn btn-danger",
 	                			'click' : function()
 	                			 {
-	                				 //alert('hi');	
-	                				 //alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
-	                				 //---
-	                				 $.ajax({
-	                					 "type":"POST",//傳遞方式				
-	                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
-	                             		 "dataType":"text",//Servlet回傳格式
-	                             		 "data":{ "action"     : 'gamblingUpdate' ,   /* data : 由dialog格子取得場次及輸入的資料 */
-	                             			 	  "battleId"   : $("#battleId_choosed").val() ,
-	                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
-	                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
-	                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5) + ":00" , // 拆掉"比賽時間："字串，並串上 ":00" 秒數供 java.sql.TimeStamp.valueOf()用
-	                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
-	                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
-	                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
-	                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
-	                             			 	  "awayId"     : $("#awayId").val(),// input hidden
-	                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
-	                             			 	  "awayCoins"  : $("#awayCoins").val(),
-	                             			 	  "homeCoins"  : $("#homeCoins").val()
-	                             		  },
-	                    				 "success":function(data){
-												
-												switch(  $.trim(data)  ){
-													case 'shortage':
-														//alert(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
-														BootstrapAlert.alert({
-											                title: "Sorry!",
-											                message: " 餘額不足，請【儲值】或【減少下注金額】 !!! "
-											            });
-													  break;											
-													default:/*下注成功*/
-														//alert("Session中會員剩餘點數 : " + data);
-			                    						$.notiny({/* notiny 特效*/
-		                        	 	                    theme:'dark',
-		                        	 	                    text: '下注成功！',
-		                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
-		                        	 	                    delay: 1200,
-		                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
-		                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
-		                        	 					});
-			                    						//【下注成功 → 修改右上方登入會員圖示的點數】
-		 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
-												     break;
-												}
-	                    				 }
-	                				 })
-	                				 //---
-	                				 // 關閉 dialog
-	                				 myDialog.dialog("close");
+		                			 if( $("#awayCoins").val()==0 && $("#homeCoins").val()==0){ //判斷是否兩隊下注金額皆=0
+		                				  BootstrapAlert.alert({ //BootstrapAlert 特效
+					 			                title: "Inofrmation",
+					 			                message: "下注金額不可為 0 ",
+					 			                hideTimeout: 1800,
+					 			          });
+					                 }else
+						             {
+		                				 //alert('hi');	
+		                				 //alert(($("#row3 td:eq(0) > h4").text()).substring(5) + ":00");
+		                				 //---
+		                				 $.ajax({
+		                					 "type":"POST",//傳遞方式				
+		                             		 "url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'BattleSet_Ajax_Servlet.do',
+		                             		 "dataType":"text",//Servlet回傳格式
+		                             		 "data":{ "action"     : 'gamblingUpdate' ,   /* data : 由dialog格子取得場次及輸入的資料 */
+		                             			 	  "battleId"   : $("#battleId_choosed").val() ,
+		                             			 	  "awayName"   : $("#row2 td:eq(0) > h4").text(),
+		                             			 	  "homeName"   : $("#row2 td:eq(2) > h4").text(),
+		                             			 	  "battleTime" :($("#row3 td:eq(0) > h4").text()).substring(5) + ":00" , // 拆掉"比賽時間："字串，並串上 ":00" 秒數供 java.sql.TimeStamp.valueOf()用
+		                             			 	  "awayScore"  : $("#row4 td:eq(0) > h4").text(),
+		                             			 	  "homeScore"  : $("#row4 td:eq(2) > h4").text(),
+		                             			 	  "awayBet"    : $("#row5 td:eq(0) > h4").text(),
+		                             			 	  "homeBet"    : $("#row5 td:eq(2) > h4").text(),
+		                             			 	  "awayId"     : $("#awayId").val(),// input hidden
+		                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
+		                             			 	  "awayCoins"  : $("#awayCoins").val(),
+		                             			 	  "homeCoins"  : $("#homeCoins").val()
+		                             		  },
+		                    				 "success":function(data){
+													
+													switch(  $.trim(data)  ){
+														case 'shortage':
+															//alert(" 餘額不足，請【儲值】或【減少下注金額】 !!! ");
+															BootstrapAlert.alert({
+												                title: "Sorry!",
+												                message: " 餘額不足，請【儲值】或【減少下注金額】 !!! "
+												            });
+														  break;											
+														default:/*下注成功*/
+															//alert("Session中會員剩餘點數 : " + data);
+				                    						$.notiny({/* notiny 特效*/
+			                        	 	                    theme:'dark',
+			                        	 	                    text: '下注成功！',
+			                        	 	                    image: 'http://cdn.imgs.tuts.dragoart.com/how-to-draw-the-nba-logo_1_000000001129_3.jpg',
+			                        	 	                    delay: 1200,
+			                        	 	                    animation_show: 'notiny-animation-show 0.5s forwards',
+			                        	 	                    animation_hide: 'notiny-animation-hide 0.5s forwards' 
+			                        	 					});
+				                    						//【下注成功 → 修改右上方登入會員圖示的點數】
+			 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
+													     break;
+													}
+		                    				 }
+		                				 })
+		                				 //---
+											if($('#start5').is(':ui-dialog')) {//關閉先發名單Dialog
+													$("#start5").dialog("close");
+											}
+		                				    // 關閉下注 dialog
+		                					myDialog.dialog("close");
+								     }
+
 	                			 }
 	                		 },
 	                		 {
@@ -403,14 +516,22 @@
 		                			'class': "btn btn-primary",
 		                			'click' : function()
 		                			 {
-		                				 //alert('結束');
-		                				 // 關閉 dialog
+
+										if($('#start5').is(':ui-dialog')) {//關閉先發名單Dialog
+											$("#start5").dialog("close");
+										}
+										 // 關閉下注 dialog
 		                				 myDialog.dialog("close");
 		                			 }
 	                		 }
 	                ]
 	                ,
 	                close: function () {
+
+	                  	if($('#start5').is(':ui-dialog')) {//關閉先發名單Dialog
+							$("#start5").dialog("close");
+						}
+
 	                    form[0].reset();
 	                }
 	            });
@@ -455,7 +576,7 @@
       			 		 cvcInput.parent('div').switchClass('has-error','has-success');
       			 		 cvcInput.next('span').switchClass('glyphicon-remove','glyphicon-ok');
       			 	 }
-      				 if(ntdInput.val() == "empty" || ntdInput.val() == ""){
+      				 if(ntdInput.val() == "empty" || ntdInput.val() == "" || ntdInput.val() == 0 ){
       					 ntdInput.parent('div').switchClass('has-success','has-error');
       					 ntdInput.next('span').switchClass('glyphicon-ok','glyphicon-remove');
       					 coinText.val(0);// 點數textBox 設 0
@@ -468,7 +589,7 @@
        				 falgNumber = ( cardnumberInput.val() == "empty") ? false : true;
        				 flagName   = ( fullNameInput.val()   == "empty") ? false : true;
        				 flagCvc    = ( cvcInput.val()        == "empty") ? false : true;
-       				 falgNtd    = ( ntdInput.val()        == "empty") ? false : true;
+       				 falgNtd    = ( ntdInput.val()        == "empty" || ntdInput.val()== 0 ) ? false : true;
        				 return falgNumber && flagName && flagCvc && falgNtd ;
        			}
        			//  ______________ 檢查所有欄位是否都填入 結束 ______________
@@ -761,6 +882,7 @@
 						                text_hover_color: 'rgb(234, 57, 57)',
 						                background_hover_color: '#00BBFF',
 						                onChange: function (pageNo) {  /* pageNo → 當前頁數 */   //alert(pageNo); 
+
 						                	myAjaxFunction( "BattleSet_Ajax_Servlet.do" , "queryByDateAndPage" , "" , chooseDate , pageNo );// 根據點擊頁碼按鈕的 pageNo 查詢
 						                }
 						        });
@@ -779,9 +901,9 @@
 					var input = $(this).val(); // textbox 輸入值
 					$.ajax({
 						"type":"post",//傳遞方式				
-                		"url" :"<%=request.getContextPath()%>" + '/_5_gambling/' + 'NbaTeam_Ajax_Servlet.do',
+                		"url" :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'NbaTeam_Ajax_Servlet.do',
                 		"dataType":"json",//Servlet回傳格式
-                		"data":{ "searchName" : input },
+                		"data":{ "action": "autoComplete"  ,"searchName" : input },
        					"success":function(data){
         					//console.log(data);
         					var parentDIV = $("#searchName").parent();
@@ -906,6 +1028,58 @@
 								myrow2.appendTo(mybody);
 							})	
 							tableDiv.append(mytable);// ！--表格建立完成--！
+
+
+			///////////////////////////////////////【點擊隊徽顯示先發名單 開始】////////////////////////////////////////////////////
+					$("#tableDiv > table > tbody > tr:nth-child(odd) td:first-child").click(function(){ //點擊左邊(away)隊徽時
+	
+						var awayName = $(this).parent("tr").next('tr').find('h4').eq(0).text();
+						
+						$.ajax({
+							 "type":"POST",//傳遞方式				
+		               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+		               		 "dataType":"json",//Servlet回傳格式
+		               		 "data":{"action" : "starting5" , "searchName" : awayName},
+		      				 "success":function(dataJson){
+		      					//alert(dataJson.start5URL);
+		      					var url_start5 = dataJson.start5URL;
+		      					myStart5_Dialog_forSlicePage( url_start5 );//自訂function : 動態建立先發名單 Dialog 
+				      		 },
+				      		 "error":function(){
+					      			BootstrapAlert.info({ //BootstrapAlert 特效
+			 			                title: "網路忙線中",
+			 			                message: "請稍候",
+			 			                hideTimeout: 1800,
+			 			        	});
+					         }
+						})
+	
+	           		})
+					$("#tableDiv > table > tbody > tr:nth-child(odd) td:last-child").click(function(){//點擊右邊(home)隊徽時
+	           			var homeName = $(this).parent("tr").next('tr').find('h4').eq(1).text();
+	
+						$.ajax({
+							 "type":"POST",//傳遞方式				
+		               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+		               		 "dataType":"json",//Servlet回傳格式
+		               		 "data":{"action" : "starting5" , "searchName" : homeName},
+		      				 "success":function(dataJson){
+		      					//alert(dataJson.start5URL);
+		      					var url_start5 = dataJson.start5URL;
+		      					myStart5_Dialog_forSlicePage(url_start5);//自訂function : 動態建立先發名單 Dialog 
+				      		 },
+				      		 "error":function(){
+					      			BootstrapAlert.info({ //BootstrapAlert 特效
+			 			                title: "網路忙線中",
+			 			                message: "請稍候",
+			 			                hideTimeout: 1800,
+			 			        	});
+					         }
+						})
+						
+	           		})
+				///////////////////////////////////////【點擊隊徽顯示先發名單 結束】////////////////////////////////////////////////////
+
 							
 							/*========== ﹝註冊分頁功能下，Button 的﹝下注 click﹞事件﹞開始 ==============*/
 							tableDiv.find('button').click(function(){
@@ -991,6 +1165,40 @@
        		//======================================================================================
        		//=========================【 撈分頁資料 $.ajax function 結束】=========================
        		//======================================================================================
+ 
+ 			//=====================================【動態建立先發名單 Dialog 開始】================================================
+            var myStart5_Dialog_forSlicePage = function( imageURL ){
+
+					var myTable = $("#start5 > table");
+					var myTr    = $("<tr></tr>").attr({"height":"95"});
+					myTr.attr({"align":"center","valign":"middle"}).appendTo( myTable );
+					var cell1   = $("<td></td>").attr({"width":"200px"}).css({"border-bottom" :"1px solid gray"}).appendTo( myTr ); 
+					var cell2   = $("<td></td>").attr({"width":"500px","align":"center"}).css({"border-bottom" :"1px solid gray"}).appendTo( myTr );
+						
+						$("<img></img>").attr( {"src" : "<%=request.getContextPath()%>/_5_gambling/image/NBA_teamLogo/" + (imageURL.substr(14)) ,
+												"width":"80px","text-align":"left"})
+										.css({"display":"block","margin-left":"0"})
+						.appendTo( cell1 );
+				
+						$("<img></img>").attr( {"src"   : "<%=request.getContextPath()%>/_5_gambling" + imageURL  , 
+												"width" : "630px"}).css({"display":"block"})
+						.appendTo( cell2 );
+										
+											
+						$("#start5").css('zIndex',8000).dialog({
+							title: "先發五人",
+					        show : { effect :'fadeIn' , duration: 1000 },
+					        hide : { effect :'fadeOut', duration: 500 },
+					         //height: 400,
+					        width: 580,
+					        resizable: "auto",
+					        position: { my: "left bottom", at: "center center", of: $("#dialog-div") },
+					        close:function(){
+								$(this).find("tr").remove();// 關閉時移除舊的先發名單
+					        }
+						});
+			}
+          //=====================================【動態建立先發名單 Dialog 結束】================================================
        </script>
   </body>
 </html>

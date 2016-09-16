@@ -5,6 +5,7 @@ public class NBATeamVO
 	private Integer teamID;
 	private String teamName;
 	private String teamLogoURL;
+	private String start5URL;
 
 	public Integer getTeamID()
 	{
@@ -34,6 +35,16 @@ public class NBATeamVO
 	public void setTeamLogoURL(String teamLogoURL)
 	{
 		this.teamLogoURL = teamLogoURL;
+	}
+
+	public String getStart5URL()
+	{
+		return start5URL;
+	}
+
+	public void setStart5URL(String start5url)
+	{
+		start5URL = start5url;
 	}
 
 }

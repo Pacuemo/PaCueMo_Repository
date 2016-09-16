@@ -15,6 +15,7 @@ public class NBATeamRowMapper implements RowMapper<NBATeamVO>
 		nbaVO.setTeamID(rs.getInt("teamId"));
 		nbaVO.setTeamName(rs.getString("teamName"));
 		nbaVO.setTeamLogoURL(rs.getString("teamLogoURL"));
+		nbaVO.setStart5URL(rs.getString("start5URL"));
 		return nbaVO;
 	}
 

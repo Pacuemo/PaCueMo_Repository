@@ -1,37 +1,37 @@
-﻿USE MagicJack;
+﻿USE MagicJack_main;
 ---------------------- INSERT NBA球隊假資料 ---------------------------------------------------------------------------
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('亞特蘭大老鷹',	'/image/NBA_teamLogo/Hawks.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('波士頓塞爾提克',	'/image/NBA_teamLogo/Celtics.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('紐澤西籃網',		'/image/NBA_teamLogo/Nets.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('夏洛特黃蜂',		'/image/NBA_teamLogo/Hornets.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('芝加哥公牛',		'/image/NBA_teamLogo/Bulls.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('克里夫蘭騎士',	'/image/NBA_teamLogo/Cavaliers.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('達拉斯小牛',		'/image/NBA_teamLogo/Mavericks.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('丹佛金塊',		'/image/NBA_teamLogo/Nuggets.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('底特律活塞',		'/image/NBA_teamLogo/Pistons.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('金州勇士',		'/image/NBA_teamLogo/Warriors.png');
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('亞特蘭大老鷹',	'/image/NBA_teamLogo/Hawks.png' ,		'/image/start5/Hawks.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('波士頓塞爾提克',	'/image/NBA_teamLogo/Celtics.png',		'/image/start5/Celtics.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('紐澤西籃網',		'/image/NBA_teamLogo/Nets.png',		'/image/start5/Nets.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('夏洛特黃蜂',		'/image/NBA_teamLogo/Hornets.png',		'/image/start5/Hornets.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('芝加哥公牛',		'/image/NBA_teamLogo/Bulls.png',		'/image/start5/Bulls.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('克里夫蘭騎士',	'/image/NBA_teamLogo/Cavaliers.png',	'/image/start5/Cavaliers.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('達拉斯小牛',		'/image/NBA_teamLogo/Mavericks.png',	'/image/start5/Mavericks.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('丹佛金塊',		'/image/NBA_teamLogo/Nuggets.png',		'/image/start5/Nuggets.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('底特律活塞',		'/image/NBA_teamLogo/Pistons.png',		'/image/start5/Pistons.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('金州勇士',		'/image/NBA_teamLogo/Warriors.png',		'/image/start5/Warriors.png'  );
 
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('休士頓火箭',		'/image/NBA_teamLogo/Rockets.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('印第安納溜馬',	'/image/NBA_teamLogo/Pacers.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('洛杉磯快艇',		'/image/NBA_teamLogo/Clippers.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('洛杉磯湖人',		'/image/NBA_teamLogo/Lakers.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('曼菲斯灰熊',		'/image/NBA_teamLogo/Grizzlies.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('邁阿密熱火',		'/image/NBA_teamLogo/Heat.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('密爾瓦基公鹿',	'/image/NBA_teamLogo/Bucks.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('明尼蘇達灰狼',	'/image/NBA_teamLogo/Timberwolves.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('紐澳良鵜鶘',		'/image/NBA_teamLogo/Pelicans.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('紐約尼克',		'/image/NBA_teamLogo/Knicks.png');
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('休士頓火箭',		'/image/NBA_teamLogo/Rockets.png',		'/image/start5/Rockets.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('印第安納溜馬',	'/image/NBA_teamLogo/Pacers.png',		'/image/start5/Pacers.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('洛杉磯快艇',		'/image/NBA_teamLogo/Clippers.png',		'/image/start5/Clippers.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('洛杉磯湖人',		'/image/NBA_teamLogo/Lakers.png',		'/image/start5/Lakers.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('曼菲斯灰熊',		'/image/NBA_teamLogo/Grizzlies.png',	'/image/start5/Grizzlies.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('邁阿密熱火',		'/image/NBA_teamLogo/Heat.png',		'/image/start5/Heat.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('密爾瓦基公鹿',	'/image/NBA_teamLogo/Bucks.png',		'/image/start5/Bucks.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('明尼蘇達灰狼',	'/image/NBA_teamLogo/Timberwolves.png',	'/image/start5/Timberwolves.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('紐澳良鵜鶘',		'/image/NBA_teamLogo/Pelicans.png',		'/image/start5/Pelicans.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('紐約尼克',		'/image/NBA_teamLogo/Knicks.png',		'/image/start5/Knicks.png'  );
 
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('奧克拉荷馬雷霆',	'/image/NBA_teamLogo/Thunder.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('奧蘭多魔術',		'/image/NBA_teamLogo/Magic.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('費城七六人',		'/image/NBA_teamLogo/Sixers.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('鳳凰城太陽',		'/image/NBA_teamLogo/Suns.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('波特蘭拓荒者',	'/image/NBA_teamLogo/Blazers.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('沙加緬度國王',	'/image/NBA_teamLogo/Kings.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('聖安東尼奧馬刺',	'/image/NBA_teamLogo/Spurs.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('多倫多暴龍',		'/image/NBA_teamLogo/Raptors.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('猶他爵士',		'/image/NBA_teamLogo/Jazz.png');
-INSERT INTO NBATeam(teamName, teamLogoURL) VALUES ('華盛頓巫師',		'/image/NBA_teamLogo/Wizards.png');
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('奧克拉荷馬雷霆',	'/image/NBA_teamLogo/Thunder.png',		'/image/start5/Thunder.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('奧蘭多魔術',		'/image/NBA_teamLogo/Magic.png',		'/image/start5/Magic.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('費城七六人',		'/image/NBA_teamLogo/Sixers.png',		'/image/start5/Sixers.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('鳳凰城太陽',		'/image/NBA_teamLogo/Suns.png',		'/image/start5/Suns.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('波特蘭拓荒者',	'/image/NBA_teamLogo/Blazers.png',		'/image/start5/Blazers.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('沙加緬度國王',	'/image/NBA_teamLogo/Kings.png',		'/image/start5/Kings.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('聖安東尼奧馬刺',	'/image/NBA_teamLogo/Spurs.png',		'/image/start5/Spurs.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('多倫多暴龍',		'/image/NBA_teamLogo/Raptors.png',		'/image/start5/Raptors.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('猶他爵士',		'/image/NBA_teamLogo/Jazz.png',		'/image/start5/Jazz.png'  );
+INSERT INTO NBATeam(teamName, teamLogoURL , start5URL ) VALUES ('華盛頓巫師',		'/image/NBA_teamLogo/Wizards.png',		'/image/start5/Wizards.png'  );
 
 ---------------------- INSERT NBA球隊假資料 結束-----------------------------------------------------------------
 -----------------------INSERT 對戰組合假資料---------------------------------------------------------------------
@@ -943,7 +943,22 @@ INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScor
 VALUES( '2016-07-29 14:34' ,22 ,14 , 60 , 69 ,4264000 ,889400 )
 
 INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet )
-VALUES( '2016-07-02 02:05' ,16 ,17 , 84 , 77 ,1644400 ,1731700 )
+VALUES( '2016-07-11 02:05' ,16 ,17 , 84 , 77 ,1644400 ,1731700 )
+----
+INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet )
+VALUES( '2016-09-11 11:05' ,5 ,6 , 45 , 67 ,150000 ,140000 )
+
+INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet )
+VALUES( '2016-09-11 05:25' ,7 ,1 , 65 , 24 ,5600 ,6800 )
+
+INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet )
+VALUES( '2016-09-11 06:17' ,25 ,6 , 68 , 35 ,7700 ,9800 )
+
+INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet )
+VALUES( '2016-09-11 12:35' ,24 ,4 , 78 , 66 ,10000 ,1500 )
+
+INSERT INTO BattleSet (  battleDateTime , homeId , awayId , homeScore , awayScore , homebet , awaybet )
+VALUES( '2016-09-11 08:47' ,17 ,28 , 58 , 45 ,3500 ,8000 )
 ------------------------------------------
 -- 共 300 場比賽 --
 ------對戰組合  本日--------------------------------------------------------------------------------------------
@@ -970,6 +985,11 @@ VALUES   (DateAdd(mi,-108,GETDATE()), 7,21,58,59,1500,7100);
 
 INSERT INTO BattleSet (  battleDateTime, homeId,awayId, homeScore, awayScore,homebet, awaybet )
 VALUES   (DateAdd(mi,-136,GETDATE()) , 8,22,61,71,3300,3600);
+-----------------------
+-- 今天尚未開始的比賽 --
+-----------------------
+INSERT INTO BattleSet (  battleDateTime, homeId,awayId, homeScore, awayScore,homebet, awaybet )
+VALUES   (DateAdd(mi,59,GETDATE()), 6,18,0,0,5000,6500);
 
 INSERT INTO BattleSet (  battleDateTime, homeId,awayId, homeScore, awayScore,homebet, awaybet )
 VALUES   (DateAdd(mi,52,GETDATE()), 9,23,0,0,2000,6000);
@@ -987,53 +1007,102 @@ INSERT INTO BattleSet (  battleDateTime, homeId,awayId, homeScore, awayScore,hom
 VALUES   (DateAdd(mi,391,GETDATE()),13,27,0,0,25000,14000);
 
 INSERT INTO BattleSet (  battleDateTime, homeId,awayId, homeScore, awayScore,homebet, awaybet )
-VALUES   (DateAdd(HH,137,GETDATE()),14,28,0,0,35000,12000);
+VALUES   (DateAdd(mi,137,GETDATE()),14,28,0,0,35000,12000);
 
 INSERT INTO BattleSet (  battleDateTime, homeId,awayId, homeScore, awayScore,homebet, awaybet )
 VALUES   (DateAdd(mi,417,GETDATE()),15,29,0,0,10000,2300);
 
 --------------------------- GambleOrder 假資料 -----------------------
---INSERT INTO GambleOrder VALUES ('904BCC5C-1A49-448D-A404-11BBBA7D2A8E', 7, 200, 0 );                     
---INSERT INTO GambleOrder VALUES ('EBC71A17-4640-4693-A637-0336A7F05F76', 1, 300, 1 ); 
---INSERT INTO GambleOrder VALUES ('CFB920BA-9557-4338-903D-7711EB667020', 9, 100, 1 ); 
---INSERT INTO GambleOrder VALUES ('CF04D90B-AE78-4B86-8AA5-182BC439A51C', 6, 700, 0 ); 
---INSERT INTO GambleOrder VALUES ('EEAEB00F-06C7-476E-9FB7-130680AC8382', 7, 100, 1 ); 
---INSERT INTO GambleOrder VALUES ('B25D65B0-2788-443D-A1D9-093F05647D58',10, 1000, 0 ); 
---INSERT INTO GambleOrder VALUES ('C5D8AEC0-22B2-4007-8EB4-3774C34E00DC', 2, 100, 0 ); 
---INSERT INTO GambleOrder VALUES ('E16E662E-3494-45F2-BD0A-6801E0812C33', 2, 200, 1 ); 
---INSERT INTO GambleOrder VALUES ('A5496CF4-3337-4989-80D0-525AC87632AB', 3, 100, 0 ); 
---INSERT INTO GambleOrder VALUES ('94848977-F9F8-4AFF-A010-0BD7CCED72BD', 1, 300, 1 );
---------------------------- GambleOrder 假資料 ----------------
---INSERT INTO GoodsOrder VALUES('60FD84C9-979B-40C9-A3DE-01A8763EEDC9','1AFXDmkLUX8eUWs0OHWfrx15Xi6wU6byl2GiEXZ+f48=','三重劉德華','2018','09',365,100,100*100,'2016-09-10 06:28:34',0);
---INSERT INTO GoodsOrder VALUES('E17AC45D-80DA-4146-BEF5-0309CD3C1FB6','fKJuZOXKrWzv8st5DjNRs4cIWrTXqGLpDXgitIcOFUQ=','板橋劉德華','2022','01',014,1200,1200*100,'2016-09-11 11:28:15',0);
---INSERT INTO GoodsOrder VALUES('EBC71A17-4640-4693-A637-0336A7F05F76','xZOiJ0WVg2R5fchXd0Uwbg5Y//hdIVR0a4O+ozrPXYk=','永和劉德華','2019','11',080,520,520*100,'2016-09-12 15:28:03',0);
---INSERT INTO GoodsOrder VALUES('CCF8577D-4DF2-413C-A0E1-049A88869A01','yE9vI3iOxq4O7q4IQfnsbaLorXLJ33jOwUHToWpKtoo=','蘆洲劉德華','2023','05',345,670,670*100,'2016-09-15 06:00:05',1);
---INSERT INTO GoodsOrder VALUES('852AEA2D-751F-48B9-8D5F-056220C7CDCC','oEV8cJd2rPe4qsVrG22YHkBny8UNvhRoovqmZikgO/Q=','天母劉德華','2020','09',546,300,300*100,'2016-09-29 06:04:34',0);
---INSERT INTO GoodsOrder VALUES('209B7500-2059-4990-BBDA-05E8D0E61F6E','nnBXviKqU5lNdtthQ267WKJbgmcDEfKwZUEZYnCjd7U=','中和劉德華','2020','12',789,1200,1200*100,'2016-08-31 16:07:34',0);
---INSERT INTO GoodsOrder VALUES('3B1391BB-2518-4FF1-BCCC-064627959BDE','LpWVttDDl46UryzqjVcf6NIVw9RS4oOL9ZUa3sNWe/k=','土城劉德華','2019','09',951,1560,1560*100,'2016-09-06 07:34:54',1);
---INSERT INTO GoodsOrder VALUES('AD1DE546-9C4B-452F-8DFB-07552EC28DFF','Qtc4DuCN0B5D6ElvJzx2dTJD94lvkf3OTyDE99bXhHg=','嘉義劉德華','2018','07',657,350,350*100,'2016-08-23 05:26:25',0);
---INSERT INTO GoodsOrder VALUES('0A0BAC43-F262-4F4E-8379-0817FE34EBCE','VODCaD7cVL1FALgUdaaUtX5tSz05oM1j7ZW52A9pGvw=','屏東劉德華','2021','06',357,500,500*100,'2016-08-25 01:25:52',1);
---INSERT INTO GoodsOrder VALUES('5D34F906-7CFC-4989-A725-08D06A529A98','123/nsEQf+D6/t7HW2C0i21AgK3Lzimpa6lkI9Mgcxk=','高雄劉德華','2020','09',260,3000,3000*100,'2016-09-22 13:28:57',1);
+INSERT INTO GambleOrder VALUES ('3EA1ADB7-F37B-4DAE-8283-13EA6D242DAC', 1,200,5000 );                     
+INSERT INTO GambleOrder VALUES ('8DDA0CF6-A937-46A7-BA01-0292BC2FD3D7', 315, 300,0 ); 
+INSERT INTO GambleOrder VALUES ('5DAE7000-D1B7-4319-A388-80323B24DD38', 9, 100,700); 
+INSERT INTO GambleOrder VALUES ('82BED47C-C571-4737-AE9A-211C71CB1A12',1,0,1200 ); 
+INSERT INTO GambleOrder VALUES ('F1DA8A66-CD7C-4FAF-9268-180DF2375DA2', 7, 100, 600 ); 
+INSERT INTO GambleOrder VALUES ('10CFF0EF-737F-4369-9687-0EE4FA0547AB',10, 1000, 0 ); 
+INSERT INTO GambleOrder VALUES ('747420A4-8B21-4065-A53B-4569A4490E16', 2, 100, 0 ); 
+INSERT INTO GambleOrder VALUES ('458578DD-764E-4A2D-B4A2-6F2FBC60E867', 315, 200, 900 ); 
+INSERT INTO GambleOrder VALUES ('90ACD66E-29E0-40BF-A86A-572F6D877E02', 3, 100, 2000 ); 
+INSERT INTO GambleOrder VALUES ('30A4DCC0-A726-4A30-B118-1059051C2678', 1, 300, 1000 );
+INSERT INTO GambleOrder VALUES ('125EF6B7-98FE-4DF5-B755-001CD99B4648', 315, 1800, 0 );                     
+INSERT INTO GambleOrder VALUES ('128F57E7-0266-4EBA-B0C4-019D163312BE', 275, 0, 1000); 
+INSERT INTO GambleOrder VALUES ('8DDA0CF6-A937-46A7-BA01-0292BC2FD3D7', 315, 100, 1300 ); 
+INSERT INTO GambleOrder VALUES ('ED7D55A0-920B-4392-83E8-04C02C16B68A', 12, 700, 0 ); 
+INSERT INTO GambleOrder VALUES ('7F0DE280-D5E1-4FF2-B600-0654B97C550C', 7, 100, 4200 ); 
+INSERT INTO GambleOrder VALUES ('7ADCCF6D-47EE-4373-B9E2-076DD075D099',105, 1000, 0 ); 
+INSERT INTO GambleOrder VALUES ('AE799EFE-4278-4E6D-B4CD-0789744302E5', 315, 300, 100 ); 
+INSERT INTO GambleOrder VALUES ('A46BA10D-E584-4B12-A0F0-09BA011F81C6', 315, 0, 1600 ); 
+INSERT INTO GambleOrder VALUES ('5C9C24C2-BF00-427F-B17E-0A693532E697', 3, 100, 100 ); 
+INSERT INTO GambleOrder VALUES ('7D1D490A-5D0E-4CC7-BB7E-0B94B71696E0', 315, 300, 500 );
+INSERT INTO GambleOrder VALUES ('16F3D7E4-5BC3-4372-884E-FF3EA13B7E7E', 308,200,0 );                     
+INSERT INTO GambleOrder VALUES ('54FA9A0F-7CD1-460F-908E-9C1547A261DE', 315, 300,500 ); 
+INSERT INTO GambleOrder VALUES ('3E833283-4520-48F8-A273-8D59252DE154', 315, 100,700); 
+INSERT INTO GambleOrder VALUES ('E42131F7-72CC-4D90-8555-6DA1146E768B',1,700,1200 ); 
+INSERT INTO GambleOrder VALUES ('DF86ADBB-F1F5-49F8-A579-3800875B7292', 308, 100, 600 ); 
+INSERT INTO GambleOrder VALUES ('E42131F7-72CC-4D90-8555-6DA1146E768B',318, 1000, 0 ); 
+INSERT INTO GambleOrder VALUES ('46D93FD7-B70E-46B2-9954-6627B7E758A1', 315, 100, 0 ); 
+INSERT INTO GambleOrder VALUES ('5DAE7000-D1B7-4319-A388-80323B24DD38', 315, 200, 900 ); 
+INSERT INTO GambleOrder VALUES ('90ACD66E-29E0-40BF-A86A-572F6D877E02', 308, 0, 2000 ); 
+INSERT INTO GambleOrder VALUES ('30A4DCC0-A726-4A30-B118-1059051C2678', 306, 300, 1000 );
+INSERT INTO GambleOrder VALUES ('5DAE7000-D1B7-4319-A388-80323B24DD38', 310, 1800, 0 );                     
+INSERT INTO GambleOrder VALUES ('128F57E7-0266-4EBA-B0C4-019D163312BE', 314, 300, 1000); 
+INSERT INTO GambleOrder VALUES ('16F3D7E4-5BC3-4372-884E-FF3EA13B7E7E', 307, 100, 100 ); 
+INSERT INTO GambleOrder VALUES ('C52DA173-1793-4192-A836-C56BE3E14AFE', 313, 700, 0 ); 
+INSERT INTO GambleOrder VALUES ('B96614FD-3797-4686-BF7A-9C9952D38442', 307, 0, 4000 ); 
+INSERT INTO GambleOrder VALUES ('C52DA173-1793-4192-A836-C56BE3E14AFE',320, 1200, 0 ); 
+INSERT INTO GambleOrder VALUES ('2A363E34-9738-4F56-83B2-7EF28388055E', 315, 300, 100 ); 
+INSERT INTO GambleOrder VALUES ('178C3CDA-202D-4745-B067-5A74A78E46E4', 315, 200, 1100); 
+INSERT INTO GambleOrder VALUES ('16F3D7E4-5BC3-4372-884E-FF3EA13B7E7E', 320, 100, 200 ); 
+INSERT INTO GambleOrder VALUES ('9B7C8FDF-9A2C-45E9-8F98-8163B651AFD7', 311, 0, 500 );
 
 
-INSERT INTO GambleOrder VALUES ('C162429E-64F7-4FC5-B3D0-15D29B6ACDA4', 7, 200, 0 );                     
-INSERT INTO GambleOrder VALUES ('84CBDD6A-70CF-4D8F-B119-05958F3B930E', 1, 300, 1 ); 
-INSERT INTO GambleOrder VALUES ('4EE78F7F-D22D-484C-9C9D-8CC216FCAA8B', 9, 100, 1 ); 
-INSERT INTO GambleOrder VALUES ('6091AC80-5716-45F9-8106-206F3BABFC15', 6, 700, 0 ); 
-INSERT INTO GambleOrder VALUES ('4DBFCCED-677C-42E5-A93E-1A524FBA0014', 7, 100, 1 ); 
-INSERT INTO GambleOrder VALUES ('9DD4AFF0-24CE-401E-92C2-12C08D94152B',10, 1000, 0 ); 
-INSERT INTO GambleOrder VALUES ('382F736E-F2BF-48C7-8A60-466FD01AE887', 2, 100, 0 ); 
-INSERT INTO GambleOrder VALUES ('A93026D1-6093-40E1-80D4-6C9F82BE0C2A', 2, 200, 1 ); 
-INSERT INTO GambleOrder VALUES ('0B9BE3DB-2CAD-404B-8811-55737D5185D0', 3, 100, 0 ); 
-INSERT INTO GambleOrder VALUES ('815980ED-71F1-4124-93B3-12DF38341BE0', 1, 300, 1 );
 
-INSERT INTO GoodsOrder VALUES('58802C19-12F6-4B84-835D-0149BEDD1685','1AFXDmkLUX8eUWs0OHWfrx15Xi6wU6byl2GiEXZ+f48=','三重劉德華','2018','09',365,100,100*100,'2016-09-10 06:28:34',0);
-INSERT INTO GoodsOrder VALUES('B115AA0B-5BD5-40E0-A00D-030A4465678E','fKJuZOXKrWzv8st5DjNRs4cIWrTXqGLpDXgitIcOFUQ=','板橋劉德華','2022','01',014,1200,1200*100,'2016-09-11 11:28:15',0);
-INSERT INTO GoodsOrder VALUES('84CBDD6A-70CF-4D8F-B119-05958F3B930E','xZOiJ0WVg2R5fchXd0Uwbg5Y//hdIVR0a4O+ozrPXYk=','永和劉德華','2019','11',080,520,520*100,'2016-09-12 15:28:03',0);
-INSERT INTO GoodsOrder VALUES('13F0D659-05B2-4663-B2AB-0863598F8F16','yE9vI3iOxq4O7q4IQfnsbaLorXLJ33jOwUHToWpKtoo=','蘆洲劉德華','2023','05',345,670,670*100,'2016-09-15 06:00:05',1);
-INSERT INTO GoodsOrder VALUES('BAF849EF-194D-4ADD-B039-087AD01C226D','oEV8cJd2rPe4qsVrG22YHkBny8UNvhRoovqmZikgO/Q=','天母劉德華','2020','09',546,300,300*100,'2016-09-29 06:04:34',0);
-INSERT INTO GoodsOrder VALUES('251AA6CE-6E53-405C-A6D5-08B47A821B0F','nnBXviKqU5lNdtthQ267WKJbgmcDEfKwZUEZYnCjd7U=','中和劉德華','2020','12',789,1200,1200*100,'2016-08-31 16:07:34',0);
-INSERT INTO GoodsOrder VALUES('58A68730-3412-471C-9491-0A23A57D7320','LpWVttDDl46UryzqjVcf6NIVw9RS4oOL9ZUa3sNWe/k=','土城劉德華','2019','09',951,1560,1560*100,'2016-09-06 07:34:54',1);
-INSERT INTO GoodsOrder VALUES('B31CE9D3-320A-4006-9702-0C24291D28DD','Qtc4DuCN0B5D6ElvJzx2dTJD94lvkf3OTyDE99bXhHg=','嘉義劉德華','2018','07',657,350,350*100,'2016-08-23 05:26:25',0);
-INSERT INTO GoodsOrder VALUES('71932E50-9D51-4E90-8F59-0F9EA2A982EF','VODCaD7cVL1FALgUdaaUtX5tSz05oM1j7ZW52A9pGvw=','屏東劉德華','2021','06',357,500,500*100,'2016-08-25 01:25:52',1);
-INSERT INTO GoodsOrder VALUES('94F86D79-DE80-4C07-AD3B-11ACF93224F1','123/nsEQf+D6/t7HW2C0i21AgK3Lzimpa6lkI9Mgcxk=','高雄劉德華','2020','09',260,3000,3000*100,'2016-09-22 13:28:57',1);
+
+
+
+
+
+--------------------------- GoodsOrder 假資料 ----------------
+INSERT INTO GoodsOrder VALUES('125EF6B7-98FE-4DF5-B755-001CD99B4648','1AFXDmkLUX8eUWs0OHWfrx15Xi6wU6byl2GiEXZ+f48=','三重劉德華','2018','09',365,100,100*100,'2016-09-10 06:28:34',0);
+INSERT INTO GoodsOrder VALUES('128F57E7-0266-4EBA-B0C4-019D163312BE','fKJuZOXKrWzv8st5DjNRs4cIWrTXqGLpDXgitIcOFUQ=','板橋劉德華','2022','01',014,1200,1200*100,'2016-09-11 11:28:15',0);
+INSERT INTO GoodsOrder VALUES('8DDA0CF6-A937-46A7-BA01-0292BC2FD3D7','xZOiJ0WVg2R5fchXd0Uwbg5Y//hdIVR0a4O+ozrPXYk=','永和劉德華','2019','11',080,520,520*100,'2016-09-12 15:28:03',0);
+INSERT INTO GoodsOrder VALUES('ED7D55A0-920B-4392-83E8-04C02C16B68A','yE9vI3iOxq4O7q4IQfnsbaLorXLJ33jOwUHToWpKtoo=','蘆洲劉德華','2023','05',345,670,670*100,'2016-09-15 06:00:05',1);
+INSERT INTO GoodsOrder VALUES('7F0DE280-D5E1-4FF2-B600-0654B97C550C','oEV8cJd2rPe4qsVrG22YHkBny8UNvhRoovqmZikgO/Q=','天母劉德華','2020','09',546,300,300*100,'2016-09-29 06:04:34',0);
+INSERT INTO GoodsOrder VALUES('7ADCCF6D-47EE-4373-B9E2-076DD075D099','nnBXviKqU5lNdtthQ267WKJbgmcDEfKwZUEZYnCjd7U=','中和劉德華','2020','12',789,1200,1200*100,'2016-08-31 16:07:34',0);
+INSERT INTO GoodsOrder VALUES('AE799EFE-4278-4E6D-B4CD-0789744302E5','LpWVttDDl46UryzqjVcf6NIVw9RS4oOL9ZUa3sNWe/k=','土城劉德華','2019','09',951,1560,1560*100,'2016-09-06 07:34:54',1);
+INSERT INTO GoodsOrder VALUES('A46BA10D-E584-4B12-A0F0-09BA011F81C6','Qtc4DuCN0B5D6ElvJzx2dTJD94lvkf3OTyDE99bXhHg=','嘉義劉德華','2018','07',657,350,350*100,'2016-08-23 05:26:25',0);
+INSERT INTO GoodsOrder VALUES('5C9C24C2-BF00-427F-B17E-0A693532E697','VODCaD7cVL1FALgUdaaUtX5tSz05oM1j7ZW52A9pGvw=','屏東劉德華','2021','06',357,500,500*100,'2016-08-25 01:25:52',1);
+INSERT INTO GoodsOrder VALUES('7D1D490A-5D0E-4CC7-BB7E-0B94B71696E0','123/nsEQf+D6/t7HW2C0i21AgK3Lzimpa6lkI9Mgcxk=','高雄劉德華','2020','09',260,3000,3000*100,'2016-09-22 13:28:57',1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

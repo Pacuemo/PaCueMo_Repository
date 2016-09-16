@@ -19,6 +19,7 @@ import _9_54_gambleorder_model.GambleOrderVO;
 @Transactional
 public class GamblingFacade
 {
+
 	private BattleSetService bSetSvc;
 	private GoodsOrderService goodsOrderSvc;
 	private MemberDAO_interface_Spring memberDAO;
@@ -63,17 +64,25 @@ public class GamblingFacade
 	public String updateMemberAndBattleSetCoin(BattleSetVO bVO, MemberVO mVO, Integer homeCoins, Integer awayCoins)
 	{
 		System.out.println(" ======== 呼叫 GamblingFacade → updateMemberAndBattleSetCoin(BattleSetVO bVO , MemberVO mVO) 方法 =======");
-		// *************** 更新﹝對戰組合﹞主客隊點數 =====
-		bVO.setAwaybet(bVO.getAwaybet() + homeCoins);
-		bVO.setHomebet(bVO.getHomebet() + awayCoins);
+		// *************** (1). 更新﹝對戰組合﹞主客隊點數 =====
+		bVO.setAwaybet(bVO.getAwaybet() + awayCoins);
+		bVO.setHomebet(bVO.getHomebet() + homeCoins);
 		bSetSvc.updateBattleSet(bVO);
-		System.out.println(" 1.== BattleSetVO 點數更新成功！== \n =========================================");
-		// *************** 更新﹝會員﹞點數 ===============
+		System.out.println(" 1.== GamblingFacade BattleSetVO 點數更新成功！== \n =========================================");
+		// *************** (2). 更新﹝會員﹞點數 ===============
 		Double newCoins = mVO.getMemberPoint() - (homeCoins + awayCoins);
 		mVO.setMemberPoint(newCoins);
 		memberDAO.updatePointByPrimaryKey(mVO);
-		//---
-		System.out.println(" 2.== MemberVO 點數更新成功！== \n ============================================");
+		System.out.println(" 2.== GamblingFacade MemberVO 點數更新成功！== \n ============================================");
+		// *************** (3). 新增﹝GambleOrder﹞一筆 ========
+		GambleOrderVO gamblebVO = new GambleOrderVO();
+		gamblebVO.setMemberId(mVO.getMemberId());
+		gamblebVO.setBattleId(bVO.getBattleId());
+		gamblebVO.setBetHome(Double.valueOf(homeCoins));
+		gamblebVO.setBetAway(Double.valueOf(awayCoins));
+		System.out.print(" 3.== GamblingFacade  ");
+		gambleSvc.addOne(gamblebVO);
+		//=====================================================
 		return "success";
 	}
 
@@ -128,53 +137,58 @@ public class GamblingFacade
 							oddsHome,
 							oddsAway));
 
-			List<MemberVO> mbList = gambleSvc.getMembersByBattleId(battleId);
-			for (MemberVO mbVO : mbList)
+			List<GambleOrderVO> orderList = gambleSvc.getOrdersByBattleId(battleId);
+			for (GambleOrderVO orderVO : orderList)
 			{
+				String mbId = orderVO.getMemberId();
+				MemberVO mbVO = memberDAO.findByPrimaryKey(mbId);
+				Double betHome = orderVO.getBetHome();// user在本場次 主隊 的下注點數
+				Double betAway = orderVO.getBetAway();// user在本場次 客隊 的下注點數
+				Double totalBet = betHome + betAway; // user在本場次 總共 的下注點數
 				System.err.println(String.format("◎◎◎%3s 分派前有 %8s 點", mbVO.getMemberFirstName(), mbVO.getMemberPoint()) + "\t" + mbVO.getMemberMail());
-				List<GambleOrderVO> orderList = gambleSvc.getOrdersByMemberId(mbVO.getMemberId());
-				for (GambleOrderVO orderVO : orderList)
+				System.out.print(String.format("   (主)：%6s (客)%6s   \t本次下注總額：%-7s   |||", betHome, betAway, totalBet));
+				Double bonusHome = (orderVO.getBetHome() * oddsHome);// 下主隊贏可獲得的點數
+				Double bonusAway = (orderVO.getBetAway() * oddsAway);// 下客隊贏可獲得的點數
+				if (homeScore > awayScore)
 				{
-					Double betHome = orderVO.getBetHome();// user在本場次 主隊 的下注點數
-					Double betAway = orderVO.getBetAway();// user在本場次 客隊 的下注點數
-					Double totalBet = betHome + betAway; // user在本場次 總共 的下注點數
-					//System.out.print("\t" + betHome + "\t" + betAway + "\t" + "本場次下注總額：" + totalBet + " ||| ");
-					System.out.print(String.format("   (主)：%6s (客)%6s   \t本次下注總額：%-7s   |||", betHome, betAway, totalBet));
-					Double bonusHome = (orderVO.getBetHome() * oddsHome);// 下主隊贏可獲得的點數
-					Double bonusAway = (orderVO.getBetAway() * oddsAway);// 下客隊贏可獲得的點數
-					//Double bonusTotal = bonusHome + bonusAway;// user在本場總共可獲得的點數
-
-					if (homeScore > awayScore)
-					{
-						System.out.println(
-								String.format("\t bonusHome : %5s(贏) \t bonusAway : %5s \t", bonusHome, bonusAway));
-					}
-					else
-					{
-						System.out.println(
-								String.format("\t bonusHome : %5s \t bonusAway(贏) : %5s \t", bonusHome, bonusAway));
-					}
-
-					// ────────────────────────────────────────
-					// ────── 設定每個會員要分派(update)的點數值 ──────
-					// ────────────────────────────────────────
-					if (homeScore > awayScore)// 主隊贏
-					{
-						mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusHome);//更新結算點數 = 該會員原本的點數 + earn
-					}
-					else // 客隊贏
-					{
-						mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusAway);//更新結算點數 = 該會員原本的點數 + earn
-					}
-					Double earn = totalBet - (bonusHome + bonusAway);
-					//mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);//更新結算點數 = 該會員原本的點數 + 總Bouns
-					memberDAO.updatePointByPrimaryKey(mbVO);
-					System.err.println("=================================【 更新 " + mbVO.getMemberFirstName() + " 點數: " + (mbVO.getMemberPoint()) + " "
-							+ "\t賺： "
-							+ totalBet + " - (" + bonusHome + " + " + bonusAway + ") = " + earn
-							+ " 】===============================================");
+					System.out.println(
+							String.format("\t bonusHome : %5s(贏) \t bonusAway : %5s \t", bonusHome, bonusAway));
 				}
+				else
+				{
+					System.out.println(
+							String.format("\t bonusHome : %5s \t bonusAway(贏) : %5s \t", bonusHome, bonusAway));
+				}
+				// ────────────────────────────────────────
+				// ────── 設定每個會員要分派(update)的點數值 ──────
+				// ────────────────────────────────────────
+				Double earn = null;
+				if (homeScore > awayScore)// 主隊贏
+				{
+					earn = bonusHome;
+					mbVO.setMemberPoint(mbVO.getMemberPoint() + earn);//更新結算點數 = 該會員原本的點數 + earn
+				}
+				else // 客隊贏
+				{
+					earn = bonusAway;
+					mbVO.setMemberPoint(mbVO.getMemberPoint() + earn);//更新結算點數 = 該會員原本的點數 + earn
+				}
+				//mbVO.setMemberPoint(mbVO.getMemberPoint() + bonusTotal);//更新結算點數 = 該會員原本的點數 + 總Bouns
+				memberDAO.updatePointByPrimaryKey(mbVO);
+				String earnOrLoose = null;
+				if (totalBet > earn)
+				{
+					earnOrLoose = "\t賠 " + (totalBet - earn) + " 點";
+				}
+				else
+				{
+					earnOrLoose = "\t賺 " + (earn - totalBet) + " 點";
+				}
+				System.err.println("=================================【 更新 " + mbVO.getMemberFirstName() + " 點數: " + (mbVO.getMemberPoint()) + " "
+						+ earnOrLoose
+						+ " 】===============================================");
 			}
+
 		}
 		System.out.println("●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●");
 		System.out.println("●●●●●●●●●●●●●●●●●【分派獎金完成】●●●●●●●●●●●●●●●●●●");
@@ -192,9 +206,9 @@ public class GamblingFacade
 		ApplicationContext context = new AnnotationConfigApplicationContext("_50_gambling_facade");
 		GamblingFacade facadeService = (GamblingFacade) context.getBean("gamblingFacade4");
 		//====================【測試 組裝成功】=========================
-		//facadeService.test();
+//		facadeService.test();
 		//============== 【測試 splitPayoff() 分派點數】 =================
-		facadeService.splitPayoff("2016-09-14", 0.2f);
+		facadeService.splitPayoff("2016-09-16", 0.2f);
 		//============== 【測試 memberDAO】 ==============================
 //		int ii = facadeService.testUpdateMemberPoints("jyurjh920790@pchome.com.tw");
 //		System.out.println(" 更新 " + ii + " 筆點數資料");

@@ -301,14 +301,15 @@ public class BattleSetService
 //		System.out.println("比賽場數：" + num);
 //=====================【getOneBattleSetById】===========================
 //		Map<String, Object> bSetVO = svc.getOneBattleSetById(314);
-//		System.out.println(((NBATeamVO) bSetVO.get("away")).getTeamName());
+//		System.out.println(((NBATeamVO) bSetVO.get("away")).getTeamName() + "\t" + ((NBATeamVO) bSetVO.get("away")).getStart5URL());
 // ====================【getSetsByNameAndPage】==========================
 //		List<Map<String, Object>> list = svc.getSetsByNameAndPage("湖人", 1);
 //		for (Map<String, Object> map : list)
 //		{
-//			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//			String temp = String.format("%3s %5s %15s %15s\t %15s\t %15s %13s %10s %10s %10s %10s",
 //					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
 //					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((NBATeamVO) map.get("home")).getStart5URL(), ((NBATeamVO) map.get("away")).getStart5URL(),
 //					((String) map.get("battleTime")),
 //					((String) map.get("homeScore")),
 //					((String) map.get("awayScore")),
@@ -318,12 +319,13 @@ public class BattleSetService
 //		}
 // ====================【getSetsByDate】==========================
 //		BattleSetService svc = new BattleSetService();
-//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-07");
+//		List<Map<String, Object>> list = svc.getSetsByDate("2016-09-15");
 //		for (Map<String, Object> map : list)
 //		{
-//			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//			String temp = String.format("%3s %5s %15s %15s\t %15s\t %15s %13s %10s %10s %10s %10s",
 //					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
 //					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((NBATeamVO) map.get("home")).getStart5URL(), ((NBATeamVO) map.get("away")).getStart5URL(),
 //					((String) map.get("battleTime")),
 //					((String) map.get("homeScore")),
 //					((String) map.get("awayScore")),
@@ -332,13 +334,14 @@ public class BattleSetService
 //			System.out.println("battleId : " + map.get("battleId") + "  " + temp);
 //		}
 //====================【getSetsByDateAndPage】根據日期及分頁編號查詢==========================
-//		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-08", 1);
+//		List<Map<String, Object>> list = svc.getSetsByDateAndPage("2016-09-15", 1);
 //		System.out.println(list);
 //		for (Map<String, Object> map : list)
 //		{
-//			String temp = String.format("%3s %5s %15s %15s %13s %10s %10s %10s %10s",
+//			String temp = String.format("%3s %5s %15s %15s\t %15s\t %15s %13s %10s %10s %10s %10s",
 //					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
 //					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((NBATeamVO) map.get("home")).getStart5URL(), ((NBATeamVO) map.get("away")).getStart5URL(),
 //					((String) map.get("battleTime")),
 //					((String) map.get("homeScore")),
 //					((String) map.get("awayScore")),
@@ -362,9 +365,10 @@ public class BattleSetService
 //		System.out.println("總筆數 : " + list.size());
 //		for (Map<String, Object> map : list)
 //		{
-//			String temp = String.format("%3s %5s %15s %15s %13s %20s %20s %10s %10s",
+//			String temp = String.format("%3s %5s %15s %15s\t %15s\t %15s %13s %10s %10s %10s %10s",
 //					((NBATeamVO) map.get("home")).getTeamID(), ((NBATeamVO) map.get("away")).getTeamID(),
 //					((NBATeamVO) map.get("home")).getTeamName(), ((NBATeamVO) map.get("away")).getTeamName(),
+//					((NBATeamVO) map.get("home")).getStart5URL(), ((NBATeamVO) map.get("away")).getStart5URL(),
 //					((String) map.get("battleTime")),
 //					((String) map.get("homeScore")),
 //					((String) map.get("awayScore")),
@@ -380,7 +384,10 @@ public class BattleSetService
 //			String home = ((NBATeamVO) map.get("home")).getTeamName();
 //			String away = ((NBATeamVO) map.get("away")).getTeamName();
 //
-//			System.out.println(home + " ---vs--- " + away);
+//			String home5 = ((NBATeamVO) map.get("away")).getStart5URL();
+//			String away5 = ((NBATeamVO) map.get("away")).getStart5URL();
+//
+//			System.out.println(home + " ---vs--- " + away + " \t " + home5 + "\t" + away5);
 //		}
 		//-------------結束==依日期查詢==結束--------------
 //		BattleSetService svc = new BattleSetService();
@@ -434,8 +441,8 @@ public class BattleSetService
 //		for (BattleSetVO vvo : list)
 //		{
 //			System.out.println("編號:" + (num++) + "   " + vvo.getHomeId() + "   " + vvo.getAwayId());
-////			NBATeamVO nbavo = NBAsvc.getByTeamId(vvo.getHomeId());
-////			System.out.println(nbavo.getTeamLogoURL());
+//			NBATeamVO nbavo = NBAsvc.getByTeamId(vvo.getHomeId());
+//			System.out.println(nbavo.getTeamLogoURL() + "\t" + nbavo.getStart5URL());
 //		}
 	}
 
