@@ -9,9 +9,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import _00_config.RootConfig;
 import _22_league_service.LeagueClub_Service;
 import _22_league_service.LeagueRecord_Service;
-import _9_21_club_model.ClubConfig;
 import _9_21_club_model.ClubDAO_I;
 import _9_21_club_model.ClubVO;
 import _9_22_clubMember_model.ClubMemberDAO_I;
@@ -141,7 +141,7 @@ public class Club_Service
 		else
 		{
 			System.out.println("查詢社團成員失敗-傳入會員Id");
-			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
+			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis()), 0));
 			if (success == 1)
 			{
 				System.out.println("成功新增 " + success + " 筆申請資料");
@@ -213,6 +213,26 @@ public class Club_Service
 
 	}
 
+//查詢已申請社團資訊
+	public List<ClubApplyVO> get_All_memberId(String memberId)
+	{
+
+		List<ClubApplyVO> clubApplyVOs = clubApplyDAO.get_All_MemberId(memberId);
+		if (clubApplyVOs.size() != 0)
+		{
+			for (ClubApplyVO vo : clubApplyVOs)
+			{
+				vo.setClubVO(clubDAO.findByPK(vo.getClubId()));
+
+			}
+			return clubApplyVOs;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	//邀請加入社團
 	public int inviteJoinClub(int clubId, String memberId, String clubMemberId)
 	{
@@ -257,7 +277,7 @@ public class Club_Service
 		else
 		{
 			System.out.println("查詢社團成員失敗-傳入會員Id");
-			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis())));
+			int success = clubApplyDAO.add_One(new ClubApplyVO(clubId, memberId, new Date(System.currentTimeMillis()), 0));
 			System.out.println("成功新增社團申請VO " + success + " 筆");
 			int success2 = clubInviteDAO.delete_One(clubId, memberId);
 			System.out.println("成功刪除社團邀請VO " + success2 + " 筆");
@@ -277,7 +297,7 @@ public class Club_Service
 	public static void main(String[] args)
 	{
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ClubConfig.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		Club_Service service = context.getBean(Club_Service.class);
 //		ClubApplyVO vo = new ClubApplyVO(1, "A693D741-7233-402B-B916-5CD1E83988A1", new Date(System.currentTimeMillis()));
 //		System.out.println(service.applyClub(vo));
@@ -302,7 +322,7 @@ public class Club_Service
 //		System.out.println(service.agreeInvite(1, "CA041536-FF15-4B5F-A954-D3D6979CE812"));
 
 //		--刪除邀請--
-		System.out.println(service.deleteInvite(1, "E6F7FE28-DB03-494C-97EA-0E5AB147F51D"));
+//		System.out.println(service.deleteInvite(1, "E6F7FE28-DB03-494C-97EA-0E5AB147F51D"));
 		//		ClubVO vo;
 //		try
 //		{   //有社團 7A4A3654-149E-44C5-B240-253C5ACF926D
@@ -313,7 +333,11 @@ public class Club_Service
 //		catch (RuntimeException e)
 //		{
 //			System.out.println("該成員沒有社團");
+
 //		}
+
+		List<ClubApplyVO> s = service.get_All_memberId("83FC7025-12AA-43B0-8162-E27226D92C67");
+		System.out.println(s);
 
 	}
 

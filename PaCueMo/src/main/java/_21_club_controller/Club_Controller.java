@@ -136,6 +136,15 @@ public class Club_Controller
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "applyClubInfo", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String applyClubInfo(@RequestParam("memberId") String memberId)
+	{
+
+		List<ClubApplyVO> applyList = service.get_All_memberId(memberId);
+		return gson.toJson(applyList);
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "agreeApply", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String agreeApply(@RequestParam("clubId") int clubId, @RequestParam("memberId") String memberId)
 	{

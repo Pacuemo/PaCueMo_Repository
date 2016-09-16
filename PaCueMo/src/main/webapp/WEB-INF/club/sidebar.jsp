@@ -51,6 +51,11 @@
 	padding: 5px 10px;
 	margin-left: 80px;
 }
+
+.checked{
+background-color: #a6a6a6;
+}
+
 </style>
 <div class="container-fluid">
 	<nav class="navbar1 navbar-inverse easy-sidebar">
@@ -66,6 +71,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="${pageContext.request.contextPath}/spring/club/login">我的社團 <span class="sr-only">(current)</span></a></li>
 				<li id="check-apply" style="display: none"><a id="apply-ajax" href="${pageContext.request.contextPath}/spring/club/applyCheck?clubId=${MyClub.clubID}">社員申請<span class="badge"></span></a></li>
+			   <li id="club-apply" style="display: none"><a id="applyClubInfo" href="${pageContext.request.contextPath}/spring/club/applyClubInfo?memberId=${LoginOK.memberId}">社團申請</a></li>
 			</ul>
 
 			<!-- 搜尋 開始 -->
@@ -97,6 +103,7 @@
 <!--   <p>添加模态覆盖屏幕，让对话框看起来更突出，因为它让页面上其他内容变暗。</p> -->
 <!-- </div> -->
 <div id="dialog" title="申請用戶"></div>
+<div id="dialog-apply" title="社團申請"></div>
 
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -104,20 +111,22 @@
 <script>
 	$(function()
 	{
-		/* -----------【阻止 submit 按鈕跳轉】------------------- */
-		// 		$("#searchBtn").click(function(event){
-		// 			event.preventDefault();
-		// 		})
+
+
 		var memberId = "${LoginOK.memberId}";
 		var clubHead = "${MyClub.clubHead}";
-		var clubIda;
-		var deleteBtn;
-		if (memberId == clubHead)
+		var contextPath="${pageContext.request.contextPath}";
+// 		-----------------團長打開查看申請按鈕------------
+		if (memberId == clubHead && $.trim(memberId).length !=0)
 		{
 			$("#check-apply").attr("style", "display: block");
 			check_count();
+//	 		-----------------社員打開查看申請按鈕------------		
+		}else if(memberId!=clubHead){
+			$("#club-apply").attr("style", "display: block");
 
-		}
+			}
+
 		// ---------------------拿到未讀數目------------------
 		function check_count()
 		{
@@ -145,7 +154,6 @@
 					$(".badge").empty();
 				}
 			}) };
-	
 		
 			//---------------------改變未讀狀態為已讀---------------	
 		// --dialog設定---------------------------------------------------------------------
@@ -173,9 +181,11 @@
 				var ul = $('<ul></ul>').addClass("list-group").appendTo(applyDiv);
 				$.each(data, function(index, object)
 				{
+
 					//--------------將名子放入(未來可以放超連結到個人頁面)-------------------
-					var li = $('<li></li>').addClass("list-group-item").text(object.memberVO.memberLastName + object.memberVO.memberFirstName).appendTo(ul);
-					//--------------同意按鈕----------------------------------------------------
+var li = $('<li></li>').addClass("list-group-item").text(object.memberVO.memberLastName + object.memberVO.memberFirstName).appendTo(ul);
+
+				//--------------同意按鈕----------------------------------------------------
 					var agreeA = $('<input/>').addClass("agree").val("同意").attr("type", "button").appendTo(li).bind("click", function()
 					{
 						$(this).prop("disabled", true).siblings().prop("disabled", true);
@@ -193,7 +203,6 @@
 							}
 						} })
 					});
-
 					//--------------同意按鈕----------------------------------------------------
 					//--------------刪除按鈕----------------------------------------------------
 					var deleteA = $('<input/>').addClass("delete").val("刪除").attr("type", "button").appendTo(li).bind("click", function()
@@ -205,8 +214,6 @@
 							switch ($.trim(message.status)) {
 								case "success":
 									BootstrapAlert.success({ title : "Congrat!", message : "成功刪除申請資料" });
-									alert($(this).val());
-									$(this).prop("disabled", true);
 									break;
 							}
 						} })
@@ -216,6 +223,61 @@
 			check_chage();
 			$("#dialog").dialog("open");	
 		});
+
+
+		// --dialog-apply設定---------------------------------------------------------------------
+
+		$("#dialog-apply").dialog({ autoOpen : false, height : 400, width : 400, modal : true, close : function(event, ui)
+		{
+			$('#applyClubInfo').attr("href", "${pageContext.request.contextPath}/spring/club/applyClubInfo?memberId=${LoginOK.memberId}");
+			$('#dialog-apply').html("");
+		}, position : { my : "center", at : "center", of : window } });
+
+		// ---------------------------------------------------------------------------------
+// ------------------搜尋申請社團--------------------------------------------
+
+		$("#applyClubInfo").click(function(event)
+		{
+			event.preventDefault();
+
+			$.ajax({ "type" : "GET", //傳遞方式				
+			url : $(this).attr("href"), "dataType" : "json",//Servlet回傳格式
+			success : function(data)
+			{
+
+				$('#applyClubInfo').attr("href", "#");
+				var applyDiv = $('<div></div>').appendTo("#dialog-apply");
+				var ul = $('<ul></ul>').addClass("list-group").appendTo(applyDiv);
+				$.each(data, function(index, object)
+				{
+					//--------------將社團名子放入(未來可以放超連結到社團頁面)-------------------
+					if(object.checked==1){
+					var li = $('<li></li>').addClass("list-group-item checked").appendTo(ul);
+                    var a =$('<a></a>').attr('href',contextPath+'/spring/club/getClubById?clubId='+object.clubId).attr('style','color:#004080').text(object.clubVO.clubName).appendTo(li);
+				}else{
+					var li = $('<li></li>').addClass("list-group-item").appendTo(ul);
+                    var a =$('<a></a>').attr('href',contextPath+'/spring/club/getClubById?clubId='+object.clubId).attr('style','color:#004080').text(object.clubVO.clubName).appendTo(li);
+					}
+
+					//--------------刪除按鈕----------------------------------------------------
+					var deleteA = $('<input/>').addClass("delete").val("刪除").attr("type", "button").appendTo(li).bind("click", function()
+					{
+						$(this).prop("disabled", true);
+						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/club/deleteApply", dataType : "json",//Servlet回傳格式
+						data : { "clubId" : object.clubId, "memberId" : object.memberId }, success : function(message)
+						{
+							switch ($.trim(message.status)) {
+								case "success":
+									BootstrapAlert.success({ title : "Congrat!", message : "成功刪除申請資料" });
+									break;
+							}
+						} })
+					});
+				});
+			} });
+			$("#dialog-apply").dialog("open");	
+		});
+
 
 		// ---------------------------------------------------------------------------------
 
