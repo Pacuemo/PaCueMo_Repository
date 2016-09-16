@@ -77,12 +77,14 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 		return JdbcTemplate.query(GET_ALL_STMT, new GambleOrderRowmapper());
 	}
 
+	@Override
 	public List<GambleOrderVO> getByMemberId(String memberId)
 	{
 		return JdbcTemplate.query(GET_BY_MB_ID, new GambleOrderRowmapper(), memberId);
 	}
 
-	public List<GambleOrderVO> getBybattleId(Integer battleId)
+	@Override
+	public List<GambleOrderVO> getByBattleId(Integer battleId)
 	{
 		return JdbcTemplate.query(GET_BY_BATTLE_ID, new GambleOrderRowmapper(), battleId);
 	}

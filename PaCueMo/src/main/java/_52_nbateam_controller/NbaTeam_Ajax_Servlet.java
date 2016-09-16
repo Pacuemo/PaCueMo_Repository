@@ -45,8 +45,12 @@ public class NbaTeam_Ajax_Servlet extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		request.setCharacterEncoding("UTF-8");
+		String action = request.getParameter("action");
 
-		if ("autoComplete".equals("autoComplete"))
+		//===================================================================================================
+		//=======================================【隊名查詢→自動完成】======================================
+		//===================================================================================================
+		if ("autoComplete".equals(action))
 		{
 			System.out.println("呼叫 【AJAX】 NbaTeam_Ajax_Servlet : autoComplete");
 			System.out.println("searchName : " + request.getParameter("searchName"));
@@ -72,6 +76,38 @@ public class NbaTeam_Ajax_Servlet extends HttpServlet
 //				JSONArray jlist = new JSONArray(new String[] { "AAA", "BBB", "CCC" });
 //				System.out.println(jlist.toString());
 				out.println(jlist);
+				return;
+				/*************************** 其他可能的錯誤處理 ***************************************/
+			}
+			catch (Exception e)//---處理其他不可預期意外
+			{
+				RequestDispatcher failureView = request.getRequestDispatcher("自訂錯誤頁面");
+				failureView.forward(request, response);
+				return;
+			}
+		}
+		//===================================================================================================
+		//=======================================【隊名查詢→查先發名單圖片】======================================
+		//===================================================================================================
+		if ("starting5".equals(action))
+		{
+			System.out.println("呼叫 【AJAX】 NbaTeam_Ajax_Servlet : starting5");
+			System.out.println("searchName : " + request.getParameter("searchName"));
+			try
+			{
+				response.setHeader("content-type", "text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();//********************** for Ajax ********************/
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String queryTeamName = request.getParameter("searchName").trim();
+				/*************************** 2.開始查詢資料 *******************************************/
+//						NBATeamVO team = svc.getByTeamName(queryTeamName);
+				NBATeamVO nbaVO = svc.getByTeamName(queryTeamName);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ***************/
+
+				String ans = new Gson().toJson(nbaVO);
+				System.out.println("gson:  " + ans);
+
+				out.println(ans);
 				return;
 				/*************************** 其他可能的錯誤處理 ***************************************/
 			}

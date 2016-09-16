@@ -61,10 +61,15 @@ public class GambleOrderService
 		return gambleOrderDAO.getByMemberId(memberId);
 	}
 
+	public List<GambleOrderVO> getOrdersByBattleId(Integer battleId)
+	{
+		return gambleOrderDAO.getByBattleId(battleId);
+	}
+
 	public List<MemberVO> getMembersByBattleId(Integer BattleId)// 根據battleId查詢所有下注該場的會員VO
 	{
 		List<MemberVO> returnList = new ArrayList<>();
-		List<GambleOrderVO> orderList = gambleOrderDAO.getBybattleId(BattleId);
+		List<GambleOrderVO> orderList = gambleOrderDAO.getByBattleId(BattleId);
 		for (GambleOrderVO gambleOrderVO : orderList)
 		{
 			String pk = gambleOrderVO.getMemberId();
@@ -129,6 +134,12 @@ public class GambleOrderService
 //		for (BattleSetVO vo : list)
 //		{
 //			System.out.println(vo.getBattleDateTime() + " " + vo.getBattleId());
+//		}
+		//========= 【測試】getOrdersByBattleId() ==========
+//		List<GambleOrderVO> list = svc.getOrdersByBattleId(315);
+//		for (GambleOrderVO vo : list)
+//		{
+//			System.out.println(vo.getGambleId() + "  " + vo.getMemberId() + "  " + vo.getBetAway() + "  " + vo.getBetHome());
 //		}
 	}
 

@@ -28,18 +28,18 @@ public class NBATeamDAO implements NBATeamDAO_interface
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	private static final String GET_BY_ID_STMT = "SELECT teamId , teamName , teamLogoURL FROM NBATeam" +
+	private static final String GET_BY_ID_STMT = "SELECT teamId , teamName , teamLogoURL , start5URL FROM NBATeam" +
 			"                                       WHERE teamId=?";
-	private static final String GET_BY_NAME_STMT = "SELECT teamId , teamName , teamLogoURL FROM NBATeam" +
+	private static final String GET_BY_NAME_STMT = "SELECT teamId , teamName , teamLogoURL , start5URL FROM NBATeam" +
 			"                                         WHERE teamName like ? ";
-	private static final String GET_ALL_STMT = "SELECT teamId , teamName , teamLogoURL FROM NBATeam;";
+	private static final String GET_ALL_STMT = "SELECT teamId , teamName , teamLogoURL , start5URL FROM NBATeam;";
 
 	public static void main(String[] args)
 	{
 		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
 		NBATeamDAO dao = (NBATeamDAO) context.getBean("nbaTeamDAO");
-		NBATeamVO vo = dao.findByTeamId(17);
-		System.out.println(vo.getTeamName());
+//		NBATeamVO vo = dao.findByTeamId(17);
+//		System.out.println(String.format("%2s \t %-18s %-5s \t %-18s", vo.getTeamID(), vo.getTeamName(), vo.getTeamLogoURL(), vo.getStart5URL()));
 
 //		NBATeamDAO dao = new NBATeamDAO();
 //		NBATeamVO vo = dao.findByTeamName("公鹿");
@@ -49,7 +49,7 @@ public class NBATeamDAO implements NBATeamDAO_interface
 //		List<NBATeamVO> list = dao.getAll();
 //		for (NBATeamVO vo : list)
 //		{
-//			System.out.println(vo.getTeamID() + "  " + vo.getTeamName());
+//			System.out.println(String.format("%2s \t %-18s %-5s \t %-18s", vo.getTeamID(), vo.getTeamName(), vo.getTeamLogoURL(), vo.getStart5URL()));
 //		}
 
 //		NBATeamDAO dao = new NBATeamDAO();

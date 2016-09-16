@@ -14,4 +14,8 @@ public interface GambleOrderDAO_interface
 
 	public List<GambleOrderVO> getAll();
 
+	public List<GambleOrderVO> getByMemberId(String memberId);
+
+	public List<GambleOrderVO> getByBattleId(Integer battleId);
+
 }
