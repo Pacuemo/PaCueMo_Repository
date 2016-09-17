@@ -131,9 +131,14 @@ p.tempstyle {
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="fragment/teamSidebar.jsp" />
-
+<style>
+body {
+    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
+}
+</style>
 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
+
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-10">
@@ -264,7 +269,7 @@ p.tempstyle {
 			<hr class="margin-bottom-30">
 		</div>
 
-		<div class="col-md-6" style="color: white">
+		<div class="col-md-5" style="color: white">
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, laboriosam, quod odit quo quos itaque repellat quaerat a ad alias. Vel, nostrum id ab velit veritatis consequatur fugit sequi esse. Maecenas congue dui id posuere fermentum.</p>
 			<div class="row">
 				<div class="col-sm-3">
@@ -277,7 +282,9 @@ p.tempstyle {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6" style="color: white">
+		<div class="col-md-2" style="color: white">
+		</div>
+		<div class="col-md-5" style="color: white">
 			<!-- Progress Bars -->
 			<h3 class="progress-label">
 				出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
