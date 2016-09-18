@@ -26,7 +26,7 @@
 								<li><a href="#">編輯隊伍設定</a></li>
 								<li class="divider"></li>
 								<li><a href="#">解散隊伍</a></li>
-								<li><a id="a_creatTeam" href="#">建立新隊伍</a></li>
+								<li><a id="a_createTeam" href="#">建立新隊伍</a></li>
 							</ul>
 						</li>
 					</c:when>
@@ -36,7 +36,7 @@
 								<li><a href="#">加隊員</a></li>
 								<li><a href="#">發送訊息</a></li>
 								<li class="divider"></li>
-								<li><a id="a_creatTeam" href="#">建立新隊伍</a></li>
+								<li><a id="a_createTeam" href="#">建立新隊伍</a></li>
 							</ul>
 						</li>
 					</c:when>
@@ -92,13 +92,7 @@
 			$('body').removeClass('toggled');
 		});
 
-		//新增事件
-		var dialog;
-		dialog = $("#sidebar_contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
-		$("#a_createTeam").on("click", function()	             		
-		{
-			dialog.dialog("open"); 			
-		}); // sidebar dialog end  
+		
 		
 // init End
 	})

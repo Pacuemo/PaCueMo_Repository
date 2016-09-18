@@ -22,6 +22,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/icon_style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--     add icon  		-->
+<!-- dialog -->
+<link href="${pageContext.request.contextPath }/css/team/addteam.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/team/jquery-ui_team.min.css" rel="stylesheet">
+<!-- dialog -->
 
 
 <style type="text/css">
@@ -113,8 +117,8 @@ p.tempstyle {
 }
 
 .tmimg {
-	width: 182.8px;
-	height: 182.8px;
+	width: auto;
+	height: auto;
 }
 
 .left_20 {
@@ -130,7 +134,8 @@ p.tempstyle {
 <body>
 
 	<jsp:include page="/fragment/top.jsp" />
-	<jsp:include page="fragment/teamSidebar.jsp" />
+	<%@include file="fragment/teamSidebar.jsp"%>
+<%-- 	<jsp:include page="fragment/teamSidebar.jsp" /> --%>
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
@@ -210,16 +215,21 @@ body {
 		<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
 			<c:forEach var="teamMemberVO" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
 				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
-					<figure>
+					<figure style="background-color:  rgba(255,255,255,0.95);">
+						
 						<c:choose>
 							<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
-								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
+								<img class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
 							</c:when>
 							<c:otherwise>
-								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+								<img class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
 							</c:otherwise>
 						</c:choose>
+						
 						<figcaption>
+<!-- 							<div class="person-details"> -->
+<!-- 							<figure> -->
+							<hr style="padding: 0px;margin-top: 5px;">
 							<h3 class="margin-top-10 margin-bottom-10">
 								${teamMemberVO.memberVO.memberFirstName } 
 								<small>- 
@@ -244,18 +254,18 @@ body {
 							</h3>
 							<span>${teamMemberVO.playerCardVO.playerNote}</span>
 						</figcaption>
-						<ul class="list-inline person-details-icons">
-							<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-							</a></li>
-						</ul>
+<!-- 						<ul class="list-inline person-details-icons"> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-twitter"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-linkedin"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-facebook"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-dribbble"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-google-plus"></i> -->
+<!-- 							</a></li> -->
+<!-- 						</ul> -->
 					</figure>
 				</div>
 
@@ -310,7 +320,7 @@ body {
 	<hr class="margin-vert-20">
 	
 <!-- hidden form -->
-<form id="sidebar_contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
+<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
 		<fieldset>
 			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
 		</fieldset>
@@ -401,6 +411,14 @@ body {
 			$( "btn_public" ).button({
 			  	icon: { icon: "ui-icon-gear" }
 			});
+
+			//新增sidebar 事件 
+			var dialog;
+			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+			$("#a_createTeam").on("click", function()	             		
+			{
+				dialog.dialog("open"); 			
+			}); // sidebar dialog end  
 			
 			// End of init
 		});
