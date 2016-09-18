@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/animate.css">
+
 <style>
 .color_w {
 	color: white;
@@ -23,8 +25,9 @@
 }
 
 .battle_img{
-width: 40%;
-height: 40%;
+width: 35%;
+height: 35%;
+
 }
 </style>
 <script>
@@ -35,22 +38,29 @@ height: 40%;
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
-
+<style>
+body {
+    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
+}
+</style>
+<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
+<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
+	
 	<div class="row">
 		<div class="col-md-2">
 			<c:forEach var="teamMemberVO" items="${requestScope.mineTeamVOs[0].teamMemberVOs}">
-				<div id="div_left" class="col-md-12" style="padding-left: 0px;">
+				<div id="div_left" class="col-md-12 animate fadeInLeft animated" style="padding-left: 0px;">
 					<c:choose>
 						<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
-							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
+							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" style="margin-top: 10px;">
 						</c:when>
 						<c:otherwise>
-							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/user.jpg" style="margin-top: 10px;">
 						</c:otherwise>
 					</c:choose>
 					<div class="col-md-4 color_w" style="padding-left: 5px;padding-right: 0px">
 						<h3 class="margin-top-10 margin-bottom-10">${teamMemberVO.memberVO.memberFirstName } </h3>
-						<small style="font-size: 100%">&nbsp;&nbsp;&nbsp;&nbsp; - 
+						<small style="font-size: 100%">&nbsp; - 
 							<c:choose>
 								<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PG'}">
 										控球後衛
@@ -80,7 +90,7 @@ height: 40%;
 					<h1 style="font-size: 36px">隊伍約戰</h1>
 				</div>
 
-				<form name="profile" method="post" action="" id="profile" role="form" novalidate="novalidate">
+				<form name="form_battle" method="post" action="" id="form_battle" role="form" novalidate="novalidate">
 
 					<div class="form-group">
 						<div class="col-sm-12 col-md-12" style="padding-left: 0px; padding-bottom: 10px;">
@@ -318,12 +328,25 @@ height: 40%;
 								}
 								if($.trim(key) == "playerCardVO"){
 										small_position = value.playerPosition;
+									if(small_position == "PG"){
+										small_position =  "控球後衛";
+									}else if(small_position == "SG"){
+										small_position =  "得分後衛";
+									}else if(small_position == "SF"){
+										small_position =  "小前鋒";
+									}else if(small_position == "PF"){
+										small_position =  "大前鋒";
+									}else if(small_position == "C"){
+										small_position =  "中鋒";
+									}
 								}
 							});
-								$( "#div_left" ).append( '<img class="battle_img img-circle col-md-8" src="${home}image/member/'+img_src+'" alt="image1">'+ 
+								$( "#div_left" ).append( '<div class="animate fadeInLeft animated" strly="padding:0px;margin:0px;">'+
+														 '<img class="battle_img img-circle col-md-8" src="${home}image/member/'+img_src+'" style="margin-top: 10px;">'+ 
 													     '<div class="col-md-4 color_w" style="padding-left: 5px;padding-right: 0px">'+
 														 '<h3 class="margin-top-10 margin-bottom-10">'+h3_name+' </h3>'+
-														 '<small style="font-size: 100%">&nbsp;&nbsp;&nbsp;&nbsp; - '+ small_position +'</small>');
+														 '<small style="font-size: 100%">&nbsp; - '+ small_position +'</small>'+
+														 '</div>');
 						});
 					},
 					"error":function(Error){

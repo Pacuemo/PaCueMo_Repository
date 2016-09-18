@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import _9_11_teammember_model.TeamMemberVO;
+import _9_14_teamapply_model.TeamApplyVO;
 
 @Component
 public class TeamVO implements java.io.Serializable
@@ -20,6 +21,7 @@ public class TeamVO implements java.io.Serializable
 	private String teamHead;
 	private String content;
 	private List<TeamMemberVO> teamMemberVOs;
+	private List<TeamApplyVO> teamApplyVOs;
 
 	public TeamVO()
 	{
@@ -115,6 +117,16 @@ public class TeamVO implements java.io.Serializable
 	public void setTeamMemberVOs(List<TeamMemberVO> teamMemberVOs)
 	{
 		this.teamMemberVOs = teamMemberVOs;
+	}
+
+	public List<TeamApplyVO> getTeamApplyVOs()
+	{
+		return teamApplyVOs;
+	}
+
+	public void setTeamApplyVOs(List<TeamApplyVO> teamApplyVOs)
+	{
+		this.teamApplyVOs = teamApplyVOs;
 	}
 
 }

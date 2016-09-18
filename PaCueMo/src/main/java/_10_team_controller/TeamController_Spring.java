@@ -17,7 +17,9 @@ import com.google.gson.Gson;
 import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
+import _14_teamapply_service.TeamApplyService;
 import _9_10_team_model.TeamVO;
+import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -28,6 +30,8 @@ public class TeamController_Spring
 	private TeamMemberService teamMemberService;
 	@Autowired
 	private TeamService teamService;
+	@Autowired
+	private TeamApplyService teamApplyService;
 	@Autowired
 	private StevenFacade stevenFacade;
 	@Autowired
@@ -157,7 +161,12 @@ public class TeamController_Spring
 		request.setAttribute("myList", myList);
 		List<Integer> mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberVO.getMemberId());
 		request.setAttribute("mineTeamIdList", mineTeamIdList);
-
+		List<TeamApplyVO> myTeamApplyVOs = teamApplyService.getTeamApplyVOsById(memberVO.getMemberId());
+		request.setAttribute("myTeamApplyVOs", myTeamApplyVOs);
+		for (TeamApplyVO teamApplyVO : myTeamApplyVOs)
+		{
+			System.out.println(teamApplyVO.getTeamId());
+		}
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "team/createteam";
