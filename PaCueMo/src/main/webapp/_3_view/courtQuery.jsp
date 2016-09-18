@@ -117,13 +117,10 @@
 									ajaxUrl    = "CourtServlet.do";
 									searchName = $("#searchName").val();   // 查詢的隊伍名稱;
 									break;								
-							}
-	
+							}	
 			        		myAjaxFunction( ajaxUrl , actionName , searchName , "" , pageNo );// 呼叫﹝撈分頁資料 $.ajax function﹞
-
 		                }
-		        });
-       			/* ==================== 【分頁結束】 =================== */
+		        });       			
        		})
        		
        		//======================================================================================
@@ -146,22 +143,22 @@
 	    				
 							$.each(data , function( index , obj ){
 								
-								var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										
-								var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',      'width':70 });										
-								var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										
-								var cell11  =  $('<td></td>');
-								var cell12  =  $('<td></td>');
-								var cell13  =  $('<td></td>');
-								img1.appendTo(cell11);
-								img2.appendTo(cell12);
-								img3.appendTo(cell13);
+<%-- 								var img1    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.away.teamLogoURL , 'width':150});										 --%>
+<%-- 								var img2    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + '/image/VS4.gif',      'width':70 });										 --%>
+<%-- 								var img3    =  $('<img></img>').attr({'src': '<%=request.getContextPath()%>/_5_gambling' + obj.home.teamLogoURL , 'width':150});										 --%>
+// 								var cell11  =  $('<td></td>');
+// 								var cell12  =  $('<td></td>');
+// 								var cell13  =  $('<td></td>');
+// 								img1.appendTo(cell11);
+// 								img2.appendTo(cell12);
+// 								img3.appendTo(cell13);
 							
 								var myrow1  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
 								var myrow2  =  $('<tr></tr>').attr({'align':'center','valign':'middle'});
-								var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
-								var cell22  =  $('<td></td>').append("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong><p/>");
-/*hidden 欄位 紀錄 battleSetId*/    cell22.append("<input  type='hidden' "+" value='"+ obj.battleId +"'/>") 
-				/* 下注按鈕 */	    cell22.append("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
+// 								var cell21  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.away.teamName + "</h4>");
+// 								var cell22  =  $('<td></td>').append("<Strong class='glyphicon glyphicon-time' style='padding-right:5px;color:white;'>&nbsp;" + obj.battleTime + "</Strong><p/>");
+// /*hidden 欄位 紀錄 battleSetId*/    cell22.append("<input  type='hidden' "+" value='"+ obj.battleId +"'/>") 
+// 				/* 下注按鈕 */	    cell22.append("<button type='button' class='btn btn-warning' style='width:35px;height:35px;color:orange;font-size:14px;font-family:微軟正黑體;font-weight:800;vertical-align:baseline;'>下 注</button>");
 								var cell23  =  $('<td></td>').html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + obj.home.teamName + "</h4>");
 								myrow1.append([ cell11 , cell12 , cell13 ]);
 								myrow2.append([ cell21 , cell22 , cell23 ]);
