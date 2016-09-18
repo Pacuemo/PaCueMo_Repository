@@ -18,10 +18,17 @@ public class TimerManager
 //	private static final long PERIOD_DAY = 10 * 60 * 1000; // 時間間隔﹝十分鐘﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	private int hour;
+	private int min;
+	private int sec;
+
 	public TimerManager()
 	{
+		hour = 22;
+		min = 14;
+		sec = 0;
 		/*** 設定每日 00:00:00 執行方法 ***/
-		Calendar calendar = getCalendarWithTime(17, 45, 0);//【設定每天的幾點執行】時、分、秒  ──  24h制
+		Calendar calendar = getCalendarWithTime(hour, min, sec);//【設定每天的幾點執行】時、分、秒  ──  24h制
 		Date dateMain = calendar.getTime(); //第一次執行任務的時間
 
 //		System.out.println("TimerManager ── " + sdf.format(dateMain));

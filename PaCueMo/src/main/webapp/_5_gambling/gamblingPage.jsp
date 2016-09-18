@@ -228,7 +228,6 @@
 				</table>
 			</div>
 	    <!-- *************************【先發球員Dialog 結束】******************************* -->
-	    
 		<!-- <h5 id="state" style="color:orange;">Test</h5> --><!-- 測試長連線 -->
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -252,8 +251,6 @@
             //alert( funFlag );
        		$(function(){       	
 
-           	
-           		
        			/************************************************************************************/ 
        			/*   背景偷偷做 Ajax_LongPolling.js/jsp 持續發請求給 RoutineTask.java(RESTservice)  */ 
        			/*   → 長連接 效果                                                                 */ 
@@ -268,9 +265,10 @@
 					
 					$.ajax({
 						 "type":"POST",//傳遞方式				
-	               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+	                <%-- "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
+	               		 "url" :"<%=request.getContextPath()%>" + "/RESTservices"+ "/nbaSvc/" + awayName , /* 呼叫NBATeamService.java的 REST→getByTeamNameREST */
 	               		 "dataType":"json",//Servlet回傳格式
-	               		 "data":{"action" : "starting5" , "searchName" : awayName},
+	               		//data":{"action" : "starting5" , "searchName" : awayName},
 	      				 "success":function(dataJson){
 	      					//alert(dataJson.start5URL);
 	      					var url_start5 = dataJson.start5URL;
@@ -288,13 +286,15 @@
 
            		})
            		$("#tableDiv > table > tbody > tr:nth-child(odd) td:last-child").click(function(){//點擊右邊(home)隊徽時
+
            			var homeName = $(this).parent("tr").next('tr').find('h4').eq(1).text();
 
 					$.ajax({
 						 "type":"POST",//傳遞方式				
-	               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+	                <%-- "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
+	               		 "url" :"<%=request.getContextPath()%>" + "/RESTservices"+ "/nbaSvc/" + homeName , /* 呼叫NBATeamService.java的 REST→getByTeamNameREST */
 	               		 "dataType":"json",//Servlet回傳格式
-	               		 "data":{"action" : "starting5" , "searchName" : homeName},
+	               	   //"data":{"action" : "starting5" , "searchName" : homeName},
 	      				 "success":function(dataJson){
 	      					//alert(dataJson.start5URL);
 	      					var url_start5 = dataJson.start5URL;
@@ -411,17 +411,33 @@
 	           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
 	       				 
 	           	
-	         				 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
-	           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
-	           					//alert("距比賽開始 < 10分鐘，不可下注");
-	           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
-	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
-	           				 }else{
-	           					//alert("距比賽開始 > 10分鐘，可下注");
-	           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
-	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
-	           				 }
-	    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+	           				/*─────────────  判斷是否已分派彩金 開始 ───────────── */
+	         				 switch( (awayScore + homeScore) == 0 ) // 若兩隊比分相加為 0 → 兩隊皆0分 → 表示"未"分配彩金&更新比數 
+	         				 {
+	         					 case false:
+ 		         					 	//alert("已分配");
+		         						$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+	           							$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+			         			     break;
+	         					 case true:
+ 	         					 		//alert("未分配");
+	         						  /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+		   	           				 	if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
+		   	           						//alert("距比賽開始 < 10分鐘，不可下注");
+			   	           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+			   	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+			   	           				}else{
+			   	           					//alert("距比賽開始 > 10分鐘，可下注");
+			   	           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+			   	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
+		   	           					 }
+		   	    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+	         					 	 break;
+		         				 default:
+			         				 break;		 
+		         		     }
+	         				/*─────────────  判斷是否已分派彩金 結束 ─────────── */	 
+	
        					 }
 	   				 })
 	   				 //--- 按下【下注】按鈕ajax撈資料 結束 ---
@@ -586,10 +602,10 @@
       			 		 coinText.val( ntdInput.val() * 100 );// 點數textBox 設 0
       			 	 }
  
-       				 falgNumber = ( cardnumberInput.val() == "empty") ? false : true;
-       				 flagName   = ( fullNameInput.val()   == "empty") ? false : true;
-       				 flagCvc    = ( cvcInput.val()        == "empty") ? false : true;
-       				 falgNtd    = ( ntdInput.val()        == "empty" || ntdInput.val()== 0 ) ? false : true;
+       				 falgNumber = ( cardnumberInput.val() == "empty" || $.trim( cardnumberInput.val() ) == "" ) ? false : true;
+       				 flagName   = ( fullNameInput.val()   == "empty" || $.trim( fullNameInput.val() )   == "")  ? false : true;
+       				 flagCvc    = ( cvcInput.val()        == "empty" || $.trim( cvcInput.val() )        == "")  ? false : true;
+       				 falgNtd    = ( ntdInput.val()        == "empty" || $.trim( ntdInput.val() )        == 0 )  ? false : true;
        				 return falgNumber && flagName && flagCvc && falgNtd ;
        			}
        			//  ______________ 檢查所有欄位是否都填入 結束 ______________
@@ -605,12 +621,13 @@
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
   					}
+  				}).keyup(function(){// 檢查是否都填寫
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				})
+  	  			})
   				
   				$("#fullname").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
@@ -623,12 +640,14 @@
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
   					}
+  				}).keyup(function(){ return ValidateChi_Eng(this,$(this).val())} /*限定中英文*/)
+  				.keyup(function(){// 檢查是否都填寫
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				}).keyup(function(){ return ValidateChi_Eng(this,$(this).val())} /*限定中英文*/)
+  	  			})
   				
   				$("#cvc").click(function(){$(this).val("")}).blur(function(){
   					if($(this).val()==""){
@@ -641,12 +660,15 @@
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
   					}
-  					if(isAllFilled()){
+  				}).keyup(function(){
+  					if(isAllFilled()){// 檢查是否都填寫
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				})
+  	  			})
+  				
+  				
   				$("#NTD").click(function(){$(this).val("");$("#coin").val(0)}).blur(function(){
   					if($(this).val()==""){
 						$(this).val('empty').css({'color':'red' , 'font-style':'italic'});
@@ -658,12 +680,14 @@
   						$(this).parent('div').switchClass('has-error','has-success');
   						$(this).next('span').switchClass('glyphicon-remove','glyphicon-ok');
   					}
+  				}).keyup(function(){ return ValidateFloat2(this,$(this).val())} /*可以輸入小數點（限制小數點後一位)*/)
+  				.keyup(function(){
   					if(isAllFilled()){
                 		$("#confirm").attr("disabled",false);
                 	}else{
                 		$("#confirm").attr("disabled",true);
                 	}
-  				}).keyup(function(){ return ValidateFloat2(this,$(this).val())} /*可以輸入小數點（限制小數點後一位)*/)
+  	  			})
   				
   				
   				/*格式驗證function : 可以輸入小數點（限制小數點後一位)*/
@@ -678,12 +702,20 @@
   				/*格式驗證function : 只可輸入中英文*/
   				function ValidateChi_Eng(e, input)
 				{
-				    if (!/^[\u0391-\uFFE5A-Za-z]+$/.test(input))
+				    if (!/^[\u0391-\uFFE5A-Za-z]+$/.test( input ))
 				    {
 				        e.value = /^[\u0391-\uFFE5A-Za-z]+$/.exec(e.value);
 				    }
 				    return false;
 				}
+  				/*格式驗證function : 只可輸入數字 (套在卡號欄位會怪怪的)*/
+//   				function ValidateNumber(e, input){
+//   					if (!/^\d+$/.test( input ))
+//   				    {
+//   				        $(e).val(/^\d+/.exec($(e).val()));
+//   				    }
+//   				    return false;
+//   	  			}
   				/*=====================【信用卡textBox驗證 結束】=====================*/
        			
        			
@@ -704,7 +736,7 @@
 	                	text_yy.children('option').remove();// -- 移除舊有的 <option> 標籤
 	                	for(var mm = 1 ; mm <= 12 ; mm++){
 	                		if(mm < 10){
-	                			mm = "0" + mm; // >10月,補"0"
+	                			mm = "0" + mm; // <10月,補"0"
 	                		}
 	                		var tmp = $("<option></option>").val(mm).text(mm);
 	                		text_mm.append(tmp);
@@ -724,7 +756,7 @@
 	                	}
 	                },
 	              //position: { my: "center", at: "center" ,of: window }, /* dialog 起始彈出位置 */
-	                position:{my:"left top",at:"left top", of: $("#sidebar")},
+	               'position':{my:"left top",at:"left top", of: $("#sidebar")},
 	                buttons:[
 	                          {
                            //"disabled" : true , 
@@ -732,6 +764,7 @@
 	                        	 "text" : "確認購買",
                         	 	"class" : "btn btn-primary",
                         	 	"click" : function (){
+
                         	 		   //alert($(this).prop('tagName') +" 確認" );
                         	 		    var cardNum  = $("input[placeholder='Card number']").val();
                         	 		    var fullName = $("input[placeholder='Full name']").val();
@@ -795,7 +828,12 @@
 												}	         	 			        
                         	 				},
                         	 				"error" : function(){/* Servlet回應錯誤 */
-                        	 					alert('下訂失敗');
+                        	 					//alert('下訂失敗');
+        						      			BootstrapAlert.info({ //BootstrapAlert 特效
+        				 			                title: "下訂失敗",
+        				 			                message: "網路忙線中~請稍候 ^^",
+        				 			                hideTimeout: 1800,
+        				 			        	});
                         	 				}
                         	 			})
                         	 				
@@ -868,9 +906,9 @@
            				
 				           		/* ==================== 【分頁開始】 =================== */
 				           		//....計算總頁數...
-				           		//alert("日期對應的總場數 =  " + countData ); //日期對應的總場數
-          						totalPages = (countData/3 == 0)?(countData/3):(Math.floor(countData/3) + 1 ); /* 總頁數 */
-          						//alert('共 ' + totalPages + '頁');
+ 				           		//alert("日期對應的總場數 =  " + countData ); //日期對應的總場數
+          						var totalPages = ( $.trim(countData) % 3 == 0) ? (countData/3) : (Math.floor(countData/3) + 1 ); /* 總頁數 */          				
+             					//alert('共 ' + totalPages + '頁');
            						//-----------------
 				       			$("#slicePage").paginate({		              	             
 						                count: totalPages,/* 總頁數 = 查到的資料/每頁顯示筆數 ， (1)若是由dispatcher跳轉：${battleSetList_len}，(2)若是Ajax查詢到的總筆數，在對應的$.ajax中設定 totalCount 全域變數*/
@@ -1037,9 +1075,10 @@
 						
 						$.ajax({
 							 "type":"POST",//傳遞方式				
-		               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+		               	<%-- "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
+		               		 "url" :"<%=request.getContextPath()%>" + "/RESTservices"+ "/nbaSvc/" + awayName , /* 呼叫NBATeamService.java的 REST→getByTeamNameREST */
 		               		 "dataType":"json",//Servlet回傳格式
-		               		 "data":{"action" : "starting5" , "searchName" : awayName},
+		               	   //"data":{"action" : "starting5" , "searchName" : awayName},
 		      				 "success":function(dataJson){
 		      					//alert(dataJson.start5URL);
 		      					var url_start5 = dataJson.start5URL;
@@ -1056,13 +1095,15 @@
 	
 	           		})
 					$("#tableDiv > table > tbody > tr:nth-child(odd) td:last-child").click(function(){//點擊右邊(home)隊徽時
+
 	           			var homeName = $(this).parent("tr").next('tr').find('h4').eq(1).text();
 	
 						$.ajax({
 							 "type":"POST",//傳遞方式				
-		               		 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" ,
+		                <%-- "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
+		               		 "url" :"<%=request.getContextPath()%>" + "/RESTservices"+ "/nbaSvc/" + homeName , /* 呼叫NBATeamService.java的 REST→getByTeamNameREST */
 		               		 "dataType":"json",//Servlet回傳格式
-		               		 "data":{"action" : "starting5" , "searchName" : homeName},
+		               	   //"data":{"action" : "starting5" , "searchName" : homeName},
 		      				 "success":function(dataJson){
 		      					//alert(dataJson.start5URL);
 		      					var url_start5 = dataJson.start5URL;
@@ -1139,17 +1180,32 @@
 				           				$("#row5 td:eq(2)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:white;'>" + homeBet + "</h4>");
 				       				 
 				   				 
-				           			 	 /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
-				           				 if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
-				           					//alert("距比賽開始 < 10分鐘，不可下注");
-				           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
-				           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
-				           				 }else{
-				           					//alert("距比賽開始 > 10分鐘，可下注");
-				           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
-				           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
-				           				 }
-				    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+				           				/*─────────────  判斷是否已分派彩金 開始 ───────────── */
+				         				 switch( (awayScore + homeScore) == 0 ) // 若兩隊比分相加為 0 → 兩隊皆0分 → 表示"未"分配彩金&更新比數 
+				         				 {
+				         					 case false:
+			 		         					 	//alert("已分配");
+					         						$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+				           							$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+						         			     break;
+				         					 case true:
+			 	         					 		//alert("未分配");
+				         						  /*─────── 判斷目前時間vs比賽時間 開始 ─────── */
+					   	           				 	if( compareDateTime( timeStamp()/*現在時間*/ , battleTime/*比賽時間*/ ) > -10 ){
+					   	           						//alert("距比賽開始 < 10分鐘，不可下注");
+						   	           					$("#confirmBet").attr("disabled",true); // 設定﹝確認下注﹞不能按
+						   	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "比賽結束" + "</h4>");
+						   	           				}else{
+						   	           					//alert("距比賽開始 > 10分鐘，可下注");
+						   	           					$("#confirmBet").attr("disabled",false);// 設定﹝確認下注﹞可按
+						   	           					$("#row2 td:eq(1)").html("<h4 style='font-family:微軟正黑體;font-weight:bolder;color:orange;'>" + "即將開賽" + "</h4>");
+					   	           					 }
+					   	    					 /*─────── 判斷目前時間vs比賽時間 結束 ─────── */
+				         					 	 break;
+					         				 default:
+						         				 break;		 
+					         		     }
+				         				/*─────────────  判斷是否已分派彩金 結束 ─────────── */	 
 				   				 
 				   				 	 }
 				   				 })

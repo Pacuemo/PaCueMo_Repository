@@ -1102,8 +1102,8 @@ public class FakeInfoGenerator
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
-//		gambleOrderGenerator();
-		goodsOrderGenerator();
+		gambleOrderGenerator();
+//		goodsOrderGenerator();
 
 //		generator.teamGenerator();
 //		teammemberGenerator();
