@@ -44,7 +44,7 @@ public class CourtServlet extends HttpServlet
 				response.setHeader("content-type", "text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
-				String queryCourtName = request.getParameter("courtName");
+				String queryCourtName = request.getParameter("courtName").trim();
 
 				if (queryCourtName.equals(""))
 				{
