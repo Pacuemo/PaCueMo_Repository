@@ -81,7 +81,6 @@ public class CourtService
 
 	public static List<Map<String, Object>> getByName(String queryCourtName)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
