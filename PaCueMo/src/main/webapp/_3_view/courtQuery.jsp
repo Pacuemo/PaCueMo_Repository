@@ -11,6 +11,7 @@
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
+<!-- 	選擇器&搜尋button -->
 	<div style="margin-left: 100px; margin-right: 100px">
 		<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 30px">
 			<h2 class="page-header title-color" style="color: #2ebd59">
@@ -65,6 +66,68 @@
 					<i class="fa fa-search">搜尋</i>
 				</button>
 			</div>
+		</div>
+	</div>
+<!-- 	地圖資訊 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+
+				<div class="page-header">
+					<c:choose>
+						<c:when test="${funFlag=='byCourtName'}">
+							<h2>
+								<strong style="font-family: 微軟正黑體; font-weight: bolder; color: orange;">${queryCourtName}</strong>
+							</h2>
+						</c:when>
+						<c:when test="${empty battleSetList}">
+							<h2>
+								<strong style="font-family: 微軟正黑體; font-weight: bolder; color: red;">查無資料</strong>
+							</h2>
+						</c:when>
+					</c:choose>
+				</div>
+				<div id="tableDiv">
+					<table id="myTable" class="table">
+
+						<c:choose>
+							<c:when test="${funFlag=='byCourtName'}">
+								<c:set var="startNum" value="0" />
+								<c:set var="endNum" value="4" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="startNum" value="0" />
+								<c:set var="endNum" value="2" />
+							</c:otherwise>
+						</c:choose>
+
+						<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}" varStatus="vs">
+							<tr align='center' valign='middle'>
+								<td><img width="150" class="img-rounded" alt="away" src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td>
+								<td><img width="70" alt="vs4.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td>
+								<td><img width="150" class="img-rounded" alt="home" src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td>
+							</tr>
+							<tr align='center' valign='middle'>
+								<td><h4 style="font-family: 微軟正黑體; font-weight: bolder; color: white;">${battleSetVO['away'].teamName}</h4></td>
+								<td><Strong class='glyphicon glyphicon-time' style="padding-right: 5px; color: white;">&nbsp;${battleSetVO['battleTime']}</Strong>
+								<p />
+									<p /> <input type="hidden" value="${battleSetVO.battleId}" />
+								<!-- 紀錄 battleSetId -->
+									<button type="button" class="btn btn-warning" style="width: 35px; height: 35px; color: orange; font-size: 14px; font-family: 微軟正黑體; font-weight: 800; vertical-align: baseline;">下 注</button></td>
+								<td><h4 style="font-family: 微軟正黑體; font-weight: bolder; color: white;">${battleSetVO['home'].teamName}</h4></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+
+				<div style="margin-left: 250px; width: 580px; padding: 10px; background-color: rgb(50, 118, 110, 0.8);">
+					<div id="slicePage"></div>
+				</div>
+
+			</div>
+			<div class="col-md-2"></div>
+
 		</div>
 	</div>
 	<script type="text/javascript">
