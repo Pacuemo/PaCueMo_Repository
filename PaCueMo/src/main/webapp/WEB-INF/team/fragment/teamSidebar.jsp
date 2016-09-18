@@ -1,4 +1,8 @@
-﻿<div class="container-fluid">
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+
+</style>
+<div class="container-fluid">
 	<nav class="navbar1 navbar-inverse easy-sidebar">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -9,20 +13,34 @@
 						</button></li>
 				</ul>
 			</div>
+			<script></script>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">Link</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-						<li class="divider"></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul></li>
+				<c:choose>
+					<c:when test="${pageForSideBar == 'teampage' && teamExsist == 'Mine'}">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">隊伍設定<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu" style="margin-left: 80px">	
+								<li><a href="#">加隊員</a></li>
+								<li><a href="#">發送訊息</a></li>
+								<li class="divider"></li>
+								<li><a href="#">管理隊伍</a></li>
+								<li><a href="#">編輯隊伍設定</a></li>
+								<li class="divider"></li>
+								<li><a href="#">解散隊伍</a></li>
+								<li><a id="a_creatTeam" href="#">建立新隊伍</a></li>
+							</ul>
+						</li>
+					</c:when>
+					<c:when test="${pageForSideBar == 'teampage' && teamExsist == 'Exsist'}">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">隊伍設定 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu" style="margin-left: 80px">
+								<li><a href="#">加隊員</a></li>
+								<li><a href="#">發送訊息</a></li>
+								<li class="divider"></li>
+								<li><a id="a_creatTeam" href="#">建立新隊伍</a></li>
+							</ul>
+						</li>
+					</c:when>
+				</c:choose>
 			</ul>
 
 			<!-- 搜尋 開始 -->
@@ -73,5 +91,15 @@
 		{
 			$('body').removeClass('toggled');
 		});
+
+		//新增事件
+		var dialog;
+		dialog = $("#sidebar_contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+		$("#a_createTeam").on("click", function()	             		
+		{
+			dialog.dialog("open"); 			
+		}); // sidebar dialog end  
+		
+// init End
 	})
 </script>

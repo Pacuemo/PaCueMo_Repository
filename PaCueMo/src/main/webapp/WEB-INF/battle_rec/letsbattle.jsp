@@ -46,7 +46,7 @@ body {
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 	
-	<div class="row">
+	<div class="row" style="margin: 0px">
 		<div class="col-md-2">
 			<c:forEach var="teamMemberVO" items="${requestScope.mineTeamVOs[0].teamMemberVOs}">
 				<div id="div_left" class="col-md-12 animate fadeInLeft animated" style="padding-left: 0px;">

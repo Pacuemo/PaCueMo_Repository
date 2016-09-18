@@ -20,6 +20,7 @@ import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _12_battlerecord_service.BattleRecordService;
 import _14_teamapply_service.TeamApplyService;
+import _44_playercard_service.PlayercardService;
 import _9_10_team_model.TeamVO;
 import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberVO;
@@ -38,6 +39,8 @@ public class TeamServlet extends HttpServlet
 	private BattleRecordService battleRecordService;
 	@Autowired
 	private TeamApplyService teamApplyService;
+	@Autowired
+	private PlayercardService playercardService;
 	@Autowired
 	private StevenFacade stevenFacade;
 
@@ -61,9 +64,10 @@ public class TeamServlet extends HttpServlet
 				config.getServletContext());
 	}
 
+	// 隊伍頁面
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
-		System.out.println("Go to TeamPage (GET)");	// 隊伍頁面
+		System.out.println("Go to TeamPage (GET)");
 		req.setCharacterEncoding("UTF-8");
 
 		TeamVO teamVO = null;
@@ -145,7 +149,6 @@ public class TeamServlet extends HttpServlet
 					}
 				}
 
-//				teamApplyService = new TeamApplyService();
 				for (TeamApplyVO list : teamApplyService.getByMemberId_Applying(memberId))
 				{
 					if (list.getTeamId() == teamId)
@@ -168,11 +171,12 @@ public class TeamServlet extends HttpServlet
 				}
 
 //				Need to get average rank
-//				playerCardVO = new PlayerCardVO();
-//				for (TeamMemberVO list : teamMemberList)
+//				for (TeamMemberVO teamMemberVO : teamVO.getTeamMemberVOs())
 //				{
-//
+//					
 //				}
+
+				req.setAttribute("pageForSideBar", "teampage");	 		//setAtt
 
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");
@@ -194,6 +198,7 @@ public class TeamServlet extends HttpServlet
 		}
 	}
 
+	// 新增隊伍
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		System.out.println("這裡是 Post 新增隊伍");

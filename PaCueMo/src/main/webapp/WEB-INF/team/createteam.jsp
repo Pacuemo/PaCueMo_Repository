@@ -51,7 +51,7 @@ body {
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 
-	<div class="row">
+	<div class="row" style="margin: 0px">
 		<div class="col-md-6" >
 
 				<div class="dropdown col-md-12">
@@ -179,7 +179,7 @@ body {
 		</div>
 	</div>
 
-	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post">
+	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
 		<fieldset>
 			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
 		</fieldset>

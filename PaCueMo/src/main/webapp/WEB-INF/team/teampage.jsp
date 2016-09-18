@@ -139,7 +139,7 @@ body {
 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 
-	<div class="row">
+	<div class="row" style="margin: 0px">
 		<div class="col-md-12">
 			<div class="col-md-10">
 				<h2 style="color: white;">
@@ -284,7 +284,7 @@ body {
 		</div>
 		<div class="col-md-2" style="color: white">
 		</div>
-		<div class="col-md-5" style="color: white">
+		<div class="col-md-5" style="color: white;padding-right: 50px">
 			<!-- Progress Bars -->
 			<h3 class="progress-label">
 				出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
@@ -308,6 +308,39 @@ body {
 		</div>
 	</div>
 	<hr class="margin-vert-20">
+	
+<!-- hidden form -->
+<form id="sidebar_contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
+		<fieldset>
+			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
+		</fieldset>
+		<fieldset>
+			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
+		</fieldset>
+		<fieldset>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
+				</span>
+					<div class="descrip" id="">所有人都可以自由加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
+				</span>
+					<div class="descrip" id="">所有人都可以申請加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
+				</span>
+					<div class="descrip" id="">只有被邀請的成員才可以加入這個隊伍。</div>
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+		</fieldset>
+	</form>
 
 	<script type="text/javascript">
 		$(function()
