@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import _31_court_service.CourtService;
 
 @WebServlet("/_3_view/CourtServlet.do")
@@ -44,12 +42,13 @@ public class CourtServlet extends HttpServlet
 				response.setHeader("content-type", "text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
-				String queryCourtName = request.getParameter("courtName").trim();
+				String queryCourtName = request.getParameter("queryCourtName").trim();
 
 				if (queryCourtName.equals(""))
 				{
 					System.out.println("請輸入場地名稱");
 					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}"); // JSON格式
+					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
 					return;
 				}
 
@@ -59,23 +58,30 @@ public class CourtServlet extends HttpServlet
 				{
 					System.out.println("查無場地");
 					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}");
+					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
 					return;
 				}
-				else
-				{
-					System.out.println("查詢總筆數 : " + list.size());
-					Gson gson = new Gson();
-					String ans = gson.toJson(list);
-					System.out.println(ans);
-					out.println(ans);
-					return;
-				}
+//				else
+//				{
+//					System.out.println("查詢總筆數 : " + list.size());
+//					Gson gson = new Gson();
+//					String ans = gson.toJson(list);
+//					System.out.println(ans);
+//					out.println(ans);
+//					return;
+//				}
+
+				int listSize = list.size();
+				request.setAttribute("queryTeamName", queryCourtName);
+				request.setAttribute("battleSetList", list);
+				request.setAttribute("battleSetList_len", (listSize % 5 == 0 ? (listSize / 5) : (listSize / 5 + 1)));// 計算總頁數(每頁5筆情況)
+				request.getRequestDispatcher("/_5_gambling/gamblingPage.jsp").forward(request, response);
+				return;
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				request.getRequestDispatcher("/").forward(request, response);//導向頁面
 				return;
 			}
 		}

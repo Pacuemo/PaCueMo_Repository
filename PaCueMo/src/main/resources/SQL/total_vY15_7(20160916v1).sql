@@ -164,7 +164,7 @@ CREATE TABLE ClubMemberTable
 	clubId			/*球團編號*/	INT			 NOT NULL FOREIGN KEY REFERENCES club(clubId),
     clubMemberId	/*團員編號*/	UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES member(memberId),
     joinDate		/*加入日期*/	DATE		 NOT NULL
-	PRIMARY KEY(clubId,clubMemberId)
+	PRIMARY KEY(clubMemberId)
 );
 
 --球團聊天表--

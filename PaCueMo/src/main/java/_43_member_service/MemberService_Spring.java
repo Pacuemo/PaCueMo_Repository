@@ -110,6 +110,20 @@ public class MemberService_Spring
 
 	}
 
+	public int updateImg(MemberVO memberVO)
+	{
+		if (dao.updateMemberImg(memberVO) == 1)
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	public FriendsListVO getFriend(FriendsListVO friendsListVO)
+	{
+		return fDao.getFriend(friendsListVO);
+	}
+
 	public static void main(String[] args)
 	{
 		MemberService_Spring memberService = new MemberService_Spring();

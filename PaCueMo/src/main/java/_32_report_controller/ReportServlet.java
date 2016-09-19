@@ -38,7 +38,7 @@ public class ReportServlet extends HttpServlet
 //			errorMsg.put("reportName", "請填入姓名");
 //		}
 
-		String reportType = request.getParameter("reportType");
+		String[] reportType = request.getParameterValues("reportType");
 		if (reportType == null)
 		{
 			errorMsg.put("reportTypeEmpty", "請選擇問題類型");

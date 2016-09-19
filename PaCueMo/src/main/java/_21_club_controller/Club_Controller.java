@@ -76,11 +76,20 @@ public class Club_Controller
 		}
 		catch (RuntimeException e)
 		{
-			//此會員沒有社團
+
+			session.setAttribute("ClubVOss", service.getAll());
 			System.out.println("重導:/joinClub 您尚未有社團");
 			return "redirect:/spring/club/joinClub";
 		}
+		Map<String, Integer> winCount = new HashMap<String, Integer>();
+		int win = leagueRecordService.win_Count(clubVO.getClubID());
+		int lose = clubVO.getLeagueRecordVOs().size() - win;
+		winCount.put("win", win);
+		winCount.put("lose", lose);
+		System.out.println(win);
+		session.setAttribute("MywinCount", winCount);
 		session.setAttribute("MyClub", clubVO);
+		clubVO = service.getClub(clubVO.getClubID());
 		System.out.println("重導:/myClub 展現個人社團主頁");
 		System.out.println("-------------------------------------------------------");
 		return "redirect:/spring/club/myClub";
@@ -107,7 +116,7 @@ public class Club_Controller
 		if (errors.hasErrors())
 		{
 			System.out.println("轉入/club/registerForm.jsp 輸入社團資料格式錯誤");
-			return "club/registerForm";
+			return "club/joinClub";
 		}
 		int success = service.registerClub(clubVO);
 		if (success == 1)
@@ -123,6 +132,17 @@ public class Club_Controller
 			System.out.println("-------------------------------------------------------");
 			return "club/error";
 		}
+	}
+
+//-----------------------退出社團-------------------------------
+	@ResponseBody
+	@RequestMapping(value = "deleteClubmember", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String deleteClubmember(@RequestParam("memberId") String memberId, HttpServletRequest request)
+	{
+		int success = service.delete_clubMember(memberId);
+		Map<String, Integer> message = new HashMap<String, Integer>();
+		message.put("status", success);
+		return gson.toJson(message);
 	}
 
 //-----------------------社團申請-------------------------------
@@ -217,14 +237,15 @@ public class Club_Controller
 		return "/club/clubIntro";
 	}
 
-	@RequestMapping(value = "/searchName", method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value = "/searchName", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String clubByName(@RequestParam("name") String name, HttpServletRequest request)
 	{
 		System.out.println("呼叫Club_Controller:/searchName 查詢社團 傳入社團模糊名稱");
-		request.setAttribute("club", service.searchClub(name));
-		System.out.println("回傳多筆社團資料 放入Request物件中 Key=club");
+		String club = gson.toJson(service.searchClub(name));
+		System.out.println("回傳多筆社團資料 放入GSON");
 		System.out.println("-------------------------------------------------------");
-		return "/club/searchClub";
+		return club;
 	}
 
 //	-------------------申請加入社團---------------------------
