@@ -59,4 +59,9 @@ public class TeamApplyService
 	{
 		return teamApplyDAO.getByMemberId_ALL(memberId);
 	}
+
+	public Integer count_Checked(Integer teamId)
+	{
+		return teamApplyDAO.count_checked(teamId);
+	}
 }

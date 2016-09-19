@@ -13,8 +13,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PaCueMo</title>
 <meta charset="utf-8" />
-
-<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css">
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/animate.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/nexus.css">
@@ -25,6 +25,7 @@
 <!-- dialog -->
 <link href="${pageContext.request.contextPath }/css/team/addteam.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/css/team/jquery-ui_team.min.css" rel="stylesheet">
+
 <!-- dialog -->
 
 
@@ -37,6 +38,26 @@ p.tempstyle {
 	color: white;
 	font-size: 18;
 	font-family: "微軟正黑體";
+}
+.green_contact button[type="submit"]:hover {
+    background: #43A047;
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+}
+.green_contact button[type="submit"] {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: #4CAF50;
+    color: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.left_40 {
+	padding-left: 40px;
 }
 </style>
 
@@ -134,15 +155,14 @@ p.tempstyle {
 <body>
 
 	<jsp:include page="/fragment/top.jsp" />
-	<%@include file="fragment/teamSidebar.jsp"%>
-<%-- 	<jsp:include page="fragment/teamSidebar.jsp" /> --%>
+	<jsp:include page="fragment/teamSidebar.jsp" />
+<%-- 	<%@include file="fragment/teamSidebar.jsp"%> --%>
+	
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
 }
 </style>
-	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
-	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 
 	<div class="row" style="margin: 0px">
 		<div class="col-md-12">
@@ -154,14 +174,14 @@ body {
 					</c:choose>
 					<small> - 
 						<c:choose>
-							<c:when test="${requestScope.teamVO.teamProp == 0}"> 公開  <button id="btn_public"> </button></c:when>
+							<c:when test="${requestScope.teamVO.teamProp == 0}"> 公開  </c:when>
 							<c:when test="${requestScope.teamVO.teamProp == 1}"> 需申請 </c:when>
 							<c:when test="${requestScope.teamVO.teamProp == 2}"> 私密 </c:when>							
 						</c:choose>
 					</small>
 				</h2>
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-2" style="padding-left: 15px">
 				<c:choose>
 					<c:when test="${requestScope.teamExsist == 'Not_Exsist'}">
 						<form class="left_20" action="${pageContext.request.contextPath}/spring/battle_rec/letsbattle" method="get">
@@ -175,8 +195,8 @@ body {
 	</div>
 
 	<div class="row margin-bottom-10" id="show_team_member">
-		<div class="col-sm-2 col-md-2 animate fadeInLeft animated">
-			<p class="margin-bottom-30 tempstyle left_20">${requestScope.teamVO.content}</p>
+		<div class="col-sm-2 col-md-2 animate fadeInLeft animated" style="padding-left: 50px">
+			<p class="margin-bottom-30 tempstyle">${requestScope.teamVO.content}</p>
 			<c:choose>
 				<c:when test="${requestScope.teamExsist == 'Not_Exsist_public'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
@@ -197,10 +217,10 @@ body {
 					</form>
 				</c:when>
 				<c:when test="${requestScope.teamExsist == 'Mine'}">
-					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-						<button type="submit" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }">解散隊伍</button>
-						<input type="hidden" name="page" value="main">
-					</form>
+<%-- 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get"> --%>
+						<button id="btn_disband" class="btn btn-success btn-xs" name="btn_disband" value="${requestScope.teamVO.teamId }">解散隊伍</button>
+<!-- 						<input type="hidden" name="page" value="main"> -->
+<!-- 					</form> -->
 				</c:when>
 				<c:when test="${requestScope.teamExsist == 'Exsist'}">
 					<form class="left_20" action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
@@ -319,10 +339,10 @@ body {
 	</div>
 	<hr class="margin-vert-20">
 	
-<!-- hidden form -->
+<!-- hidden form 1-->
 <form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
 		<fieldset>
-			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
+			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{1,}">
 		</fieldset>
 		<fieldset>
 			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
@@ -350,52 +370,63 @@ body {
 		<fieldset>
 			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
 		</fieldset>
-	</form>
+	</form> 
+	
+
 
 	<script type="text/javascript">
 		$(function()
 		{
-			$("#join_team").click(function()
-			{
+// 			$("#join_team").click(function()
+// 			{
 
-				$.ajax({ "type" : "post", "url" : "${home}spring/team/joinTeam", // home 在 head
-				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
-				{
-					alert(data);
-				}, "error" : function(Error)
-				{
-					alert("fuck");
-					console.log(Error);
-				} })
-			}) // join team End
+// 				$.ajax({ "type" : "post", "url" : "${home}spring/team/joinTeam", // home 在 head
+// 				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
+// 				{
+// 					alert(data);
+// 				}, "error" : function(Error)
+// 				{
+// 					alert("fuck");
+// 					console.log(Error);
+// 				} })
+// 			}) // join team End
 
-			$("#abort_team").click(function()
-			{
+// 			$("#abort_team").click(function()
+// 			{
 
-				$.ajax({ "type" : "get", "url" : "${home}spring/team/abortTeam", // home 在 head
-				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
-				{
-					alert(data);
-				}, "error" : function(Error)
-				{
-					alert("fuck");
-					console.log(Error);
-				} })
-			}) // abort team End
+// 				$.ajax({ "type" : "get", "url" : "${home}spring/team/abortTeam", // home 在 head
+// 				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
+// 				{
+// 					alert(data);
+// 				}, "error" : function(Error)
+// 				{
+// 					alert("fuck");
+// 					console.log(Error);
+// 				} })
+// 			}) // abort team End
 
-			$("#disband_team").click(function()
-			{
+// 			$("#disband_team").click(function()
+// 			{
 
-				$.ajax({ "type" : "get", "url" : "${home}spring/team/disband_team", // home 在 head
-				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
-				{
-					alert(data);
-				}, "error" : function(Error)
-				{
-					alert("fuck");
-					console.log(Error);
-				} })
-			}) // disband team End
+// 				$.ajax({ 
+// 					"type" : "get", 
+// 					"url" : "${home}spring/team/disbandTeam", // home 在 head
+// 				"data" : { 
+// 					"memberId" : "${sessionScope.LoginOK.memberId}", 
+// 					"teamId" : "${requestScope.teamVO.teamId}" 
+// 						}, 
+// 				"dataType" : "text",
+// 				"success" : function(data)
+// 				{
+// 					alert(data);
+// 				}, 
+// 				"error" : function(Error)
+// 				{
+// 					alert("fuck");
+// 					console.log(Error);
+// 				} 
+// 				})
+// 			}) // disband team End
 
 			//set btn_cancle hover
 			$("#btn_cancle").hover(function(){
@@ -412,13 +443,45 @@ body {
 			  	icon: { icon: "ui-icon-gear" }
 			});
 
-			//新增sidebar 事件 
+		// 新增 dialog 事件
+			//新增sidebar  team_Create 事件 
 			var dialog;
 			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
 			$("#a_createTeam").on("click", function()	             		
 			{
 				dialog.dialog("open"); 			
 			}); // sidebar dialog end  
+			
+			
+			//setting confirm 
+			$("#btn_disband").confirm({
+			    title:"解散隊伍",
+			    text:"一旦解散隊伍，就無法再回復!   確定要解散嗎?",
+			    confirm: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/team/disbandTeam", // home 在 head
+						"data" : { 
+								"memberId" : "${sessionScope.LoginOK.memberId}", 
+								"btn_disband" : "${requestScope.teamVO.teamId}" 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}spring/team/createTeamPage";
+						}, 
+						"error" : function(Error)
+						{
+							alert("fuck");
+							console.log(Error);
+						} 
+					})
+			    },
+			    cancel: function(button) {
+			    },
+			    confirmButton: "Yes",
+			    cancelButton: "No"
+			});
 			
 			// End of init
 		});

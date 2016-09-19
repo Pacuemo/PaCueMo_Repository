@@ -139,6 +139,31 @@ public class TeamController_Spring
 		return "forward:createTeamPage";
 	}
 
+	@RequestMapping(value = "/updateTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
+	public String updateTeam(HttpServletRequest request, Integer teamId, String teamName, Integer teamProp, String content)
+	{
+		System.out.println("Team_Controller : updateTeam");
+		try
+		{
+			TeamVO teamVO = teamService.getTeamById(teamId);
+			teamVO.setTeamName(teamName);
+			teamVO.setTeamProp(teamProp);
+			teamVO.setContent(content);
+			teamService.update(teamVO);
+			request.setAttribute("teamId", teamVO.getTeamId());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "???";
+		}
+		System.out.println("修改成功");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("forward TeamPage (GET)");
+		return "forward:/TeamServlet";
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/searchTeam_like", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String searchTeam_like(@RequestParam("teamName") String teamName)
@@ -163,13 +188,29 @@ public class TeamController_Spring
 		request.setAttribute("mineTeamIdList", mineTeamIdList);
 		List<TeamApplyVO> myTeamApplyVOs = teamApplyService.getTeamApplyVOsById(memberVO.getMemberId());
 		request.setAttribute("myTeamApplyVOs", myTeamApplyVOs);
-		for (TeamApplyVO teamApplyVO : myTeamApplyVOs)
-		{
-			System.out.println(teamApplyVO.getTeamId());
-		}
+		request.setAttribute("pageForSideBar", "createteam");
+//		for (TeamApplyVO teamApplyVO : myTeamApplyVOs)
+//		{
+//			System.out.println(teamApplyVO.getTeamId());
+//		}
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "team/createteam";
+	}
+
+	@RequestMapping(value = "/settingTeamPage")	// Page
+	public String settingTeamPage(HttpServletRequest request, Integer teamId)
+	{
+		System.out.println("Team_Controller : getsettingTeamPage");
+		TeamVO teamVO = teamService.getTeamById(teamId);
+		System.out.println(teamVO.getTeamName());
+
+		request.setAttribute("teamVO_update", teamVO);
+		request.setAttribute("pageForSideBar", "haveTeamId");
+		request.setAttribute("teamExsist", "Mine");
+		System.out.println("成功導入");
+		System.out.println("-------------------------------------------------------");
+		return "team/teamsetting";
 
 	}
 

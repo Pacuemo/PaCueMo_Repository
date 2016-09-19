@@ -13,18 +13,20 @@ public class TeamApplyVO implements java.io.Serializable
 	private String memberId;
 	private Integer applystatus;
 	private Date applyDate;
+	private Integer checked;
 
 	public TeamApplyVO()
 	{
 	}
 
-	public TeamApplyVO(Integer teamId, String memberId, Integer applystatus, Date applyDate)
+	public TeamApplyVO(Integer teamId, String memberId, Integer applystatus, Date applyDate, Integer checked)
 	{
 		super();
 		this.teamId = teamId;
 		this.memberId = memberId;
 		this.applystatus = applystatus;
 		this.applyDate = applyDate;
+		this.checked = checked;
 	}
 
 	public Integer getTeamId()
@@ -70,6 +72,16 @@ public class TeamApplyVO implements java.io.Serializable
 	public static long getSerialversionuid()
 	{
 		return serialVersionUID;
+	}
+
+	public Integer getChecked()
+	{
+		return checked;
+	}
+
+	public void setChecked(Integer checked)
+	{
+		this.checked = checked;
 	}
 
 }

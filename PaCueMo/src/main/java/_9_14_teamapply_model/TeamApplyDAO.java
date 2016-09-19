@@ -25,6 +25,8 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	private static final String INSERT = "INSERT INTO TeamApply (teamId, memberId) VALUES (?, ?)";
 	private static final String DELETE = "DELETE FROM TeamApply WHERE teamId = ? and memberId = ?";
 	private static final String UPDATE = "UPDATE TeamApply SET applystatus = ? WHERE teamId = ? AND memberId = ?";
+	private static final String CHECK_COUNT = "select count(*) from TeamApply where checked !=1 AND teamId=?";
+	private static final String CHECK_CHANGE = " UPDATE TeamApply SET checked=1 WHERE teamId=?";
 
 	/*
 	 * (non-Javadoc)
@@ -82,12 +84,31 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 		jdbc.update(UPDATE, invstatus, teamId, memberId);
 	}
 
+	@Override
+	public int count_checked(int teamId)
+	{
+		try
+		{
+			return jdbc.queryForObject(CHECK_COUNT, Integer.class, teamId);
+		}
+		catch (Exception e)
+		{
+			return 0;
+		}
+	}
+
+	@Override
+	public int change_checked(int teamId)
+	{
+		return jdbc.update(CHECK_CHANGE, teamId);
+	}
+
 	private static final class TeamApplyRowMapper implements RowMapper<TeamApplyVO>
 	{
 		@Override
 		public TeamApplyVO mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
-			return new TeamApplyVO(rs.getInt("teamId"), rs.getString("memberId"), rs.getInt("applystatus"), rs.getDate("applyDate"));
+			return new TeamApplyVO(rs.getInt("teamId"), rs.getString("memberId"), rs.getInt("applystatus"), rs.getDate("applyDate"), rs.getInt("checked"));
 		}
 	}
 

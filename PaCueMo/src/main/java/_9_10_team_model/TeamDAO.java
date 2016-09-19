@@ -249,76 +249,7 @@ public class TeamDAO implements TeamDAO_interface
 	@Override
 	public TeamVO getTeamById(Integer teamId)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		TeamVO teamVO = null;
-
-		try
-		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
-			pstmt = con.prepareStatement(GET_ONE);
-			pstmt.setInt(1, teamId);
-
-			rs = pstmt.executeQuery();
-			teamVO = new TeamVO();
-			while (rs.next())
-			{
-				teamVO.setTeamId(rs.getInt("teamId"));
-				teamVO.setTeamName(rs.getString("teamName"));
-				teamVO.setCreateDate(rs.getDate("createDate"));
-				teamVO.setTeamProp(rs.getInt("teamProp"));
-				teamVO.setAvgRank(rs.getDouble("avgRank"));
-				teamVO.setTeamHead(rs.getString("teamHead"));
-				teamVO.setContent(rs.getString("content"));
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return teamVO;
+		return jdbc.queryForObject(GET_ONE, new TeamRowMapper(), teamId);
 	}
 
 	/*
