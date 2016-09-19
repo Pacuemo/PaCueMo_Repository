@@ -5,9 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimerTask;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Component;
 
 import _50_gambling_facade.GamblingFacade;
 import _50_gambling_facade.GamblingFacade_Config;
+import _9_41_member_model.MemberDAO_interface_Spring;
+import _9_41_member_model.MemberVO;
 
 /**
  * 在 TimerManager 这个类里面，大家一定要注意 时间点的问题。如果你设定在凌晨2点执行任务。但你是在2点以后
@@ -32,6 +36,8 @@ public class RoutineTask extends TimerTask
 {
 	@Autowired
 	private GamblingFacade gamblingFacade4; /* 變數名一定要叫 gamblingFacade4 → 因為GamblingFacade_Config定義太多型態相同的GamblingFacade */
+	@Autowired
+	private MemberDAO_interface_Spring mbDAO;
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String format1 = "yyyy-MM-dd";
 	private static String flag_isUpdate = "yet_update";
@@ -53,7 +59,7 @@ public class RoutineTask extends TimerTask
 
 	@GET /* 前端Ajax_LongPolling.js持續監控本方法，當每日執行時間一到，flag_isUpdate=="start_Update" ，進行更新動作 */
 	@Produces("text/plain;charset=UTF-8")
-	public String distributPointTask()// 定時分派賭金(點數)的task→RESTful service，由前端ajax持續監控
+	public String distributPointTask(@Context HttpServletRequest request)// 定時分派賭金(點數)的task→RESTful service，由前端ajax持續監控
 	{
 		synchronized (flag_isUpdate)
 		{
@@ -71,10 +77,16 @@ public class RoutineTask extends TimerTask
 					sdf.applyPattern(format1);// 使用 "yyyy-MM-dd" 格式
 					String querydateStr = sdf.format(querydate).toString();
 					System.out.println("查詢時間 ：" + querydateStr);
+
 					/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
 					routineTask.gamblingFacade4.splitPayoff(querydateStr, 0.2f);
 					/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
-
+					//---------------------------------------------------------------------------------
+					String mbId = ((MemberVO) request.getSession().getAttribute("LoginOK")).getMemberId();
+					Double pointsAfterAllocate = routineTask.mbDAO.findByPrimaryKey(mbId).getMemberPoint();
+					((MemberVO) request.getSession().getAttribute("LoginOK")).setMemberPoint(pointsAfterAllocate);
+					System.out.println(" ==== 更新 session 中會員的 point ====  " + pointsAfterAllocate);
+					//---------------------------------------------------------------------------------
 					String tmpFlag = flag_isUpdate; // 第一個Ajax請求進入，tmpFlag == "start_Update"
 					flag_isUpdate = "yet_update";// 立即將flag_isUpdate → 設回未更新→以免第2個請求瞬間也進入，造成連續更新資料兩次
 					return tmpFlag;// return "start_Update"
