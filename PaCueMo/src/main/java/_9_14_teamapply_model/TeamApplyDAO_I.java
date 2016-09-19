@@ -17,4 +17,8 @@ public interface TeamApplyDAO_I
 
 	void update(Integer invstatus, Integer teamId, String memberId);
 
+	int count_checked(int teamId);
+
+	int change_checked(int teamId);
+
 }

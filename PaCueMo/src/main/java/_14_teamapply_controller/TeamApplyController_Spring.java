@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
@@ -88,6 +90,15 @@ public class TeamApplyController_Spring
 			System.out.println("forward ctp");
 			return "forward:/spring/team/createTeamPage";
 		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "countChecked", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String countChecked(@RequestParam("teamId") int teamId)
+	{
+		int msg = teamApplyService.count_Checked(teamId);
+		System.out.println("=========" + msg);
+		return gson.toJson(msg);
 	}
 
 }

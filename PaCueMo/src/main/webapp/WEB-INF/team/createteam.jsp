@@ -16,6 +16,8 @@
 <link href="${pageContext.request.contextPath }/css/team/jquery-ui_team.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/animate.css">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/icon_style.css">
+
 <%-- <script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <%-- <script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 
@@ -64,19 +66,20 @@ body {
 			        <ul class="dropdown-menu animate fadeInDown animated" role="menu" style="width: 340px;margin-left: 40px;padding-top: 10px">
 			          <c:forEach var="my_list" items="${requestScope.myList }">
 			        <li class="row left_div">
+			        <div class="col-md-12">
 						<div class="col-md-6" >
 							<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${my_list.teamId}" class="left_20" style="font-size: 23px;color: #2C514C;font-family: '微軟正黑體';font-weight: bolder;">${my_list.teamName}</a>
 						</div>
 						<div class="col-md-6" >
 						<c:set var="flag" value="N"></c:set>
-						<c:forEach var="mineTeamId" items="${requewstScope.mineTeamIdList }">
+						<c:forEach var="mineTeamId" items="${requestScope.mineTeamIdList }">
 						<c:choose>
 							<c:when test="${my_list.teamId == mineTeamId}">
-								<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-									<button type="submit" class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
-									<input type="hidden" name="page" value="first">
+<%-- 								<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get"> --%>
+									<button id="btn_disband" class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
+<!-- 									<input type="hidden" name="page" value="first"> -->
 									<c:set var="flag" value="Y"></c:set>
-								</form>
+<!-- 								</form> -->
 							</c:when>
 						</c:choose>
 						</c:forEach>
@@ -87,6 +90,7 @@ body {
 								</form>
 							</c:if>
 						</div>
+					</div>
 					</li>
 			        <li class="divider"></li>
 				</c:forEach>
@@ -242,6 +246,36 @@ body {
 				$( this ).html('申請中...');
 			})
 				
+			//setting confirm 
+			$("#btn_disband").confirm({
+			    title:"解散隊伍",
+			    text:"一旦解散隊伍，就無法再回復!   確定要解散嗎?",
+			    confirm: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/team/disbandTeam", // home 在 head
+						"data" : { 
+								"memberId" : "${sessionScope.LoginOK.memberId}", 
+								"btn_disband" : "${requestScope.teamVO.teamId}" 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}spring/team/createTeamPage";
+						}, 
+						"error" : function(Error)
+						{
+							alert("fuck");
+							console.log(Error);
+						} 
+					})
+			    },
+			    cancel: function(button) {
+			    },
+			    confirmButton: "Yes",
+			    cancelButton: "No"
+			});
+			
 			
 			// initial end
 		});

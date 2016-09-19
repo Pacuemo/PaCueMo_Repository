@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import _31_court_service.CourtService;
 
 @WebServlet("/_3_view/CourtServlet.do")
@@ -63,21 +61,27 @@ public class CourtServlet extends HttpServlet
 					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
 					return;
 				}
-				else
-				{
-					System.out.println("查詢總筆數 : " + list.size());
-					Gson gson = new Gson();
-					String ans = gson.toJson(list);
-					System.out.println(ans);
-					out.println(ans);
-					return;
-				}		
-				
+//				else
+//				{
+//					System.out.println("查詢總筆數 : " + list.size());
+//					Gson gson = new Gson();
+//					String ans = gson.toJson(list);
+//					System.out.println(ans);
+//					out.println(ans);
+//					return;
+//				}
+
+				int listSize = list.size();
+				request.setAttribute("queryTeamName", queryCourtName);
+				request.setAttribute("battleSetList", list);
+				request.setAttribute("battleSetList_len", (listSize % 5 == 0 ? (listSize / 5) : (listSize / 5 + 1)));// 計算總頁數(每頁5筆情況)
+				request.getRequestDispatcher("/_5_gambling/gamblingPage.jsp").forward(request, response);
+				return;
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
-				errorMsgs.add("無法取得資料:" + e.getMessage());				
+				errorMsgs.add("無法取得資料:" + e.getMessage());
 				return;
 			}
 		}

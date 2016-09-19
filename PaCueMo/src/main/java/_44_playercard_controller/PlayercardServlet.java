@@ -51,14 +51,14 @@ public class PlayercardServlet
 	{
 		String memberId = request.getParameter("guid");
 		MemberVO me = (MemberVO) session.getAttribute("LoginOK");
-		MemberVO friend = ls.findbyGUID(memberId);
+		MemberVO friend = null;
 		FriendsListVO fVO = new FriendsListVO();
-		HashMap<String, List<String>> map = ms.showAllFriends(memberId);
-		request.setAttribute("friends", map);
+		HashMap<String, List<String>> map = null;
 
 		if (me != null && memberId != null)
 		{
-
+			friend = ls.findbyGUID(memberId);
+			map = ms.showAllFriends(memberId);
 			if (me.getMemberId().equals(memberId))
 			{
 				PlayerCardVO pv = ps.getPlayercardByPK(me.getMemberId());
@@ -88,7 +88,7 @@ public class PlayercardServlet
 				}
 				else
 				{
-
+					request.setAttribute("Status", "3");
 				}
 			}
 			else
@@ -96,11 +96,76 @@ public class PlayercardServlet
 				request.setAttribute("Status", "4");// no relationship
 			}
 
+			request.setAttribute("friends", map);
 			request.setAttribute("Info", friend);
 
 			return "playercard/playercard";
 		}
 
+		return "playercard/error";
+	}
+
+	@RequestMapping(value = "Playercard/friends", method = RequestMethod.GET)
+	public String playcardFriends(HttpServletRequest request, HttpSession session)
+	{
+		String memberId = request.getParameter("guid");
+		HashMap<String, List<String>> map = ms.showAllFriends(memberId);
+		request.setAttribute("friends", map);
+
+		return "playercard/friendslist";
+
+	}
+
+	@RequestMapping(value = "Playercard/friends/invite", method = RequestMethod.GET)
+	public String inviteFriend(HttpServletRequest request, HttpSession session)
+	{
+		String friendId = request.getParameter("guid");
+		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
+		FriendsListVO me = new FriendsListVO();
+		FriendsListVO friend = new FriendsListVO();
+		me.setMemberId(mv.getMemberId());
+		me.setMemberFriendId(friendId);
+		me.setMemberStatus(3);
+		friend.setMemberId(friendId);
+		friend.setMemberFriendId(mv.getMemberId());
+		friend.setMemberStatus(2);
+		if (ps.inviteFriend(me, friend) == 1)
+		{
+			return "redirect:../../Playercard?guid=" + friendId;
+		}
+		return "playercard/error";
+	}
+
+	@RequestMapping(value = "Playercard/friends/cancel", method = RequestMethod.GET)
+	public String cancelInvite(HttpServletRequest request, HttpSession session)
+	{
+		String friendId = request.getParameter("guid");
+		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
+		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
+		{
+			return "redirect:../../Playercard?guid=" + friendId.trim();
+		}
+		return "playercard/error";
+	}
+
+	@RequestMapping(value = "Playercard/friends/agree", method = RequestMethod.GET)
+	public String agreeInvite(HttpServletRequest request, HttpSession session)
+	{
+		String friendId = request.getParameter("guid");
+		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
+		FriendsListVO me = new FriendsListVO();
+		FriendsListVO friend = new FriendsListVO();
+		me.setMemberId(mv.getMemberId());
+		me.setMemberFriendId(friendId);
+		me.setMemberStatus(1);
+		friend.setMemberId(friendId);
+		friend.setMemberFriendId(mv.getMemberId());
+		friend.setMemberStatus(1);
+
+		if (ps.agreeInvite(me, friend) == 1)
+		{
+			return "redirect:../../Playercard?guid=" + friendId.trim();
+		}
 		return "playercard/error";
 	}
 

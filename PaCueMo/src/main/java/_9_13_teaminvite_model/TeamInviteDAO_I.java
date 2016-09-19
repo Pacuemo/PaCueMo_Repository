@@ -19,4 +19,8 @@ public interface TeamInviteDAO_I
 
 	void delete(Integer invId, String memberId);
 
+	int count_checked(int teamId);
+
+	int change_checked(int teamId);
+
 }

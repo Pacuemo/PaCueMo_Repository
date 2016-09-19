@@ -139,14 +139,22 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+$(function(){
+	$(".form-control-static1.test1").bind("click",function(){
+		var guid = $(this).val();
+		location.href = "../spring/playercard/Playercard?guid="+guid;
+	})	
+})
+</script>
 
 <c:if test="${fn:length(friends.ids) > 0}">
 <script>
 	function addlink(){
 		var id = $(this).val();
-		location.href="#";
+		location.href = "../spring/playercard/Playercard?guid="+id;
 	};
-
+	
 	
 	
 	$(function(){
@@ -198,7 +206,6 @@
 			$(this).parent().prev().prop("disabled",false);
 			$(this).parent().remove();	
 		});
-
 	})
 	
 </script>

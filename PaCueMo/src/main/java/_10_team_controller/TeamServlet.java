@@ -1,6 +1,7 @@
 package _10_team_controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -176,7 +177,10 @@ public class TeamServlet extends HttpServlet
 //					
 //				}
 
-				req.setAttribute("pageForSideBar", "teampage");	 		//setAtt
+				req.setAttribute("pageForSideBar", "haveTeamId");	 		//setAtt
+
+				List<TeamVO> myList = teamService.getMyTeamList(memberId);
+				req.setAttribute("myList", myList);
 
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");

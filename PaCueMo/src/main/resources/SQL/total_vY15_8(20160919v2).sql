@@ -351,12 +351,13 @@ CREATE TABLE BattleSet
 CREATE TABLE GambleOrder
 (
     gambleId		/*下注編號*/				 int						IDENTITY				PRIMARY KEY,
-	memberId		/*會員編號*/				 UNIQUEIDENTIFIER			FOREIGN KEY			REFERENCES member(memberId),
+	memberId		/*會員編號*/				 UNIQUEIDENTIFIER			FOREIGN KEY				REFERENCES member(memberId),
 	battleId		/*對戰組合編號*/			 int						NOT NULL				FOREIGN KEY REFERENCES battleSet(battleId),
-	betHome      /*主隊下注金額*/			 decimal(10, 2)			NOT NULL,
-	betAway      /*客隊下注金額*/			 decimal(10, 2)			NOT NULL,
-	--betMoney	/*下注金額*/				 decimal(10, 2)			NOT NULL,
-	--betTeam	/*下注(主、客)隊*/		 int						CHECK(betTeam=0 OR betTeam=1) NOT NULL    -- (0)代表主隊, (1)代表客隊
+	betHome         /*主隊下注金額*/			 decimal(10, 2)				NOT NULL,
+	betAway         /*客隊下注金額*/			 decimal(10, 2)				NOT NULL,
+	--betMoney	    /*下注金額*/				 decimal(10, 2)				NOT NULL,
+	--betTeam	    /*下注(主、客)隊*/		 int						CHECK(betTeam=0 OR betTeam=1) NOT NULL    -- (0)代表主隊, (1)代表客隊
+	betTime			/*會員下注時間*/			 dateTime					NOT NULL
 ); 
 
 ------代幣訂單Table-----
@@ -364,14 +365,14 @@ CREATE TABLE GoodsOrder
 (
 	orderId			 /*訂單編號*/			    int							IDENTITY		PRIMARY KEY, 
 	memberId		     /*訂購會員編號*/			UNIQUEIDENTIFIER				FOREIGN KEY  REFERENCES member(memberId),   /*FOREIGN KEY REFERENCES*/
-	cardNum           /*信用卡號*/			varchar(60)		NOT NULL,
-	fullName          /*持卡人全名*/			nVarchar(15)		NOT NULL,
+	cardNum           /*信用卡號*/				varchar(60)		NOT NULL,
+	fullName          /*持卡人全名*/				nVarchar(15)		NOT NULL,
 	expireYY          /*信用卡到期年*/			varchar(7)		NOT NULL,
 	expireMM          /*信用卡到期月*/			varchar(7)		NOT NULL,
-	cvc              /*信用卡背面3碼*/		varchar(10)		NOT NULL,
+	cvc              /*信用卡背面3碼*/			varchar(10)		NOT NULL,
 	ntdQty           /*台幣*/				    int				NOT NULL,
-	coinQty		     /*訂購代幣數量*/			decimal(10,2)		NOT NULL,
-	orderDateTime	     /*下訂時間*/			    dateTime			NOT NULL,
+	coinQty		     /*訂購代幣數量*/				decimal(10,2)		NOT NULL,
+	orderDateTime	 /*下訂時間*/			    dateTime			NOT NULL,
 	isPay			 /*付款狀態*/				bit			CHECK(isPay=0 OR isPay=1) NOT NULL
 )
 

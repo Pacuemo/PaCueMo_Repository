@@ -44,7 +44,8 @@
 			<tr style="height: 30%">
 				<td colspan="2" style="color: white; font-size: 40px; text-align: center; border-left: 1px solid white">${ClubVO.clubName}</td>
 				<td></td>
-				<td colspan="2" style="color: white; font-size: 15px; text-align: right">成立日期: ${ClubVO.clubDate} <s:url value="/spring/club/apply" var="joinClub">
+				<td colspan="2" style="color: white; font-size: 15px; text-align: right">成立日期: ${ClubVO.clubDate} 
+				<s:url value="/spring/club/apply" var="joinClub">
 						<s:param name="club" value="${ClubVO.clubID}" />
 						<s:param name="memberId" value="${sessionScope.LoginOK.memberId}" />
 					</s:url> <a id="joinClub" class="btn btn-default" href="${joinClub}" role="button" style="background-color: #0059b3; font-size: 10px; width: 100px; padding: 10px; min-width: 100px;">加入社團</a></td>
@@ -214,7 +215,7 @@
 					}
 
 				} })
-			})
+			});
 		})
 	</script>
 </body>
