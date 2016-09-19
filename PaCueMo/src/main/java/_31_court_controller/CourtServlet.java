@@ -1,6 +1,7 @@
 package _31_court_controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import _31_court_service.CourtService;
 
-@WebServlet("/CourtServlet")
+@WebServlet("/_3_view/CourtServlet.do")
 public class CourtServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -27,45 +30,51 @@ public class CourtServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-//		System.out.println("call the post");
+		System.out.println("call the post");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if ("queryByName".equals(action))
 		{
-//			System.out.println("call CourtServlet : queryName");
+			System.out.println("call CourtServlet : queryByName");
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 			try
 			{
+				response.setHeader("content-type", "text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+
 				String queryCourtName = request.getParameter("courtName").trim();
+
 				if (queryCourtName.equals(""))
 				{
-					errorMsgs.add("請輸入場地");
-				}
-//				System.out.println("queryCourtName = " + queryCourtName);
-//				String funFlag = request.getParameter("funFlag");
-				List<Map<String, Object>> list = CourtService.getByName(queryCourtName);
-				if (list == null)
-				{
-					errorMsgs.add("查無場地");
-					System.out.println("查無場地");
-					request.getRequestDispatcher("/").forward(request, response);//導向頁面
+					System.out.println("請輸入場地名稱");
+					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}"); // JSON格式
 					return;
 				}
 
-				int listSize = list.size();
-//				request.setAttribute("funFlag", funFlag);
-				request.setAttribute("queryCourtName", queryCourtName);
-				request.setAttribute("courtList", list);
-				request.setAttribute("courtListLength", (listSize % 10 == 0 ? (listSize / 10) : (listSize / 10 + 1)));
-				request.getRequestDispatcher("/").forward(request, response);//導向頁面
-				return;
+				List<Map<String, Object>> list = CourtService.getByName(queryCourtName);
+
+				if (list == null)
+				{
+					System.out.println("查無場地");
+					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}");
+					return;
+				}
+				else
+				{
+					System.out.println("查詢總筆數 : " + list.size());
+					Gson gson = new Gson();
+					String ans = gson.toJson(list);
+					System.out.println(ans);
+					out.println(ans);
+					return;
+				}
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
-				errorMsgs.add(e.getMessage());
+				errorMsgs.add("無法取得資料:" + e.getMessage());
 				request.getRequestDispatcher("/").forward(request, response);//導向頁面
 				return;
 			}

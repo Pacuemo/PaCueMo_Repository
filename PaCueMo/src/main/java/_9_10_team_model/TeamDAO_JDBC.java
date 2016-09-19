@@ -644,7 +644,7 @@ public class TeamDAO_JDBC implements TeamDAO_interface
 	}
 
 	@Override
-	public List<TeamVO> find_TeamVO_With_TeamHead(String teamHead)
+	public List<TeamVO> find_TeamVOs_With_TeamHead(String teamHead)
 	{
 		// TODO Auto-generated method stub
 		return null;

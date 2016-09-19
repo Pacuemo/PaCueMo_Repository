@@ -34,7 +34,6 @@ public class TeamApplyService
 		TeamApplyVO teamApplyVO = new TeamApplyVO();
 		teamApplyVO.setTeamId(teamId);
 		teamApplyVO.setMemberId(memberId);
-		System.out.println("add        :    " + (null == teamApplyDAO));
 		teamApplyDAO.add(teamApplyVO);
 	}
 
@@ -54,5 +53,10 @@ public class TeamApplyService
 	public void cancel(Integer teamId, String memberId)
 	{
 		teamApplyDAO.delete(teamId, memberId);
+	}
+
+	public List<TeamApplyVO> getTeamApplyVOsById(String memberId)
+	{
+		return teamApplyDAO.getByMemberId_ALL(memberId);
 	}
 }

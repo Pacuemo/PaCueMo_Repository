@@ -14,6 +14,7 @@
 
 <link href="${pageContext.request.contextPath }/css/team/addteam.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/css/team/jquery-ui_team.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/animate.css">
 
 <%-- <script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <%-- <script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
@@ -31,6 +32,7 @@ padding-left: 20px;
 .left_div{
 height: 50px;
 }
+
 </style>
 
 
@@ -41,81 +43,143 @@ height: 50px;
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
-
-	
+<style>
+body {
+    background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
+}
+</style>	
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 
-	<div class="row">
+	<div class="row" style="margin: 0px">
 		<div class="col-md-6" >
+
+				<div class="dropdown col-md-12">
 		<c:choose >
 			<c:when test="${requestScope.myList[0].teamId == null }">
 				<h2 class="h2_tm">您尚未加入任何隊伍</h2>
 			</c:when>
 			<c:otherwise>
-				<h2 class="h2_tm">您的隊伍：</h2>
-				<c:forEach var="my_list" items="${requestScope.myList }">
-				<div class="row left_div">
-					<div class="col-md-6" >
-						<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${my_list.teamId}" class="left_20">${my_list.teamName}</a><br>
-					</div>
-					<div class="col-md-6" >
-					<c:set var="flag" value="N"></c:set>
-					<c:forEach var="mineTeamId" items="${requestScope.mineTeamIdList }">
-					<c:choose>
-						<c:when test="${my_list.teamId == mineTeamId}">
-							<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
-								<button type="submit" class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
-								<input type="hidden" name="page" value="first">
-								<c:set var="flag" value="Y"></c:set>
-							</form>
-						</c:when>
-					</c:choose>
-					</c:forEach>
-						<c:if test="${flag == 'N'}">
-							<form action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
-								<button type="submit" class="btn btn-success btn-xs left_20" name="btn_abort" value="${my_list.teamId }" >退出</button>
-								<input type="hidden" name="page" value="first">
-							</form>
-						</c:if>
-					</div>
-				</div>
+				<h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">您的隊伍：<span class="caret"></span></h2>
+			        <ul class="dropdown-menu animate fadeInDown animated" role="menu" style="width: 340px;margin-left: 40px;padding-top: 10px">
+			          <c:forEach var="my_list" items="${requestScope.myList }">
+			        <li class="row left_div">
+						<div class="col-md-6" >
+							<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${my_list.teamId}" class="left_20" style="font-size: 23px;color: #2C514C;font-family: '微軟正黑體';font-weight: bolder;">${my_list.teamName}</a>
+						</div>
+						<div class="col-md-6" >
+						<c:set var="flag" value="N"></c:set>
+						<c:forEach var="mineTeamId" items="${requewstScope.mineTeamIdList }">
+						<c:choose>
+							<c:when test="${my_list.teamId == mineTeamId}">
+								<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get">
+									<button type="submit" class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
+									<input type="hidden" name="page" value="first">
+									<c:set var="flag" value="Y"></c:set>
+								</form>
+							</c:when>
+						</c:choose>
+						</c:forEach>
+							<c:if test="${flag == 'N'}">
+								<form action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
+									<button type="submit" class="btn btn-success btn-xs left_20" name="btn_abort" value="${my_list.teamId }" >退出</button>
+									<input type="hidden" name="page" value="first">
+								</form>
+							</c:if>
+						</div>
+					</li>
+			        <li class="divider"></li>
 				</c:forEach>
+			        <li><div class="left_20" style="text-align: right;">
+						<button id="create-team" style="margin:10px;margin-right: 20px">Create new Team</button>
+					</div></li>
+			        </ul>
+				
 			</c:otherwise>
 		</c:choose>
-			<div class="left_20">
-				<button id="create-team" >Create new Team</button>
-			</div>
+		      </div>
 		</div>
 		
 <!-- 		right side 			-->
-		<div class="col-md-6">
-			<h2 class="h2_tm">推薦隊伍</h2>
+		<div class="col-md-2"></div>
+		<div class="col-md-4">
+		<div class="dropdown col-md-12"> <h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">推薦隊伍：<span class="caret"></span></h2>
+			<ul class="dropdown-menu animate fadeInDown animated" style="width: 340px;margin-left: 40px;padding-top: 10px">
 			<table class="table table-hover " >
 				<tbody>
 				<c:forEach var="ot_list" items="${requestScope.otherList }" end="6" >
-					<tr><td class="text-success "><div class="row">
-						<div class="col-md-6" >
-							<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
-						</div>
-<!-- 						<div class="col-md-6" > -->
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${ot_list.teamId == 0}"> --%>
-<%-- 							<form action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get"> --%>
-<%-- 								<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${ot_list.teamId }" >加入</button> --%>
-<!-- 								<input type="hidden" name="page" value="first"> -->
-<!-- 							</form> -->
-<%-- 							</c:when> --%>
-<%-- 						</c:choose> --%>
-<!-- 						</div> -->
-					</div></td></tr>
+					<c:choose>
+						<c:when test="${ot_list.teamProp == 0}">
+							<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">	
+									<div class="col-md-6" >
+										<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
+									</div>
+									<div class="col-md-6" >
+									<form action="${pageContext.request.contextPath}/spring/team/joinTeam" method="get">
+										<button type="submit" class="btn btn-success btn-xs left_20" name="btn_join" value="${ot_list.teamId }" >加入</button>
+										<input type="hidden" name="page" value="first">
+									</form>
+									</div>
+							</div></td></tr>
+						</c:when>
+						<c:when test="${ot_list.teamProp == 1}">
+						<c:set var="flag" value="false"/>
+							<c:forEach var="myTeamApplyVO" items="${requestScope.myTeamApplyVOs }">
+							<c:choose>
+								<c:when test="${ot_list.teamId == myTeamApplyVO.teamId && myTeamApplyVO.applystatus == 0}">
+								<c:set var="flag" value="true"/>
+									<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">		
+											<div class="col-md-6" >
+												<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
+											</div>
+											<div class="col-md-6" >
+												<form action="${pageContext.request.contextPath}/spring/tm_apply/cancel" method="get">
+													<button type="submit" class="btn btn-warning btn-xs left_20" name="btn_cancel" value="${ot_list.teamId }" id="btn_cancle" style="background-color: #F2A359">申請中...</button>
+													<input type="hidden" name="page" value="first">
+												</form>
+											</div>
+									</div></td></tr>
+								</c:when>
+								<c:otherwise>
+								<c:set var="flag" value="true"/>
+									<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">		
+											<div class="col-md-6" >
+												<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
+											</div>
+											<div class="col-md-6" >
+												<form action="${pageContext.request.contextPath}/spring/tm_apply/applyTeam" method="get">
+													<button type="submit" class="btn btn-success btn-xs left_20" name="btn_apply" value="${ot_list.teamId }" >申請加入</button>
+													<input type="hidden" name="page" value="first">
+												</form>
+											</div>
+									</div></td></tr>
+								</c:otherwise>
+							</c:choose>
+							</c:forEach>
+							<c:if test="${flag eq false}">
+							<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">		
+								<div class="col-md-6" >
+									<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
+								</div>
+								<div class="col-md-6" >
+									<form action="${pageContext.request.contextPath}/spring/tm_apply/applyTeam" method="get">
+										<button type="submit" class="btn btn-success btn-xs left_20" name="btn_apply" value="${ot_list.teamId }" >申請加入</button>
+										<input type="hidden" name="page" value="first">
+									</form>
+								</div>
+							</div></td></tr>
+							</c:if>
+						</c:when>
+					</c:choose>
 				</c:forEach>
 				</tbody>
 			</table>
+			</ul>
+		</div>
 		</div>
 	</div>
 
-	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post">
+	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
 		<fieldset>
 			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
 		</fieldset>
@@ -166,27 +230,18 @@ height: 50px;
 				dialog.dialog("open");
 			}); // team dialog end  
 
-// 			// join team start
-// 			$("button[name='btn_join']").click(function(){
-//  				//alert(this.value + " = " + $(this).val());
-				
-// 				$.ajax({
-// 					"type":"post",
-// 					"url":"${home}spring/team/joinTeam", // home 在 設定
-// 					"data":{"memberId":"${sessionScope.LoginOK.memberId}",
-// 							"teamId":$(this).val()},
-// 					"dataType":"text",
-// 					"success":function(data){
-// 						alert(data);
-// 					},
-// 					"error":function(Error){
-// 						alert("fuck2");
-// 						console.log(Error);
-// 					}
-// 				})
-// 			}); // join team End
 
-			
+
+			//set btn_cancle hover
+			$("#btn_cancle").hover(function(){
+// 				$("#tdId").fadeOut( 200 );
+// 				 $( this ).fadeIn( 500 );
+				 $( this ).html('取消申請');
+				 
+			},function(){
+				$( this ).html('申請中...');
+			})
+				
 			
 			// initial end
 		});

@@ -22,6 +22,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/icon_style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--     add icon  		-->
+<!-- dialog -->
+<link href="${pageContext.request.contextPath }/css/team/addteam.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/team/jquery-ui_team.min.css" rel="stylesheet">
+<!-- dialog -->
 
 
 <style type="text/css">
@@ -113,8 +117,8 @@ p.tempstyle {
 }
 
 .tmimg {
-	width: 182.8px;
-	height: 182.8px;
+	width: auto;
+	height: auto;
 }
 
 .left_20 {
@@ -130,11 +134,17 @@ p.tempstyle {
 <body>
 
 	<jsp:include page="/fragment/top.jsp" />
-	<jsp:include page="fragment/teamSidebar.jsp" />
-
+	<%@include file="fragment/teamSidebar.jsp"%>
+<%-- 	<jsp:include page="fragment/teamSidebar.jsp" /> --%>
+<style>
+body {
+    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
+}
+</style>
 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script>
 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
-	<div class="row">
+
+	<div class="row" style="margin: 0px">
 		<div class="col-md-12">
 			<div class="col-md-10">
 				<h2 style="color: white;">
@@ -142,6 +152,13 @@ p.tempstyle {
 						<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
 						<c:otherwise>TeamName !</c:otherwise>
 					</c:choose>
+					<small> - 
+						<c:choose>
+							<c:when test="${requestScope.teamVO.teamProp == 0}"> 公開  <button id="btn_public"> </button></c:when>
+							<c:when test="${requestScope.teamVO.teamProp == 1}"> 需申請 </c:when>
+							<c:when test="${requestScope.teamVO.teamProp == 2}"> 私密 </c:when>							
+						</c:choose>
+					</small>
 				</h2>
 			</div>
 			<div class="col-md-2">
@@ -196,54 +213,59 @@ p.tempstyle {
 
 		<!-- Person Details -->
 		<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
-			<c:forEach var="list" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
+			<c:forEach var="teamMemberVO" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
 				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
-					<figure>
+					<figure style="background-color:  rgba(255,255,255,0.95);">
+						
 						<c:choose>
-							<c:when test="${list.memberVO.memberImgUrl != null}">
-								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/${list.memberVO.memberImgUrl }" alt="image1">
+							<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
+								<img class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
 							</c:when>
 							<c:otherwise>
-								<img class="tmimg" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
+								<img class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
 							</c:otherwise>
 						</c:choose>
+						
 						<figcaption>
+<!-- 							<div class="person-details"> -->
+<!-- 							<figure> -->
+							<hr style="padding: 0px;margin-top: 5px;">
 							<h3 class="margin-top-10 margin-bottom-10">
-								${list.memberVO.memberFirstName } 
+								${teamMemberVO.memberVO.memberFirstName } 
 								<small>- 
 								<c:choose>
-									<c:when test="${list.playerCardVO.playerPosition == 'PG'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PG'}">
 											控球後衛
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'SG'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'SG'}">
 											得分後衛
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'SF'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'SF'}">
 											小前鋒
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'PF'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'PF'}">
 											大前鋒
 									</c:when>
-									<c:when test="${list.playerCardVO.playerPosition == 'C'}">
+									<c:when test="${teamMemberVO.playerCardVO.playerPosition == 'C'}">
 											中鋒
 									</c:when>
 								</c:choose>
 								</small>
 							</h3>
-							<span>${list.playerCardVO.playerNote}</span>
+							<span>${teamMemberVO.playerCardVO.playerNote}</span>
 						</figcaption>
-						<ul class="list-inline person-details-icons">
-							<li><a href="#"> <i class="fa-lg fa-twitter"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-linkedin"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-facebook"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-dribbble"></i>
-							</a></li>
-							<li><a href="#"> <i class="fa-lg fa-google-plus"></i>
-							</a></li>
-						</ul>
+<!-- 						<ul class="list-inline person-details-icons"> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-twitter"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-linkedin"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-facebook"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-dribbble"></i> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="#"> <i class="fa-lg fa-google-plus"></i> -->
+<!-- 							</a></li> -->
+<!-- 						</ul> -->
 					</figure>
 				</div>
 
@@ -257,7 +279,7 @@ p.tempstyle {
 			<hr class="margin-bottom-30">
 		</div>
 
-		<div class="col-md-6" style="color: white">
+		<div class="col-md-5" style="color: white">
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, laboriosam, quod odit quo quos itaque repellat quaerat a ad alias. Vel, nostrum id ab velit veritatis consequatur fugit sequi esse. Maecenas congue dui id posuere fermentum.</p>
 			<div class="row">
 				<div class="col-sm-3">
@@ -270,7 +292,9 @@ p.tempstyle {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6" style="color: white">
+		<div class="col-md-2" style="color: white">
+		</div>
+		<div class="col-md-5" style="color: white;padding-right: 50px">
 			<!-- Progress Bars -->
 			<h3 class="progress-label">
 				出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
@@ -294,6 +318,39 @@ p.tempstyle {
 		</div>
 	</div>
 	<hr class="margin-vert-20">
+	
+<!-- hidden form -->
+<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
+		<fieldset>
+			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
+		</fieldset>
+		<fieldset>
+			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
+		</fieldset>
+		<fieldset>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
+				</span>
+					<div class="descrip" id="">所有人都可以自由加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
+				</span>
+					<div class="descrip" id="">所有人都可以申請加入這個隊伍。</div>
+				</label>
+			</div>
+			<div class="div_pri_tm">
+				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
+				</span>
+					<div class="descrip" id="">只有被邀請的成員才可以加入這個隊伍。</div>
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+		</fieldset>
+	</form>
 
 	<script type="text/javascript">
 		$(function()
@@ -350,7 +407,18 @@ p.tempstyle {
 				$( this ).html('申請中...');
 			})
 				
-			
+			// set button icon
+			$( "btn_public" ).button({
+			  	icon: { icon: "ui-icon-gear" }
+			});
+
+			//新增sidebar 事件 
+			var dialog;
+			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+			$("#a_createTeam").on("click", function()	             		
+			{
+				dialog.dialog("open"); 			
+			}); // sidebar dialog end  
 			
 			// End of init
 		});

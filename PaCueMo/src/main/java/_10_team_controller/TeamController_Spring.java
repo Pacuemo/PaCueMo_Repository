@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
+import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
+import _14_teamapply_service.TeamApplyService;
 import _9_10_team_model.TeamVO;
+import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -25,6 +30,23 @@ public class TeamController_Spring
 	private TeamMemberService teamMemberService;
 	@Autowired
 	private TeamService teamService;
+	@Autowired
+	private TeamApplyService teamApplyService;
+	@Autowired
+	private StevenFacade stevenFacade;
+	@Autowired
+	private Gson gson;
+
+	@ResponseBody
+	@RequestMapping(value = "getTeamVO", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String getTeamVO(Integer teamId)
+	{
+		System.out.println("Team_Controller : getTeamVO");
+		System.out.println(gson.toJson(stevenFacade.getTeamById(teamId)));
+		System.out.println("return teamVO jason");
+		System.out.println("-------------------------------------------------------");
+		return gson.toJson(stevenFacade.getTeamById(teamId));
+	}
 
 	@RequestMapping(value = "/joinTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
 	public String joinTeam(HttpServletRequest request, HttpSession session, Integer btn_join, String page)
@@ -124,29 +146,6 @@ public class TeamController_Spring
 		return null;
 	}
 
-	@RequestMapping(value = "/clickTeam")
-	public String clickTeam(HttpSession session)
-	{
-		try
-		{
-			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
-			List teamMemberList = teamMemberService.findByTeamMemberId(memberVO.getMemberId());
-			if (teamMemberList.isEmpty())
-			{
-				return "";
-			}
-			else
-			{
-
-			}
-		}
-		catch (Exception e)
-		{
-
-		}
-		return null;
-	}
-
 //------------------------------------------------------------Page------------------------------------------------------------
 
 	@RequestMapping(value = "/createTeamPage")	// Page
@@ -162,7 +161,12 @@ public class TeamController_Spring
 		request.setAttribute("myList", myList);
 		List<Integer> mineTeamIdList = teamService.find_TeamId_With_TeamHead(memberVO.getMemberId());
 		request.setAttribute("mineTeamIdList", mineTeamIdList);
-
+		List<TeamApplyVO> myTeamApplyVOs = teamApplyService.getTeamApplyVOsById(memberVO.getMemberId());
+		request.setAttribute("myTeamApplyVOs", myTeamApplyVOs);
+		for (TeamApplyVO teamApplyVO : myTeamApplyVOs)
+		{
+			System.out.println(teamApplyVO.getTeamId());
+		}
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "team/createteam";

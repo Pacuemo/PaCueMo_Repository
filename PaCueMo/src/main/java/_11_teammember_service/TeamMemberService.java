@@ -75,9 +75,9 @@ public class TeamMemberService
 			for (TeamMemberVO teamMemberVO : teamMemberVOs)
 			{
 				teamMemberVO.setMemberVO(memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId()));
-				System.out.println();
 				teamMemberVO.setPlayerCardVO(playerCardDAO.getPlayerCardById(teamMemberVO.getTeamMemberId()));
 			}
+			System.out.println("TeamMemberService : getOneTeam End");
 			return teamMemberVOs;
 		}
 		catch (Exception e)

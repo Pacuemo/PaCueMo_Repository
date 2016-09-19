@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _31_court_service.CourtService;
@@ -23,6 +24,8 @@ import _9_41_member_model.MemberVO;
 @RequestMapping("/battle_rec")
 public class BattleRecordController_Spring
 {
+	@Autowired
+	private StevenFacade stevenFacade;
 	@Autowired
 	private TeamMemberService teamMemberService;
 	@Autowired
@@ -43,6 +46,7 @@ public class BattleRecordController_Spring
 		return gson.toJson(courtService.findByCourtName(address));
 	}
 
+//------------------------------------------Page-------------------------------------------	
 	@RequestMapping(value = "/introduce") //Page
 	public String getMainPage(HttpSession session, HttpServletRequest request)
 	{
@@ -51,7 +55,7 @@ public class BattleRecordController_Spring
 		try
 		{
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
-			List<TeamVO> mineTeamIdList = teamService.find_TeamVO_With_TeamHead(memberVO.getMemberId());
+			List<TeamVO> mineTeamIdList = teamService.find_TeamVOs_With_TeamHead(memberVO.getMemberId());
 			request.setAttribute("mineTeamVOList", mineTeamIdList);
 
 		}
@@ -74,8 +78,8 @@ public class BattleRecordController_Spring
 		try
 		{
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
-			List<TeamVO> mineTeamIdList = teamService.find_TeamVO_With_TeamHead(memberVO.getMemberId());
-			request.setAttribute("mineTeamVOList", mineTeamIdList);
+			List<TeamVO> mineTeamVOs = stevenFacade.find_TeamVOs_With_TeamHead(memberVO.getMemberId());
+			request.setAttribute("mineTeamVOs", mineTeamVOs);		//Set Att
 
 		}
 		catch (Exception e)

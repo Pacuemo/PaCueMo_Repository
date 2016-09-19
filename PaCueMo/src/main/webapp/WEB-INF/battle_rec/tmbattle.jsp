@@ -49,6 +49,12 @@ td {
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
+	
+<style>
+body {
+    background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
+}
+</style>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	<div class="row">
 		<div class="col-md-6">
