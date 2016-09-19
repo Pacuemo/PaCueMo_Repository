@@ -67,6 +67,12 @@ public class Club_Service
 
 	}
 
+	//getAll
+	public List<ClubVO> getAll()
+	{
+		return clubDAO.getAll();
+	}
+
 	//get社團、成員資訊
 	public ClubVO getClub(int clubId)
 	{
@@ -91,6 +97,12 @@ public class Club_Service
 		clubVO.setLeagueRecordVOs(leagueRecordVOs);
 		System.out.println("回傳1筆社團VO");
 		return clubVO;
+	}
+
+	//退出社團
+	public int delete_clubMember(String memberId)
+	{
+		return clubMemberDAO.delete(memberId);
 	}
 
 	//get社團資訊by clubMemberID

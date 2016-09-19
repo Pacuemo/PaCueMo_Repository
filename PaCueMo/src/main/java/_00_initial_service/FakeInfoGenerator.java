@@ -1095,14 +1095,14 @@ public class FakeInfoGenerator
 //		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-//		friendListGenerator("83FC7025-12AA-43B0-8162-E27226D92C67", 20);
+		friendListGenerator("83FC7025-12AA-43B0-8162-E27226D92C67", 20);
 //      club和league部分
 //		clubGenerator();
 
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
-		gambleOrderGenerator();
+//		gambleOrderGenerator();
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();

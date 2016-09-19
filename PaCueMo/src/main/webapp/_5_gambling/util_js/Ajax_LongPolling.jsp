@@ -48,7 +48,7 @@
 								"success":function(dataText){			      				
 			      					//console.log(" 由session中meID查詢到的會員點數 : " + dataText);
              						$("a.point").text("點數餘額：" + dataText + " 點 "); //【修改右上方登入會員圖示的點數】
-        							//----------------------------------------
+             						//----------------------------------------
        							    Lobibox.notify( // 有音效的alert特效
 	       					               'success',/*色彩調這裡 warning , error , info ,success*/
 	       					               {
