@@ -383,9 +383,10 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				String strAwayBet = request.getParameter("awayBet");
 				String strHomeCoins = request.getParameter("homeCoins"); // 下注金額 
 				String strAwayCoins = request.getParameter("awayCoins"); // 下注金額
-				System.out.println(strBattleId + "  " + strAwayId + "  " + strHomeId + "  "
-						+ strBattleTime + "  " + strAwayScore + "  " + strHomeScore + "  " + strAwayBet + "  " + strHomeBet
-						+ "   " + strAwayCoins + "   " + strHomeCoins);
+				String strBetTime = request.getParameter("betTime"); // 下注時間				
+//				System.out.println(strBattleId + "  " + strAwayId + "  " + strHomeId + "  "
+//						+ strBattleTime + "  " + strAwayScore + "  " + strHomeScore + "  " + strAwayBet + "  " + strHomeBet
+//						+ "   " + strAwayCoins + "   " + strHomeCoins + "  " + strBetTime);
 				//--- battleId---
 				Integer battleId = null;
 				try
@@ -496,10 +497,22 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 					out.print("...awayCoins 型別轉換失敗...");
 					return;
 				}
-				System.out.println(" ============= 轉型後: ============= ");
-				System.out.println(battleId + "  " + awayId + "  " + homeId + "  "
-						+ battleTime + "  " + awayScore + "  " + homeScore + "  " + awayBet + "  " + homeBet
-						+ "   " + awayCoins + "   " + homeCoins + "\n =================");
+				//--- betTime ---
+				java.sql.Timestamp betTime = null;
+				try
+				{
+					betTime = java.sql.Timestamp.valueOf(strBetTime);
+				}
+				catch (IllegalArgumentException ex)
+				{
+					out.print("...betTime 型別轉換失敗...");
+					return;
+				}
+
+//				System.out.println(" ============= 轉型後: ============= ");
+//				System.out.println(battleId + "  " + awayId + "  " + homeId + "  "
+//						+ battleTime + "  " + awayScore + "  " + homeScore + "  " + awayBet + "  " + homeBet
+//						+ "   " + awayCoins + "   " + homeCoins + "  " + betTime + "\n =================");
 				/*************************** 2.開始 Update 資料 ( jQuery + Ajax : return text ) **********/
 //				BattleSetService svc = new BattleSetService(); // Spring
 //				List<Map<String, Object>> list = svc.getSetsByDateAndPage(queryDate, pageNo);
@@ -522,7 +535,8 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 				bSetVO.setAwayScore(awayScore);
 				bSetVO.setHomebet(homeBet);
 				bSetVO.setAwaybet(awayBet);
-				gamblingFacade.updateMemberAndBattleSetCoin(bSetVO, memberVO, homeCoins, awayCoins); // facade 類別控制 BattleSet 及 Member 交易
+				// 下注動作 facade
+				gamblingFacade.updateMemberAndBattleSetCoin(bSetVO, memberVO, homeCoins, awayCoins, betTime); // facade 類別控制 BattleSet 及 Member 交易
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 //				// *************************
 //				// ********【Ajax】*********

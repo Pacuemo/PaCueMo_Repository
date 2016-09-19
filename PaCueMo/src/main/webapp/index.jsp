@@ -9,5 +9,7 @@
 
 <jsp:include page="/fragment/top.jsp" />
 <jsp:include page="/fragment/sidebar.jsp" />
+<body>
+
 </body>
 </html>

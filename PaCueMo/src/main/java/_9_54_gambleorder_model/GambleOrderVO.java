@@ -7,6 +7,7 @@ public class GambleOrderVO
 	private Integer battleId;
 	private Double betHome;
 	private Double betAway;
+	private java.sql.Timestamp betTime;
 
 	public Integer getGambleId()
 	{
@@ -56,6 +57,16 @@ public class GambleOrderVO
 	public void setBetAway(Double betAway)
 	{
 		this.betAway = betAway;
+	}
+
+	public java.sql.Timestamp getBetTime()
+	{
+		return betTime;
+	}
+
+	public void setBetTime(java.sql.Timestamp betTime)
+	{
+		this.betTime = betTime;
 	}
 
 }

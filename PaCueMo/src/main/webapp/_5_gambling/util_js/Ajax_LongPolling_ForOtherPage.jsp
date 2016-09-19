@@ -10,7 +10,6 @@
 
 <%@page import="_9_41_member_model.MemberVO"%>
 <script>
-
 	(function longPolling() {   
 		
 		setTimeout(function(){
@@ -35,8 +34,7 @@
 	                
 	                if (textStatus == "success") { // 請求成功
 	                
-	                	if(data == "start_Update"){
-
+	                	if(data=="start_Update"){
 							//----------------【取得session中memberId】------------------
 							var memberId = "<%=((MemberVO) request.getSession().getAttribute("LoginOK")).getMemberId()%>";
 							//-----------------------------------------------------------
@@ -76,8 +74,8 @@
 					      		 },
 					      		 "error":function(){
 						      			BootstrapAlert.info({ //BootstrapAlert 特效
-				 			                title: "Sorry~NBA彩金分配發生例外",
-				 			                message: "網路忙線中~請稍候 ^___^",
+				 			                title: "網路忙線中",
+				 			                message: "請稍候",
 				 			                hideTimeout: 1800,
 				 			        	});
 						         }
@@ -90,7 +88,7 @@
 	            }
 	        }  /*, 1000 延遲時間*/);
 			/////////////////////////////////
-		},500)//--setTimeout() , 每 0.5 秒發一次請求給後端 RESTful
+		},500)//--setTimeout()
 		
 		 
 		  
