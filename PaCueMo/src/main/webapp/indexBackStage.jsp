@@ -16,7 +16,7 @@
   	<c:url var="home" value="/"></c:url>
   	
     <script language="javascript">
-        window.location.href = "${home}/_99_backstage/pages/index.jsp";
+        window.location.href = "${home}_99_backstage/pages/index.jsp";
     </script>
   </head>
   <body>
