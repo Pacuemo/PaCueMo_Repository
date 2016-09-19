@@ -140,9 +140,29 @@ public class PlayercardServlet
 	public String cancelInvite(HttpServletRequest request, HttpSession session)
 	{
 		String friendId = request.getParameter("guid");
-		System.out.println(friendId);
 		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
 		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
+		{
+			return "redirect:../../Playercard?guid=" + friendId.trim();
+		}
+		return "playercard/error";
+	}
+
+	@RequestMapping(value = "Playercard/friends/agree", method = RequestMethod.GET)
+	public String agreeInvite(HttpServletRequest request, HttpSession session)
+	{
+		String friendId = request.getParameter("guid");
+		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
+		FriendsListVO me = new FriendsListVO();
+		FriendsListVO friend = new FriendsListVO();
+		me.setMemberId(mv.getMemberId());
+		me.setMemberFriendId(friendId);
+		me.setMemberStatus(1);
+		friend.setMemberId(friendId);
+		friend.setMemberFriendId(mv.getMemberId());
+		friend.setMemberStatus(1);
+
+		if (ps.agreeInvite(me, friend) == 1)
 		{
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
