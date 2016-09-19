@@ -29,6 +29,16 @@ public class TimerManager
 	private int min;
 	private int sec;
 
+	public TimerManager()
+	{
+		//--- 建構子 ----
+		this.hour = 9;
+		this.min = 35;
+		this.sec = 30;
+		//---------------
+		setTimerTask(this.hour, this.min, this.sec);
+	}
+
 	@POST
 	@Produces("text/plain;charset=UTF-8")
 	@Path("/setAllocateTime")// 設定分派彩金時間(後台功能)
@@ -49,16 +59,6 @@ public class TimerManager
 			return "fail";
 		}
 		//------------------------------
-	}
-
-	public TimerManager()
-	{
-		//--- 建構子 ----
-		this.hour = 22;
-		this.min = 14;
-		this.sec = 0;
-		//---------------
-		setTimerTask(this.hour, this.min, this.sec);
 	}
 
 	private void setTimerTask(int hour, int min, int sec)
