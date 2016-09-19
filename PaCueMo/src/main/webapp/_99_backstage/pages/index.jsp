@@ -332,7 +332,13 @@
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling/gamblingBackStage.jsp">Blank Page</a>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_gambleOrder_manager.jsp"> - 下注訂單管理 - </a>
+	                                </li>
+	                                <li>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_goodsOrder_manager.jsp"> - 代幣訂單管理 - </a>
+	                                </li>
+	                                <li>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a>
 	                                </li>
 	                                <li>
 	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>
