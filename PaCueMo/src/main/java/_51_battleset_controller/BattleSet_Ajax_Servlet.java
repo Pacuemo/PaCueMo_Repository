@@ -19,8 +19,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.google.gson.Gson;
 
+import _00_config.RootConfig;
 import _50_gambling_facade.GamblingFacade;
-import _50_gambling_facade.GamblingFacade_Config;
 import _51_battleset_service.BattleSetService;
 import _9_41_member_model.MemberDAO_Spring;
 import _9_41_member_model.MemberDAO_interface_Spring;
@@ -44,7 +44,7 @@ public class BattleSet_Ajax_Servlet extends HttpServlet
 //		context.scan("_51_battleset_service");
 //		context.register(BattleSetBeans_Config.class);
 		context.scan("_50_gambling_facade");
-		context.register(GamblingFacade_Config.class);
+		context.register(RootConfig.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
 		mbDAO = (MemberDAO_Spring) context.getBean("MemberDAO");

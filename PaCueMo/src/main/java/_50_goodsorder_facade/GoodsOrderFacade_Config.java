@@ -3,16 +3,13 @@ package _50_goodsorder_facade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
-import _00_config.LiyideScanConfig;
-import _53_goodsorder_service.GoodsOrderBeans_Config;
 import _53_goodsorder_service.GoodsOrderService;
 import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Configuration
 @ComponentScan({ "_50_goodsorder_facade" })
-@Import({ GoodsOrderBeans_Config.class, LiyideScanConfig.class })
+//@Import({ GoodsOrderBeans_Config.class, LiyideScanConfig.class })
 public class GoodsOrderFacade_Config
 {
 	@Bean(name = "goodsOrderFacade2")

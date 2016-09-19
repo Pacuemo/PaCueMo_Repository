@@ -2,9 +2,8 @@ package _59_task_routine;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 
-@WebListener
+// @WebListener
 public class RoutineTaskListener implements ServletContextListener
 {
 

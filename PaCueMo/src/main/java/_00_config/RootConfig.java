@@ -24,12 +24,13 @@ import com.warrenstrange.googleauth.GoogleAuthenticator;
 
 import _00_initial_service.GlobalService;
 import _10_Configs.StevenScanConfig;
+import _50_SpringConfigs.Roger_ScanConfig;
 import _9_21_club_model.ClubConfig;
 import _9_23_league_model.LeagueConfig;
 
 @Configuration
 @ComponentScan({ "_9_41_member_model", "_00_initial_service" })
-@Import({ ClubConfig.class, LeagueConfig.class, StevenScanConfig.class, LiyideScanConfig.class })
+@Import({ ClubConfig.class, LeagueConfig.class, StevenScanConfig.class, LiyideScanConfig.class, Roger_ScanConfig.class })
 @EnableTransactionManagement
 public class RootConfig
 {

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+import _00_config.RootConfig;
 import _50_goodsorder_facade.GoodsOrderFacade;
-import _50_goodsorder_facade.GoodsOrderFacade_Config;
 import _9_41_member_model.MemberVO;
 import _9_53_goodsorder_model.GoodsOrderVO;
 
@@ -31,7 +31,7 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 	{
 		context = new AnnotationConfigWebApplicationContext();
 		context.scan("_50_goodsorder_facade");
-		context.register(GoodsOrderFacade_Config.class);
+		context.register(RootConfig.class);
 		context.refresh();
 		buyPointsSvc = (GoodsOrderFacade) context.getBean("goodsOrderFacade2");
 
