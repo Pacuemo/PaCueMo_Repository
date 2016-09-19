@@ -99,28 +99,42 @@ public class GambleOrderService
 
 		//========= 【測試】addOne() ==========
 //		GambleOrderVO vvo = new GambleOrderVO();
-//		vvo.setMemberId("FB59BB9B-6A41-48B7-8410-5C39FCACCB82");
+//		vvo.setMemberId("01BF5304-DBCF-4BA9-A2C6-7200C98D7B9B");
 //		vvo.setBattleId(254);
-//		vvo.setBetMoney(2300.0);
-//		vvo.setBetTeam(0);
+//		vvo.setBetHome(999.0);
+//		vvo.setBetAway(999.0);
+//		vvo.setBetTime(java.sql.Timestamp.valueOf("2016-09-19 11:23:00"));
 //		svc.addOne(vvo);
 		//========= 【測試】Update() ==========
 //		GambleOrderVO vvo = new GambleOrderVO();
-//		vvo.setGambleId(11);
-//		vvo.setMemberId("FB59BB9B-6A41-48B7-8410-5C39FCACCB82");
-//		vvo.setBattleId(114);
-//		vvo.setBetMoney(8000.0);
-//		vvo.setBetTeam(1);
+//		vvo.setGambleId(46);
+//		vvo.setMemberId("01BF5304-DBCF-4BA9-A2C6-7200C98D7B9B");
+//		vvo.setBattleId(254);
+//		vvo.setBetHome(888.0);
+//		vvo.setBetAway(888.0);
+//		vvo.setBetTime(java.sql.Timestamp.valueOf("2016-09-19 11:23:00"));
 //		svc.update(vvo);
-
 		//========= 【測試】getOne() ==========
 //		GambleOrderVO vo = svc.getOne(1);
-//		System.out.println(vo.getMemberId());
+//		System.out.println(
+//				String.format("%1s %40s %5s %10s %10s \t %10s",
+//						vo.getGambleId(),
+//						vo.getMemberId(),
+//						vo.getBattleId(),
+//						vo.getBetHome(),
+//						vo.getBetAway(),
+//						vo.getBetTime()));
 		//========= 【測試】getAll() ==========
 //		List<GambleOrderVO> list = svc.getAll();
 //		for (GambleOrderVO vo : list)
 //		{
-//			String tmp = String.format("%1s %40s %5s %10s %10s", vo.getGambleId(), vo.getMemberId(), vo.getBattleId(), vo.getBetHome(), vo.getBetAway());
+//			String tmp = String.format("%1s %40s %5s %10s %10s \t %10s",
+//					vo.getGambleId(),
+//					vo.getMemberId(),
+//					vo.getBattleId(),
+//					vo.getBetHome(),
+//					vo.getBetAway(),
+//					vo.getBetTime());
 //			System.out.println(tmp);
 //		}
 		//========= 【測試】getMembersByBattleId() ==========
@@ -130,7 +144,7 @@ public class GambleOrderService
 //			System.out.println(vo.getMemberFirstName() + " " + vo.getMemberLastName());
 //		}
 		//========= 【測試】getBattleSetsByMbId() ==========
-//		List<BattleSetVO> list = svc.getBattleSetsByMbId("382F736E-F2BF-48C7-8A60-466FD01AE887");
+//		List<BattleSetVO> list = svc.getBattleSetsByMbId("091CA478-5C43-40F9-AEEB-63A509B90E21");
 //		for (BattleSetVO vo : list)
 //		{
 //			System.out.println(vo.getBattleDateTime() + " " + vo.getBattleId());
@@ -139,7 +153,14 @@ public class GambleOrderService
 //		List<GambleOrderVO> list = svc.getOrdersByBattleId(315);
 //		for (GambleOrderVO vo : list)
 //		{
-//			System.out.println(vo.getGambleId() + "  " + vo.getMemberId() + "  " + vo.getBetAway() + "  " + vo.getBetHome());
+//			String tmp = String.format("%1s %40s %5s %10s %10s \t %10s",
+//					vo.getGambleId(),
+//					vo.getMemberId(),
+//					vo.getBattleId(),
+//					vo.getBetHome(),
+//					vo.getBetAway(),
+//					vo.getBetTime());
+//			System.out.println(tmp);
 //		}
 	}
 

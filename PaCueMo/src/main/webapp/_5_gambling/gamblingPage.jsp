@@ -489,7 +489,8 @@
 		                             			 	  "awayId"     : $("#awayId").val(),// input hidden
 		                             			 	  "homeId"	   : $("#homeId").val(),// input hidden
 		                             			 	  "awayCoins"  : $("#awayCoins").val(),
-		                             			 	  "homeCoins"  : $("#homeCoins").val()
+		                             			 	  "homeCoins"  : $("#homeCoins").val(),
+		                             			 	  "betTime"    : timeStamp()  // 會員下注時間
 		                             		  },
 		                    				 "success":function(data){
 													

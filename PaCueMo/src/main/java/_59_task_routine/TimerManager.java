@@ -32,9 +32,9 @@ public class TimerManager
 	public TimerManager()
 	{
 		//--- 建構子 ----
-		this.hour = 9;
-		this.min = 35;
-		this.sec = 30;
+		this.hour = 14;
+		this.min = 38;
+		this.sec = 0;
 		//---------------
 		setTimerTask(this.hour, this.min, this.sec);
 	}

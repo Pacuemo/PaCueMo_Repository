@@ -30,6 +30,7 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 	private static final String UPDATE_FBID = "UPDATE dbo.Member SET memberFBId = ?, memberImgUrl = ? WHERE memberId = ?";
 	private static final String UPDATE_SKEY = "UPDATE dbo.Member SET memberSecretKey = ?, member2StepVerify = ? WHERE memberId = ?";
 	private static final String UPDATE_PASSWORD_BY_PK = "UPDATE dbo.Member SET memberPassword = ?, memberOutDate = ? WHERE memberId = ?";
+	private static final String CHANGE_PASSWORD_BY_PK = "UPDATE dbo.Member SET memberPassword = ? WHERE memberId = ?";
 	private static final String UPDATE_FORGETPWD_BY_MAIL = "UPDATE dbo.Member SET memberOutDate = ?, memberValidateCode = ? WHERE memberMail = ?";
 	private static final String UPDATE_IMG = "UPDATE dbo.Member SET memberImgUrl = ? WHERE memberId = ?";
 	private static final String UPDATE_POINT = "UPDATE dbo.Member SET memberPoint = ? WHERE memberId = ?";
@@ -131,8 +132,9 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 	@Override
 	public int updateMemberImg(MemberVO memberVO)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return jdbc.update(UPDATE_IMG,
+				memberVO.getMemberImgUrl(),
+				memberVO.getMemberId());
 	}
 
 	@Override
