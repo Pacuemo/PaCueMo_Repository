@@ -44,12 +44,13 @@ public class CourtServlet extends HttpServlet
 				response.setHeader("content-type", "text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
-				String queryCourtName = request.getParameter("courtName").trim();
+				String queryCourtName = request.getParameter("queryCourtName").trim();
 
 				if (queryCourtName.equals(""))
 				{
 					System.out.println("請輸入場地名稱");
 					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}"); // JSON格式
+					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
 					return;
 				}
 
@@ -59,6 +60,7 @@ public class CourtServlet extends HttpServlet
 				{
 					System.out.println("查無場地");
 					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}");
+					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
 					return;
 				}
 				else
@@ -69,13 +71,13 @@ public class CourtServlet extends HttpServlet
 					System.out.println(ans);
 					out.println(ans);
 					return;
-				}
+				}		
+				
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				request.getRequestDispatcher("/").forward(request, response);//導向頁面
+				errorMsgs.add("無法取得資料:" + e.getMessage());				
 				return;
 			}
 		}
