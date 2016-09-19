@@ -44,7 +44,7 @@
 								<li><a href="#">發送訊息</a></li>
 								<li class="divider"></li>
 								<li>
-									<a id="apply_team" href="#" style="padding-left: 25px;padding-right: 0px;">管理隊伍 <span class="badge"></span></a>
+									<a id="apply_team" href="${pageContext.request.contextPath}/spring/tm_apply/applyCheck?teamId=${teamVO.teamId}" style="padding-left: 25px;padding-right: 0px;">管理隊伍 <span id="badge" class="badge"></span></a>
 								</li>
 								<li>
 									<s:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
@@ -97,8 +97,13 @@
 	</nav>
 </div>
 
-<div id="dialog" title="申請用戶"></div>
+<div id="dialog_thx" title="申請用戶"></div>
 <div id="dialog-apply" title="社團申請"></div>
+
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrapAlert.js"></script>
 
 <script>
 	$(function()
@@ -165,10 +170,17 @@
 			dialog.dialog("open"); 			
 		}); // sidebar dialog end  
 		
-		
+
+
+
+
 		var memberId = "${LoginOK.memberId}";
-		var teamHead = "${teamVO.teamHead}";
+		if("${teamVO != null}"){
+			var teamHead = "${teamVO.teamHead}";
+		}
 		var contextPath="${pageContext.request.contextPath}";
+
+		
 // // 		-----------------團長打開查看申請按鈕------------
 // 		if (memberId == teamHead && $.trim(memberId).length !=0)
 // 		{
@@ -178,7 +190,7 @@
 // 		}else if(memberId!=clubHead){
 // 			$("#club-apply").attr("style", "display: block");
 
-// 			}
+// 		}
 
 		// ---------------------拿到未讀數目------------------
 		function check_count()
@@ -197,9 +209,9 @@
 						{
 							$(".badge").empty();
 						}
+						chkPosition()
 					}
 			});
-
 		}
 		// ---------------------拿到未讀數目------------------
 		
@@ -207,27 +219,36 @@
 		
     function check_chage()
 		{
-			$.ajax({ url : "${pageContext.request.contextPath}/spring/club/countChange?clubId=${MyClub.clubID}", dataType : "json", success : function(message)
+			$.ajax({ url : "${pageContext.request.contextPath}/spring/tm_apply/countChange?teamId=${teamVO.teamId}", dataType : "json", success : function(message)
 			{		
 					$(".badge").empty();
+					chkPosition()
 				}
-			}) };
+			}) 
+		};
 		
-			//---------------------改變未讀狀態為已讀---------------	
 		// --dialog設定---------------------------------------------------------------------
 
-		$("#dialog").dialog({ autoOpen : false, height : 400, width : 400, modal : true, close : function(event, ui)
+		$("#dialog_thx").dialog({ autoOpen : false, height : 400, width : 400, modal : true, close : function(event, ui)
 		{
-			$('#apply-ajax').attr("href", "${pageContext.request.contextPath}/spring/club/applyCheck?clubId=${MyClub.clubID}");
-			$('#dialog').html("");
+			$('#apply_team').attr("href", "${pageContext.request.contextPath}/spring/tm_apply/applyCheck?teamId=${teamVO.teamId}");
+			$('#dialog_thx').html("");
 			check_count();
 		}, position : { my : "center", at : "center", of : window } });
 
 		// ---------------------------------------------------------------------------------
 		
+		function chkPosition(){
+			if($("#badge").html() == ""){
+				$('#apply_team').css("padding-left","0px")
+			}else{
+				$('#apply_team').css("padding-left","23px")
+			}
+		}
+		
 		// ------------------搜尋會員Ajax--------------------------------------------
 
-		$("#apply-ajax").click(function(event)
+		$("#apply_team").click(function(event)
 		{
 			event.preventDefault();
 
@@ -235,8 +256,8 @@
 			url : $(this).attr("href"), "dataType" : "json",//Servlet回傳格式
 			success : function(data)
 			{
-				$('#apply-ajax').attr("href", "#");
-				var applyDiv = $('<div></div>').appendTo("#dialog");
+				$('#apply_team').attr("href", "#");
+				var applyDiv = $('<div></div>').appendTo("#dialog_thx");
 				var ul = $('<ul></ul>').addClass("list-group").appendTo(applyDiv);
 				$.each(data, function(index, object)
 				{
@@ -248,16 +269,12 @@
 					var agreeA = $('<input/>').addClass("agree").val("同意").attr("type", "button").appendTo(li).bind("click", function()
 					{
 						$(this).prop("disabled", true).siblings().prop("disabled", true);
-						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/club/agreeApply", dataType : "json",//Servlet回傳格式
-						data : { "clubId" : object.clubId, "memberId" : object.memberId }, success : function(message)
+						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/tm_apply/agreeApply", dataType : "json",//Servlet回傳格式
+						data : { "teamId" : object.teamId, "memberId" : object.memberId }, success : function(message)
 						{
-
 							switch ($.trim(message.status)) {
 								case "success":
-									BootstrapAlert.success({ title : "Congrat!", message : "成功新增一名社團成員!!!!" });
-									break;
-								case "already":
-									BootstrapAlert.alert({ title : "Sorry!", message : "該會員已有社團，新增失敗" });
+									BootstrapAlert.success({message : "成功加入隊伍!" });
 									break;
 							}
 						} })
@@ -267,12 +284,12 @@
 					var deleteA = $('<input/>').addClass("delete").val("刪除").attr("type", "button").appendTo(li).bind("click", function()
 					{
 						$(this).prop("disabled", true).siblings().prop("disabled", true);
-						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/club/deleteApply", dataType : "json",//Servlet回傳格式
-						data : { "clubId" : object.clubId, "memberId" : object.memberId }, success : function(message)
+						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/tm_apply/rejectApply", dataType : "json",//Servlet回傳格式
+						data : { "teamId" : object.teamId, "memberId" : object.memberId }, success : function(message)
 						{
 							switch ($.trim(message.status)) {
 								case "success":
-									BootstrapAlert.success({ title : "Congrat!", message : "成功刪除申請資料" });
+									console.log("已拒絕加入隊伍")
 									break;
 							}
 						} })
@@ -280,7 +297,7 @@
 				});
 			} });
 			check_chage();
-			$("#dialog").dialog("open");
+			$("#dialog_thx").dialog("open");
 		});
 		
 // init End
