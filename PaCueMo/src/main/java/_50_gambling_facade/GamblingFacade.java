@@ -61,7 +61,7 @@ public class GamblingFacade
 	// PROPAGATION_MANDATORY : 方法必須在一個現存的交易中進行，否則丟出例外
 	// @Transactional(rollbackFor=Exception.class) //指定回滾,需要捕獲的例外(throw new Exception(“");)不會回滾
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public String updateMemberAndBattleSetCoin(BattleSetVO bVO, MemberVO mVO, Integer homeCoins, Integer awayCoins)
+	public String updateMemberAndBattleSetCoin(BattleSetVO bVO, MemberVO mVO, Integer homeCoins, Integer awayCoins, java.sql.Timestamp betTime)
 	{
 		System.out.println(" ======== 呼叫 GamblingFacade → updateMemberAndBattleSetCoin(BattleSetVO bVO , MemberVO mVO) 方法 =======");
 		// *************** (1). 更新﹝對戰組合﹞主客隊點數 =====
@@ -80,6 +80,7 @@ public class GamblingFacade
 		gamblebVO.setBattleId(bVO.getBattleId());
 		gamblebVO.setBetHome(Double.valueOf(homeCoins));
 		gamblebVO.setBetAway(Double.valueOf(awayCoins));
+		gamblebVO.setBetTime(betTime);
 		System.out.print(" 3.== GamblingFacade  ");
 		gambleSvc.addOne(gamblebVO);
 		//=====================================================
