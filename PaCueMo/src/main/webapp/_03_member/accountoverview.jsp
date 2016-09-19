@@ -13,6 +13,9 @@
     .ui-widget {
    		z-index:1000000 !important; /* The default is 100. !important overrides the default. */
 	}	
+	img {
+  		max-width: 100%; /* This rule is very important, please do not ignore this! */
+	}	
 </style>
 </head>
 <body>
@@ -51,7 +54,7 @@
 							<div class="form-group">
 		   					 	<label class="control-label"></label>
 		   					</div>
-							<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-photo">上傳修改大頭貼</button>
+							<div><label class="btn btn-secondary btn-sm btn-block center-block" id="btn-photo" for="upload">上傳修改大頭</label><input type="file" id="upload"/></div>
 						</div>
 						</c:if>
 					 </div>
@@ -86,26 +89,26 @@
 								<c:choose>
 							        <c:when test="${not empty friends.fbIds[i]}">
 							        <div class="form-group">
-							        <button class="form-control-static1 test"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${friends.names[i]}"><font>${friends.names[i]}</font></button>
+							        <button class="form-control-static1 test" value="${friends.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${friends.names[i]}"><font>${friends.names[i]}</font></button>
 							        </div>
 							        </c:when>
 							        <c:when test="${not empty friends.imgs[i]}">
 							        <div class="form-group">
-							        <button class="form-control-static1 test"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${friends.imgs[i]}" alt="${friends.names[i]}"><font>${friends.names[i]}</font></button>
+							        <button class="form-control-static1 test" value="${friends.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${friends.imgs[i]}" alt="${friends.names[i]}"><font>${friends.names[i]}</font></button>
 							        </div>
 							        </c:when>
 							        <c:when test="${i >= fn:length(friends.ids)}">
 							        </c:when>
 							        <c:otherwise>
 							        <div class="form-group">
-							        <button class="form-control-static1 test"><div class="user-icon-container img-circle navbar-user-img2"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use></svg></div><font>${friends.names[i]}</font></button>
+							        <button class="form-control-static1 test" value="${friends.ids[i]}"><div class="user-icon-container img-circle navbar-user-img2"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use></svg></div><font>${friends.names[i]}</font></button>
 							        </div>
 							        </c:otherwise>							    
       							</c:choose>
 							</c:forEach>
 								<c:if test="${fn:length(friends.ids) > 5 }">
 								<div class="form-group">
-								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-friendslist">進入好友列表</button>
+								<a class="btn btn-secondary btn-sm btn-block center-block" id="btn-friendslist" href="${pageContext.request.contextPath}/_03_member/friendsList.do">進入好友列表</a>
 								</div>
 								</c:if>
 							</c:when>
@@ -123,10 +126,10 @@
 	</div>
 </div>
 <c:if test="${ empty LoginOK.memberFBId }">
-<div id="dialog-form" title="Create new user" style="display:none">
+<div id="dialog-form" title="裁切圖片" style="display:none">
   <form>
     <fieldset>
-    	<input type="file"/>
+    	<img id="photo" />
     </fieldset>
   </form>
 </div>
@@ -135,6 +138,36 @@
 </body>	
 <c:choose>
 	<c:when test="${empty LoginOK.memberFBId }">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/cropper.min.css">
+	<script src="${pageContext.request.contextPath}/js/cropper.min.js"></script>
+	<script type="text/javascript">
+	function loadImage(e) {
+		 $("#photo").attr("src",e.target.result);
+	     e.preventDefault();
+	     dialog.dialog( "open" );
+	     $('#photo').cropper({
+			  aspectRatio: 1 / 1,
+			  crop: function(e) {
+			    // Output the result data for cropping image.
+			    console.log(e.x);
+			    console.log(e.y);
+			    console.log(e.width);
+			    console.log(e.height);
+			    console.log(e.rotate);
+			    console.log(e.scaleX);
+			    console.log(e.scaleY);
+			  }
+		});
+	}
+	function previewImage() {
+		 var reader = new FileReader();
+		 var file = document.getElementById("upload").files[0];
+		 reader.readAsDataURL(file);
+		 reader.onload = loadImage;
+	}
+	$("#upload").change(previewImage);
+	
+	</script>
 	<script>
 	  $(function(){
 		  window.fbAsyncInit = function() {
@@ -211,18 +244,40 @@
 	  $( function() {
 		    dialog = $( "#dialog-form" ).dialog({
 		      autoOpen: false,
-		      height: 400,
-		      width: 350,
+		      height: 600,
+		      width: 600,
 		      modal: true,
 		      buttons: {
-		        "Create an account": function(){
-		        	
+		        "上傳圖片": function(){
+		        	$("#photo").cropper('getCroppedCanvas').toBlob(function (blob) {
+		        		  var formData = new FormData();
+
+		        		  formData.append('croppedImage', blob);
+		        		  $.ajax('upload.do', {
+		        		    method: "POST",
+		        		    data: formData,
+		        		    processData: false,
+		        		    contentType: false,
+		        		    success: function () {
+		        		      console.log('Upload success');
+								$('#dialog-form').dialog('close');
+ 								window.location.reload(true);
+		        		    },
+		        		    error: function () {
+		        		      console.log('Upload error');
+		        		    }
+		        		  });
+		        		});
 		        },
-		        Cancel: function() {
+		        "取消": function() {
+		          $("#photo").cropper("destroy")
+		          document.getElementById("upload").value = "";
 		          dialog.dialog( "close" );
 		        }
 		      },
 		      close: function() {
+		    	$("#photo").cropper("destroy");
+		    	document.getElementById("upload").value = "";
 		        form[ 0 ].reset();
 		      }
 		    });
@@ -231,12 +286,16 @@
 		      event.preventDefault();
 		    });
 		 
-		    $( "#btn-photo" ).button().on( "click", function( event ) {
-		      event.preventDefault();
-		      dialog.dialog( "open" );
-		    });
 		  } );
 	</script>
 	</c:when>
 </c:choose>
+	<script type="text/javascript">
+	$(function(){
+		$(".form-control-static1.test").bind("click",function(){
+			var guid = $(this).val();
+			location.href = "../spring/playercard/Playercard?guid="+guid;
+		})	
+	})
+	</script>
 </html>

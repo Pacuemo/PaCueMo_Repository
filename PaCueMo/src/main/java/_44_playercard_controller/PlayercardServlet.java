@@ -2,6 +2,8 @@ package _44_playercard_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import _41_login_service.LoginService_Spring;
+import _43_member_service.MemberService_Spring;
 import _44_playercard_service.PlayercardService;
 import _9_41_member_model.MemberVO;
 import _9_42_playerCard_model.PlayerCardVO;
+import _9_43_friendsList_model.FriendsListVO;
 
 @Controller
 @RequestMapping("/playercard")
@@ -23,6 +28,10 @@ public class PlayercardServlet
 {
 	@Autowired
 	private PlayercardService ps;
+	@Autowired
+	private LoginService_Spring ls;
+	@Autowired
+	private MemberService_Spring ms;
 
 	@RequestMapping("Myplayercard")
 	public String home(HttpServletRequest request)
@@ -35,6 +44,64 @@ public class PlayercardServlet
 			request.setAttribute("Playercard", pv);
 		}
 		return "playercard/myplayercard";
+	}
+
+	@RequestMapping(value = "Playercard", method = RequestMethod.GET)
+	public String playcard(HttpServletRequest request, HttpSession session)
+	{
+		String memberId = request.getParameter("guid");
+		MemberVO me = (MemberVO) session.getAttribute("LoginOK");
+		MemberVO friend = ls.findbyGUID(memberId);
+		FriendsListVO fVO = new FriendsListVO();
+		HashMap<String, List<String>> map = ms.showAllFriends(memberId);
+		request.setAttribute("friends", map);
+
+		if (me != null && memberId != null)
+		{
+
+			if (me.getMemberId().equals(memberId))
+			{
+				PlayerCardVO pv = ps.getPlayercardByPK(me.getMemberId());
+				request.setAttribute("Playercard", pv);
+				return "playercard/myplayercard";
+			}
+
+			if (friend.getMemberHaveCard())
+			{
+				PlayerCardVO pv = ps.getPlayercardByPK(friend.getMemberId());
+				request.setAttribute("Playercard", pv);
+
+			}
+
+			fVO.setMemberId(me.getMemberId());
+			fVO.setMemberFriendId(memberId);
+
+			if ((fVO = ms.getFriend(fVO)) != null)
+			{
+				if (fVO.getMemberStatus() == 1)
+				{
+					request.setAttribute("Status", "1"); //friend
+				}
+				else if (fVO.getMemberStatus() == 2)
+				{
+					request.setAttribute("Status", "2"); //inviting
+				}
+				else
+				{
+
+				}
+			}
+			else
+			{
+				request.setAttribute("Status", "4");// no relationship
+			}
+
+			request.setAttribute("Info", friend);
+
+			return "playercard/playercard";
+		}
+
+		return "playercard/error";
 	}
 
 	@ResponseBody
