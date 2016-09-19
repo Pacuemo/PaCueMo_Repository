@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import _9_41_member_model.MemberVO;
 import _9_51_battleset_model.BattleSetVO;
 import _9_54_gambleorder_model.GambleOrderVO;
 
+@Component
 @Transactional
 public class GamblingFacade
 {

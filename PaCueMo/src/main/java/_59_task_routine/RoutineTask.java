@@ -17,8 +17,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+import _00_config.RootConfig;
 import _50_gambling_facade.GamblingFacade;
-import _50_gambling_facade.GamblingFacade_Config;
 import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 
@@ -38,6 +38,7 @@ public class RoutineTask extends TimerTask
 	private GamblingFacade gamblingFacade4; /* 變數名一定要叫 gamblingFacade4 → 因為GamblingFacade_Config定義太多型態相同的GamblingFacade */
 	@Autowired
 	private MemberDAO_interface_Spring mbDAO;
+	//--------------------------------------------
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String format1 = "yyyy-MM-dd";
 	private static String flag_isUpdate = "yet_update";
@@ -66,7 +67,7 @@ public class RoutineTask extends TimerTask
 			if ("start_Update".equals(flag_isUpdate))
 			{
 				//----------------------------------------------------------------
-				ApplicationContext context = new AnnotationConfigApplicationContext(GamblingFacade_Config.class);
+				ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 				RoutineTask routineTask = (RoutineTask) context.getBean("taskRoutine");
 				System.out.println(" ****** 執行當前的時間 " + sdf.format(Calendar.getInstance().getTime()) + " ****** ");
 				try

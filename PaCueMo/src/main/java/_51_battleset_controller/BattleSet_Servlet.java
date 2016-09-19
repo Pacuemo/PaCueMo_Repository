@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import _51_battleset_service.BattleSetBeans_Config;
+import _00_config.RootConfig;
 import _51_battleset_service.BattleSetService;
 
 @WebServlet("/_5_gambling/BattleSet_Servlet.do")
@@ -31,7 +31,7 @@ public class BattleSet_Servlet extends HttpServlet
 	{
 		context = new AnnotationConfigWebApplicationContext();
 		context.scan("_51_battleset_service");
-		context.register(BattleSetBeans_Config.class);
+		context.register(RootConfig.class);
 		context.refresh();
 		svc = (BattleSetService) context.getBean("bSetService");
 	}

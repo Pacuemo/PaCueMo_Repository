@@ -13,6 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
+import _00_config.RootConfig;
 import _9_52_nbateam_model.NBATeamDAO;
 import _9_52_nbateam_model.NBATeamDAO_interface;
 import _9_52_nbateam_model.NBATeamVO;
@@ -56,7 +57,7 @@ public class NBATeamService
 //		response.setHeader("Access-Control-Allow-Origin", "*");
 //		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
 //		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		NBATeamDAO_interface nbaTeamDAO = (NBATeamDAO) context.getBean("nbaTeamDAO");
 		System.out.println("== 呼叫 NBATeamService 中的 getByTeamNameREST(隊名) ==   查詢隊名字串：" + teamName);
 		NBATeamVO ans = nbaTeamDAO.findByTeamName(teamName);

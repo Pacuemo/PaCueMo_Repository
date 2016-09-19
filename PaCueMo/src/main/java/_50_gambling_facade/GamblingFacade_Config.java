@@ -3,20 +3,15 @@ package _50_gambling_facade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
-import _00_config.LiyideScanConfig;
-import _51_battleset_service.BattleSetBeans_Config;
 import _51_battleset_service.BattleSetService;
-import _53_goodsorder_service.GoodsOrderBeans_Config;
 import _53_goodsorder_service.GoodsOrderService;
-import _54_gambleorder_service.GambleOrderBeans_Config;
 import _54_gambleorder_service.GambleOrderService;
 import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Configuration
-@Import({ BattleSetBeans_Config.class, GoodsOrderBeans_Config.class, GambleOrderBeans_Config.class, LiyideScanConfig.class })
 @ComponentScan({ "_50_gambling_facade", "_59_task_routine" })
+//@Import({ BattleSetBeans_Config.class, GoodsOrderBeans_Config.class, GambleOrderBeans_Config.class, LiyideScanConfig.class })
 public class GamblingFacade_Config
 {
 	@Bean(name = "gamblingFacade1")

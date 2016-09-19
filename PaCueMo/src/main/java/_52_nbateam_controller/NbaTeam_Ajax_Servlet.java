@@ -15,7 +15,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.google.gson.Gson;
 
-import _51_battleset_service.BattleSetBeans_Config;
+import _00_config.RootConfig;
 import _52_nbateam_service.NBATeamService;
 import _9_52_nbateam_model.NBATeamVO;
 
@@ -32,7 +32,7 @@ public class NbaTeam_Ajax_Servlet extends HttpServlet
 	{
 		context = new AnnotationConfigWebApplicationContext();
 		context.scan("_52_nbateam_service");
-		context.register(BattleSetBeans_Config.class);
+		context.register(RootConfig.class);
 		context.refresh();
 		svc = (NBATeamService) context.getBean("nbaTeamService");
 	}
