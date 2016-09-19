@@ -335,7 +335,8 @@
 	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_gambleOrder_manager.jsp"> - 下注訂單管理 - </a>
 	                                </li>
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_goodsOrder_manager.jsp"> - 代幣訂單管理 - </a>
+	                                <!--<a href="<%=request.getContextPath()%>/_5_gambling_backstage/_goodsOrder_manager.jsp"> - 代幣訂單管理 - </a>-->
+	                                    <a href="<%=request.getContextPath()%>/spring/goodsOrder/allGoodsOrders"> - 代幣訂單管理 - </a>
 	                                </li>
 	                                <li>
 	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a>

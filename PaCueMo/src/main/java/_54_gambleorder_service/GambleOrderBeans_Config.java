@@ -13,7 +13,7 @@ import _9_51_battleset_model.BattleSetDAO;
 import _9_54_gambleorder_model.GambleOrderDAO;
 
 @Configuration
-@ComponentScan({ "_9_54_gambleorder_model" })
+@ComponentScan({ "_9_54_gambleorder_model", "_53_goodsorder_service" })
 @Import({ RootConfig.class, BattleSetBeans_Config.class })
 public class GambleOrderBeans_Config
 {
