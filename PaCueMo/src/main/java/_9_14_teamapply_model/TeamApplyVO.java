@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import _9_41_member_model.MemberVO;
+
 @Component
 public class TeamApplyVO implements java.io.Serializable
 {
@@ -14,6 +16,7 @@ public class TeamApplyVO implements java.io.Serializable
 	private Integer applystatus;
 	private Date applyDate;
 	private Integer checked;
+	private MemberVO memberVO;
 
 	public TeamApplyVO()
 	{
@@ -82,6 +85,16 @@ public class TeamApplyVO implements java.io.Serializable
 	public void setChecked(Integer checked)
 	{
 		this.checked = checked;
+	}
+
+	public MemberVO getMemberVO()
+	{
+		return memberVO;
+	}
+
+	public void setMemberVO(MemberVO memberVO)
+	{
+		this.memberVO = memberVO;
 	}
 
 }

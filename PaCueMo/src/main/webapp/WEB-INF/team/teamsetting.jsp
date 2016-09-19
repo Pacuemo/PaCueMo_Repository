@@ -47,6 +47,7 @@
 </script>
 </head>
 <body>
+
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
 	<style>
@@ -57,17 +58,22 @@ body {
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 
+<c:set target="${requestScope.teamVO}" property="teamId" value="${requestScope.teamId}"/>
+<c:set target="${requestScope.teamVO}" property="teamName" value="${requestScope.teamName}"/>
+<c:set target="${requestScope.teamVO}" property="teamProp" value="${requestScope.teamProp}"/>
+<c:set target="${requestScope.teamVO}" property="teamHead" value="${requestScope.teamHead}"/>
+<c:set target="${requestScope.teamVO}" property="content" value="${requestScope.content}"/>
 	<div class="row" style="padding-left: 30px">
 		<div class="col-md-12">
 			<h2 style="color: white;">
 				<c:choose>
-					<c:when test="${not empty requestScope.teamVO_update}"> ${requestScope.teamVO_update.teamName}</c:when>
+					<c:when test="${not empty requestScope.teamVO}"> ${requestScope.teamVO.teamName}</c:when>
 					<c:otherwise>TeamName !</c:otherwise>
 				</c:choose>
 				<small> - <c:choose>
-						<c:when test="${requestScope.teamVO_update.teamProp == 0}"> 公開  </c:when>
-						<c:when test="${requestScope.teamVO_update.teamProp == 1}"> 需申請 </c:when>
-						<c:when test="${requestScope.teamVO_update.teamProp == 2}"> 私密 </c:when>
+						<c:when test="${requestScope.teamVO.teamProp == 0}"> 公開  </c:when>
+						<c:when test="${requestScope.teamVO.teamProp == 1}"> 需申請 </c:when>
+						<c:when test="${requestScope.teamVO.teamProp == 2}"> 私密 </c:when>
 					</c:choose>
 				</small>
 			</h2>
@@ -78,14 +84,14 @@ body {
 
 			<div class="content">
 				<form method="get" action="${pageContext.request.contextPath }/spring/team/updateTeam" >
-					<input type="hidden" autocomplete="off" name="teamId" value="${requestScope.teamVO_update.teamId }">
+					<input type="hidden" autocomplete="off" name="teamId" value="${requestScope.teamVO.teamId }">
 					<div id="groupsEditSaveNotification"></div>
 					<table role="presentation">
 						<tbody>
 							<tr>
 								<th>隊伍名稱</th>
 								<td class="left_40"><div>
-										<input id="teamName" name="teamName" type="text" tabindex="1" maxlength="10" pattern=".{1,}" value="${requestScope.teamVO_update.teamName }">
+										<input id="teamName" name="teamName" type="text" tabindex="1" maxlength="10" pattern=".{1,}" value="${requestScope.teamVO.teamName }">
 									</div></td>
 							</tr>
 							<tr>
@@ -126,7 +132,7 @@ body {
 						<tbody>
 							<tr class="_3stt">
 								<th class="_3sts">隊伍簡介</th>
-								<td class="left_40"><textarea class="uiTextareaAutogrow fbGroupDescriptionEditor" name="content">${requestScope.teamVO_update.content }</textarea>
+								<td class="left_40"><textarea class="uiTextareaAutogrow fbGroupDescriptionEditor" name="content">${requestScope.teamVO.content }</textarea>
 									<div class="mts fsm fwn fcg">若隊伍性質為公開或不公開，及所有成員都看得見隊伍簡介。</div></td>
 							</tr>
 							<tr class="_3sto">
@@ -155,7 +161,7 @@ body {
 		// initial start
 		$(function()
 		{
-			var prop = "${requestScope.teamVO_update.teamProp}";
+			var prop = "${requestScope.teamVO.teamProp}";
 			switch ($.trim(prop)) {
 				case "0":
 					$("#privacy_1").prop('checked', true);

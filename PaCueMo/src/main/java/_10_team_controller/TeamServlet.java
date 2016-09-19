@@ -152,7 +152,8 @@ public class TeamServlet extends HttpServlet
 
 				for (TeamApplyVO list : teamApplyService.getByMemberId_Applying(memberId))
 				{
-					if (list.getTeamId() == teamId)
+
+					if (list.getTeamId().equals(teamId))
 					{
 						req.setAttribute("teamExsist", "Not_Exsist_applying");	//setAtt
 						flag = true;

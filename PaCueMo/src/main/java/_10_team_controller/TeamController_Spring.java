@@ -199,15 +199,26 @@ public class TeamController_Spring
 	}
 
 	@RequestMapping(value = "/settingTeamPage")	// Page
-	public String settingTeamPage(HttpServletRequest request, Integer teamId)
+	public String settingTeamPage(HttpSession session, HttpServletRequest request, Integer teamId)
 	{
 		System.out.println("Team_Controller : getsettingTeamPage");
+		request.removeAttribute("teamVO");
 		TeamVO teamVO = teamService.getTeamById(teamId);
-		System.out.println(teamVO.getTeamName());
 
-		request.setAttribute("teamVO_update", teamVO);
+		System.out.println(teamVO.getTeamName());
+		request.setAttribute("teamVO", teamVO);
+		request.setAttribute("teamId", teamVO.getTeamId());
+		request.setAttribute("teamName", teamVO.getTeamName());
+		request.setAttribute("teamProp", teamVO.getTeamProp());
+		request.setAttribute("teamHead", teamVO.getTeamHead());
+		request.setAttribute("content", teamVO.getContent());
 		request.setAttribute("pageForSideBar", "haveTeamId");
 		request.setAttribute("teamExsist", "Mine");
+
+		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+		List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+		request.setAttribute("myList", myList);
+
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "team/teamsetting";

@@ -444,7 +444,7 @@ body {
 			});
 
 		// 新增 dialog 事件
-			//新增sidebar  team_Create 事件 
+			//新增sidebar team_Create 事件 
 			var dialog;
 			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
 			$("#a_createTeam").on("click", function()	             		
