@@ -5,74 +5,66 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>courtQuery</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
 </head>
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
-<!-- 	選擇器&搜尋button -->
+	<!-- 	選擇器&搜尋button -->
 	<div style="margin-left: 100px; margin-right: 100px">
 		<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 30px">
-			<h2 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">找球場嗎?</h2>
-			<!-- 			<ol class="breadcrumb printdisplaynone"> -->
-			<!-- 				<li><span style="color: red">查詢結果 : 共有<strong class="text-info" style="font-size: 18px"> XX </strong>筆 -->
-			<!-- 				</span></li> -->
-			<!-- 			</ol> -->
-			<!-- 			<div class="btn-group printdisplaynone pull-right" role="group"> -->
-			<!-- 				<a class="btn btn-default" href="" id="SearchQueryText"><i class="fa fa-list printdisplaynone"></i>文字版</a> -->
-			<!-- 			</div> -->
+			<h2 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">找球場嗎?</h2>			
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-4 printdisplaynone">
-			<div class="form-group">
-				<select class="form-control" onchange="changeBlocks(this.selectedIndex);">
-					<option disabled="disabled" selected="selected">全部縣市</option>
-					<option value="2">臺北市</option>
-					<option value="3">新北市</option>
-					<option value="4">桃園市</option>
-					<option value="5">基隆市</option>
-					<option value="6">新竹市</option>
-					<option value="7">新竹縣</option>
-					<option value="8">宜蘭縣</option>
-					<option value="9">苗栗縣</option>
-					<option value="10">臺中市</option>
-					<option value="11">彰化縣</option>
-					<option value="12">南投縣</option>
-					<option value="13">雲林縣</option>
-					<option value="14">嘉義縣</option>
-					<option value="15">嘉義市</option>
-					<option value="16">臺南市</option>
-					<option value="17">屏東縣</option>
-					<option value="18">高雄市</option>
-					<option value="19">花蓮縣</option>
-					<option value="20">臺東縣</option>
-					<option value="21">澎湖縣</option>
-					<option value="22">金門縣</option>
-					<option value="23">連江縣</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<select class="form-control" id="blocks">
-					<option disabled="disabled" selected="selected">全部行政區</option>
-				</select>
-			</div>
-			<form id="searchForm">
-			<div class="form-group">
-				<input id="searchName" type="text" class="form-control" placeholder="請輸入名稱" value="${queryCourtName}" style="margin-bottom: 10px;">
-			</div>
-			<div class="form-group">
-				<button id="searchBtn" class="btn btn-danger form-control " type="submit" >
-					<i class="fa fa-search" style="font-family: 微軟正黑體;">搜尋</i>
-				</button>
-			</div>
+			<form id="searchForm" name="courtsearch" method="post">
+				<div class="form-group">
+					<select class="form-control" onchange="renew(this.selectedIndex);" name="county">
+						<option disabled="disabled" selected="selected">全部縣市</option>
+						<option value="2">臺北市</option>
+						<option value="3">新北市</option>
+						<option value="4">桃園市</option>
+						<option value="5">基隆市</option>
+						<option value="6">新竹市</option>
+						<option value="7">新竹縣</option>
+						<option value="8">宜蘭縣</option>
+						<option value="9">苗栗縣</option>
+						<option value="10">臺中市</option>
+						<option value="11">彰化縣</option>
+						<option value="12">南投縣</option>
+						<option value="13">雲林縣</option>
+						<option value="14">嘉義縣</option>
+						<option value="15">嘉義市</option>
+						<option value="16">臺南市</option>
+						<option value="17">屏東縣</option>
+						<option value="18">高雄市</option>
+						<option value="19">花蓮縣</option>
+						<option value="20">臺東縣</option>
+						<option value="21">澎湖縣</option>
+						<option value="22">金門縣</option>
+						<option value="23">連江縣</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<select class="form-control" name="blocks">
+						<option disabled="disabled" selected="selected">全部行政區</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<input id="searchName" name="querCourtName" type="text" class="form-control" placeholder="請輸入名稱" value="${queryCourtName}" style="margin-bottom: 10px;">
+				</div>
+				<div class="form-group">
+					<button id="searchBtn" class="btn btn-danger form-control " type="submit">
+						<i class="fa fa-search" style="font-family: 微軟正黑體;">搜尋</i>
+					</button>
+				</div>
 			</form>
 		</div>
 	</div>
-<!-- 	地圖資訊 -->
+	<!-- 	地圖資訊 -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
-
 				<div class="page-header">
 					<c:choose>
 						<c:when test="${funFlag=='byCourtName'}">
@@ -89,7 +81,6 @@
 				</div>
 				<div id="tableDiv">
 					<table id="myTable" class="table">
-
 						<c:choose>
 							<c:when test="${funFlag=='byCourtName'}">
 								<c:set var="startNum" value="0" />
@@ -100,33 +91,28 @@
 								<c:set var="endNum" value="2" />
 							</c:otherwise>
 						</c:choose>
-
-<%-- 						<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}" varStatus="vs"> --%>
-<!-- 							<tr align='center' valign='middle'> -->
-<%-- 								<td><img width="150" class="img-rounded" alt="away" src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['away'].teamLogoURL}"></td> --%>
-<%-- 								<td><img width="70" alt="vs4.gif" src="<%=request.getContextPath()%>/_5_gambling/image/VS4.gif"></td> --%>
-<%-- 								<td><img width="150" class="img-rounded" alt="home" src="<%=request.getContextPath()%>/_5_gambling/${battleSetVO['home'].teamLogoURL}"></td> --%>
-<!-- 							</tr> -->
-<!-- 							<tr align='center' valign='middle'> -->
-<%-- 								<td><h4 style="font-family: 微軟正黑體; font-weight: bolder; color: white;">${battleSetVO['away'].teamName}</h4></td> --%>
-<%-- 								<td><Strong class='glyphicon glyphicon-time' style="padding-right: 5px; color: white;">&nbsp;${battleSetVO['battleTime']}</Strong> --%>
-<!-- 								<p /> -->
-<%-- 									<p /> <input type="hidden" value="${battleSetVO.battleId}" /> --%>
-<!-- 								紀錄 battleSetId -->
-<!-- 									<button type="button" class="btn btn-warning" style="width: 35px; height: 35px; color: orange; font-size: 14px; font-family: 微軟正黑體; font-weight: 800; vertical-align: baseline;">下 注</button></td> -->
-<%-- 								<td><h4 style="font-family: 微軟正黑體; font-weight: bolder; color: white;">${battleSetVO['home'].teamName}</h4></td> --%>
-<!-- 							</tr> -->
-<%-- 						</c:forEach> --%>
+						<c:forEach var="battleSetVO" items="${battleSetList}" begin="${startNum}" end="${endNum}" varStatus="vs">
+							<tr align='center' valign='middle'>
+								<td><img width="150" class="img-rounded" alt="away" src=""></td>
+								<td><img width="70" alt="vs4.gif" src=""></td>
+								<td><img width="150" class="img-rounded" alt="home" src=""></td>
+							</tr>
+							<tr align='center' valign='middle'>
+								<td><h4 style="font-family: 微軟正黑體; font-weight: bolder; color: white;"></h4></td>
+								<td><Strong class='glyphicon glyphicon-time' style="padding-right: 5px; color: white;">&nbsp;${battleSetVO['battleTime']}</Strong><p/><p/>
+									<input type="hidden" value="${battleSetVO.battleId}" /> 紀錄 battleSetId
+									<button type="button" class="btn btn-warning" style="width: 35px; height: 35px; color: orange; font-size: 14px; font-family: 微軟正黑體; font-weight: 800; vertical-align: baseline;">下 注</button>
+								</td>
+								<td><h4 style="font-family: 微軟正黑體; font-weight: bolder; color: white;">${battleSetVO['home'].teamName}</h4></td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
-
 				<div style="margin-left: 250px; width: 580px; padding: 10px; background-color: rgb(50, 118, 110, 0.8);">
 					<div id="slicePage"></div>
 				</div>
-
 			</div>
 			<div class="col-md-2"></div>
-
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -140,19 +126,19 @@
 		manyBlocks[5] = [ "東區", "北區", "香山區" ];
 		manyBlocks[6] = [ "竹北市", "竹東鎮", "新埔鎮", "關西鎮", "湖口鄉", "新豐鄉", "峨眉鄉", "寶山鄉", "北埔鄉", "芎林鄉", "橫山鄉", "尖石鄉", "五峰鄉" ];
 
-		function changeBlocks(index)
+		function renew(index)
 		{
 			for (var i = 0; i < manyBlocks[index].length; i++)
-				blocks.options[i] = new Option(manyBlocks[index][i]);
-			blocks.length = manyBlocks[index].length;
+				document.county.blocks.options[i] = new Option(manyBlocks[index][i]);
+			document.county.blocks.length = manyBlocks[index].length;
 		}
 		
 // 		-------------------------查詢場地
 		$("searchBtn").click(function()
 		{
 			funFlag = 'byCourtName';
-			var searchName = $("#searchName").val(); // 搜尋textBox的值(隊名)
-			$('#searchForm').attr({ 'ACTION':"<%=request.getContextPath()%>" + '/_3_view/' + 'CourtServlet.do?' + 'action=queryByName' + '&queryCourtName='+ searchName, 
+			var searchName = $("#searchName").val(); // 搜尋textBox的值(場地)
+			$('#searchForm').attr({ 'ACTION':"${pageContext.request.contextPath}" + '/_3_view/' + 'CourtServlet.do?' + 'action=queryByName' + '&queryCourtName='+ searchName, 
 			  						'METHOD':'POST'}).submit();
 		})
 		
@@ -175,7 +161,7 @@
 								case "byCourtName":
 									actionName = "queryByNameAndPage";
 									ajaxUrl    = "CourtServlet.do";
-									searchName = $("#searchName").val();   // 查詢的隊伍名稱;
+									searchName = $("#searchName").val();   // 查詢的場地名稱;
 									break;								
 							}	
 			        		myAjaxFunction( ajaxUrl , actionName , searchName , "" , pageNo );// 呼叫﹝撈分頁資料 $.ajax function﹞
@@ -186,7 +172,7 @@
 
 	            	$.ajax({
 	            		"type": "POST" ,  //傳遞方式				
-	            		"url" :  "<%=request.getContextPath()%>" + "/_3_view/" + var_ajaxUrl , 
+	            		"url" :  "${pageContext.request.contextPath}" + "/_3_view/" + var_ajaxUrl , 
 	            		"dataType":"json",//Servlet回傳格式
 	            		"data":{ "action": var_actionName , "pageNo":var_pageNo , "searchName": var_searchName },
 	            		"success":function(data){
@@ -221,8 +207,8 @@
 								
 								myrow1.appendTo(mybody);
 								myrow2.appendTo(mybody);
-							})	
-							tableDiv.append(mytable)// ！--表格建立完成--！
+							});	
+							tableDiv.append(mytable);// ！--表格建立完成--！
 	</script>
 </body>
 </html>

@@ -19,7 +19,7 @@
 						<label for="reportType">問題類型</label>
 					</td>
 					<td class="title">
-						<select required="required" id="reportType">
+						<select required="required" id="reportType" name="reportType">
 							<option disabled="disabled" selected="selected" class="form-control">請選擇</option>
 							<option>場地資訊不符</option>
 							<option>其他</option>							
@@ -31,13 +31,13 @@
 						<label for="context">內容描述</label>
 					</td>
 					<td>
-						<textarea required="required" maxlength="500" id="context" class="textsize"></textarea>
+						<textarea required="required" maxlength="500" id="context" class="textsize" name="reportContent"></textarea>
 					</td>
 				</tr>
 			</table>
-			<div>
-				<button type="submit">送出</button>
-				<button type="reset">清除</button>
+			<div> 
+				<button type="submit" class="button">送出</button>
+				<button type="reset" class="button">清除</button>
 			</div>
 		</form>
 	</div>
