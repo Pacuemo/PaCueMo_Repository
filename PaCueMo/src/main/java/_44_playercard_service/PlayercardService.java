@@ -9,6 +9,8 @@ import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 import _9_42_playerCard_model.PlayerCardDAO_interface;
 import _9_42_playerCard_model.PlayerCardVO;
+import _9_43_friendsList_model.FriendsListDAO_interface_Spring;
+import _9_43_friendsList_model.FriendsListVO;
 
 @Component
 public class PlayercardService
@@ -19,10 +21,23 @@ public class PlayercardService
 	@Autowired
 	private MemberDAO_interface_Spring mdao;
 
+	@Autowired
+	private FriendsListDAO_interface_Spring fdao;
+
 	@Transactional
 	public int buildPlayercard(PlayerCardVO playerCardVO, MemberVO memberVO)
 	{
 		if (dao.insertPlayerCard(playerCardVO) == mdao.updatePlayercard(memberVO))
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	@Transactional
+	public int inviteFriend(FriendsListVO me, FriendsListVO friend)
+	{
+		if (fdao.insertFriend(me) == fdao.insertFriend(friend))
 		{
 			return 1;
 		}

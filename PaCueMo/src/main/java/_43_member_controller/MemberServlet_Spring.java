@@ -54,7 +54,9 @@ public class MemberServlet_Spring extends HttpServlet
 			if ("/_03_member/overview.do".equals(servletPath))
 			{
 				HashMap<String, List<String>> map = ms.showAllFriends(memberVO.getMemberId());
+				HashMap<String, List<String>> map1 = ms.showAllFriendsInvite(memberVO.getMemberId());
 				request.setAttribute("friends", map);
+				request.setAttribute("invite", map1);
 				request.getRequestDispatcher("/_03_member/accountoverview.jsp").forward(request, response);
 				return;
 			}

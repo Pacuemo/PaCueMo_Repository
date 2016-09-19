@@ -68,6 +68,27 @@
 	   					</div>
 	   					</div>
 	   					<div class="col-sm-12 col-sm-6">
+	   						<div class="well card profile" id="">
+							<h3 class="text-primary1">好友狀態</h3>
+							<c:choose>
+								<c:when test="${Status == '1'}">
+								<h5 style="color:#1ed760">您們已經是好友了喔!!!</h5>
+								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-delete-friend" value="${Info.memberId }">解除好友關係</button>
+								</c:when>
+								<c:when test="${Status == '2'}">
+								<h5 style="color:#1ed760">等待請求同意</h5>
+								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-invited" value="${Info.memberId }">同意請求</button>
+								</c:when>
+								<c:when test="${Status == '3'}">
+								<h5 style="color:#eb1e32">邀請中</h5>
+								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-inviting" value="${Info.memberId }">取消邀請</button>
+								</c:when>
+								<c:otherwise>
+								<h5 style="color:#eb1e32">你們還不是好友喔!!!</h5>
+								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-invite" value="${Info.memberId }">邀請成為好友</button>
+								</c:otherwise>
+							</c:choose>
+							</div>
 							<div class="well card friendlist" id="">
 							<h3 class="text-primary1">好友</h3>
 							<c:choose>
@@ -95,7 +116,7 @@
 							</c:forEach>
 								<c:if test="${fn:length(friends.ids) > 5 }">
 								<div class="form-group">
-								<a class="btn btn-secondary btn-sm btn-block center-block" id="btn-friendslist" href="${pageContext.request.contextPath}/_03_member/friendsList.do">進入好友列表</a>
+								<a class="btn btn-secondary btn-sm btn-block center-block" id="btn-friendslist" href="${pageContext.request.contextPath}/spring/playercard/Playercard/friends?guid=${Info.memberId}">進入好友列表</a>
 								</div>
 								</c:if>
 							</c:when>
@@ -212,6 +233,15 @@
 		$(".form-control-static1.test").bind("click",function(){
 			var guid = $(this).val();
 			location.href = "Playercard?guid="+guid;
+		})	
+		$("#btn-invite").bind("click",function(){
+			var guid = $(this).val();
+			location.href = "Playercard/friends/invite?guid="+guid;
+		})	
+		
+		$("#btn-inviting").bind("click",function(){
+			var guid = $(this).val();
+			location.href = "Playercard/friends/cancel?guid="+guid;
 		})	
 	})
 	</script>

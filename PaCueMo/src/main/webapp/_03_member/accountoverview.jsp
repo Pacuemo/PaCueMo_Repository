@@ -78,7 +78,7 @@
 								<button class="btn btn-secondary btn-sm btn-block center-block" id="btn-fb-connect">連結臉書帳號</button>
 								</c:otherwise>
 							</c:choose>
-							</div>
+						</div>
 					 </div>
 					 <div class="col-sm-12 col-md-4">
 					 	<div class="well card friendlist" id="">
@@ -118,6 +118,37 @@
 								</div>
 							</c:otherwise>
 							</c:choose>
+						</div>
+						<div class="well card friendlist" id="">
+					 	    <h3 class="text-primary1">好友邀請</h3>
+					 	    <c:choose>
+							<c:when test="${fn:length(invite.ids) > 0}">
+							<c:forEach var="i" begin="0" end="${fn:length(invite.ids)-1}" varStatus ="vs">
+								<c:choose>
+							        <c:when test="${not empty invite.fbIds[i]}">
+							        <div class="test form-group">
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
+							        </div>
+							        </c:when>
+							        <c:when test="${not empty invite.imgs[i]}">
+							        <div class="test form-group">
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${invite.imgs[i]}" alt="${friends.names[i]}"><font>${invite.names[i]}</font></button>
+							        </div>
+							        </c:when>
+							        <c:otherwise>
+							        <div class="test form-group">
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><div class="user-icon-container img-circle navbar-user-img2"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use></svg></div><font>${invite.names[i]}</font></button>
+							        </div>
+							        </c:otherwise>							    
+      							</c:choose>
+							</c:forEach>
+							</c:when>
+							</c:choose>
+							<c:if test="${fn:length(invite.ids) == 0}">
+								<div class="form-group">
+								<div class="form-control-static test"><h5>目前沒有好友邀請喔!!!</h5></div>
+								</div>
+							</c:if>
 						</div>	
 					 </div>
    				</div>
@@ -293,6 +324,12 @@
 	<script type="text/javascript">
 	$(function(){
 		$(".form-control-static1.test").bind("click",function(){
+			var guid = $(this).val();
+			location.href = "../spring/playercard/Playercard?guid="+guid;
+		})	
+	})
+	$(function(){
+		$(".form-control-static1.test1").bind("click",function(){
 			var guid = $(this).val();
 			location.href = "../spring/playercard/Playercard?guid="+guid;
 		})	
