@@ -43,12 +43,14 @@
 								<li><a href="#">加隊員</a></li>
 								<li><a href="#">發送訊息</a></li>
 								<li class="divider"></li>
-								<li><a href="#" style="padding-left: 25px;padding-right: 0px;">管理隊伍 <span class="badge"></span></a></li>
 								<li>
-								<s:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
-									<s:param name="teamId" value="${requestScope.teamVO.teamId }"></s:param>
-								</s:url>
-								<a id="a_settingTeam" href="${s_settingTeam}">編輯隊伍設定</a>
+									<a id="apply_team" href="#" style="padding-left: 25px;padding-right: 0px;">管理隊伍 <span class="badge"></span></a>
+								</li>
+								<li>
+									<s:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
+										<s:param name="teamId" value="${requestScope.teamVO.teamId }"></s:param>
+									</s:url>
+									<a id="a_settingTeam" href="${s_settingTeam}">編輯隊伍設定</a>
 								</li>
 								<li class="divider"></li>
 								<li><a id="a_disbandTeam" href="#">解散隊伍</a></li>
@@ -94,6 +96,10 @@
 		<!-- /.container-fluid -->
 	</nav>
 </div>
+
+<div id="dialog" title="申請用戶"></div>
+<div id="dialog-apply" title="社團申請"></div>
+
 <script>
 	$(function()
 	{
@@ -218,6 +224,64 @@
 		}, position : { my : "center", at : "center", of : window } });
 
 		// ---------------------------------------------------------------------------------
+		
+		// ------------------搜尋會員Ajax--------------------------------------------
+
+		$("#apply-ajax").click(function(event)
+		{
+			event.preventDefault();
+
+			$.ajax({ "type" : "GET", //傳遞方式				
+			url : $(this).attr("href"), "dataType" : "json",//Servlet回傳格式
+			success : function(data)
+			{
+				$('#apply-ajax').attr("href", "#");
+				var applyDiv = $('<div></div>').appendTo("#dialog");
+				var ul = $('<ul></ul>').addClass("list-group").appendTo(applyDiv);
+				$.each(data, function(index, object)
+				{
+
+					//--------------將名子放入(未來可以放超連結到個人頁面)-------------------
+					var li = $('<li></li>').addClass("list-group-item").text(object.memberVO.memberLastName + object.memberVO.memberFirstName).appendTo(ul);
+
+					//--------------同意按鈕----------------------------------------------------
+					var agreeA = $('<input/>').addClass("agree").val("同意").attr("type", "button").appendTo(li).bind("click", function()
+					{
+						$(this).prop("disabled", true).siblings().prop("disabled", true);
+						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/club/agreeApply", dataType : "json",//Servlet回傳格式
+						data : { "clubId" : object.clubId, "memberId" : object.memberId }, success : function(message)
+						{
+
+							switch ($.trim(message.status)) {
+								case "success":
+									BootstrapAlert.success({ title : "Congrat!", message : "成功新增一名社團成員!!!!" });
+									break;
+								case "already":
+									BootstrapAlert.alert({ title : "Sorry!", message : "該會員已有社團，新增失敗" });
+									break;
+							}
+						} })
+					});
+					//--------------同意按鈕----------------------------------------------------
+					//--------------刪除按鈕----------------------------------------------------
+					var deleteA = $('<input/>').addClass("delete").val("刪除").attr("type", "button").appendTo(li).bind("click", function()
+					{
+						$(this).prop("disabled", true).siblings().prop("disabled", true);
+						$.ajax({ type : "POST", url : "${pageContext.request.contextPath}/spring/club/deleteApply", dataType : "json",//Servlet回傳格式
+						data : { "clubId" : object.clubId, "memberId" : object.memberId }, success : function(message)
+						{
+							switch ($.trim(message.status)) {
+								case "success":
+									BootstrapAlert.success({ title : "Congrat!", message : "成功刪除申請資料" });
+									break;
+							}
+						} })
+					});
+				});
+			} });
+			check_chage();
+			$("#dialog").dialog("open");
+		});
 		
 // init End
 	})
