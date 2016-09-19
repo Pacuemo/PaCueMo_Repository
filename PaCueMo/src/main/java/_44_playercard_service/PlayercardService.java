@@ -44,6 +44,16 @@ public class PlayercardService
 		return 0;
 	}
 
+	@Transactional
+	public int agreeInvite(FriendsListVO me, FriendsListVO friend)
+	{
+		if (fdao.updateFriend(me) == fdao.updateFriend(friend))
+		{
+			return 1;
+		}
+		return 0;
+	}
+
 	public PlayerCardVO getPlayercardByPK(String memberId)
 	{
 		return dao.getPlayerCardById(memberId);

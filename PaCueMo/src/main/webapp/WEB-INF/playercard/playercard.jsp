@@ -243,6 +243,11 @@
 			var guid = $(this).val();
 			location.href = "Playercard/friends/cancel?guid="+guid;
 		})	
+		
+		$("#btn-invited").bind("click",function(){
+			var guid = $(this).val();
+			location.href = "Playercard/friends/agree?guid="+guid;
+		})	
 	})
 	</script>
   </body>
