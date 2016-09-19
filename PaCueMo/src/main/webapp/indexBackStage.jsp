@@ -13,13 +13,12 @@
 		  <%--@import url('');--%>
 	</style>
   	
-  	<c:url var="home" value="/"></c:url>
-  	
+    
     <script language="javascript">
-        window.location.href = "${home}_99_backstage/pages/index.jsp";
+        window.location.href = "<%=request.getContextPath()%>/_99_backstage/pages/index.jsp";
     </script>
   </head>
   <body>
-	    Go to <a href="${home}/_99_backstage/pages/index.jsp">/pages/index.html</a>
+	    Go to <a href="<%=request.getContextPath()%>/_99_backstage/pages/index.jsp">/pages/index.html</a>
   </body>
 </html>

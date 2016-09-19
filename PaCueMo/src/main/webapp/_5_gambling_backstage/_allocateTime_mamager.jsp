@@ -24,6 +24,10 @@
 	
 	    <!-- Custom Fonts -->
 	    <link href="<%=request.getContextPath()%>/_99_backstage/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+		<!-- jquery-ui.css -->
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	 
 	
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -326,14 +330,20 @@
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                                </li>
-                            </ul>
+	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_gambleOrder_manager.jsp"> - 下注訂單管理 - </a>
+	                                </li>
+	                                <li>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_goodsOrder_manager.jsp"> - 代幣訂單管理 - </a>
+	                                </li>
+	                                <li>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a>
+	                                </li>
+	                                <li>
+	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>
+	                                </li>
+	                            </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
@@ -381,36 +391,118 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Blank</h1>
+                        <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">分派彩金時間設定</font></h1>
+                        <!-- --------------------------------------------------------------------- -->
+                        <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------【每頁不同 開始】-------------------------- -->
-					      	<h1>幹你娘</h1>
-					      	<form  action= "<%=request.getContextPath()%>/RESTservices/TimerManager/setAllocateTime" method="POST">
-								<input type="text" value="18" name="hour"/>
-								<input type="text" value="230" name="min"/>
-								<input type="text" value="174" name="sec"/>
-								<input type="submit">
+                        <!-- --------------------------------------------------------------------- -->
+                        <!-- --------------------------------------------------------------------- -->
+							<%-- <form class="form-inline" action="<%=request.getContextPath()%>/RESTservices/TimerManager/setAllocateTime" method="POST"> --%>
+							<form id="timerForm" class="form-inline" action="" method="POST">
+								  <div class="form-group">
+									    <label for="hour">Hour</label>
+									    <input id="hour" type="text" value="0" name="hour" class="form-control"  placeholder="hour(24h type)" required="required" pattern="[0-9]*" data-msg-required="please input" min="0" max="23" maxlength="2" autocomplete="off">
+								  		<span id="err1" style="color:red;font-style:italic;"></span>
+								  </div>
+								  <p/>
+								  <div class="form-group">
+									    <label for="min">min</label>
+									    <input id="min"  type="text" value="0"  name="min" class="form-control"  placeholder="minute" required="required" pattern="[0-9]*" data-msg-required="please input" min="0" max="59" maxlength="2" autocomplete="off" style="margin-left:9px;">
+								 		<span id="err2" style="color:red;font-style:italic;"></span>
+								  </div>
+								  <p/>
+								  <div class="form-group">
+									    <label for="sec">sec</label>
+									    <input id="sec"  type="text" value="0" name="sec" class="form-control"   placeholder="second" required="required" pattern="[0-9]*" data-msg-required="please input" min="0" max="59" maxlength="2" autocomplete="off" style="margin-left:10px;">
+								 		<span id="err3" style="color:red;font-style:italic;"></span>
+								  </div>
+								  <p/><p/>
+								  <button id="submitBtn" class="btn btn-danger">確認</button>
 							</form>
+						<!-- --------------------------------------------------------------------- -->
+						<!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------【每頁不同 結束】-------------------------- -->
+                        <!-- --------------------------------------------------------------------- -->
+                        <!-- --------------------------------------------------------------------- -->
                     </div><!-- /.col-lg-12 -->  
                 </div><!-- /.row --> 
             </div><!-- /.container-fluid -->
         </div> <!-- /#page-wrapper -->
        
 
-    </div>
-    <!-- /#wrapper -->
+    </div><!-- /#wrapper -->
+    
 
     <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/_99_backstage/vendor/jquery/jquery.min.js"></script>
-
+    <!-- jQuery UI CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="<%=request.getContextPath()%>/_99_backstage/vendor/bootstrap/js/bootstrap.min.js"></script>
-
     <!-- Metis Menu Plugin JavaScript -->
     <script src="<%=request.getContextPath()%>/_99_backstage/vendor/metisMenu/metisMenu.min.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="<%=request.getContextPath()%>/_99_backstage/dist/js/sb-admin-2.js"></script>
+    <script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.validate.js"></script> 
+	
+	<script type="text/javascript">
+		$(function(){		
+			
+			$("#timerForm").validate({
+		 		errorClass: "has-error",
+				errorPlacement: 
+					function(error, element) {
+						if(element.is('#hour')){
+								$("#err1").append(error);
+						}else if(element.is('#min')){
+								$("#err2").append(error);
+						}else if(element.is('#sec')){
+								$("#err3").append(error);
+						};
+				}, 
+				submitHandler:function(form){        
+					
+					var hour = $("#hour").val();
+					var min  = $("#min").val();
+					var sec  = $("#sec").val();
+					//alert("幹");
+					$.ajax({
+							"type":"POST",
+							"url": "<%=request.getContextPath()%>/RESTservices/TimerManager/setAllocateTime", /* _59_task_routine → TimerManager.java → setPointsTime() */
+							"dataType": "text",
+							"data":{
+									"hour":hour,							
+									"min" :min,
+									"sec" :sec
+							},
+							"success":function(data){
+								//alert('fuck');
+				      			BootstrapAlert.success({ //BootstrapAlert 特效
+		 			                title: "設定成功",
+		 			                message: "設定分派彩金時間為：" + hour + " 時 " + min + " 分 " + sec + " 秒 ",
+		 			                hideTimeout: 2300,
+		 			        	});		
+							},
+				      		"error":function(){
+				      			BootstrapAlert.info({ //BootstrapAlert 特效
+		 			                title: "網路忙線中",
+		 			                message: "請稍候",
+		 			                hideTimeout: 2300,
+		 			        	});
+					         }
+						});
+						//return false;
+				}
+
+			});	
+		})
+	</script>
 
 </body>
 </html>
+
+
+
+
+
