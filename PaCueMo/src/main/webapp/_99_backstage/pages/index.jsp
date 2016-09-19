@@ -332,7 +332,7 @@
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
+	                                    <a href="<%=request.getContextPath()%>/_5_gambling/gamblingBackStage.jsp">Blank Page</a>
 	                                </li>
 	                                <li>
 	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>

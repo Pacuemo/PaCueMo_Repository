@@ -81,12 +81,14 @@ public class RoutineTask extends TimerTask
 					/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
 					routineTask.gamblingFacade4.splitPayoff(querydateStr, 0.2f);
 					/*********************** 【分派彩金&更新對戰比數邏輯】 *************************/
-					//---------------------------------------------------------------------------------
+
+					/************************* 【更新Session中會員資料】 *************************/
 					String mbId = ((MemberVO) request.getSession().getAttribute("LoginOK")).getMemberId();
 					Double pointsAfterAllocate = routineTask.mbDAO.findByPrimaryKey(mbId).getMemberPoint();
 					((MemberVO) request.getSession().getAttribute("LoginOK")).setMemberPoint(pointsAfterAllocate);
 					System.out.println(" ==== 更新 session 中會員的 point ====  " + pointsAfterAllocate);
-					//---------------------------------------------------------------------------------
+					/************************* 【更新Session中會員資料】 *************************/
+
 					String tmpFlag = flag_isUpdate; // 第一個Ajax請求進入，tmpFlag == "start_Update"
 					flag_isUpdate = "yet_update";// 立即將flag_isUpdate → 設回未更新→以免第2個請求瞬間也進入，造成連續更新資料兩次
 					return tmpFlag;// return "start_Update"
