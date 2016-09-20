@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import _52_nbateam_service.NbaTeamBeans_Config;
+import _00_config.RootConfig;
 
 // @Repository("nbaTeamDAO")
 public class NBATeamDAO implements NBATeamDAO_interface
@@ -36,7 +36,8 @@ public class NBATeamDAO implements NBATeamDAO_interface
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
+//		ApplicationContext context = new AnnotationConfigApplicationContext(NbaTeamBeans_Config.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		NBATeamDAO dao = (NBATeamDAO) context.getBean("nbaTeamDAO");
 //		NBATeamVO vo = dao.findByTeamId(17);
 //		System.out.println(String.format("%2s \t %-18s %-5s \t %-18s", vo.getTeamID(), vo.getTeamName(), vo.getTeamLogoURL(), vo.getStart5URL()));
