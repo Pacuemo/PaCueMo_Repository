@@ -19,20 +19,11 @@ import javax.servlet.http.HttpSession;
 
 import _9_41_member_model.MemberVO;
 
-@WebFilter(filterName = "login", initParams = {
+@WebFilter(filterName = "auth", initParams = {
 
-				@WebInitParam(name = "mustLogin1", value = "/spring/club/login"),
-				@WebInitParam(name = "mustLogin2", value = "/TeamServlet"),
-				@WebInitParam(name = "mustLogin3", value = "/_03_member/*"),
-				@WebInitParam(name = "mustLogin4", value = "/spring/club/apply"),
-				@WebInitParam(name = "mustLogin5", value = "/_5_gambling/*"),
-				@WebInitParam(name = "mustLogin6", value = "/spring/team/createTeamPage"),
-				@WebInitParam(name = "mustLogin7", value = "/spring/battle_rec/introduce"),
-				@WebInitParam(name = "mustLogin8", value = "/spring/playercard/Myplayercard"),
-				@WebInitParam(name = "mustLogin9", value = "/spring/battle_rec/introduce"),
-				@WebInitParam(name = "mustLogin10", value = "/_99_backstage/pages/*")
+				@WebInitParam(name = "mustAuth1", value = "/_99_backstage/pages/index.jsp"),
 })
-public class LoginFilter implements Filter
+public class AuthFilter implements Filter
 {
 	Collection<String> url = new ArrayList<String>();
 	String servletPath;
@@ -66,14 +57,14 @@ public class LoginFilter implements Filter
 			queryString = req.getQueryString();
 			isRequestedSessionIdValid = req.isRequestedSessionIdValid();
 
-			if (mustLogin())
+			if (mustAuth())
 			{
-				if (checkLogin(req))
-				{   //  需要登入，已經登入
+				if (checkAuth(req))
+				{   //  需要權限，已有權限
 					chain.doFilter(request, response);
 				}
 				else
-				{				//  需要登入，尚未登入
+				{				//  需要權限，沒有權限
 					HttpSession session = req.getSession();
 					session.setAttribute("requestURI", requestURI);
 					session.setAttribute("queryString", queryString);
@@ -81,7 +72,7 @@ public class LoginFilter implements Filter
 					{
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}
-					resp.sendRedirect(contextPath + "/spring/login/Signin");
+					resp.sendRedirect(contextPath);
 					return;
 				}
 			}
@@ -96,11 +87,11 @@ public class LoginFilter implements Filter
 		}
 	}
 
-	private boolean checkLogin(HttpServletRequest req)
+	private boolean checkAuth(HttpServletRequest req)
 	{
 		HttpSession session = req.getSession();
 		MemberVO loginToken = (MemberVO) session.getAttribute("LoginOK");
-		if (loginToken == null)
+		if (loginToken.getMemberType() == 1)
 		{
 			return false;
 		}
@@ -110,9 +101,9 @@ public class LoginFilter implements Filter
 		}
 	}
 
-	private boolean mustLogin()
+	private boolean mustAuth()
 	{
-		boolean login = false;
+		boolean Auth = false;
 		for (String sURL : url)
 		{
 			if (sURL.endsWith("*"))
@@ -120,7 +111,7 @@ public class LoginFilter implements Filter
 				sURL = sURL.substring(0, sURL.length() - 1);
 				if (servletPath.startsWith(sURL))
 				{
-					login = true;
+					Auth = true;
 					break;
 				}
 			}
@@ -129,12 +120,12 @@ public class LoginFilter implements Filter
 				String requestURIs = contextPath + sURL;
 				if (requestURI.equals(requestURIs))
 				{
-					login = true;
+					Auth = true;
 					break;
 				}
 			}
 		}
-		return login;
+		return Auth;
 	}
 
 	@Override
