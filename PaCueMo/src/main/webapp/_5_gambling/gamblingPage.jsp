@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <title>NBA 運彩專區</title>
 	
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" type="text/css"/><!-- 分頁 -->
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
