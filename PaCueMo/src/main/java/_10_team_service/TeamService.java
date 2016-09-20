@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import _9_10_team_model.TeamDAO_interface;
 import _9_10_team_model.TeamVO;
 import _9_11_teammember_model.TeamMemberDAO_interface;
+import _9_12_battlerecord_model.BattleRecordDAO;
+import _9_13_teaminvite_model.TeamInviteDAO;
+import _9_14_teamapply_model.TeamApplyDAO;
 
 @Component
 @Transactional
@@ -23,6 +26,12 @@ public class TeamService
 	private TeamDAO_interface teamDAO;
 	@Autowired
 	private TeamMemberDAO_interface teamMemberDAO;
+	@Autowired
+	private BattleRecordDAO battleRecordDAO;
+	@Autowired
+	private TeamInviteDAO teamInviteDAO;
+	@Autowired
+	private TeamApplyDAO teamApplyDAO;
 
 	public TeamService()
 	{
@@ -59,6 +68,9 @@ public class TeamService
 	public void delete(Integer teamId)
 	{
 		teamMemberDAO.deleteAll(teamId);
+		battleRecordDAO.deleteByTeamId(teamId);
+		teamInviteDAO.deleteByTeamId(teamId);
+		teamApplyDAO.deleteByTeamId(teamId);
 		teamDAO.delete(teamId);
 	}
 

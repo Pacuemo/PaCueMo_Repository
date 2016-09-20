@@ -46,6 +46,19 @@ public class BattleRecordController_Spring
 		return gson.toJson(courtService.findByCourtName(address));
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/reportTeamA", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String reportTeamA(String address)
+	{
+		System.out.println("BattleRecord_Controller : reportTeamA");
+
+		CourtService courtService = new CourtService();
+		System.out.println("回傳場地VOs 格式JSON");
+
+		System.out.println("-------------------------------------------------------");
+		return gson.toJson(courtService.findByCourtName(address));
+	}
+
 //------------------------------------------Page-------------------------------------------	
 	@RequestMapping(value = "/introduce") //Page
 	public String getMainPage(HttpSession session, HttpServletRequest request)

@@ -23,7 +23,7 @@ public class CourtDAO implements CourtDAO_interface
 	private static final String GET_ONE_STMT = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where courtId=?";
 	private static final String DELETE = "DELETE FROM Court where courtId =?";
 	private static final String UPDATE = "UPDATE Court set name=?, courtaddress=?, imgUrl=?, latitude=?, longitude=?, webUrl=?, phone=? where courtId=?";
-	private static final String GET_BY_NAME = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court where name like ?";
+	private static final String GET_BY_NAME = "SELECT name, courtaddress FROM Court where name like ?";
 
 	@Override
 	public void insert(CourtVO courtVO)
@@ -384,14 +384,8 @@ public class CourtDAO implements CourtDAO_interface
 			while (rs.next())
 			{
 				courtVO = new CourtVO();
-				courtVO.setCourtId(rs.getInt("courtId"));
 				courtVO.setName(rs.getString("name"));
 				courtVO.setCourtaddress(rs.getString("courtaddress"));
-				courtVO.setImgUrl(rs.getString("imgUrl"));
-				courtVO.setLatitue(rs.getDouble("latitude"));
-				courtVO.setLongitue(rs.getDouble("longitude"));
-				courtVO.setWebUrl(rs.getString("webUrl"));
-				courtVO.setPhone(rs.getString("phone"));
 				list2.add(courtVO);
 			}
 		}
