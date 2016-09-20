@@ -323,7 +323,7 @@
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
+	                                    <a href="<%=request.getContextPath()%>/spring/leagueBackStage/league"> - 聯賽管理 - </a>
 	                                </li>
 	                            </ul>
 	                            <!-- /.nav-second-level -->
