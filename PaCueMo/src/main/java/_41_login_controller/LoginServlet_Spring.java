@@ -160,6 +160,7 @@ public class LoginServlet_Spring
 				}
 				else
 				{
+					session.removeAttribute("requestURI");
 					jsonObject.addProperty("status", "true");
 					jsonObject.addProperty("url", requestURI);
 					return jsonObject.toString();

@@ -25,9 +25,10 @@
 	<!-- --------------------社團分組------------------------ -->
 	<div id="team" class="col-lg-8 col-lg-offset-2" style="display: block">
 		<div style="margin-top: 100px">
-			<div ><div class="width=50%">
-			<h1 class="page-header" style="color: white; font-weight: bold ;text-align: justify;">參加社團 <input type="button" value="123"></h1></div>
-			<div class="width=50%"><h1>123</h1></div>
+			<div><div class="test999">
+			<div class="page-header" style="color: white; font-weight: bold ;"><div class="test888"><h2>參 加 社 團</h2><input type="button" value="123"></div></div>
+			
+			</div>
 			</div>
 			<div id="groups" class="row" style="margin-top: 100px; margin-bottom: 200px;">
 
