@@ -20,6 +20,7 @@ public class TeamVO implements java.io.Serializable
 	private Double avgRank;
 	private String teamHead;
 	private String content;
+	private String location;
 	private List<TeamMemberVO> teamMemberVOs;
 	private List<TeamApplyVO> teamApplyVOs;
 
@@ -28,7 +29,7 @@ public class TeamVO implements java.io.Serializable
 
 	}
 
-	public TeamVO(Integer teamId, String teamName, Date createDate, Integer teamProp, Double avgRank, String teamHead, String content)
+	public TeamVO(Integer teamId, String teamName, Date createDate, Integer teamProp, Double avgRank, String teamHead, String content, String location)
 	{
 		this.teamId = teamId;
 		this.teamName = teamName;
@@ -37,6 +38,7 @@ public class TeamVO implements java.io.Serializable
 		this.avgRank = avgRank;
 		this.teamHead = teamHead;
 		this.content = content;
+		this.location = location;
 	}
 
 	public Integer getTeamId()
@@ -127,6 +129,16 @@ public class TeamVO implements java.io.Serializable
 	public void setTeamApplyVOs(List<TeamApplyVO> teamApplyVOs)
 	{
 		this.teamApplyVOs = teamApplyVOs;
+	}
+
+	public String getLocation()
+	{
+		return location;
+	}
+
+	public void setLocation(String location)
+	{
+		this.location = location;
 	}
 
 }

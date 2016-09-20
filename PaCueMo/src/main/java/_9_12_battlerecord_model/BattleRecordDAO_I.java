@@ -30,4 +30,6 @@ public interface BattleRecordDAO_I
 
 	Double getWPCT(Integer teamId);
 
+	void deleteByTeamId(Integer teamId);
+
 }

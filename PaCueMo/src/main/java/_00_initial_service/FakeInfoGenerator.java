@@ -20,9 +20,11 @@ import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Component;
 
+import _00_config.RootConfig;
 import _9_41_member_model.MemberVO;
 
 @Component
@@ -1070,7 +1072,7 @@ public class FakeInfoGenerator
 
 		List<String> memberIds = jdbc.queryForList(get_memberVO, String.class);
 
-		File file = new File("C:\\PaCueMo\\team.txt");
+		File file = new File("C:\\PaCueMo\\team_ver2.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String sql = null;
 		while ((sql = br.readLine()) != null)
@@ -1078,7 +1080,7 @@ public class FakeInfoGenerator
 			String[] sqls = sql.split(",");
 			int number = Integer.valueOf(sqls[4]);
 
-			String newSQL = sqls[0] + "," + sqls[1] + "," + sqls[2] + "," + sqls[3] + ",'" + memberIds.get(number) + "'," + sqls[5] + ";";
+			String newSQL = sqls[0] + "," + sqls[1] + "," + sqls[2] + "," + sqls[3] + ",'" + memberIds.get(number) + "'," + sqls[5] + "," + sqls[6] + ";";
 			System.out.println(newSQL);
 		}
 	}
@@ -1091,8 +1093,8 @@ public class FakeInfoGenerator
 		 * Step3 : 在本程式中執行你的方法，將SSMS NEWID() 生成的 memberId 換掉原本的 INSERT 指令
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
-//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
-//		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
 //		friendListGenerator("83FC7025-12AA-43B0-8162-E27226D92C67", 20);
@@ -1102,7 +1104,7 @@ public class FakeInfoGenerator
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
-		gambleOrderGenerator();
+//		gambleOrderGenerator();
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();
