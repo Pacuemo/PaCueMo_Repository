@@ -69,8 +69,10 @@ public class MemberServlet_Spring extends HttpServlet
 			{
 				HashMap<String, List<String>> map = ms.showAllFriends(memberVO.getMemberId());
 				HashMap<String, List<String>> map1 = ms.showAllFriendsInvite(memberVO.getMemberId());
+				HashMap<String, List<String>> map2 = ms.showAllFriendsInviting(memberVO.getMemberId());
 				request.setAttribute("friends", map);
 				request.setAttribute("invite", map1);
+				request.setAttribute("inviting", map2);
 				request.getRequestDispatcher("/_03_member/accountfriend.jsp").forward(request, response);
 				return;
 			}

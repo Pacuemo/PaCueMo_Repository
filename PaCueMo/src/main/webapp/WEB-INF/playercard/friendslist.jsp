@@ -11,7 +11,7 @@
 </head>
 <body>
 <jsp:include page="/fragment/top.jsp" />
-<jsp:include page="/_03_member/fragment/sidebar.jsp" />
+<jsp:include page="sidebar.jsp" />
 <div class="container container-content">
 	<div class="row">
 		<div class="col-sm-12">

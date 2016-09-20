@@ -8,6 +8,8 @@ public interface FriendsListDAO_interface_Spring
 
 	public List<FriendsListVO> getAllFriendsInvite(String memberId);
 
+	public List<FriendsListVO> getAllFriendsInviting(String memberId);
+
 	public int deleteFriend(FriendsListVO friendsListVO);
 
 	public FriendsListVO getFriend(FriendsListVO friendsListVO);

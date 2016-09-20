@@ -35,6 +35,7 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 	private static final String UPDATE_IMG = "UPDATE dbo.Member SET memberImgUrl = ? WHERE memberId = ?";
 	private static final String UPDATE_POINT = "UPDATE dbo.Member SET memberPoint = ? WHERE memberId = ?";
 	private static final String UPDATE_PLAYERCARD = "UPDATE dbo.Member SET memberHaveCard = ? WHERE memberId = ?";
+	private static final String SEARCH_MEMBER = "SELECT * FROM dbo.Member WHERE memberLastName+memberFirstName LIKE ? OR memberMail LIKE ?";
 
 	@Autowired
 	public MemberDAO_Spring(JdbcOperations jdbcOperations)
@@ -195,6 +196,12 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<MemberVO> searchMember(String keyword)
+	{
+		return jdbc.query(SEARCH_MEMBER, new MemberRowMapper(), keyword + "%", keyword + "%");
 	}
 
 	//mapRow
