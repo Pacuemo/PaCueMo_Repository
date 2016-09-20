@@ -30,7 +30,8 @@ import _9_41_member_model.MemberVO;
 				@WebInitParam(name = "mustLogin7", value = "/spring/battle_rec/introduce"),
 				@WebInitParam(name = "mustLogin8", value = "/spring/playercard/Myplayercard"),
 				@WebInitParam(name = "mustLogin9", value = "/spring/battle_rec/introduce"),
-				@WebInitParam(name = "mustLogin10", value = "/_99_backstage/pages/*")
+				@WebInitParam(name = "mustLogin10", value = "/_99_backstage/pages/*"),
+				@WebInitParam(name = "mustLogin11", value = "/spring/league/signUp")
 })
 public class LoginFilter implements Filter
 {
