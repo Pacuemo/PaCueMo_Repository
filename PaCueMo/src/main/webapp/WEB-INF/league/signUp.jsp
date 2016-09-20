@@ -24,12 +24,27 @@
 	<jsp:include page="sidebar.jsp" />
 	<!-- --------------------社團分組------------------------ -->
 	<div id="team" class="col-lg-8 col-lg-offset-2" style="display: block">
-		<div style="margin-top: 100px">
-			<div><div class="test999">
-			<div class="page-header" style="color: white; font-weight: bold ;"><div class="test888"><h2>參 加 社 團</h2><input type="button" value="123"></div></div>
-			
+		<div class="row" style="margin-top: 100px;border-bottom: 1px solid white">
+			<div class="col-md-8">
+			<h1 style="color: white; font-weight: bold ;text-align: justify; ;margin:0px 0px">參加社團 </h1>			
 			</div>
-			</div>
+			<div class="col-md-4" style="text-align: right">			
+			<c:if test="${LoginOK.memberId eq MyClub.clubHead }">
+			<c:forEach items="${leagueClubs}" var="leagueClubVO" >	
+			<c:if test="${leagueClubVO.clubId == MyClub.clubID}">
+		     <c:set var="count" value="${1}"></c:set>
+			</c:if>
+			</c:forEach>
+			<c:if test="${count ne 1}">
+			<s:url value="/spring/league/signUp/club" var="signUp"><s:param name="clubId">${MyClub.clubID}</s:param><s:param name="leagueId">${leagueId}</s:param></s:url>	
+			<a class="btn btn-default" href="${signUp}" role="button" style="background-color: #008000;margin-bottom: 10px">報名聯賽</a>				
+			</c:if>
+			<c:if test="${count eq 1}">			
+			<a class="btn btn-default" href="#" role="button" style="background-color: #206040;margin-bottom: 10px">已報名</a>				
+			</c:if>
+			</c:if>			
+			</div>		
+			</div>			
 			<div id="groups" class="row" style="margin-top: 100px; margin-bottom: 200px;">
 
 				<div class="col-md-8 col-md-offset-2"  style="border: 1px solid grey;">

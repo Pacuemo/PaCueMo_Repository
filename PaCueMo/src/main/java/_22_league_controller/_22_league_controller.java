@@ -91,7 +91,7 @@ public class _22_league_controller
 		return "league/recordInfos";
 	}
 
-//----------------------報名聯賽---------------------------------------
+//----------------------報名聯賽頁面---------------------------------------
 	@RequestMapping(value = "/signUp", method = RequestMethod.GET)
 	public String signUp(@RequestParam("leagueId") int leagueId, HttpServletRequest request)
 	{
@@ -100,7 +100,17 @@ public class _22_league_controller
 		if (leagueClubVOs != null)
 		{
 			request.setAttribute("leagueClubs", leagueClubVOs);
+			request.setAttribute("leagueId", leagueId);
 		}
 		return "league/signUp";
+	}
+
+	//----------------------報名聯賽按鈕---------------------------------------
+	@RequestMapping(value = "/signUp/club", method = RequestMethod.GET)
+	public String signUpClub(@RequestParam("leagueId") int leagueId, @RequestParam("clubId") int clubId, HttpServletRequest request)
+	{
+
+		leagueClub_Service.add_League_club(leagueId, clubId);
+		return "redirect:/spring/league/signUp?leagueId=" + leagueId;
 	}
 }

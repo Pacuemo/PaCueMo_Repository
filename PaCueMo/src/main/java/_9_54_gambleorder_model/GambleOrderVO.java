@@ -1,5 +1,7 @@
 package _9_54_gambleorder_model;
 
+import _9_41_member_model.MemberVO;
+
 public class GambleOrderVO
 {
 	private Integer gambleId;
@@ -8,6 +10,7 @@ public class GambleOrderVO
 	private Double betHome;
 	private Double betAway;
 	private java.sql.Timestamp betTime;
+	private MemberVO memberVO;// 嵌入 會員
 
 	public Integer getGambleId()
 	{
@@ -67,6 +70,16 @@ public class GambleOrderVO
 	public void setBetTime(java.sql.Timestamp betTime)
 	{
 		this.betTime = betTime;
+	}
+
+	public MemberVO getMemberVO()
+	{
+		return memberVO;
+	}
+
+	public void setMemberVO(MemberVO memberVO)
+	{
+		this.memberVO = memberVO;
 	}
 
 }

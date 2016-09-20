@@ -25,16 +25,17 @@ public class TimerManager
 //	private static final long PERIOD_DAY = 10 * 60 * 1000; // 時間間隔﹝十分鐘﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	Timer timerMain = null;;
 	private int hour;
 	private int min;
 	private int sec;
 
 	public TimerManager()
 	{
-		//--- 建構子 ----
-		this.hour = 14;
-		this.min = 38;
-		this.sec = 0;
+		//--- 建構子 ---- 設定預設Timer每次Run的時間
+		this.hour = 10; //時(24h)
+		this.min = 24;//分
+		this.sec = 0;//秒
 		//---------------
 		setTimerTask(this.hour, this.min, this.sec);
 	}
@@ -44,6 +45,7 @@ public class TimerManager
 	@Path("/setAllocateTime")// 設定分派彩金時間(後台功能)
 	public String setPointsTime(@FormParam("hour") Integer hour, @FormParam("min") Integer min, @FormParam("sec") Integer sec)
 	{
+		timerMain.cancel();// Step1.停止前一次的Timer
 		System.out.println("呼叫RESTful setPointsTime() 傳入的： hour : " + hour + "  min : " + min + " sec : " + sec);
 		this.hour = hour;
 		this.min = min;
@@ -77,7 +79,7 @@ public class TimerManager
 			System.out.println("TimerManager ── " + sdf.format(dateMain));
 		}
 		/*************** MainTimer *********************/
-		Timer timerMain = new Timer();
+		timerMain = new Timer();
 		RoutineTask task = new RoutineTask(); //TimerTask
 		//============================================================
 		//=== 安排指定的任務在指定的時間開始進行重覆的固定延遲執行 ===
