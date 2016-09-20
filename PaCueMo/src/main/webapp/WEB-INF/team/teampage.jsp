@@ -74,7 +74,8 @@ p.tempstyle {
 }
 .insideB{
 }
-
+.a_reportA{
+}
 </style>
 
 <style>
@@ -177,8 +178,8 @@ p.tempstyle {
 	
 <style>
 body {
-    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
-}
+    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg"); 
+} 
 </style>
 
 	<div class="row" style="margin: 0px">
@@ -316,6 +317,8 @@ body {
 			<hr class="margin-bottom-30" style="margin-top: 0px">
 		</div>
 
+
+<!-- 主約戰紀錄 -->
 		<div class="col-md-5">
 			<div class="row">
 			<div class="content" style="margin-left: 30px;padding: 20px;background-color:  rgba(255,255,255,0.95);">
@@ -347,7 +350,7 @@ body {
 						    <tr>
 						      <th hidden="none" scope="row">${battleRecordVO.battleId}</th>
 						      <th scope="row"></th>
-						      <td>${battleRecordVO.teamBVO.teamName}</td>
+						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVO.teamBVO.teamId}">${battleRecordVO.teamBVO.teamName}</a></td>
 						      <td>${battleRecordVO.battleMode} V ${battleRecordVO.battleMode}</td>
 						      <td>  <c:choose>
 									<c:when test="${battleRecordVO.battleBet == 0}">
@@ -369,10 +372,12 @@ body {
 										<jsp:useBean id="now" class="java.util.Date"  />
 										<c:choose>
 											<c:when test="${now.time > battleRecordVO.battleDateTime.time}">
-												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
-													<spring:param name="teamId" value="${requestScope.teamVO.teamId }"></spring:param>
-												</spring:url>
-													<a id="a_report" href="${s_settingTeam}">回報</a>
+												<c:choose>
+													<c:when test="${battleRecordVO.reportA == 0}">
+														<a battleId="${battleRecordVO.battleId}" class="a_reportA" href="#">回報</a>													
+													</c:when>
+													<c:otherwise>已回報</c:otherwise>
+												</c:choose>
 											</c:when>
 											<c:otherwise>
 												&nbsp;&nbsp;&nbsp;&nbsp;-
@@ -424,40 +429,42 @@ body {
 					  </tbody>
 <!-- 				  這裡開始是 被約戰表  -->
 					  <tbody id="tbody_B">
-					  	<c:forEach var="battleRecordVO" items="${requestScope.battleRecordVOs_B}" varStatus="status">
+					  	<c:forEach var="battleRecordVOB" items="${requestScope.battleRecordVOs_B}" varStatus="status">
 						  <c:if test="${status.index % 3 == 0}">
 						  	<c:set var="flag2" value="on"></c:set>
 					  	  	<fmt:parseNumber var="a" type="number" integerOnly="true" value="${status.index / 3}" />
 						  	<tbody id="insideB_${a}" class="insideB" hidden="hidden">
 						  </c:if>
 						    <tr>
-						      <th hidden="none" scope="row">${battleRecordVO.battleId}</th>
+						      <th hidden="none" scope="row">${battleRecordVOB.battleId}</th>
 						      <th scope="row"></th>
-						      <td>${battleRecordVO.teamBVO.teamName}</td>
-						      <td>${battleRecordVO.battleMode} V ${battleRecordVO.battleMode}</td>
+						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVO.teamAVO.teamId}">${battleRecordVOB.teamAVO.teamName}</a></td>
+						      <td>${battleRecordVOB.battleMode} V ${battleRecordVOB.battleMode}</td>
 						      <td>  <c:choose>
-									<c:when test="${battleRecordVO.battleBet == 0}">
+									<c:when test="${battleRecordVOB.battleBet == 0}">
 										 &nbsp;&nbsp;&nbsp;&nbsp;-
 									</c:when>
 									<c:otherwise>								
-										${battleRecordVO.battleBet}
+										${battleRecordVOB.battleBet}
 									</c:otherwise>
 									</c:choose>
 							  </td>	
 							  		<jsp:useBean id="dateValue2" class="java.util.Date" />
-									<jsp:setProperty name="dateValue2" property="time" value="${battleRecordVO.battleDateTime.time}" />
+									<jsp:setProperty name="dateValue2" property="time" value="${battleRecordVOB.battleDateTime.time}" />
 						      <td>
 								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue2}" />
 						      </td>	
 						      <td>
 								<c:choose>
-									<c:when test="${battleRecordVO.result == 0}">
+									<c:when test="${battleRecordVOB.result == 0}">
 										<c:choose>
-											<c:when test="${now.time > battleRecordVO.battleDateTime.time}">
-												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
-													<spring:param name="teamId" value="${requestScope.teamVO.teamId }"></spring:param>
-												</spring:url>
-													<a id="a_report" href="${s_settingTeam}">回報</a>
+											<c:when test="${now.time > battleRecordVOB.battleDateTime.time}">
+												<c:choose>
+													<c:when test="${battleRecordVOB.reportB == 0}">
+														<a battleId="${battleRecordVOB.battleId }" class="a_reportB" href="#">回報</a>
+													</c:when>
+													<c:otherwise>已回報</c:otherwise>
+												</c:choose>
 											</c:when>
 											<c:otherwise>
 												&nbsp;&nbsp;&nbsp;&nbsp;-
@@ -466,14 +473,14 @@ body {
 									</c:when>
 									<c:otherwise>
 										<c:choose>
-											<c:when test="${battleRecordVO.result == 1}">lose</c:when>
-											<c:when test="${battleRecordVO.result == 2}">win</c:when>
-											<c:when test="${battleRecordVO.result == 3}">平手</c:when>
-											<c:when test="${battleRecordVO.result == 4}">對方缺席 </c:when>
-											<c:when test="${battleRecordVO.result == 5}">缺席</c:when>
-											<c:when test="${battleRecordVO.result == 6}">
+											<c:when test="${battleRecordVOB.result == 1}">lose</c:when>
+											<c:when test="${battleRecordVOB.result == 2}">win</c:when>
+											<c:when test="${battleRecordVOB.result == 3}">平手</c:when>
+											<c:when test="${battleRecordVOB.result == 4}">對方缺席 </c:when>
+											<c:when test="${battleRecordVOB.result == 5}">缺席</c:when>
+											<c:when test="${battleRecordVOB.result == 6}">
 												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
-													<spring:param name="teamId" value="${battleRecordVO.teamIdB }"></spring:param>
+													<spring:param name="teamId" value="${battleRecordVOB.teamIdB }"></spring:param>
 												</spring:url>
 												<a href="${s_settingTeam}">結果不符</a>
 											</c:when>
@@ -498,7 +505,7 @@ body {
 									  	<c:forEach begin="1" end="${status.count}" varStatus="status2">
 									    	<c:if test="${status2.count % 3 == 0}">
 												<fmt:parseNumber var="j" type="number" integerOnly="true" value="${status2.count / 3}" />
-									      		<a class="paginationB" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${j}</a>
+									      		<a  class="paginationB" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${j}</a>
 									      	</c:if>
 									  	</c:forEach>
 								      </td>	
@@ -685,7 +692,7 @@ body {
 			});
 			
 			// set a_recordA click事件
-			$("#a_recordA").click(function(event){
+			$("#a_recordA").click(function(){
 				event.preventDefault();
 				$("#tbody_A").show(200);
 				$("#insideA_0").show(200);
@@ -695,7 +702,7 @@ body {
 				$("#selectpage_B").hide();
 			})
 			// set a_recordB click事件
-			$("#a_recordB").click(function(event){
+			$("#a_recordB").click(function(){
 				event.preventDefault();
 				$("#tbody_B").show(200);
 				$("#insideB_0").show(200);
@@ -705,12 +712,12 @@ body {
 				$("#selectpage_A").hide();
 			})
 			// set 顯示分頁
-			$(".paginationA").click(function(event){
+			$(".paginationA").click(function(){
 				event.preventDefault();
 				$(".insideA").hide();
 				$("#insideA_"+($(this).text()-1)+"").show(200);
 			})
-			$(".paginationB").click(function(event){
+			$(".paginationB").click(function(){
 				event.preventDefault();
 				$(".insideB").hide();
 				$("#insideB_"+($(this).text()-1)+"").show(200);
@@ -719,6 +726,108 @@ body {
 			{
 				$("#insideA_0").show(200);
 			}
+			
+			//setting confirm reportA
+			var a_battleAId;
+			$(".a_reportA").click(function(event){
+				event.preventDefault();
+				a_battleAId = $(this).attr('battleId')				
+			}).confirm({
+			    title:"回報結果",
+			    text:"這場對戰的結果是你們：",
+			    confirm: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"data" : { "resault" : "win",
+								"battleId" : a_battleAId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    cancel: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"data" : { "resault" : "lose",
+								"battleId" : a_battleAId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    confirmButton: "贏了",
+			    cancelButton: "輸了"
+			});
+
+			//setting confirm reportB
+			var a_battleBId;
+			$(".a_reportB").click(function(event){
+				event.preventDefault();
+				a_battleBId = $(this).attr('battleId')				
+			}).confirm({
+			    title:"回報結果",
+			    text:"這場對戰的結果是你們：",
+			    confirm: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamB", // home 在 head
+						"data" : { "resault" : "win",
+								"battleId" : a_battleBId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    cancel: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"data" : { "resault" : "lose",
+								"battleId" : a_battleAId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    confirmButton: "贏了",
+			    cancelButton: "輸了"
+			});
+
+			
 			// End of init
 		});
 	</script>

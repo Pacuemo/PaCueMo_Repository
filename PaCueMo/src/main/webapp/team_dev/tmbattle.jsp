@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:url var="home" value="/" scope="request" /> <%--設定home，之後在script可以用--%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -71,6 +72,11 @@ color:white;
 		</div>
 	</div>
 
-
+<button id="aaa" value="100"></button>
+<script type="text/javascript">
+	$("#aaa").click(function(){
+		window.location.href= "${home}";
+	})
+</script>
 </body>
 </html>

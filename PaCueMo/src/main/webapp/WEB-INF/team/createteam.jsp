@@ -45,6 +45,7 @@ height: 50px;
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
+<%-- 	<%@include file="fragment/teamSidebar.jsp"%> --%>
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
@@ -76,7 +77,7 @@ body {
 						<c:choose>
 							<c:when test="${my_list.teamId == mineTeamId}">
 <%-- 								<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get"> --%>
-									<button id="btn_disband" class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
+									<button class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
 <!-- 									<input type="hidden" name="page" value="first"> -->
 									<c:set var="flag" value="Y"></c:set>
 <!-- 								</form> -->
@@ -225,20 +226,32 @@ body {
 		</fieldset>
 		<fieldset>
 			<div class="div_pri_tm">
-				<label class="" for="privacy_1"> <span class=""> <input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/public.png" alt="" width="16" height="16"> <span>公開</span>
-				</span>
+				<label class="" for="privacy_1"> 
+					<span class=""> 
+						<input type="radio" id="privacy_1" name="teamProp" value="0" aria-describedby="groupsCreatePrivacy" class=""> 
+						<img class="img_tm" src="${pageContext.request.contextPath }/assets/images/public.png" alt="" width="16" height="16"> 
+						<span>公開</span>
+					</span>
 					<div class="descrip" id="">所有人都可以自由加入這個隊伍。</div>
 				</label>
 			</div>
 			<div class="div_pri_tm">
-				<label class="" for="privacy_2"> <span class=""> <input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/protect.png" alt="" width="16" height="16"> <span>需申請</span>
-				</span>
+				<label class="" for="privacy_2"> 
+					<span class=""> 
+						<input type="radio" id="privacy_2" name="teamProp" value="1" checked="checked" aria-describedby="groupsCreatePrivacy" class="">
+						 <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/protect.png" alt="" width="16" height="16"> 
+						 <span>需申請</span>
+					</span>
 					<div class="descrip" id="">所有人都可以申請加入這個隊伍。</div>
 				</label>
 			</div>
 			<div class="div_pri_tm">
-				<label class="" for="privacy_3"> <span class=""> <input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> <img class="img_tm" src="${pageContext.request.contextPath }/assets/images/private.png" alt="" width="16" height="16"> <span>私密</span>
-				</span>
+				<label class="" for="privacy_3"> 
+					<span class=""> 
+						<input type="radio" id="privacy_3" name="teamProp" value="2" aria-describedby="groupsCreatePrivacy" class=""> 
+						<img class="img_tm" src="${pageContext.request.contextPath }/assets/images/private.png" alt="" width="16" height="16"> 
+						<span>私密</span>
+					</span>
 					<div class="descrip" id="">只有被邀請的成員才可以加入這個隊伍。</div>
 				</label>
 			</div>
@@ -251,6 +264,8 @@ body {
 
 	
 
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script> -->
+<%-- <script src="<%=request.getContextPath()%>/js/bootstrapAlert.js"></script> --%>
 
 	<script>
 		// initial start
@@ -277,10 +292,13 @@ body {
 				 
 			},function(){
 				$( this ).html('申請中...');
-			})
+			});
 				
 			//setting confirm 
-			$("#btn_disband").confirm({
+			var id_disband;
+			$("button[name='btn_disband']").click(function(event){
+				id_disband = $(this).val();
+			}).confirm({
 			    title:"解散隊伍",
 			    text:"一旦解散隊伍，就無法再回復!   確定要解散嗎?",
 			    confirm: function(button) {
@@ -289,7 +307,7 @@ body {
 						"url" : "${home}spring/team/disbandTeam", // home 在 head
 						"data" : { 
 								"memberId" : "${sessionScope.LoginOK.memberId}", 
-								"btn_disband" : "${requestScope.teamVO.teamId}" 
+								"btn_disband" :id_disband
 							}, 
 						"dataType" : "text",
 						"success" : function(data)

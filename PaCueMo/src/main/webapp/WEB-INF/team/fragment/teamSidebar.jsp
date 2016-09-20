@@ -163,11 +163,11 @@
 		    cancelButton: "No"
 		});
 		
-		var dialog;
-		dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+		var dialog_sidebar;
+		dialog_sidebar = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
 		$("#a_createTeam").on("click", function()	             		
 		{
-			dialog.dialog("open"); 			
+			dialog_sidebar.dialog("open"); 			
 		}); // sidebar dialog end  
 		
 

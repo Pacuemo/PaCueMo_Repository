@@ -288,7 +288,7 @@ public class TeamServlet extends HttpServlet
 			}
 			System.out.println("doPost OK");
 			System.out.println("-------------------------------------------------------");
-			req.getRequestDispatcher("/spring/team/createTeamPage").forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + "/spring/team/createTeamPage");
 			return;
 		}
 		catch (Exception e)
