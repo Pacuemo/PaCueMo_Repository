@@ -367,6 +367,7 @@ body {
 								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue}" />
 						      </td>	
 						      <td>
+						      <c:if test="${battleRecordVO.teamAVO.teamHead == LoginOK.memberId}">
 								<c:choose>
 									<c:when test="${battleRecordVO.result == 0}">
 										<jsp:useBean id="now" class="java.util.Date"  />
@@ -400,6 +401,10 @@ body {
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
+								</c:if>
+								<c:if test="${battleRecordVO.teamAVO.teamHead != memberVO.memberId}">
+									&nbsp;&nbsp;&nbsp;&nbsp;-
+								</c:if>
 							  </td>	
 						    </tr>
 						  <c:if test="${((status.index -2) > 0) && (status.index - 2) % 3 == 0}">
@@ -455,6 +460,7 @@ body {
 								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue2}" />
 						      </td>	
 						      <td>
+						      <c:if test="${battleRecordVOB.teamBVO.teamHead == LoginOK.memberId}">
 								<c:choose>
 									<c:when test="${battleRecordVOB.result == 0}">
 										<c:choose>
@@ -487,6 +493,10 @@ body {
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
+								</c:if>
+								<c:if test="${battleRecordVOB.teamBVO.teamHead != memberVO.memberId}">
+									&nbsp;&nbsp;&nbsp;&nbsp;-
+								</c:if>
 							  </td>	
 						    </tr>
 						  <c:if test="${((status.index -2) > 0) && (status.index - 2) % 3 == 0}">
