@@ -504,9 +504,9 @@
 					</tr>
 				</table>
 			</div>
-			
-
 		<!-- ====================【 修改 Dialog 結束 】=====================  -->
+		
+		
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/jquery/jquery.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -521,11 +521,6 @@
 		    $(function() {
 		    	
 		    	//bootbox.alert("Hello world!");
-		    	
-// 		    	$('#gg').click(function(){
-// 		    		alert($('#modify input:eq(0)').prop('id'));
-// 		    		alert($('#modify input:eq(1)').prop('id'));
-// 		    	})
 		    	
 		    	$('#tableDiv button:nth-child(1)').click(function(){ // ﹝修改﹞按鈕
 		    		//alert('fuck1');

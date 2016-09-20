@@ -31,14 +31,20 @@
 
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath()%>/_99_backstage/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+	
+	<!-- jQuery Ui -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
+	<style type="text/css">
+		.ui-dialog { z-index: 9999 !important ;}/* 確保 dialog 最上層顯示 */
+	</style>
 </head>
 
 	<body>
@@ -410,7 +416,7 @@
 	                            DataTables Advanced Tables
 	                        </div>
 	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
+	                        <div id="tableDiv" class="panel-body">
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
@@ -463,26 +469,206 @@
 	    </div>
 	    <!-- /#wrapper -->
 	
-	    <!-- jQuery -->
+	
+				<!-- ====================【 修改 Dialog 開始 】=====================  -->
+			<div id="modify" align="center" style="display: none;">
+				<table class="table table-striped table-bordered table-hover" width="100%" style="display:table-cell;">	
+					<tr>
+						<th scope="row" valign="middle">訂單編號</th>
+						<td valign="middle" style="color:blue;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">會員Id</th>
+						<td valign="middle" style="color:blue;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">信用卡號</th>
+						<td valign="middle" style="color:red;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">持卡人姓名</th>
+						<td valign="middle" style="font-size:large;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">到期年</th>
+						<td valign="middle" style="font-size:medium;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">到期月</th>
+						<td valign="middle" style="font-size:medium;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">CVC碼</th>
+						<td valign="middle" style="font-size:medium;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th class="bg-primary" scope="row" valign="middle">訂購數量(代幣)</th>
+						<td class="bg-primary" valign="middle" style="font-size:large;font-weight:800;color:yellow;">text</td>
+						<td class="bg-primary" valign="middle">
+							<input class="form-control" style="color:red;font-weight:800;" type="text" autocomplete="off"/>
+						</td>
+					</tr>		
+					<tr>
+						<th class="bg-primary" scope="row" valign="middle">訂購數量(NTD)</th>
+						<td class="bg-primary" valign="middle" style="font-size:large;font-weight:800;color:yellow;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>			
+					<tr>
+						<th scope="row" valign="middle">下訂時間</th>
+						<td valign="middle">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">付款狀態</th>
+						<td valign="middle">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+		<!-- ====================【 修改 Dialog 結束 】=====================  -->
+	
+	
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/jquery/jquery.min.js"></script>
-	
-	    <!-- Bootstrap Core JavaScript -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/bootstrap/js/bootstrap.min.js"></script>
-	
-	    <!-- Metis Menu Plugin JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/metisMenu/metisMenu.min.js"></script>
-	
-	    <!-- DataTables JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables/js/jquery.dataTables.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables-responsive/dataTables.responsive.js"></script>
-	
-	    <!-- Custom Theme JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/dist/js/sb-admin-2.js"></script>
-	
+		<script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+		<script src="<%=request.getContextPath()%>/_5_gambling_backstage/plugins/Bootbox/js/bootbox.min.js"></script>
 	    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	    <script>
 		    $(function() {
+
+		    	$('#tableDiv button:nth-child(1)').click(function(){ // ﹝修改﹞按鈕
+		    		//alert('fuck1');
+		    		var orderId       = $(this).parents('tr').children(':nth-child(1)').text();
+		    		var mbId          = $(this).parents('tr').children(':nth-child(2)').text();
+		    		var carNum        = $(this).parents('tr').children(':nth-child(3)').text();
+		    		var fullName      = $(this).parents('tr').children(':nth-child(4)').text();
+		    		var expire        = $(this).parents('tr').children(':nth-child(5)').text();
+		    		var cvc      	  = $(this).parents('tr').children(':nth-child(6)').text();
+		    		var coinQty   	  = $(this).parents('tr').children(':nth-child(7)').text();
+		    		var ntdQty   	  = $(this).parents('tr').children(':nth-child(8)').text();
+		    		var orderDateTime = $(this).parents('tr').children(':nth-child(9)').text();
+		    		var isPay 		  = $(this).parents('tr').children(':nth-child(10)').text();
+		    		$('#modify input:eq(0)').val(coinQty);// 給修改金額textbox預設值
+		    		
+					console.log( 'orderId' 			, orderId );
+					console.log( 'mbId' 			, mbId );
+					console.log( 'carNum' 			, carNum );
+					console.log( 'fullName' 		, fullName );
+					console.log( 'expireMM' 		, expire.substring(0,2) );
+					console.log( 'expireYY' 		, expire.substring(5,9) );
+					console.log( 'cvc' 				, cvc );
+					console.log( 'coinQty' 			, coinQty );
+					console.log( 'ntdQty' 			, ntdQty );
+					console.log( 'orderDateTime' 	, orderDateTime );
+					console.log( 'isPay' 			, isPay );
+
+		    		$('#modify td:eq(0)').text( orderId );
+		    		$('#modify td:eq(2)').text( mbId );
+		    		$('#modify td:eq(4)').text( carNum );
+		    		$('#modify td:eq(6)').text( fullName );
+		    		$('#modify td:eq(8)').text( expire.substring(5,9) );
+		    		$('#modify td:eq(10)').text( expire.substring(0,2) );
+		    		$('#modify td:eq(12)').text( cvc );
+		    		$('#modify td:eq(14)').text( coinQty );
+		    		$('#modify td:eq(16)').text( ntdQty );
+		    		$('#modify td:eq(18)').text( orderDateTime );
+		    		$('#modify td:eq(20)').text( isPay );
+
+					var tmpTr = $(this).parents('tr');// 目前選到的 <tr>
+
+
+					var myDialog = $("#modify").dialog({
+							 title  : "修改訂單",
+					         show   : { effect :'fold' , duration: 1000 },
+					         hide   : { effect :'clip' , duration: 500 },
+					       //height    : '400',
+					        'width'    : '800',
+					        'resizable':  false,
+					        'position' : { my: "center", at: "center center", of: window },
+					        'open'     : function(){ /*do-nothing*/ },
+					         buttons   :[
+							        {
+							        	'id'    : 'btnConfirm',
+			                			'text'  : "確認修改",
+			                			'class' : "btn btn-warning",
+			                			'click' :  function(){
+				                			alert('e04');
+					            		    		var modify_betMoney = $('#modify input:eq(0)').val(); // 要修改的下注金額(home)
+
+			                						//-------- 到後台更新資料 -----------
+//              									$.ajax({
+// 														"type":"POST",//傳遞方式				
+<%-- 								                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/updateOrder", --%>
+// 								                		"dataType":"text",//Servlet回傳格式
+// 								                		"data":{ "gambleId" 	   : gambleId ,
+// 								                				 "modify_betHome"  : modify_betHome  ,
+// 								                				 "modify_betAway"  : modify_betAway  ,
+// 								                				 "battleId"        : battleId ,
+// 								                				 "betTime"         : betTime  ,
+// 								                				 "mbId"            : mbId
+// 								                		},
+// 								       					"success":function(dataText){
+// 															//alert('ggg ' + dataText);
+// 											      			BootstrapAlert.success({ //BootstrapAlert 特效
+// 									 			                title  : "系統訊息",
+// 									 			                message: "更新成功",
+// 									 			                hideTimeout: 2500,
+// 									 			        	});
+// 											      			//---- 修改 <tr>→<td> 為新金額 ----
+// 											      			//alert(tmpTr.prop('tagName'));
+// 											      			tmpTr.children(':nth-child(5)').text( modify_betHome );
+// 											      			tmpTr.children(':nth-child(6)').text( modify_betAway );
+// 								       					},
+// 											      		"error":function(){
+// 												      			BootstrapAlert.info({ //BootstrapAlert 特效
+// 										 			                title  : "網路忙線中",
+// 										 			                message: "請稍候",
+// 										 			                hideTimeout: 2300,
+// 										 			        	});
+// 												        }
+// 													})
+			                					    //-------- 關閉 dialog --------------
+			                						myDialog.dialog("close");
+			                			 		  }
+							        },
+							        {
+							        	'id'    : 'btnCancel',
+			                			'text'  : "取消",
+			                			'class' : "btn btn-success",
+			                			'click' : function(){
+			                				
+			                						myDialog.dialog("close");
+			                			          }
+							        }
+					        ],
+					        'close': function(){
+					        	// do-nothing
+					        }
+						});
+
+					
+		    	})/*end-of Click*/
+
+
+
+
+		    	
+
+
+			    //----------------------------------
 		        $('#dataTables-example').DataTable({
 		            responsive: true
 		        });
