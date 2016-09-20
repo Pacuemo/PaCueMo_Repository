@@ -33,13 +33,13 @@ public class TeamDAO implements TeamDAO_interface
 		this.jdbc = jdbc;
 	}
 
-	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead,content) VALUES (?, ?, ?, ?)";
+	private static final String INSERT = "INSERT INTO Team (teamName,teamProp,teamHead,content,location) VALUES (?, ?, ?, ?, ?)";
 	private static final String FIND_TEAMID_WITH_TEAMHEAD = "SELECT teamId FROM Team where teamHead = ?";
 	private static final String FIND_TEAMVO_WITH_TEAMHEAD = "SELECT * FROM Team where teamHead = ?";
-	private static final String GET_ALL = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team order by teamId";
-	private static final String GET_ONE = "SELECT teamId,teamName,createDate,teamProp,avgRank,teamHead,content FROM Team where teamId = ?";
+	private static final String GET_ALL = "SELECT * FROM Team order by teamId";
+	private static final String GET_ONE = "SELECT * FROM Team where teamId = ?";
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
-	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, teamHead=?, content=? where teamId=?";
+	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, teamHead=?, content=?, location=? where teamId=?";
 	private static final String UPDATE_AVG = " UPDATE Team SET avgRank=? WHERE teamId=?";
 	private static final String GET_OTHER = "SELECT * FROM Team WHERE teamId NOT IN ( " +
 			"SELECT DISTINCT Team.teamId " +
@@ -83,7 +83,7 @@ public class TeamDAO implements TeamDAO_interface
 	@Override
 	public void insert(TeamVO teamVO)
 	{
-		jdbc.update(INSERT, teamVO.getTeamName(), teamVO.getTeamProp(), teamVO.getTeamHead(), teamVO.getContent());
+		jdbc.update(INSERT, teamVO.getTeamName(), teamVO.getTeamProp(), teamVO.getTeamHead(), teamVO.getContent(), teamVO.getLocation());
 	}
 
 	/*
@@ -124,6 +124,8 @@ public class TeamDAO implements TeamDAO_interface
 			pstmt.setString(1, teamVO.getTeamName());
 			pstmt.setInt(2, teamVO.getTeamProp());
 			pstmt.setString(3, memberId);
+			pstmt.setString(4, teamVO.getContent());
+			pstmt.setString(5, teamVO.getLocation());
 			pstmt.executeUpdate();
 			// 查詢隊伍Id
 			pstmt = con.prepareStatement(FIND_TEAMID_WITH_TEAMHEAD);
@@ -197,7 +199,8 @@ public class TeamDAO implements TeamDAO_interface
 			pstmt.setDouble(4, teamVO.getAvgRank());
 			pstmt.setString(5, teamVO.getTeamHead());
 			pstmt.setString(6, teamVO.getContent());
-			pstmt.setInt(7, teamVO.getTeamId());
+			pstmt.setString(7, teamVO.getLocation());
+			pstmt.setInt(8, teamVO.getTeamId());
 
 			pstmt.executeUpdate();
 		}
@@ -281,6 +284,7 @@ public class TeamDAO implements TeamDAO_interface
 				teamVO.setTeamProp(rs.getInt("teamProp"));
 				teamVO.setAvgRank(rs.getDouble("avgRank"));
 				teamVO.setTeamHead(rs.getString("teamHead"));
+				teamVO.setLocation(rs.getString("location"));
 				teamVO.setContent(rs.getString("content"));
 				list.add(teamVO);
 			}
@@ -418,6 +422,7 @@ public class TeamDAO implements TeamDAO_interface
 	@SuppressWarnings("resource")
 	public void updateAvg(Integer teamId) // not finished
 	{
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		List<String> teamMemberIdList = new ArrayList<>();
@@ -515,7 +520,7 @@ public class TeamDAO implements TeamDAO_interface
 		public TeamVO mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
 			return new TeamVO(rs.getInt("teamId"), rs.getString("teamName"), rs.getDate("createDate"), rs.getInt("teamProp"),
-					rs.getDouble("avgRank"), rs.getString("teamHead"), rs.getString("content"));
+					rs.getDouble("avgRank"), rs.getString("teamHead"), rs.getString("content"), rs.getString("location"));
 		}
 	}
 }
