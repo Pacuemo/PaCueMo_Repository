@@ -4,17 +4,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
-import _54_gambleorder_service.GambleOrderBeans_Config;
+import _00_config.RootConfig;
 
+@Repository
 public class GambleOrderDAO implements GambleOrderDAO_interface
 {
-
+	@Autowired
 	private JdbcTemplate JdbcTemplate;
 
 	private static final String GET_ALL_STMT = "SELECT gambleId,memberId,battleId,betHome,betAway,betTime FROM GambleOrder";
@@ -120,7 +123,8 @@ public class GambleOrderDAO implements GambleOrderDAO_interface
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(GambleOrderBeans_Config.class);
+//		ApplicationContext context = new AnnotationConfigApplicationContext(GambleOrderBeans_Config.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		GambleOrderDAO dao = (GambleOrderDAO) context.getBean("gambleOrderDAO");
 		//=============== 測試insert() ================
 //		GambleOrderVO vvo = new GambleOrderVO();
