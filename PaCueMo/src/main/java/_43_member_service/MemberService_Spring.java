@@ -92,6 +92,33 @@ public class MemberService_Spring
 		return map;
 	}
 
+	public HashMap<String, List<String>> showAllFriendsInviting(String memberId)
+	{
+		HashMap<String, List<String>> map = new HashMap<>();
+		List<FriendsListVO> friends = fDao.getAllFriendsInviting(memberId);
+		List<String> friendids = new ArrayList<>();
+		List<String> names = new ArrayList<>();
+		List<String> imgUrls = new ArrayList<>();
+		List<String> fbIds = new ArrayList<>();
+
+		for (FriendsListVO friend : friends)
+		{
+			String friendid = friend.getMemberFriendId();
+			MemberVO memberVO = dao.findByPrimaryKey(friendid);
+			friendids.add(friendid);
+			names.add(memberVO.getMemberLastName() + memberVO.getMemberFirstName());
+			imgUrls.add(memberVO.getMemberImgUrl());
+			fbIds.add(memberVO.getMemberFBId());
+		}
+
+		map.put("ids", friendids);
+		map.put("names", names);
+		map.put("imgs", imgUrls);
+		map.put("fbIds", fbIds);
+
+		return map;
+	}
+
 	@Transactional
 	public int deleteFriend(String memberId, String friendId)
 	{
@@ -124,27 +151,9 @@ public class MemberService_Spring
 		return fDao.getFriend(friendsListVO);
 	}
 
-	public static void main(String[] args)
+	public List<MemberVO> searchMember(String keyword)
 	{
-		MemberService_Spring memberService = new MemberService_Spring();
-		HashMap<String, List<String>> map = memberService.showAllFriends("B411208D-B026-4973-845E-F4C6DFCDF263");
-
-		for (String str : map.get("ids"))
-		{
-			System.out.println(str);
-		}
-		for (String str : map.get("names"))
-		{
-			System.out.println(str);
-		}
-		for (String str : map.get("img"))
-		{
-			System.out.println(str);
-		}
-		for (String str : map.get("fbIds"))
-		{
-			System.out.println(str);
-		}
-
+		return dao.searchMember(keyword);
 	}
+
 }

@@ -2,7 +2,6 @@ package _9_24_leagueClub_model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	}
 
 	private final String Select_ALL_BY_ID = "select * from LeagueClub where LeagueId =?";
-	private final String Add_One_BY_VO = "insert into LeagueClub values (?,?)";
+	private final String Add_One_BY_VO = "insert into LeagueClub (leagueId,clubId) values (?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueClub where leagueId=? and clubId =?";
 	private final String Select_fightId_By_ClubId = "select * from LeagueClub where clubId=?";
 
@@ -36,9 +35,8 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	@Override
 	public List<LeagueClubVO> find_ALL(int leagueId)
 	{
-		Object[] queryState = { leagueId };
-		int[] queryType = { Types.INTEGER };
-		return jdbc.query(Select_ALL_BY_ID, queryState, queryType, new LeagueClubRowMap());
+
+		return jdbc.query(Select_ALL_BY_ID, new LeagueClubRowMap(), leagueId);
 	}
 
 	@Override
@@ -53,8 +51,7 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	{
 		return jdbc.update(Add_One_BY_VO,
 				leagueClubVO.getLeagueId(),
-				leagueClubVO.getClubId(),
-				leagueClubVO.getGroups());
+				leagueClubVO.getClubId());
 	}
 
 	//刪除

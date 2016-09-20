@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import _00_config.RootConfig;
 import _9_41_member_model.MemberDAO_Spring;
 import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
@@ -16,6 +17,7 @@ import _9_54_gambleorder_model.GambleOrderVO;
 
 public class GambleOrderService
 {
+
 	private GambleOrderDAO gambleOrderDAO;
 	private MemberDAO_interface_Spring memberDAO;
 	private BattleSetDAO_interface battleSetDAO;
@@ -56,6 +58,21 @@ public class GambleOrderService
 		return gambleOrderDAO.getAll();
 	}
 
+	//------ 查所有gambleOrder，包含會員資料 -----------
+	public List<GambleOrderVO> getAll_EmbedMember()
+	{
+		List<GambleOrderVO> returnList = new ArrayList<>();
+		List<GambleOrderVO> orderList = gambleOrderDAO.getAll();
+		for (GambleOrderVO gambleOrderVO : orderList)
+		{
+			String mbId = gambleOrderVO.getMemberId();
+			MemberVO mb = memberDAO.findByPrimaryKey(mbId);
+			gambleOrderVO.setMemberVO(mb);
+			returnList.add(gambleOrderVO);
+		}
+		return returnList;
+	}
+
 	public List<GambleOrderVO> getOrdersByMemberId(String memberId)
 	{
 		return gambleOrderDAO.getByMemberId(memberId);
@@ -94,9 +111,21 @@ public class GambleOrderService
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(GambleOrderBeans_Config.class);
+//		ApplicationContext context = new AnnotationConfigApplicationContext(GambleOrderBeans_Config.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		GambleOrderService svc = context.getBean(GambleOrderService.class);
-
+		//========= 【測試】getAll_EmbedMember() ==========
+//		List<GambleOrderVO> list = svc.getAll_EmbedMember();
+//		for (GambleOrderVO gbVO : list)
+//		{
+//			String str = String.format("%3s %3s \t %10s %10s %10s",
+//					gbVO.getMemberVO().getMemberLastName(),
+//					gbVO.getMemberVO().getMemberFirstName(),
+//					gbVO.getBetTime(),
+//					gbVO.getBetHome(),
+//					gbVO.getBetAway());
+//			System.out.println(str);
+//		}
 		//========= 【測試】addOne() ==========
 //		GambleOrderVO vvo = new GambleOrderVO();
 //		vvo.setMemberId("01BF5304-DBCF-4BA9-A2C6-7200C98D7B9B");

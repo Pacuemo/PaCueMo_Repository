@@ -17,6 +17,7 @@ public class FriendsListDAO_Spring implements FriendsListDAO_interface_Spring
 	private JdbcOperations jdbc;
 	private final String GET_ALL_FRIENDS = "SELECT * FROM friendsList WHERE memberId = ? AND memberStatus ='1'";
 	private final String GET_ALL_INVITE = "SELECT * FROM friendsList WHERE memberId = ? AND memberStatus ='2'";
+	private final String GET_ALL_INVITING = "SELECT * FROM friendsList WHERE memberId = ? AND memberStatus ='3'";
 	private final String Delete_friend = "DELETE FROM dbo.FriendsList WHERE memberId= ? AND memberFriendId = ?";
 	private final String GET_FRIENDS = "SELECT * FROM dbo.FriendsList WHERE memberId= ? AND memberFriendId = ?";
 	private final String UPDATE_FRIENDS = "UPDATE dbo.FriendsList SET memberStatus = ? WHERE memberId = ? AND memberFriendId = ?";
@@ -40,6 +41,12 @@ public class FriendsListDAO_Spring implements FriendsListDAO_interface_Spring
 	public List<FriendsListVO> getAllFriendsInvite(String memberId)
 	{
 		return jdbc.query(GET_ALL_INVITE, new FriendsListMapper(), memberId);
+	}
+
+	@Override
+	public List<FriendsListVO> getAllFriendsInviting(String memberId)
+	{
+		return jdbc.query(GET_ALL_INVITING, new FriendsListMapper(), memberId);
 	}
 
 	@Override

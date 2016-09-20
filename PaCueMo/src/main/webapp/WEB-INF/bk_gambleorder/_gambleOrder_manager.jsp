@@ -32,6 +32,9 @@
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath()%>/_99_backstage/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<!-- jQuery Ui -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -339,10 +342,10 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_gambleOrder_manager.jsp"> - 下注訂單管理 - </a>
+	                                    <a href="#"> - 下注訂單管理 - </a>
 	                                </li>
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_goodsOrder_manager.jsp"> - 代幣訂單管理 - </a>
+	                                    <a href="<%=request.getContextPath()%>/spring/goodsOrder/allGoodsOrders"> - 代幣訂單管理 - </a>
 	                                </li>
 	                                <li>
 	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a>
@@ -399,7 +402,7 @@
 	        <div id="page-wrapper">
 	            <div class="row">
 	                <div class="col-lg-12">
-	                    <h1 class="page-header">Tables</h1>
+	                    <h1 class="page-header" style="font-family:微軟正黑體;">下注訂單管理</h1>
 	                </div>
 	                <!-- /.col-lg-12 -->
 	            </div>
@@ -411,12 +414,13 @@
 	                            DataTables Advanced Tables
 	                        </div>
 	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
+	                        <div id="tableDiv"  class="panel-body">
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
 	                                        <th>訂單編號</th>
 	                                        <th>會員id</th>
+	                                        <th>會員姓名</th>
 	                                        <th>場次編號</th>
 	                                        <th>主隊下注</th>
 	                                        <th>客隊下注</th>
@@ -425,421 +429,23 @@
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
+	                                
 	                                	<c:forEach var="gambleOrderVO" items="${requestScope.allGambleOrder}">	                                		
 	                                		<tr class="odd gradeX">
-	                                			<td>${gambleOrderVO.gambleId}</td>
-	                                			<td>${gambleOrderVO.memberId}</td>
-	                                			<td>${gambleOrderVO.battleId}</td>
-	                                			<td>${gambleOrderVO.betHome}</td>
-	                                			<td>${gambleOrderVO.betAway}</td>
-	                                			<td>${gambleOrderVO.betTime}</td>
+	                                			<td class="center">${gambleOrderVO.gambleId}</td>
+	                                			<td class="center">${gambleOrderVO.memberId}</td>
+	                                			<td class="center">${gambleOrderVO.memberVO.memberLastName}&nbsp;${gambleOrderVO.memberVO.memberFirstName}</td>
+	                                			<td class="center">${gambleOrderVO.battleId}</td>
+	                                			<td class="center">${gambleOrderVO.betHome}</td>
+	                                			<td class="center">${gambleOrderVO.betAway}</td>
+	                                			<td class="center">${gambleOrderVO.betTime}</td>
 	                                			<td>
 	                                				<button class="btn btn-warning">修改</button>
 	                                				<button class="btn btn-danger">刪除</button>
 	                                			</td>
 	                                		</tr>	                                		
 	                                	</c:forEach>
-	                                
-<!-- 	                                    <tr class="odd gradeX"> -->
-<!-- 	                                        <td>Trident</td> -->
-<!-- 	                                        <td>Internet Explorer 4.0</td> -->
-<!-- 	                                        <td>Win 95+</td> -->
-<!-- 	                                        <td class="center">4</td> -->
-<!-- 	                                        <td class="center">X</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="even gradeC"> -->
-<!-- 	                                        <td>Trident</td> -->
-<!-- 	                                        <td>Internet Explorer 5.0</td> -->
-<!-- 	                                        <td>Win 95+</td> -->
-<!-- 	                                        <td class="center">5</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="odd gradeA"> -->
-<!-- 	                                        <td>Trident</td> -->
-<!-- 	                                        <td>Internet Explorer 5.5</td> -->
-<!-- 	                                        <td>Win 95+</td> -->
-<!-- 	                                        <td class="center">5.5</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="even gradeA"> -->
-<!-- 	                                        <td>Trident</td> -->
-<!-- 	                                        <td>Internet Explorer 6</td> -->
-<!-- 	                                        <td>Win 98+</td> -->
-<!-- 	                                        <td class="center">6</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="odd gradeA"> -->
-<!-- 	                                        <td>Trident</td> -->
-<!-- 	                                        <td>Internet Explorer 7</td> -->
-<!-- 	                                        <td>Win XP SP2+</td> -->
-<!-- 	                                        <td class="center">7</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="even gradeA"> -->
-<!-- 	                                        <td>Trident</td> -->
-<!-- 	                                        <td>AOL browser (AOL desktop)</td> -->
-<!-- 	                                        <td>Win XP</td> -->
-<!-- 	                                        <td class="center">6</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Firefox 1.0</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">1.7</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Firefox 1.5</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Firefox 2.0</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Firefox 3.0</td> -->
-<!-- 	                                        <td>Win 2k+ / OSX.3+</td> -->
-<!-- 	                                        <td class="center">1.9</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Camino 1.0</td> -->
-<!-- 	                                        <td>OSX.2+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Camino 1.5</td> -->
-<!-- 	                                        <td>OSX.3+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Netscape 7.2</td> -->
-<!-- 	                                        <td>Win 95+ / Mac OS 8.6-9.2</td> -->
-<!-- 	                                        <td class="center">1.7</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Netscape Browser 8</td> -->
-<!-- 	                                        <td>Win 98SE+</td> -->
-<!-- 	                                        <td class="center">1.7</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Netscape Navigator 9</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.0</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.1</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.1</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.2</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.2</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.3</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.3</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.4</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.4</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.5</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.5</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.6</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.6</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.7</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.7</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Mozilla 1.8</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Seamonkey 1.1</td> -->
-<!-- 	                                        <td>Win 98+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Gecko</td> -->
-<!-- 	                                        <td>Epiphany 2.20</td> -->
-<!-- 	                                        <td>Gnome</td> -->
-<!-- 	                                        <td class="center">1.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>Safari 1.2</td> -->
-<!-- 	                                        <td>OSX.3</td> -->
-<!-- 	                                        <td class="center">125.5</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>Safari 1.3</td> -->
-<!-- 	                                        <td>OSX.3</td> -->
-<!-- 	                                        <td class="center">312.8</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>Safari 2.0</td> -->
-<!-- 	                                        <td>OSX.4+</td> -->
-<!-- 	                                        <td class="center">419.3</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>Safari 3.0</td> -->
-<!-- 	                                        <td>OSX.4+</td> -->
-<!-- 	                                        <td class="center">522.1</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>OmniWeb 5.5</td> -->
-<!-- 	                                        <td>OSX.4+</td> -->
-<!-- 	                                        <td class="center">420</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>iPod Touch / iPhone</td> -->
-<!-- 	                                        <td>iPod</td> -->
-<!-- 	                                        <td class="center">420.1</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Webkit</td> -->
-<!-- 	                                        <td>S60</td> -->
-<!-- 	                                        <td>S60</td> -->
-<!-- 	                                        <td class="center">413</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 7.0</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.1+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 7.5</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 8.0</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 8.5</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.2+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 9.0</td> -->
-<!-- 	                                        <td>Win 95+ / OSX.3+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 9.2</td> -->
-<!-- 	                                        <td>Win 88+ / OSX.3+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera 9.5</td> -->
-<!-- 	                                        <td>Win 88+ / OSX.3+</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Opera for Wii</td> -->
-<!-- 	                                        <td>Wii</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Nokia N800</td> -->
-<!-- 	                                        <td>N800</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Presto</td> -->
-<!-- 	                                        <td>Nintendo DS browser</td> -->
-<!-- 	                                        <td>Nintendo DS</td> -->
-<!-- 	                                        <td class="center">8.5</td> -->
-<!-- 	                                        <td class="center">C/A<sup>1</sup> -->
-<!-- 	                                        </td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeC"> -->
-<!-- 	                                        <td>KHTML</td> -->
-<!-- 	                                        <td>Konqureror 3.1</td> -->
-<!-- 	                                        <td>KDE 3.1</td> -->
-<!-- 	                                        <td class="center">3.1</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>KHTML</td> -->
-<!-- 	                                        <td>Konqureror 3.3</td> -->
-<!-- 	                                        <td>KDE 3.3</td> -->
-<!-- 	                                        <td class="center">3.3</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>KHTML</td> -->
-<!-- 	                                        <td>Konqureror 3.5</td> -->
-<!-- 	                                        <td>KDE 3.5</td> -->
-<!-- 	                                        <td class="center">3.5</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeX"> -->
-<!-- 	                                        <td>Tasman</td> -->
-<!-- 	                                        <td>Internet Explorer 4.5</td> -->
-<!-- 	                                        <td>Mac OS 8-9</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">X</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeC"> -->
-<!-- 	                                        <td>Tasman</td> -->
-<!-- 	                                        <td>Internet Explorer 5.1</td> -->
-<!-- 	                                        <td>Mac OS 7.6-9</td> -->
-<!-- 	                                        <td class="center">1</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeC"> -->
-<!-- 	                                        <td>Tasman</td> -->
-<!-- 	                                        <td>Internet Explorer 5.2</td> -->
-<!-- 	                                        <td>Mac OS 8-X</td> -->
-<!-- 	                                        <td class="center">1</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>NetFront 3.1</td> -->
-<!-- 	                                        <td>Embedded devices</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeA"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>NetFront 3.4</td> -->
-<!-- 	                                        <td>Embedded devices</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">A</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeX"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>Dillo 0.8</td> -->
-<!-- 	                                        <td>Embedded devices</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">X</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeX"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>Links</td> -->
-<!-- 	                                        <td>Text only</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">X</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeX"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>Lynx</td> -->
-<!-- 	                                        <td>Text only</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">X</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeC"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>IE Mobile</td> -->
-<!-- 	                                        <td>Windows Mobile 6</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeC"> -->
-<!-- 	                                        <td>Misc</td> -->
-<!-- 	                                        <td>PSP browser</td> -->
-<!-- 	                                        <td>PSP</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">C</td> -->
-<!-- 	                                    </tr> -->
-<!-- 	                                    <tr class="gradeU"> -->
-<!-- 	                                        <td>Other browsers</td> -->
-<!-- 	                                        <td>All others</td> -->
-<!-- 	                                        <td>-</td> -->
-<!-- 	                                        <td class="center">-</td> -->
-<!-- 	                                        <td class="center">U</td> -->
-<!-- 	                                    </tr> -->
+	                           
 	                                </tbody>
 	                            </table>
 	               
@@ -857,29 +463,214 @@
 	    </div>
 	    <!-- /#wrapper -->
 	
-	    <!-- jQuery -->
+		<!-- ====================【 修改 Dialog 開始 】=====================  -->
+			<div id="modify" align="center" style="display: none;">
+				<table class="table table-striped table-bordered table-hover" width="100%" style="display:table-cell;">	
+					<tr>
+						<th scope="row" valign="middle">訂單編號</th>
+						<td valign="middle" style="color:blue;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">會員姓名</th>
+						<td valign="middle" style="color:blue;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">場次編號</th>
+						<td valign="middle" style="color:blue;font-weight:800;">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+					<tr>
+						<th class="bg-primary" scope="row" valign="middle">主隊下注</th>
+						<td class="bg-primary" valign="middle" style="font-size:large;font-weight:800;color:yellow;">text</td>
+						<td class="bg-primary" valign="middle">
+							<input class="form-control" style="color:red;font-weight:800;" type="text" autocomplete="off"/>
+						</td>
+					</tr>
+					<tr>
+						<th class="bg-primary" scope="row" valign="middle">客隊下注</th>
+						<td class="bg-primary" valign="middle" style="font-size:large;font-weight:800;color:yellow;">text</td>
+						<td class="bg-primary" valign="middle">
+							<input class="form-control" style="color:red;font-weight:800;" type="text" autocomplete="off"/>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row" valign="middle">下注時間</th>
+						<td valign="middle">text</td>
+						<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+		<!-- ====================【 修改 Dialog 結束 】=====================  -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/jquery/jquery.min.js"></script>
-	
-	    <!-- Bootstrap Core JavaScript -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/bootstrap/js/bootstrap.min.js"></script>
-	
-	    <!-- Metis Menu Plugin JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/metisMenu/metisMenu.min.js"></script>
-	
-	    <!-- DataTables JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables/js/jquery.dataTables.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables-responsive/dataTables.responsive.js"></script>
-	
-	    <!-- Custom Theme JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/dist/js/sb-admin-2.js"></script>
-	
-	    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+		<script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
 	    <script>
-		    $(document).ready(function() {
+		    $(function() {
+		    
+		    	$('#gg').click(function(){
+		    		alert($('#modify input:eq(0)').prop('id'));
+		    		alert($('#modify input:eq(1)').prop('id'));
+		    	})
+		    	
+		    	$('#tableDiv button:nth-child(1)').click(function(){ // ﹝修改﹞按鈕
+		    		//alert('fuck1');
+		    		var gambleId  = $(this).parents('tr').children(':nth-child(1)').text();
+		    		var mbId      = $(this).parents('tr').children(':nth-child(2)').text();
+		    		var mbName    = $(this).parents('tr').children(':nth-child(3)').text();
+		    		var battleId  = $(this).parents('tr').children(':nth-child(4)').text();
+		    		var betHome   = $(this).parents('tr').children(':nth-child(5)').text();
+		    		var betAway   = $(this).parents('tr').children(':nth-child(6)').text();
+		    		var betTime   = $(this).parents('tr').children(':nth-child(7)').text();
+		    		$('#modify input:eq(0)').val(betHome);// 給修改金額textbox預設值
+		    		$('#modify input:eq(1)').val(betAway);// 給修改金額textbox預設值
+		    		
+		    		console.log( 'gambleId : ' 	+  gambleId );
+		    		console.log( 'mbId     : ' 	+  mbId );
+		    		console.log( 'mbName   : ' 	+  mbName );
+		    		console.log( 'battleId : ' 	+  battleId );
+		    		console.log( 'betHome  : '	+  betHome );
+		    		console.log( 'betAway  : '	+  betAway );
+		    		console.log( 'betTime  : ' 	+  betTime );
+		    		
+		    		$('#modify td:eq(0)').text( gambleId );
+		    		$('#modify td:eq(2)').text( mbName );
+		    		$('#modify td:eq(4)').text( battleId );
+		    		$('#modify td:eq(6)').text( betHome );
+		    		$('#modify td:eq(8)').text( betAway );
+		    		$('#modify td:eq(10)').text( betTime );
+		    		
+		    		var tmpTr = $(this).parents('tr');// 目前選到的 <tr>
+		    		
+				  var myDialog = $("#modify").dialog({
+								 title  : "修改訂單",
+						         show   : { effect :'fold' , duration: 1000 },
+						         hide   : { effect :'clip' , duration: 500 },
+						       //height    : '400',
+						        'width'    : '630',
+						        'resizable':  false,
+						        'position' : { my: "center", at: "center center", of: window },
+						        'open'     : function(){ /*do-nothing*/ },
+						         buttons   :[
+								        {
+								        	'id'    : 'btnConfirm',
+				                			'text'  : "確認修改",
+				                			'class' : "btn btn-warning",
+				                			'click' :  function(){
+						            		    		var modify_betHome = $('#modify input:eq(0)').val();// 要修改的下注金額(home)
+						            		    		var modify_betAway = $('#modify input:eq(1)').val();// 要修改的下注金額(away)
+				                						//-------- 到後台更新資料 -----------
+	                									$.ajax({
+															"type":"POST",//傳遞方式				
+									                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/updateOrder",
+									                		"dataType":"text",//Servlet回傳格式
+									                		"data":{ "gambleId" 	   : gambleId ,
+									                				 "modify_betHome"  : modify_betHome  ,
+									                				 "modify_betAway"  : modify_betAway  ,
+									                				 "battleId"        : battleId ,
+									                				 "betTime"         : betTime  ,
+									                				 "mbId"            : mbId
+									                		},
+									       					"success":function(dataText){
+																//alert('ggg ' + dataText);
+												      			BootstrapAlert.success({ //BootstrapAlert 特效
+										 			                title  : "系統訊息",
+										 			                message: "更新成功",
+										 			                hideTimeout: 2500,
+										 			        	});
+												      			//---- 修改 <tr>→<td> 為新金額 ----
+												      			//alert(tmpTr.prop('tagName'));
+												      			tmpTr.children(':nth-child(5)').text( modify_betHome );
+												      			tmpTr.children(':nth-child(6)').text( modify_betAway );
+									       					},
+												      		"error":function(){
+													      			BootstrapAlert.info({ //BootstrapAlert 特效
+											 			                title  : "網路忙線中",
+											 			                message: "請稍候",
+											 			                hideTimeout: 2300,
+											 			        	});
+													        }
+														})
+				                					    //-------- 關閉 dialog --------------
+				                						myDialog.dialog("close");
+				                			 		  }
+								        },
+								        {
+								        	'id'    : 'btnCancel',
+				                			'text'  : "取消",
+				                			'class' : "btn btn-success",
+				                			'click' : function(){
+				                				
+				                						myDialog.dialog("close");
+				                			          }
+								        }
+						        ],
+						        'close': function(){
+						        	// do-nothing
+						        }
+							});
+		    	})
+		    	
+		    	$('#tableDiv button:nth-child(2)').click(function(){ // ﹝刪除﹞按鈕
+		    		alert('fuck2');
+		    		var gambleId  = $(this).parents('tr').children(':nth-child(1)').text();
+		    		console.log( 'gambleId : ' 	+  gambleId );
+		    		console.log( 'mbId     : ' 	+  $(this).parents('tr').children(':nth-child(2)').text() );
+		    		console.log( 'mbName   : ' 	+  $(this).parents('tr').children(':nth-child(3)').text() );
+		    		console.log( 'battleId : ' 	+  $(this).parents('tr').children(':nth-child(4)').text() );
+		    		console.log( 'betHome  : '	+  $(this).parents('tr').children(':nth-child(5)').text() );
+		    		console.log( 'betAway  : '	+  $(this).parents('tr').children(':nth-child(6)').text() );
+		    		console.log( 'betTime  : ' 	+  $(this).parents('tr').children(':nth-child(7)').text() );
+		    		
+		    		var tmp = $(this);//暫存 $(this)
+		    		
+					$.ajax({
+						"type":"POST",//傳遞方式				
+                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/deleteOrder",
+                		"dataType":"text",//Servlet回傳格式
+                		"data":{ "gambleId" : gambleId },
+       					"success":function(dataText){
+							//alert('ggg ' + dataText);
+							switch ( $.trim(dataText) ) 
+							{
+								case 'del_success':
+									//alert('fuck' + dataText);
+					      			BootstrapAlert.success({ //BootstrapAlert 特效
+			 			                title: "系統訊息",
+			 			                message: "刪除成功",
+			 			                hideTimeout: 2500,
+			 			        	});
+					      			
+					      			tmp.closest('tr').remove();//刪除本列
+
+								  break;
+								default:
+					      			BootstrapAlert.info({ //BootstrapAlert 特效
+			 			                title: "網路忙線中",
+			 			                message: "請稍候",
+			 			                hideTimeout: 2000,
+			 			        	});
+								  break;
+							}
+       					}
+					})
+		    	})
+		    	
 		        $('#dataTables-example').DataTable({
-		            responsive: true
+		            responsive: true,
+
+		        }).on('page', function(){
+		        	//alert("換頁事件這樣寫")
 		        });
+		        
+		        
 		    });
 	    </script>
 	

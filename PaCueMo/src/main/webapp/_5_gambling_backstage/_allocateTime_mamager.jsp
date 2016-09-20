@@ -28,7 +28,8 @@
 		<!-- jquery-ui.css -->
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	 
-	
+		<!-- 小時鐘 -->
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling_backstage/plugins/CSS3-digital-clock/css/clock.css"/>
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	    <!--[if lt IE 9]>
@@ -332,13 +333,13 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_gambleOrder_manager.jsp"> - 下注訂單管理 - </a>
+	                                    <a href="<%=request.getContextPath()%>/spring/gambleOrder/getAllGambleOrder"> - 下注訂單管理 - </a>
 	                                </li>
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_goodsOrder_manager.jsp"> - 代幣訂單管理 - </a>
+	                                    <a href="<%=request.getContextPath()%>/spring/goodsOrder/allGoodsOrders"> - 代幣訂單管理 - </a>
 	                                </li>
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a>
+	                                    <a href="#"> - 派彩時間設定 - </a>
 	                                </li>
 	                                <li>
 	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>
@@ -390,7 +391,7 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-md-3">
                         <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">分派彩金時間設定</font></h1>
                         <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------------------------------------------------- -->
@@ -424,14 +425,23 @@
                         <!-- --------------------------【每頁不同 結束】-------------------------- -->
                         <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------------------------------------------------- -->
-                    </div><!-- /.col-lg-12 -->  
+                    </div><!-- /.col-md-6 -->  
+                    <div class="col-md-3"><!-- 時鐘 -->
+                        <ul class="clock_ul">
+			                <li id='gg' class="clock_li">00</li>
+			                <li class="clock_li">:</li>
+			                <li class="clock_li">00</li>
+			                <li class="clock_li">:</li>
+			                <li class="clock_li">00</li>
+			            </ul>
+                    </div>                
                 </div><!-- /.row --> 
             </div><!-- /.container-fluid -->
         </div> <!-- /#page-wrapper -->
        
 
-    </div><!-- /#wrapper -->
     
+    </div><!-- /#wrapper -->
 
     <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/_99_backstage/vendor/jquery/jquery.min.js"></script>
@@ -449,6 +459,12 @@
 	<script type="text/javascript">
 		$(function(){		
 			
+			//---------- 載入完成時，設定時鐘初值 = inputBox的值-------------
+			$(".clock_ul li:eq(0)").text('0' + $("#hour").val());
+			$(".clock_ul li:eq(2)").text('0' + $("#min").val());
+			$(".clock_ul li:eq(4)").text('0' + $("#sec").val());
+			
+			//---------- jQuery 表單驗證 -----------
 			$("#timerForm").validate({
 		 		errorClass: "has-error",
 				errorPlacement: 
@@ -483,6 +499,10 @@
 		 			                message: "設定分派彩金時間為：" + hour + " 時 " + min + " 分 " + sec + " 秒 ",
 		 			                hideTimeout: 2300,
 		 			        	});		
+				      			//-------設定時鐘值---------
+				    			$(".clock_ul li:eq(0)").text($("#hour").val());
+				    			$(".clock_ul li:eq(2)").text($("#min").val());
+				    			$(".clock_ul li:eq(4)").text($("#sec").val());
 							},
 				      		"error":function(){
 				      			BootstrapAlert.info({ //BootstrapAlert 特效

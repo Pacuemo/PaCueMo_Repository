@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import _9_21_club_model.ClubDAO_I;
 import _9_24_leagueClub_model.LeagueClubDAO_I;
 import _9_24_leagueClub_model.LeagueClubVO;
 import _9_25_leagueRecord_model.LeagueRecordDAO_I;
@@ -22,6 +23,8 @@ public class LeagueClub_Service
 	private LeagueRecordDAO_I leagueRecordDao;
 	@Autowired
 	private FightRecordDAO_I fightRecordDao;
+	@Autowired
+	private ClubDAO_I clubDAO_I;
 
 	// ---------新增聯賽球隊-------
 	public int add_League_club(int leagueId, int clubId)
@@ -31,6 +34,18 @@ public class LeagueClub_Service
 		System.out.println("成功新增 1 筆聯賽社團");
 		System.out.println("並回傳整數  " + success);
 		return success;
+	}
+
+//-------------查詢全部社團-------
+	public List<LeagueClubVO> get_All(int leagueId)
+	{
+
+		List<LeagueClubVO> leagueClubs = leagueClubDao.find_ALL(leagueId);
+		for (LeagueClubVO vo : leagueClubs)
+		{
+			vo.setClubVO(clubDAO_I.findByPK(vo.getClubId()));
+		}
+		return leagueClubs;
 	}
 
 //	查詢社團參加多少聯賽

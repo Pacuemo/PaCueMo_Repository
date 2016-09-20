@@ -126,3 +126,53 @@ input#upload {
     position: relative;
     top: -30;
 }
+
+button#complete-edit {
+    position: relative;
+    right: -150%;
+}
+
+button#edit-friendlist {
+    position: relative;
+    right: -150%;
+}
+
+button.cancel {
+    width: 50%;
+    background: transparent;
+    background-color: #79FF79;
+}
+
+button.delete {
+    width: 50%;
+    background: transparent;
+    background-color: #FF2D2D;
+}
+
+.card .form-group .form-control-static2 {
+    padding-top: 17px;
+}
+
+@media (max-width: 768px){
+button#complete-edit {
+    position: relative;
+    right: -60% !important;
+}
+
+button#edit-friendlist {
+    position: relative;
+    right: -60% !important;
+}
+}
+
+@media (max-width: 991px){
+button#complete-edit {
+    position: relative;
+    right: -80%;
+}
+
+button#edit-friendlist {
+    position: relative;
+    right: -80%;
+}
+}
