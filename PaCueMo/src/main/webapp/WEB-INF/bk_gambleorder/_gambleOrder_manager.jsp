@@ -41,7 +41,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+	<style type="text/css">
+		.ui-dialog { z-index: 9999 !important ;}/* 確保 dialog 最上層顯示 */
+	</style>
 </head>
 
 	<body>
@@ -503,6 +505,8 @@
 				</table>
 			</div>
 		<!-- ====================【 修改 Dialog 結束 】=====================  -->
+		
+		
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/jquery/jquery.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -512,13 +516,11 @@
 	    <script src="<%=request.getContextPath()%>/_99_backstage/vendor/datatables-responsive/dataTables.responsive.js"></script>
 	    <script src="<%=request.getContextPath()%>/_99_backstage/dist/js/sb-admin-2.js"></script>
 		<script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+		<script src="<%=request.getContextPath()%>/_5_gambling_backstage/plugins/Bootbox/js/bootbox.min.js"></script>
 	    <script>
 		    $(function() {
-		    
-		    	$('#gg').click(function(){
-		    		alert($('#modify input:eq(0)').prop('id'));
-		    		alert($('#modify input:eq(1)').prop('id'));
-		    	})
+		    	
+		    	//bootbox.alert("Hello world!");
 		    	
 		    	$('#tableDiv button:nth-child(1)').click(function(){ // ﹝修改﹞按鈕
 		    		//alert('fuck1');
@@ -618,8 +620,9 @@
 							});
 		    	})
 		    	
+		    	
 		    	$('#tableDiv button:nth-child(2)').click(function(){ // ﹝刪除﹞按鈕
-		    		alert('fuck2');
+		    		//alert('fuck2');
 		    		var gambleId  = $(this).parents('tr').children(':nth-child(1)').text();
 		    		console.log( 'gambleId : ' 	+  gambleId );
 		    		console.log( 'mbId     : ' 	+  $(this).parents('tr').children(':nth-child(2)').text() );
@@ -630,38 +633,64 @@
 		    		console.log( 'betTime  : ' 	+  $(this).parents('tr').children(':nth-child(7)').text() );
 		    		
 		    		var tmp = $(this);//暫存 $(this)
-		    		
-					$.ajax({
-						"type":"POST",//傳遞方式				
-                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/deleteOrder",
-                		"dataType":"text",//Servlet回傳格式
-                		"data":{ "gambleId" : gambleId },
-       					"success":function(dataText){
-							//alert('ggg ' + dataText);
-							switch ( $.trim(dataText) ) 
-							{
-								case 'del_success':
-									//alert('fuck' + dataText);
-					      			BootstrapAlert.success({ //BootstrapAlert 特效
-			 			                title: "系統訊息",
-			 			                message: "刪除成功",
-			 			                hideTimeout: 2500,
-			 			        	});
-					      			
-					      			tmp.closest('tr').remove();//刪除本列
 
-								  break;
-								default:
-					      			BootstrapAlert.info({ //BootstrapAlert 特效
-			 			                title: "網路忙線中",
-			 			                message: "請稍候",
-			 			                hideTimeout: 2000,
-			 			        	});
-								  break;
-							}
-       					}
-					})
-		    	})
+					//////////////////////////////////////////////////////
+				    bootbox.dialog({
+							  message: " ※ 注意：刪除資料將無法復原！！！",
+							  title: " -- 系統訊息 -- ",
+							  buttons: {
+							    danger: {
+							      label: "確認",
+							      className: "btn-danger",
+							      callback: function() {
+								      
+											$.ajax({
+												"type":"POST",//傳遞方式				
+						                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/deleteOrder",
+						                		"dataType":"text",//Servlet回傳格式
+						                		"data":{ "gambleId" : gambleId },
+						       					"success":function(dataText){
+													//alert('ggg ' + dataText);
+													switch ( $.trim(dataText) ) 
+													{
+														case 'del_success':
+															//alert('fuck' + dataText);
+											      			BootstrapAlert.success({ //BootstrapAlert 特效
+									 			                title: "系統訊息",
+									 			                message: "刪除成功",
+									 			                hideTimeout: 2500,
+									 			        	});
+											      			
+											      			tmp.closest('tr').remove();//刪除本列
+						
+														  break;
+														default:
+											      			BootstrapAlert.info({ //BootstrapAlert 特效
+									 			                title: "網路忙線中",
+									 			                message: "請稍候",
+									 			                hideTimeout: 2000,
+									 			        	});
+														  break;
+													}
+						       					}
+											})/*end-of $ajax*/
+							      }/*end-of callback: function()*/
+							    },
+							    main: {
+							      label: "取消",
+							      className: "btn-primary",
+							      callback: function() {
+							    	  /*do-nothing*/
+							      }
+							    }
+							  }
+					});	/*end-of bootbox.dialog*/	    		
+					/////////////////////////////////////////////////////
+		    	})/*end-of click event*/	
+		    	//----------------------------------
+		    	
+		    	
+		    	
 		    	
 		        $('#dataTables-example').DataTable({
 		            responsive: true,
@@ -670,8 +699,34 @@
 		        	//alert("換頁事件這樣寫")
 		        });
 		        
-		        
+		    	
 		    });
+
+
+		    var bDialog = function(){
+
+		    	bootbox.dialog({
+					  message: " ※ 注意：刪除資料將無法復原！！！",
+					  title: " -- 系統訊息 -- ",
+					  buttons: {
+					    danger: {
+					      label: "確認",
+					      className: "btn-danger",
+					      callback: function() {
+					        /*do-nothing*/
+	
+					      }
+					    },
+					    main: {
+					      label: "Click ME!",
+					      className: "btn-primary",
+					      callback: function() {
+					    	  /*do-nothing*/
+					      }
+					    }
+					  }
+					});
+			}
 	    </script>
 	
 	</body>
