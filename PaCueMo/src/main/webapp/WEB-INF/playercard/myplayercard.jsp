@@ -17,7 +17,7 @@
   </head>
   <body>
   <jsp:include page="/fragment/top.jsp" />
-  <jsp:include page="/_03_member/fragment/sidebar.jsp" />
+  <jsp:include page="sidebar.jsp" />
   <c:if test="${LoginOK.memberHaveCard == true }">
   <div class="container container-content1">
 		<div class="row">

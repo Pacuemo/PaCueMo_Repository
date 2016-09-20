@@ -1,11 +1,11 @@
 package _31_court_controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,57 +32,34 @@ public class CourtServlet extends HttpServlet
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
-		if ("queryByName".equals(action))
+		if ("queryByName".equals(action))// 來自courtQuery.jsp的請求
 		{
 			System.out.println("call CourtServlet : queryByName");
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 			try
 			{
-				response.setHeader("content-type", "text/html;charset=UTF-8");
-				PrintWriter out = response.getWriter();
-
-				String queryCourtName = request.getParameter("queryCourtName").trim();
-
-				if (queryCourtName.equals(""))
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String court = request.getParameter("court");
+				if (court == null || (court.trim()).length() == 0)
 				{
-					System.out.println("請輸入場地名稱");
-					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}"); // JSON格式
-					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
+					errorMsgs.add("請輸入關鍵字");
+				}
+				if (!errorMsgs.isEmpty())
+				{
+					RequestDispatcher failureView = request.getRequestDispatcher("/_3_view/courtQuery.jsp");
+					failureView.forward(request, response);
 					return;
 				}
-
-				List<Map<String, Object>> list = CourtService.getByName(queryCourtName);
-
-				if (list == null)
-				{
-					System.out.println("查無場地");
-					out.println("{ \"errMsg\" : \" 請輸入場地名稱\"}");
-					request.getRequestDispatcher("/_3_view/courtQuery.jsp").forward(request, response);
-					return;
-				}
-//				else
-//				{
-//					System.out.println("查詢總筆數 : " + list.size());
-//					Gson gson = new Gson();
-//					String ans = gson.toJson(list);
-//					System.out.println(ans);
-//					out.println(ans);
-//					return;
-//				}
-
-				int listSize = list.size();
-				request.setAttribute("queryTeamName", queryCourtName);
-				request.setAttribute("battleSetList", list);
-				request.setAttribute("battleSetList_len", (listSize % 5 == 0 ? (listSize / 5) : (listSize / 5 + 1)));// 計算總頁數(每頁5筆情況)
-				request.getRequestDispatcher("/_5_gambling/gamblingPage.jsp").forward(request, response);
-				return;
+				/*************************** 2.開始查詢資料 *****************************************/
+				CourtService courtSvc = new CourtService();
+				List<Map<String, Object>> courtVO = courtSvc.getByName(court);
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				return;
+				RequestDispatcher failureView = request.getRequestDispatcher("/_3_view/courtQuery.jsp");
+				failureView.forward(request, response);
 			}
 		}
 	}

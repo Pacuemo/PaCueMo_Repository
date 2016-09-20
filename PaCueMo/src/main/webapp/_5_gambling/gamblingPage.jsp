@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <title>NBA 運彩專區</title>
 	
-     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" /><!-- 分頁 -->
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/slicePage/css/style.css" media="screen" type="text/css"/><!-- 分頁 -->
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/reset.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/default.css" type="text/css">
      <link rel="stylesheet" href="<%=request.getContextPath()%>/_5_gambling/plugins/datePicker/css/style.css" type="text/css">
@@ -180,18 +180,16 @@
 	            <form action="">
 	                  <div class="form-group has-feedback">
 						  <label class="control-label" for="number" style="font-family:'微軟正黑體';font-weight:800;color:orange;">卡 號</label>
-						  <input id="cardnumber" placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" style="color:BLUE;font-weight:800;"/>
+						  <input id="cardnumber" placeholder="Card number" type="text" name="number" class="form-control" value="4023 7845 6941 3354" autocomplete="off" style="color:BLUE;font-weight:800;"/>
 					      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
-					  
-					  </div>
+					  </div>					  
 	                  <div class="form-group has-feedback">
 						  <label class="control-label" for="fullname" style="font-family:'微軟正黑體';font-weight:800;color:orange;">姓 名</label>
-						  <input id="fullname" placeholder="Full name" type="text" name="name" value="科比布萊恩" class="form-control"  style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
+						  <input id="fullname" placeholder="Full name" type="text" name="name" value="科比布萊恩" autocomplete="off" class="form-control"  style="font-family:'微軟正黑體';color:BLUE;font-weight:800;"/>
 					 	  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
-					  </div>
-					
+					  </div>					
 					  <div class="row">
 		                  <div class="form-group col-xs-6">
 							  <label class="control-label" for="expire_mm" style="font-family:'微軟正黑體';font-weight:800;color:orange;">期 限(月)</label>
@@ -204,13 +202,13 @@
 					  </div>	
 					  <div class="form-group has-feedback">
 						  <label class="control-label" for="cvc" style="font-family:'微軟正黑體';font-weight:800;color:orange;" >代 碼(CVC)</label>
-						  <input id="cvc" placeholder="CVC" type="text" name="cvc" class="form-control" value="346" pattern=".{3,}" style="color:BLUE;font-weight:800;"/>
+						  <input id="cvc" placeholder="CVC" type="text" name="cvc" class="form-control" value="346" autocomplete="off" pattern=".{3,}" style="color:BLUE;font-weight:800;"/>
 					  	  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
 					 <div class="form-group has-feedback col-xs-6">
 						  <label class="control-label" for="NTD" style="font-family:'微軟正黑體';font-weight:800;color:#00CACA;font-size:10px">購買金額 (1 NT$ : 100 P)</label>
-						  <input id="NTD" placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990" style="color:BLUE;font-weight:800;"/>
+						  <input id="NTD" placeholder="購買金額(NT)" type="text" name="NTD" class="form-control" value="990" autocomplete="off" style="color:BLUE;font-weight:800;"/>
 					  	  <span class="glyphicon form-control-feedback" aria-hidden="true" style="padding-right:15px;"></span>
             			  <span class="sr-only">(error)</span>
 					  </div>
@@ -766,82 +764,93 @@
                         	 	"class" : "btn btn-primary",
                         	 	"click" : function (){
 
-                        	 		   //alert($(this).prop('tagName') +" 確認" );
-                        	 		    var cardNum  = $("input[placeholder='Card number']").val();
-                        	 		    var fullName = $("input[placeholder='Full name']").val();
-                        	 		    var expireMM = $("#expire_mm").val();
-                        	 		    var expireYY = $("#expire_yy").val();
-                        	 		    var cvc      = $("input[placeholder='CVC']").val();
-                        	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
-                        	 		    var coin     = $("input[placeholder='代幣數量']").val();
-                        	 		    var bookingTime = timeStamp();
-                        	 		    //alert(bookingTime);
-                        	 			//======================================================
-                        	 			//==============【傳送信用卡資訊到servlet】=============
-                        	 			//======================================================	
-                        	 				//alert($('#confirm').prop('id'));
-                        	 				console.log('cardNum  '     + cardNum);
-                        	 				console.log('fullName  '    + fullName);
-                        	 				console.log('expireMM  '    + expireMM);
-                        	 				console.log('expireYY  '    + expireYY);
-                        	 				console.log('cvc  '         + cvc);
-                        	 				console.log('ntd  '         + ntd);
-                        	 				console.log('coin  '        + coin);
-                        	 				console.log('bookingTime  ' + bookingTime);
-                        	 			$.ajax({
-                        	 				"type" : "POST",                        	 				
-                        	 				"url"  :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'GoodsOrder_Ajax_Servlet.do',
-                        	 				"dataType":"text",//Servlet回傳格式
-                        	 				"data" : { 
-                        	 						   'action'      :  'buyCoins'  , 
-                        	 						   'cardNum'     :   cardNum    ,
-                        	 						   'fullName'    :   fullName   ,
-                        	 						   'expireMM'    :   expireMM   ,
-                        	 						   'expireYY'    :   expireYY   ,
-                        	 						   'cvc'         :   cvc        ,
-                        	 						   'ntd'         :   ntd        ,
-                        	 						   'coin'        :   coin       ,
-                        	 						   'bookingTime' :   bookingTime   //下訂時間(call from js_timestamp.js)
-                        	 				},
-                        	 				"success" : function(data){/* Servlet回應成功 */
-                        	 					//alert('hello' + data );
-
-                        	 					switch(  $.trim(data)  ){
-													case 'exception':
-														//alert(" 下訂發生例外，請稍候 ");
-														BootstrapAlert.alert({
-											                title: "Sorry!",
-											                message: " 下訂發生例外，請稍候 "
-											            });
-													  break;											
-													default:/*下注成功*/
-														//alert("Session中會員剩餘點數 : " + data);
-														BootstrapAlert.warning({ //BootstrapAlert 特效
-		                        	 			                title: "訂單成立!",
-		                        	 			                message: "已為您儲值點數",
-		                        	 			                hideTimeout: 1800,
-		                        	 			                //parentClass: 'bootstrap-alert',
-		                        	 			       			//innerClass:  'bootstrap-alert-message'
-		                        	 			        });
-		                        	 					//【購買點數成功 → 修改右上方登入會員圖示的點數】
-		 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
-												     break;
-												}	         	 			        
-                        	 				},
-                        	 				"error" : function(){/* Servlet回應錯誤 */
-                        	 					//alert('下訂失敗');
-        						      			BootstrapAlert.info({ //BootstrapAlert 特效
-        				 			                title: "下訂失敗",
-        				 			                message: "網路忙線中~請稍候 ^^",
-        				 			                hideTimeout: 1800,
-        				 			        	});
-                        	 				}
-                        	 			})
-                        	 				
-                        	 			//======================================================
-                                    	cardDialog.dialog("close");/*關閉 dialog*/
-								 }
-	                         }  ,
+		                  					if( !isAllFilled() ){
+		        				      			BootstrapAlert.alert({ //BootstrapAlert 特效
+		        		 			                title: "溫馨提醒",
+		        		 			                message: "是否有欄位未填寫或為0",
+		        		 			                hideTimeout: 2200,
+		        		 			        	});
+		                                		//$("#confirm").attr("disabled",false);
+		                                	}else{
+		                                		//$("#confirm").attr("disabled",true);
+		                                	
+                        	 		
+		                        	 		   //alert($(this).prop('tagName') +" 確認" );
+		                        	 		    var cardNum  = $("input[placeholder='Card number']").val();
+		                        	 		    var fullName = $("input[placeholder='Full name']").val();
+		                        	 		    var expireMM = $("#expire_mm").val();
+		                        	 		    var expireYY = $("#expire_yy").val();
+		                        	 		    var cvc      = $("input[placeholder='CVC']").val();
+		                        	 		    var ntd      = $("input[placeholder='購買金額(NT)']").val();
+		                        	 		    var coin     = $("input[placeholder='代幣數量']").val();
+		                        	 		    var bookingTime = timeStamp();
+		                        	 		    //alert(bookingTime);
+		                        	 			//======================================================
+		                        	 			//==============【傳送信用卡資訊到servlet】=============
+		                        	 			//======================================================	
+		                        	 				//alert($('#confirm').prop('id'));
+		                        	 				console.log('cardNum  '     + cardNum);
+		                        	 				console.log('fullName  '    + fullName);
+		                        	 				console.log('expireMM  '    + expireMM);
+		                        	 				console.log('expireYY  '    + expireYY);
+		                        	 				console.log('cvc  '         + cvc);
+		                        	 				console.log('ntd  '         + ntd);
+		                        	 				console.log('coin  '        + coin);
+		                        	 				console.log('bookingTime  ' + bookingTime);
+		                        	 			$.ajax({
+		                        	 				"type" : "POST",                        	 				
+		                        	 				"url"  :"<%=request.getContextPath()%>" + "/_5_gambling/" + 'GoodsOrder_Ajax_Servlet.do',
+		                        	 				"dataType":"text",//Servlet回傳格式
+		                        	 				"data" : { 
+		                        	 						   'action'      :  'buyCoins'  , 
+		                        	 						   'cardNum'     :   cardNum    ,
+		                        	 						   'fullName'    :   fullName   ,
+		                        	 						   'expireMM'    :   expireMM   ,
+		                        	 						   'expireYY'    :   expireYY   ,
+		                        	 						   'cvc'         :   cvc        ,
+		                        	 						   'ntd'         :   ntd        ,
+		                        	 						   'coin'        :   coin       ,
+		                        	 						   'bookingTime' :   bookingTime   //下訂時間(call from js_timestamp.js)
+		                        	 				},
+		                        	 				"success" : function(data){/* Servlet回應成功 */
+		                        	 					//alert('hello' + data );
+		
+		                        	 					switch(  $.trim(data)  ){
+															case 'exception':
+																//alert(" 下訂發生例外，請稍候 ");
+																BootstrapAlert.alert({
+													                title: "Sorry!",
+													                message: " 下訂發生例外，請稍候 "
+													            });
+															  break;											
+															default:/*下注成功*/
+																//alert("Session中會員剩餘點數 : " + data);
+																BootstrapAlert.warning({ //BootstrapAlert 特效
+				                        	 			                title: "訂單成立!",
+				                        	 			                message: "已為您儲值點數",
+				                        	 			                hideTimeout: 1800,
+				                        	 			                //parentClass: 'bootstrap-alert',
+				                        	 			       			//innerClass:  'bootstrap-alert-message'
+				                        	 			        });
+				                        	 					//【購買點數成功 → 修改右上方登入會員圖示的點數】
+				 	                    						$("a.point").text("點數餘額："+ data + " 點 ");
+														     break;
+														}	         	 			        
+		                        	 				},
+		                        	 				"error" : function(){/* Servlet回應錯誤 */
+		                        	 					//alert('下訂失敗');
+		        						      			BootstrapAlert.info({ //BootstrapAlert 特效
+		        				 			                title: "下訂失敗",
+		        				 			                message: "網路忙線中~請稍候 ^^",
+		        				 			                hideTimeout: 1800,
+		        				 			        	});
+		                        	 				}
+		                        	 			})
+		                        	 			//======================================================
+		                                    	cardDialog.dialog("close");/*關閉 dialog*/
+		                                	}
+								 	}/*click*/
+	                         }/*buttons*/  ,
 	                         {
                         	 	 text  : "取消",
                         	 	'class' : "btn btn-info",

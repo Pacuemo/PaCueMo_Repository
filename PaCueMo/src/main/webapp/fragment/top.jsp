@@ -56,7 +56,7 @@
 
 
       </c:if>
-      <a class="navbar-brand" href=""> <span class="navbar-logo">PACHEMO</span> </a> </div>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}"> <span class="navbar-logo">PACHEMO</span> </a> </div>
     <nav class="collapse navbar-collapse" id="navbar-nav" role="navigation">
       <ul class="nav navbar-nav navbar-right nav-main">
 

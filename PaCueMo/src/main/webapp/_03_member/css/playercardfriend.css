@@ -219,9 +219,8 @@ fieldset {
 .page-header h1.title {
     font-size: 50px;
     margin: .5em 0;
-    color: red;
+    color: #3015fd;
     font-weight: 900;
-    font-style: italic;
 }
 
 font.name {
@@ -436,3 +435,4 @@ span.position::before, span.height::before, span.weight::before, span.hand::befo
     bottom: 150px;
     left: -375px;
 }
+

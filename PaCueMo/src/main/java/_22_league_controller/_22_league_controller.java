@@ -1,5 +1,7 @@
 package _22_league_controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import _22_league_service.FightRecord_Service;
+import _22_league_service.LeagueClub_Service;
 import _22_league_service.LeagueRecord_Service;
 import _22_league_service.League_Service;
+import _9_24_leagueClub_model.LeagueClubVO;
 
 @Controller
 @RequestMapping("/league")
@@ -27,6 +31,8 @@ public class _22_league_controller
 	private FightRecord_Service fightRecordService;
 	@Autowired
 	private Gson gson;
+	@Autowired
+	private LeagueClub_Service leagueClub_Service;
 
 //	------------------------介紹頁面----------------------------------------------
 	@RequestMapping(value = "/introduce", method = RequestMethod.GET)
@@ -83,5 +89,28 @@ public class _22_league_controller
 		System.out.println("轉入/league/recordInfos.jsp 顯示單場球員資訊頁面");
 		System.out.println("-------------------------------------------------------");
 		return "league/recordInfos";
+	}
+
+//----------------------報名聯賽頁面---------------------------------------
+	@RequestMapping(value = "/signUp", method = RequestMethod.GET)
+	public String signUp(@RequestParam("leagueId") int leagueId, HttpServletRequest request)
+	{
+
+		List<LeagueClubVO> leagueClubVOs = leagueClub_Service.get_All(leagueId);
+		if (leagueClubVOs != null)
+		{
+			request.setAttribute("leagueClubs", leagueClubVOs);
+			request.setAttribute("leagueId", leagueId);
+		}
+		return "league/signUp";
+	}
+
+	//----------------------報名聯賽按鈕---------------------------------------
+	@RequestMapping(value = "/signUp/club", method = RequestMethod.GET)
+	public String signUpClub(@RequestParam("leagueId") int leagueId, @RequestParam("clubId") int clubId, HttpServletRequest request)
+	{
+
+		leagueClub_Service.add_League_club(leagueId, clubId);
+		return "redirect:/spring/league/signUp?leagueId=" + leagueId;
 	}
 }
