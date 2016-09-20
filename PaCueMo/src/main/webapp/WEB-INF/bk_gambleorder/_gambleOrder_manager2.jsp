@@ -416,30 +416,20 @@
 	                                    <tr>
 	                                        <th>訂單編號</th>
 	                                        <th>會員id</th>
-	                                        <th>信用卡號</th>
-	                                        <th>持卡人姓名</th>
-	                                        <th>到期日</th>
-                 							<th>識別碼</th>
-                 							<th>下訂數量</th>
-                 							<th>款項(NT)</th>
-                 							<th>下訂時間</th>
-                 							<th>付款狀態</th>
-											<th>修改/刪除</th>
+	                                        <th>場次編號</th>
+	                                        <th>主隊下注</th>
+	                                        <th>客隊下注</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
-	                                	<c:forEach var="goodsOrderVO" items="${requestScope.allGoodsOrder}">	                                		
+	                                	<c:forEach var="gambleOrderVO" items="${requestScope.allGambleOrder}">	                                		
 	                                		<tr class="odd gradeX">
-	                                			<td>${goodsOrderVO.orderId}</td>
-	                                			<td>${goodsOrderVO.memberId}</td>
-	                                			<td>${goodsOrderVO.cardNum}</td>
-	                                			<td>${goodsOrderVO.fullName}</td>
-	                                			<td>${goodsOrderVO.expireMM} / ${goodsOrderVO.expireYY} 年</td>
-	                                			<td>${goodsOrderVO.cvc}</td>
-	                                			<td>${goodsOrderVO.coinQty}</td>
-	                                			<td>${goodsOrderVO.ntdQty}</td>
-	                                			<td>${goodsOrderVO.orderDateTime}</td>
-	                                			<td>${goodsOrderVO.isPay}</td>
+	                                			<td>${gambleOrderVO.gambleId}</td>
+	                                			<td>${gambleOrderVO.memberId}</td>
+	                                			<td>${gambleOrderVO.battleId}</td>
+	                                			<td>${gambleOrderVO.betHome}</td>
+	                                			<td>${gambleOrderVO.betAway}</td>
+	                                			<td>${gambleOrderVO.betTime}</td>
 	                                			<td>
 	                                				<button class="btn btn-warning">修改</button>
 	                                				<button class="btn btn-danger">刪除</button>

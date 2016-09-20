@@ -417,7 +417,7 @@
 								 		<span id="err3" style="color:red;font-style:italic;"></span>
 								  </div>
 								  <p/><p/>
-								  <button id="submitBtn" class="btn btn-danger">確認</button>
+								  <button id="submitBtn" class="btn btn-danger btn-lg" style="margin-left:115px;width:120px;">確認</button>
 							</form>
 						<!-- --------------------------------------------------------------------- -->
 						<!-- --------------------------------------------------------------------- -->
