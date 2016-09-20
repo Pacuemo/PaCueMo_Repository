@@ -1,4 +1,5 @@
-﻿<div class="container-fluid"> 
+﻿<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/playercardsidebar.css">
+<div class="container-fluid"> 
  <nav class="navbar1 navbar-inverse easy-sidebar">
   <div class="container-fluid"> 
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,6 +14,12 @@
       <li><a href="#">帳戶餘額明細</a></li>
       <li><a href="${pageContext.request.contextPath}/_03_member/friendsList.do">好友列表</a></li>
     </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group" id="search">
+        <input id="searchName" type="text" class="form-control" placeholder="搜尋好友" autocomplete="off"/>
+      </div>
+      <button id="searchBtn" type="submit" class="btn btn-default">Submit</button>
+    </form>
   </div>
   <!-- /.container-fluid --> 
 </nav>
@@ -31,5 +38,45 @@
 		$('html').on('swipeleft', function(){
 		    $('body').removeClass('toggled');
 		});
+		
+		$("#searchName").bind("keyup",function(){
+			
+			var keyword = $(this).val();
+			$.ajax({
+				"type":"get",
+				"url": "../spring/playercard/Playercard/search",
+				"dataType": "json",
+				"data":{"keyword": keyword},
+				"success":function(data){
+					$("button.outcome").remove();
+					jQuery.each( data, function( i, member ) {
+						console.log("data   "+data);
+						if(data != null){
+							if(data.length > 0){
+								var name = member.memberLastName+member.memberFirstName;
+								var button=$("<button class='outcome'></div>");
+								button.text(name);
+								button.val(member.memberId)
+								if(member.memberFBId != null){
+									button.prepend(' <img class="user-img img-thumbnail" src="https://graph.facebook.com/'+member.memberFBId+'/picture?width=36&amp;height=36" style="height:45px;width:45px">')
+								}else if(member.memberImgUrl != null){
+									button.prepend(' <img class="user-img img-thumbnail" src="${pageContext.request.contextPath}/image/member/'+member.memberImgUrl+'" style="height:45px;width:45px">')
+								}else{
+									button.prepend(' <img class="user-img img-thumbnail" src="${pageContext.request.contextPath}/image/member/user.jpg" style="height:45px;width:45px">')
+								}
+								$("#search").append(button);
+							}
+						}
+					});
+				}
+			});
+		})
+		
+		$(document.body).on("click",".outcome",function(e){
+			e.preventDefault();
+			var guid = $(this).val();
+			location.href = "../spring/playercard/Playercard?guid="+guid;
+		})
+		
 	})
 </script>

@@ -24,14 +24,14 @@
 	   					<div class="well card friendlist" id="">
 	   						<c:choose>
 							<c:when test="${fn:length(friends.ids) > 0}">
-		   					<h3 class="text-primary1">好友名單 <button id="edit-friendlist">edit</button></h3>
+		   					<h3 class="text-primary1">好友名單 <button id="edit-friendlist">編輯名單</button></h3>
 		   					</c:when>
 		   					<c:otherwise>
 		   					<h3 class="text-primary1">好友名單 </h3>
 		   					</c:otherwise>
 		   					</c:choose>
 		   					<div class="row">
-		   					<div class="col-md-6">
+		   					<div class="col-sm-6 col-md-6">
 		   					<c:choose>
 							<c:when test="${fn:length(friends.ids) > 0}">
 							<c:forEach var="i" begin="0" end="${fn:length(friends.ids)-1}">
@@ -58,7 +58,7 @@
 							</c:when>
 							</c:choose>
 							</div>
-							<div class="col-md-6">
+							<div class="col-sm-6 col-md-6">
 							<c:choose>
 							<c:when test="${fn:length(friends.ids) > 0}">
 							<c:forEach var="i" begin="0" end="${fn:length(friends.ids)-1}">
@@ -95,22 +95,19 @@
 					 </div>
 					 <div class="col-sm-12 col-md-4">
 						<div class="well card friendlist" id="">
-							<h3 class="text-primary1">臉書好友</h3>
-						</div>
-						<div class="well card friendlist" id="">
-					 	    <h3 class="text-primary1">好友邀請</h3>
-					 	    <c:choose>
+							<h3 class="text-primary1">好友邀請</h3>
+							<c:choose>
 							<c:when test="${fn:length(invite.ids) > 0}">
 							<c:forEach var="i" begin="0" end="${fn:length(invite.ids)-1}" varStatus ="vs">
 								<c:choose>
 							        <c:when test="${not empty invite.fbIds[i]}">
 							        <div class="test form-group">
-							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${invite.fbIds[i]}/picture?width=64&amp;height=64" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
 							        </div>
 							        </c:when>
 							        <c:when test="${not empty invite.imgs[i]}">
 							        <div class="test form-group">
-							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${invite.imgs[i]}" alt="${friends.names[i]}"><font>${invite.names[i]}</font></button>
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${invite.imgs[i]}" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
 							        </div>
 							        </c:when>
 							        <c:otherwise>
@@ -125,6 +122,37 @@
 							<c:if test="${fn:length(invite.ids) == 0}">
 								<div class="form-group">
 								<div class="form-control-static test"><h5>目前沒有好友邀請喔!!!</h5></div>
+								</div>
+							</c:if>
+						</div>
+						<div class="well card friendlist" id="">
+					 	    <h3 class="text-primary1">發出的邀請</h3>
+					 	    <c:choose>
+							<c:when test="${fn:length(inviting.ids) > 0}">
+							<c:forEach var="i" begin="0" end="${fn:length(inviting.ids)-1}" varStatus ="vs">
+								<c:choose>
+							        <c:when test="${not empty inviting.fbIds[i]}">
+							        <div class="test form-group">
+							        <button class="form-control-static1 test1" value="${inviting.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${inviting.fbIds[i]}/picture?width=64&amp;height=64" alt="${inviting.names[i]}"><font>${inviting.names[i]}</font></button>
+							        </div>
+							        </c:when>
+							        <c:when test="${not empty inviting.imgs[i]}">
+							        <div class="test form-group">
+							        <button class="form-control-static1 test1" value="${inviting.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${inviting.imgs[i]}" alt="${inviting.names[i]}"><font>${inviting.names[i]}</font></button>
+							        </div>
+							        </c:when>
+							        <c:otherwise>
+							        <div class="test form-group">
+							        <button class="form-control-static1 test1" value="${inviting.ids[i]}"><div class="user-icon-container img-circle navbar-user-img2"> <svg class="user-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user-icon"> </use></svg></div><font>${inviting.names[i]}</font></button>
+							        </div>
+							        </c:otherwise>							    
+      							</c:choose>
+							</c:forEach>
+							</c:when>
+							</c:choose>
+							<c:if test="${fn:length(inviting.ids) == 0}">
+								<div class="form-group">
+								<div class="form-control-static test"><h5>目前沒有發出邀請喔!!!</h5></div>
 								</div>
 							</c:if>
 						</div>
@@ -162,27 +190,30 @@ $(function(){
 		
 		$(document.body).on("click","#edit-friendlist",function(){
 			$(this).attr("id","complete-edit");
-			$(this).text("complete");
+			$(this).text("結束編輯");
 			$(".form-control-static1.test1.f").unbind("click");
 			$(".form-control-static1.test1.f").bind("click",function(){
-				$(this).after("<div class='form-control-static1 test1 b'><button class='delete' style:'color:red'>刪除</button><button class='cancel' style:'color:blue'>取消</button></div>");
+				$(this).closest(".test.form-group").attr("style","-moz-box-shadow:4px 4px 12px -2px rgba(20%,20%,40%,0.5);-webkit-box-shadow:4px 4px 12px -2px rgba(20%,20%,40%,0.5);box-shadow:4px 4px 12px -2px rgba(20%,20%,40%,0.5);background-color:#F0F0F0");
+				$(this).after("<div class='form-control-static2 test1 b'><button class='delete' style:'color:red'>刪除</button><button class='cancel' style:'color:blue'>取消</button></div>");
 				$(this).prop("disabled",true)
 			});
 			
 		});
 		
 		$(document.body).on("click","#complete-edit",function(){
-			$(".form-control-static1.test1.b").prev().prop("disabled",false);	
-			$(".form-control-static1.test1.b").remove();
+			$(".test.form-group").removeAttr("style");
+			$(".form-control-static2.test1.b").prev().prop("disabled",false);	
+			$(".form-control-static2.test1.b").remove();
 			$(".form-control-static1.test1.f").unbind("click");
 			$(".form-control-static1.test1.f").bind("click",addlink)
 			$(this).attr("id","edit-friendlist");
-			$(this).text("edit");
+			$(this).text("編輯名單");
 		});
 	
 		
 		
 		$(document.body).on("click","button.cancel",function(){
+			$(this).closest(".test.form-group").removeAttr("style");
 			$(this).parent().prev().prop("disabled",false);
 			$(this).parent().remove();	
 		});

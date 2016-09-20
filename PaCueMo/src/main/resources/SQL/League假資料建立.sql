@@ -570,6 +570,7 @@ insert into Court values ('永建國小籃球場','臺北市文山區華興里�
 --建立聯賽資料--
 
 INSERT INTO League VALUES ('世界盃',12,'2016-07-01','2016-09-30',1);
+INSERT INTO League VALUES ('來一盃',12,'2016-10-01','2016-11-30',2);
 
 --聯賽主表格--
 
@@ -585,6 +586,19 @@ INSERT INTO LeagueClub VALUES (1,9,4);
 INSERT INTO LeagueClub VALUES (1,10,3);
 INSERT INTO LeagueClub VALUES (1,11,2);
 INSERT INTO LeagueClub VALUES (1,12,1);
+
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,1);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,2);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,3);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,4);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,5);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,6);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,7);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,8);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,9);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,10);
+INSERT INTO LeagueClub  (leagueId,clubId) VALUES (2,11);
+INSERT INTO LeagueClub (leagueId,clubId) VALUES (2,12);
 
 
 --單季聯賽表格--
