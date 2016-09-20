@@ -2,6 +2,7 @@ package _44_playercard_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import _41_login_service.LoginService_Spring;
 import _43_member_service.MemberService_Spring;
@@ -32,6 +35,8 @@ public class PlayercardServlet
 	private LoginService_Spring ls;
 	@Autowired
 	private MemberService_Spring ms;
+	@Autowired
+	private Gson gson;
 
 	@RequestMapping("Myplayercard")
 	public String home(HttpServletRequest request)
@@ -44,6 +49,30 @@ public class PlayercardServlet
 			request.setAttribute("Playercard", pv);
 		}
 		return "playercard/myplayercard";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "Playercard/search", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String search(HttpServletRequest request, HttpSession session)
+	{
+		String keyword = request.getParameter("keyword");
+		List<MemberVO> list = new ArrayList<>();
+
+		if (keyword != null && keyword.trim().length() > 0)
+		{
+			if ((list = ms.searchMember(keyword)).size() > 0)
+			{
+
+				return gson.toJson(list);
+
+			}
+			else
+			{
+				return gson.toJson(list);
+			}
+		}
+
+		return gson.toJson(list);
 	}
 
 	@RequestMapping(value = "Playercard", method = RequestMethod.GET)
@@ -163,6 +192,18 @@ public class PlayercardServlet
 		friend.setMemberStatus(1);
 
 		if (ps.agreeInvite(me, friend) == 1)
+		{
+			return "redirect:../../Playercard?guid=" + friendId.trim();
+		}
+		return "playercard/error";
+	}
+
+	@RequestMapping(value = "Playercard/friends/delete", method = RequestMethod.GET)
+	public String deleteFriend(HttpServletRequest request, HttpSession session)
+	{
+		String friendId = request.getParameter("guid");
+		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
+		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
 		{
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}

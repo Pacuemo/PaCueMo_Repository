@@ -32,4 +32,6 @@ public interface MemberDAO_interface_Spring
 
 	public List<MemberVO> getAll();
 
+	public List<MemberVO> searchMember(String keyword);
+
 }
