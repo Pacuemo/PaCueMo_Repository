@@ -1106,7 +1106,7 @@ public class FakeInfoGenerator
 
 //		gambleOrderGenerator();
 //		goodsOrderGenerator();
-
+//		goodsOrderGenerator();
 //		generator.teamGenerator();
 		teammemberGenerator();
 
