@@ -93,6 +93,13 @@ public class League_Service
 
 	}
 
+	public int updateLeague(LeagueVO leagueVO)
+	{
+		int success = leagueDao.updateOne(leagueVO);
+		System.out.println("修改" + success + "筆資料");
+		return success;
+	}
+
 //------取得某社團多	
 
 	//------交易測試--------
