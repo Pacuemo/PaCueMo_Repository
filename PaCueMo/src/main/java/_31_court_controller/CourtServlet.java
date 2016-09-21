@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import _9_31_court_model.CourtVO;
-
 @WebServlet("/_3_view/CourtServlet.do")
 public class CourtServlet extends HttpServlet
 {
@@ -29,7 +27,7 @@ public class CourtServlet extends HttpServlet
 	{
 		System.out.println("call the post");
 		request.setCharacterEncoding("UTF-8");
-		List<CourtVO> list = null;
+//		List<CourtVO> list = null;
 
 		System.out.println("call CourtServlet : queryByName");
 		List<String> errorMsgs = new LinkedList<String>();

@@ -5,13 +5,13 @@
 <%@ page import="_31_court_service.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	List<CourtVO> list; 
+	List<CourtVO> list;
 	String court = (String) request.getParameter("court");
-	if( court == null){
+	if (court == null) {
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findAll();
 		pageContext.setAttribute("list", list);
-	}else{
+	} else {
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findByCourtName(court);
 		pageContext.setAttribute("list", list);
@@ -21,13 +21,12 @@
 <html>
 <head>
 <style>
-div.imgtest{
-    width: 100%;
-    height: 250px;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-
+div.imgtest {
+	width: 100%;
+	height: 250px;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
@@ -38,83 +37,85 @@ div.imgtest{
 	<jsp:include page="/fragment/sidebar.jsp" />
 	<!-- 選擇器&搜尋button -->
 	<div style="margin-left: 100px; margin-right: 100px">
-	<div class="row">
-		<div class="col-sm-12" style="margin-bottom: 30px">
-			<h2 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">想去哪打球?</h2>
-			<hr>
-		</div>
-	</div>
-	<div class="row">	
-		<div class="col-sm-3">
-			<form name="county" method="post" action="">
-				<!-- 縣市選擇器 -->
-				<div class="form-group">
-					<select class="form-control" onchange="renew(this.selectedIndex);">
-						<option disabled="disabled" selected="selected">全部縣市</option>
-						<option value="2">臺北市</option>
-						<option value="3">新北市</option>
-						<option value="4">桃園市</option>
-						<option value="5">基隆市</option>
-						<option value="6">新竹市</option>
-						<option value="7">新竹縣</option>
-						<option value="8">宜蘭縣</option>
-						<option value="9">苗栗縣</option>
-						<option value="10">臺中市</option>
-						<option value="11">彰化縣</option>
-						<option value="12">南投縣</option>
-						<option value="13">雲林縣</option>
-						<option value="14">嘉義縣</option>
-						<option value="15">嘉義市</option>
-						<option value="16">臺南市</option>
-						<option value="17">屏東縣</option>
-						<option value="18">高雄市</option>
-						<option value="19">花蓮縣</option>
-						<option value="20">臺東縣</option>
-						<option value="21">澎湖縣</option>
-						<option value="22">金門縣</option>
-						<option value="23">連江縣</option>
-					</select>
-				</div>
-				<!-- 行政區選擇器 -->
-				<div class="form-group">
-					<select class="form-control" name="bolcks">
-						<option disabled="disabled" selected="selected">全部行政區</option>
-					</select>
-				</div>
-			</form>			
-			<form action="CourtServlet.do" name="findByONE" method="post">
-				<!-- 關鍵字搜尋 -->
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="請輸入名稱" name="court">
-					<input type="hidden" name="action" value="queryByName">
-				</div>
-				<div class="form-group">
-					<button class="btn btn-danger form-control" type="submit">
-						<i class="fa fa-search" style="font-family: 微軟正黑體;">搜尋</i>
-					</button>
-				</div>
-			</form>
-		</div>
-
-	<!-- 	場地資料 -->
-	<div class="col-sm-9">
-			<%@ include file="page1.file"%>
-			<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}');">
-					</div>
-				</div>	
-				<div class="col-sm-8">
-					<div style="padding: 10px ; width:400px">
-
-						<h4 style="color: white;">${courtVO.name}</h4> <img src="image/location-alt.png"><span style="color: white;">${courtVO.courtaddress}</span>
-					</div>
-				</div>	
+		<div class="row">
+			<div class="col-sm-12" style="margin-bottom: 30px">
+				<h2 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">想去哪打球?</h2>
+				<hr>
 			</div>
-			</c:forEach>
-		<%@ include file="page2.file"%>
 		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<form name="county" method="post" action="">
+					<!-- 縣市選擇器 -->
+					<div class="form-group">
+						<select class="form-control" onchange="renew(this.selectedIndex);">
+							<option disabled="disabled" selected="selected">全部縣市</option>
+							<option value="2">臺北市</option>
+							<option value="3">新北市</option>
+							<option value="4">桃園市</option>
+							<option value="5">基隆市</option>
+							<option value="6">新竹市</option>
+							<option value="7">新竹縣</option>
+							<option value="8">宜蘭縣</option>
+							<option value="9">苗栗縣</option>
+							<option value="10">臺中市</option>
+							<option value="11">彰化縣</option>
+							<option value="12">南投縣</option>
+							<option value="13">雲林縣</option>
+							<option value="14">嘉義縣</option>
+							<option value="15">嘉義市</option>
+							<option value="16">臺南市</option>
+							<option value="17">屏東縣</option>
+							<option value="18">高雄市</option>
+							<option value="19">花蓮縣</option>
+							<option value="20">臺東縣</option>
+							<option value="21">澎湖縣</option>
+							<option value="22">金門縣</option>
+							<option value="23">連江縣</option>
+						</select>
+					</div>
+					<!-- 行政區選擇器 -->
+					<div class="form-group">
+						<select class="form-control" name="bolcks">
+							<option disabled="disabled" selected="selected">全部行政區</option>
+						</select>
+					</div>
+				</form>
+				<form action="CourtServlet.do" name="findByONE" method="post">
+					<!-- 關鍵字搜尋 -->
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="請輸入名稱" name="court"> <input type="hidden" name="action" value="queryByName">
+					</div>
+					<div class="form-group">
+						<button class="btn btn-danger form-control" type="submit">
+							<img src="image/search.png" style="width: 20px; height: 20px">
+							<div class="fa fa-search" style="font-family: 微軟正黑體;">搜尋</div>
+						</button>
+					</div>
+				</form>
+			</div>
+			<!-- 	場地資料 -->
+			<div class="col-sm-9">
+				<%@ include file="page1.file"%>
+				<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}'); margin-bottom: 20px"></div>
+						</div>
+						<div class="col-sm-8">
+							<div style="padding: 10px; width: 400px">
+								<div style="margin-top: 30px">
+									<img src="image/architecture-interior.png" width="20px" height="20px">
+									<h4 style="color: white;">${courtVO.name}</h4>
+									<img src="image/location-alt.png" width="20px" height="20px">
+									<span style="color: white;">${courtVO.courtaddress}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				<%@ include file="page2.file"%>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -132,7 +133,7 @@ div.imgtest{
 			for (var i = 0; i < manyBlocks[index].length; i++)
 				document.county.bolcks.options[i] = new Option(manyBlocks[index][i], manyBlocks[index][i]); // 設定新選項
 			document.county.bolcks.length = manyBlocks[index].length; // 刪除多餘的選項
-		}		
+		}
 	</script>
 </body>
 </html>
