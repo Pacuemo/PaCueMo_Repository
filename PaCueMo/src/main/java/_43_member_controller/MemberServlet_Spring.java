@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,25 +14,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
 
 import _43_member_service.MemberService_Spring;
+import _51_battleset_service.BattleSetService;
+import _53_goodsorder_service.GoodsOrderService;
+import _54_gambleorder_service.GambleOrderService;
 import _9_41_member_model.MemberVO;
+import _9_53_goodsorder_model.GoodsOrderVO;
+import _9_54_gambleorder_model.GambleOrderVO;
 
 @WebServlet(urlPatterns = { "/_03_member/activate.do", "/_03_member/deactivate.do", "/_03_member/connect.do", "/_03_member/overview.do",
-				"/_03_member/security.do", "/_03_member/friendsList.do" })
+				"/_03_member/security.do", "/_03_member/friendsList.do", "/_03_member/details.do" })
 public class MemberServlet_Spring extends HttpServlet
 {
 
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	MemberService_Spring ms;
+
+	@Autowired
+	Gson gson;
+
+	@Autowired
+	GoodsOrderService gs;
+
+	@Autowired
+	GambleOrderService gas;
+
+	@Autowired
+	BattleSetService bs;
+
+	@Autowired
+	JsonArray jsonArray;
+
+	@Autowired
+	JsonObject jsonObject;
 
 	public void init(ServletConfig config) throws ServletException
 	{
@@ -47,6 +75,7 @@ public class MemberServlet_Spring extends HttpServlet
 		String servletPath = request.getServletPath();
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+		PrintWriter out = response.getWriter();
 
 		if (memberVO != null)
 		{
@@ -74,6 +103,28 @@ public class MemberServlet_Spring extends HttpServlet
 				request.setAttribute("invite", map1);
 				request.setAttribute("inviting", map2);
 				request.getRequestDispatcher("/_03_member/accountfriend.jsp").forward(request, response);
+				return;
+			}
+			else if ("/_03_member/details.do".equals(servletPath))
+			{
+				List<GoodsOrderVO> list = gs.getOrdersByMemberId(memberVO.getMemberId());
+				List<GambleOrderVO> galist = gas.getOrdersByMemberId(memberVO.getMemberId());
+				JSONArray ja1 = new JSONArray(gson.toJson(list));
+				JSONArray ja2 = new JSONArray(gson.toJson(galist));
+				JSONArray ja3 = new JSONArray();
+				for (GambleOrderVO gambleOrderVO : galist)
+				{
+					Map<String, Object> map = bs.getOneBattleSetById(gambleOrderVO.getBattleId());
+					JSONObject jo = new JSONObject(gson.toJson(map));
+					ja3.put(jo);
+				}
+
+				JSONObject jo = new JSONObject();
+				jo.put("goods", ja1);
+				jo.put("gamble", ja2);
+				jo.put("battle", ja3);
+
+				out.write(jo.toString());
 				return;
 			}
 		}

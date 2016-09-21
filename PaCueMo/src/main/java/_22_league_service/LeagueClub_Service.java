@@ -36,6 +36,13 @@ public class LeagueClub_Service
 		return success;
 	}
 
+//修改社團
+	public int update_LeagueClub(LeagueClubVO leagueClubVO)
+	{
+
+		return leagueClubDao.update(leagueClubVO);
+	}
+
 //-------------查詢全部社團-------
 	public List<LeagueClubVO> get_All(int leagueId)
 	{
