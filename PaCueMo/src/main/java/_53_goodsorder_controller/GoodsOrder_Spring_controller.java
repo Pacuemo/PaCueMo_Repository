@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,9 +36,7 @@ public class GoodsOrder_Spring_controller
 //					vo.getCardNum(),
 //					vo.getFullName()));
 //		}
-
 		request.setAttribute("allGoodsOrder", list);
-
 		return "bk_goodsorder/_goodsOrder_manager";
 	}
 
@@ -62,35 +61,13 @@ public class GoodsOrder_Spring_controller
 	//======================【修改訂單】=======================
 	@ResponseBody
 	@RequestMapping(value = "/updateOrder", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
-	public String updateGoodsOrderById(
-			@RequestParam("orderId") Integer orderId,
-			@RequestParam("mbId") String mbId,
-			@RequestParam("cardNum") String cardNum,
-			@RequestParam("fullName") String fullName,
-			@RequestParam("expireMM") String expireMM,
-			@RequestParam("expireYY") String expireYY,
-			@RequestParam("cvc") String cvc,
-			@RequestParam("modify_coin") Double modify_coin,
-			@RequestParam("modify_ntd") Integer modify_ntd,
-			@RequestParam("orderDateTime") java.sql.Timestamp orderDateTime,
-			@RequestParam("isPay") Boolean isPay)
-
+	public String updateGoodsOrderById(@RequestBody GoodsOrderVO gdVO)
 	{
-		System.out.println(
-				String.format("%3s %15s %15s %3s %3s %3s %3s %3s %3s %3s %3s", orderId, mbId, cardNum, fullName, expireMM,
-						expireYY, cvc, modify_coin, modify_ntd, orderDateTime, isPay));
-		GoodsOrderVO gdVO = new GoodsOrderVO();
-		gdVO.setOrderId(orderId);
-		gdVO.setMemberId(mbId);
-		gdVO.setCardNum(cardNum);
-		gdVO.setFullName(fullName);
-		gdVO.setExpireMM(expireMM);
-		gdVO.setExpireYY(expireYY);
-		gdVO.setCvc(cvc);
-		gdVO.setCoinQty(modify_coin);
-		gdVO.setNtdQty(modify_ntd);
-		gdVO.setOrderDateTime(orderDateTime);
-		gdVO.setIsPay(isPay);
+		System.out.println(" =========== 呼叫 updateGoodsOrderById() ===========");
+//		System.out.println(
+//				String.format("%3s %15s %15s %3s %3s %3s %3s %3s %3s %3s %3s",
+//						gdVO.getOrderId(), gdVO.getMemberId(), gdVO.getCardNum(), gdVO.getFullName(), gdVO.getExpireMM(),
+//						gdVO.getExpireYY(), gdVO.getCvc(), gdVO.getCoinQty(), gdVO.getNtdQty(), gdVO.getOrderDateTime(), gdVO.getIsPay()));
 		goodsService.update(gdVO);
 		return "update_success";
 	}

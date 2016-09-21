@@ -14,7 +14,7 @@ import _9_41_member_model.MemberDAO_Spring;
 public class MemberPoints_controller
 {
 	@Autowired
-	private MemberDAO_Spring mbDAO;
+	private MemberDAO_Spring MemberDAO;
 //	@Autowired
 //	private Gson gson;
 
@@ -22,6 +22,7 @@ public class MemberPoints_controller
 	@RequestMapping(value = "/getPoints", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
 	public String getMbPoints(@RequestParam("mbId") String memberId)// DB查詢member目前點數
 	{
-		return String.valueOf(mbDAO.findByPrimaryKey(memberId).getMemberPoint());
+		System.out.println(" === 呼叫 getMbPoints() 成功 ===");
+		return String.valueOf(MemberDAO.findByPrimaryKey(memberId).getMemberPoint());
 	}
 }

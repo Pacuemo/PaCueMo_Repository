@@ -8,43 +8,43 @@
     </ul>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-      <li><a href="#">Link</a></li>
-      <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-          <li class="divider"></li>
-          <li><a href="#">One more separated link</a></li>
-        </ul>
-      </li>
+      <li class="active"><a href="<%=request.getContextPath()%>/index.jsp">HOME <span class="sr-only">(current)</span></a></li>
+      <li><a href="http://nba.udn.com/nba/index?gr=www" target="_blank">NBA.com</a></li>
+<!--       <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a> -->
+<!--         <ul class="dropdown-menu" role="menu"> -->
+<!--           <li><a href="#">Action</a></li> -->
+<!--           <li><a href="#">Another action</a></li> -->
+<!--           <li><a href="#">Something else here</a></li> -->
+<!--           <li class="divider"></li> -->
+<!--           <li><a href="#">Separated link</a></li> -->
+<!--           <li class="divider"></li> -->
+<!--           <li><a href="#">One more separated link</a></li> -->
+<!--         </ul> -->
+<!--       </li> -->
       <li><a id="buyCoin" style="font-family:微軟正黑體;color:red;">購買代幣</a></li>
     </ul>
 
     <!-- 搜尋 開始 -->
     <form id="searchForm" class="navbar-form navbar-left" role="search">
       <div class="form-group">
-        <input id="searchName" type="text" value="${queryTeamName}" class="form-control" placeholder="Search" autocomplete="off"/>
+        <input id="searchName" type="text" value="${queryTeamName}" class="form-control" placeholder="輸入NBA球隊名" autocomplete="off" />
       </div>
       <button id="searchBtn" type="submit" class="btn btn-default">Submit</button>
     </form>
     <!-- 搜尋 結束 -->
     
-    <ul class="nav navbar-nav navbar-left">
-      <li><a href="#">Link</a></li>
-      <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </li>
-    </ul>
+<!--     <ul class="nav navbar-nav navbar-left"> -->
+<!--       <li><a href="#">Link</a></li> -->
+<!--       <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a> -->
+<!--         <ul class="dropdown-menu" role="menu"> -->
+<!--           <li><a href="#">Action</a></li> -->
+<!--           <li><a href="#">Another action</a></li> -->
+<!--           <li><a href="#">Something else here</a></li> -->
+<!--           <li class="divider"></li> -->
+<!--           <li><a href="#">Separated link</a></li> -->
+<!--         </ul> -->
+<!--       </li> -->
+<!--     </ul> -->
   </div>
   <!-- /.container-fluid --> 
   <!-- ===【DatePicker 開始】=== -->

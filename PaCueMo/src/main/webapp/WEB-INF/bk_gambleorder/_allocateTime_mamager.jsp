@@ -50,7 +50,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">PaCueMo</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -279,7 +279,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard - Home</a>
+                            <a href="<%=request.getContextPath()%>/_99_backstage/pages/index.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - HOME</a>
                         </li>
                         <!-- ============================================================================== -->
                         <!-- =============================【後臺功能頁籤 開始】============================== -->
@@ -323,36 +323,13 @@
 	                                <li>
 	                                    <a href="#"> - 派彩時間設定 - </a>
 	                                </li>
-	                                <li>
-	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>
-	                                </li>
 	                            </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <!-- ============================================================================== -->
                         <!-- =============================【後臺功能頁籤 結束】============================== -->
                         <!-- ============================================================================== -->
-                        <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i>以下 Tables、Forms 參考用</a>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="login.html">Login Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+      
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -364,8 +341,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">分派彩金時間設定</font></h1>
+                    <div class="col-md-4">
+                        <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">分派彩金時間設定</h1>
                         <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------【每頁不同 開始】-------------------------- -->
@@ -473,9 +450,21 @@
 		 			                hideTimeout: 2300,
 		 			        	});		
 				      			//-------設定時鐘值---------
-				    			$(".clock_ul li:eq(0)").text($("#hour").val());
-				    			$(".clock_ul li:eq(2)").text($("#min").val());
-				    			$(".clock_ul li:eq(4)").text($("#sec").val());
+				      			if( $("#hour").val() < 10 ){
+				      				$(".clock_ul li:eq(0)").text( '0' + $("#hour").val() );
+						      	}else{
+						      		$(".clock_ul li:eq(0)").text( $("#hour").val() );
+								}
+								if( $("#min").val() < 10 ){
+									$(".clock_ul li:eq(2)").text( '0' + $("#min").val() );
+								}else{
+									$(".clock_ul li:eq(2)").text( $("#min").val() );
+								}
+								if( $("#sec").val() < 10 ){
+									$(".clock_ul li:eq(4)").text( '0' + $("#sec").val() );
+								}else{
+									$(".clock_ul li:eq(4)").text( $("#sec").val() );
+								}
 							},
 				      		"error":function(){
 				      			BootstrapAlert.info({ //BootstrapAlert 特效
