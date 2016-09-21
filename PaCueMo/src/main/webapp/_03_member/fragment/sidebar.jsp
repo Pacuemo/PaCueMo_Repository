@@ -11,7 +11,7 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="${pageContext.request.contextPath}/_03_member/overview.do">帳戶概覽<span class="sr-only">(current)</span></a></li>
       <li><a href="${pageContext.request.contextPath}/_03_member/security.do">安全性</a></li>
-      <li><a href="#">帳戶餘額明細</a></li>
+      <li><a href="${pageContext.request.contextPath}/_03_member/accountdetails.jsp">帳戶餘額明細</a></li>
       <li><a href="${pageContext.request.contextPath}/_03_member/friendsList.do">好友列表</a></li>
     </ul>
     <form class="navbar-form navbar-left" role="search">

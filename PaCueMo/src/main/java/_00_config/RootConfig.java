@@ -19,6 +19,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 
@@ -87,6 +88,12 @@ public class RootConfig
 	public JsonObject jsonObject()
 	{
 		return new JsonObject();
+	}
+
+	@Bean
+	public JsonArray jsonArray()
+	{
+		return new JsonArray();
 	}
 
 	@Bean
