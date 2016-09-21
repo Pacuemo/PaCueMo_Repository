@@ -49,7 +49,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>
-	                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	                <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">PaCueMo</a>
 	            </div>
 	            <!-- /.navbar-header -->
 	
@@ -278,7 +278,7 @@
 	                            <!-- /input-group -->
 	                        </li>
 	                        <li>
-	                            <a href="index.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - Home</a>
+	                            <a href="index.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - HOME</a>
 	                        </li>
 	                        <!-- ============================================================================== -->
 	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
@@ -324,9 +324,6 @@
 	                                    <%-- <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a> --%>
 	                                    <a href="<%=request.getContextPath()%>/spring/gambleOrder/timerSetter"> - 派彩時間設定 - </a>
 	                                </li>
-	                                <li>
-	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>
-	                                </li>
 	                            </ul>
 	                            <!-- /.nav-second-level -->
 	                        </li>
@@ -344,7 +341,7 @@
 	        <div id="page-wrapper">
 	            <div class="row">
 	                <div class="col-lg-12">
-	                    <h1 class="page-header">Dashboard</h1>
+	                    <h1 class="page-header" style="font-family:微軟正黑體;font-weight:1200">PaCueMo 後台管理系統</h1>
 	                </div>
 	                <!-- /.col-lg-12 -->
 	            </div>
@@ -444,7 +441,7 @@
 	                <div class="col-lg-8">
 	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
-	                            <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+	                            <i class="fa fa-bar-chart-o fa-fw"></i> Link to PaCueMo
 	                            <div class="pull-right">
 	                                <div class="btn-group">
 	                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -467,7 +464,10 @@
 	                        </div>
 	                        <!-- /.panel-heading -->
 	                        <div class="panel-body">
-	                            <div id="morris-area-chart"></div>
+	                            <!-- <div id="morris-area-chart"></div> -->                           	                            	                            
+	                            <div align="center">
+	                            	<a href="<%=request.getContextPath()%>/index.jsp"><img src="${pageContext.request.contextPath}/img/PACUEMO.png"></a>
+	                            </div>
 	                        </div>
 	                        <!-- /.panel-body -->
 	                    </div>

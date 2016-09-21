@@ -58,7 +58,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>
-	                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	                <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">PaCueMo</a>
 	            </div>
 	            <!-- /.navbar-header -->
 	
@@ -287,7 +287,7 @@
 	                            <!-- /input-group -->
 	                        </li>
 	                        <li>
-	                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+	                            <a href="<%=request.getContextPath()%>/_99_backstage/pages/index.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - HOME</a>
 	                        </li>
 	                       
 	                       
@@ -333,39 +333,13 @@
 	                                <li>
 	                                    <a href="<%=request.getContextPath()%>/spring/gambleOrder/timerSetter"> - 派彩時間設定 - </a>
 	                                </li>
-	                                <li>
-	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>
-	                                </li>
 	                            </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <!-- ============================================================================== -->
                         <!-- =============================【後臺功能頁籤 結束】============================ -->
-                        <!-- ============================================================================== -->
-                        <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i>以下 Tables、Forms 參考用</a>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="login.html">Login Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-	                       
-	                       
-	                       
+                        <!-- ============================================================================== -->                       
+           
 	                    </ul>
 	                </div>
 	                <!-- /.sidebar-collapse -->
@@ -376,7 +350,7 @@
 	        <div id="page-wrapper">
 	            <div class="row">
 	                <div class="col-lg-12">
-	                    <h1 class="page-header">Tables</h1>
+	                    <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">會員代幣訂單管理</h1>
 	                </div>
 	                <!-- /.col-lg-12 -->
 	            </div>
@@ -523,7 +497,7 @@
 	    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	    <script>
 		    $(function() {	
-		    	
+
 		    	// --  設定 輸入 代幣 keyup 改變 台幣		    	
 		    	$('#modify input:eq(0)').keyup(function(){
 		    		$('#modify input:eq(1)').val( $(this).val()/100 );
@@ -546,7 +520,7 @@
 		    		var ntdQty   	  = $(this).parents('tr').children(':nth-child(8)').text();
 		    		var orderDateTime = $(this).parents('tr').children(':nth-child(9)').text();
 		    		var isPay 		  = $(this).parents('tr').children(':nth-child(10)').text();
-		    		
+
 		    		var inputCoin = $('#modify input:eq(0)');
 		    		var inputNtd  = $('#modify input:eq(1)');
 		    		inputCoin.val(coinQty); // 修改代幣textbox預設值
@@ -605,27 +579,33 @@
 										                var modify_ntd      =  $('#modify input:eq(1)').val(); // 要修改的下注金額(台幣)		
 										                var orderDateTime	=  $('#modify td:eq(18)').text();
 										                var isPay		    =  $('#modify td:eq(20)').text();
+
+										                
+											            var data={ 
+										                	         "orderId"       : orderId ,
+										                	         "memberId"      : mbId    ,
+										                	         "cardNum"       : cardNum  ,
+										                	         "fullName"      : fullName  ,
+										                	         "expireMM"      : expireMM  ,
+										                	         "expireYY"      : expireYY  ,
+										                	         "cvc"     		 : cvc  ,
+										                	         "coinQty"	     : modify_coin  , /* 要更新的點數 */
+										                	         "ntdQty"    	 : modify_ntd  ,  /* 要更新的點數 */
+										                	         "orderDateTime" : orderDateTime  ,
+										                	         "isPay"         : isPay  
+								                				};
+								                		//console.log( JSON.stringify(data) );
 													//===================================
 			                						//-------- 到後台更新資料 -----------
 			                						//===================================
 	             									$.ajax({
-															"type":"POST",//傳遞方式				
+															"type":"POST",//傳遞方式	
+															"contentType": "application/json",			
 									                		"url" :"<%=request.getContextPath()%>/spring/goodsOrder/updateOrder",
 									                		"dataType":"text",//Servlet回傳格式
-									                		"data":{ 
-									                	            "orderId"       : orderId ,
-									                	            "mbId"          : mbId    ,
-									                	            "cardNum"       : cardNum  ,
-									                	            "fullName"      : fullName  ,
-									                	            "expireMM"      : expireMM  ,
-									                	            "expireYY"      : expireYY  ,
-									                	            "cvc"     		: cvc  ,
-									                	            "modify_coin"   : modify_coin  ,
-									                	            "modify_ntd"    : modify_ntd  ,
-									                	            "orderDateTime" : orderDateTime  ,
-									                	            "isPay"         : isPay  
-									                		},
+															"data" : JSON.stringify(data), //從物件建立 JSON 字串
 									       					"success":function(dataText){
+									       						
 																//alert('ggg ' + dataText);
 												      			BootstrapAlert.success({ //BootstrapAlert 特效
 										 			                title  : "系統訊息",
@@ -671,7 +651,7 @@
 		    	
 		    	$('#tableDiv button:nth-child(2)').click(function(){ // ﹝刪除﹞按鈕
 					
-		    		alert("fuck you");		    		
+		    		//alert("fuck you");		    		
 		    		var orderId = $(this).parents('tr').children(':nth-child(1)').text();		    				    		
 		    		var tmpTr   = $(this).parents('tr');// 目前選到的 <tr>
 		    		

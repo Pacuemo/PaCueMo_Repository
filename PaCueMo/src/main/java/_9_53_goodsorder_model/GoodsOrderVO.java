@@ -1,5 +1,7 @@
 package _9_53_goodsorder_model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class GoodsOrderVO
 {
 	private Integer orderId;
@@ -11,6 +13,7 @@ public class GoodsOrderVO
 	private String cvc;
 	private Integer ntdQty;
 	private Double coinQty;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")//for _goodsOrder_manager.jsp → JSON.stringify()
 	private java.sql.Timestamp orderDateTime;
 	private Boolean isPay;
 

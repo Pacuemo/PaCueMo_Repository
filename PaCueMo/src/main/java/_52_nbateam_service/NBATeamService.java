@@ -59,6 +59,7 @@ public class NBATeamService
 //		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		NBATeamDAO_interface nbaTeamDAO = (NBATeamDAO) context.getBean("nbaTeamDAO");
+
 		System.out.println("== 呼叫 NBATeamService 中的 getByTeamNameREST(隊名) ==   查詢隊名字串：" + teamName);
 		NBATeamVO ans = nbaTeamDAO.findByTeamName(teamName);
 		((ConfigurableApplicationContext) context).close();
@@ -78,9 +79,12 @@ public class NBATeamService
 	public static void main(String[] args)
 	{
 //		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_52_nbateam_service");
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		NBATeamService svc = (NBATeamService) context.getBean("nbaTeamService");
 
+		//------------- 測試 getByTeamNameREST --------------
+		NBATeamVO vo = svc.getByTeamNameREST("湖人");
+		System.out.println(vo.getTeamName());
 		//-------------------------------------------------------begin 查無資料 org.springframework.dao.EmptyResultDataAccessException
 //		NBATeamService svc = new NBATeamService();
 //		svc.getByTeamName("123");
