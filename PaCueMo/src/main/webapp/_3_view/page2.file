@@ -3,13 +3,13 @@
  <tr>
   <%if (rowsPerPage<rowNumber) {%>
     <%if(pageIndex>=rowsPerPage){%>
-        <td><A href="<%=request.getRequestURI()%>?whichPage=1">第一頁</A>&nbsp;</td>
-        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁 </A>&nbsp;</td>
+        <td><A href="<%=request.getRequestURI()%>?whichPage=1&court=<%=court%>">第一頁</A>&nbsp;</td>
+        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>&court=<%=court%>">上一頁 </A>&nbsp;</td>
     <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁 </A>&nbsp;</td>
-        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">最後一頁</A>&nbsp;</td>
+        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>&court=<%=court%>">下一頁 </A>&nbsp;</td>
+        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>&court=<%=court%>">最後一頁</A>&nbsp;</td>
     <%}%>
   <%}%>  
  </tr>

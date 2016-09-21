@@ -76,20 +76,15 @@ public class BattleRecordService
 		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdA(teamIdA);
 		for (BattleRecordVO battleRecordVO : battleRecordVOs)
 		{
-			System.out.println(battleRecordVO.getBattleId() + " : " + " teamIdA : " + battleRecordVO.getTeamIdA());
 			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));
-			System.out.println(battleRecordVO.getTeamAVO().getTeamName());
 			battleRecordVO.setTeamBVO(teamDAO.getTeamById(battleRecordVO.getTeamIdB()));
-			System.out.println(battleRecordVO.getTeamBVO().getTeamName());
-			System.out.println("result : " + battleRecordVO.getResult());
-
 		}
 		return battleRecordVOs;
 	}
 
 	public List<BattleRecordVO> findByTeamIdB(Integer teamIdB)
 	{
-		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdA(teamIdB);
+		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdB(teamIdB);
 		for (BattleRecordVO battleRecordVO : battleRecordVOs)
 		{
 			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));
