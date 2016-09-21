@@ -6,8 +6,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import _00_config.RootConfig;
 import _00_initial_service.GlobalService;
-import _53_goodsorder_service.GoodsOrderBeans_Config;
 
 public class GoodsOrderDAO implements GoodsOrderDAO_interface
 {
@@ -27,6 +27,10 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	private static final String GET_ALL_BY_MEMBID = "SELECT orderId,memberId,cardNum,fullName,expireYY,expireMM,cvc,ntdQty,coinQty,orderDateTime,isPay "
 			+ "                                        FROM dbo.GoodsOrder WHERE memberId = ?";
 
+	private static final String UPDATE_STMT = "UPDATE GoodsOrder"
+			+ "                                    SET memberId = ?, cardNum= ? ,fullName= ? ,expireYY= ? ,expireMM=? , cvc=?, "
+			+ "                                    ntdQty= ? , coinQty= ?, orderDateTime= ?, isPay= ? "
+			+ "                                    WHERE orderId = ? ";
 	//========================================
 	private JdbcTemplate jdbcTemplate;
 
@@ -45,8 +49,16 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	{
 		//"INSERT INTO GoodsOrder ( memberId , cardNum , fullName , expireYY , expireMM ,cvc , ntdQty , coinQty , orderDateTime , isPay)"
 		int num = jdbcTemplate.update(INSERT_STMT,
-				vo.getMemberId(), GlobalService.encryptString(vo.getCardNum()), vo.getFullName(), vo.getExpireYY(), vo.getExpireMM(), vo.getCvc(),
-				vo.getNtdQty(), vo.getCoinQty(), vo.getOrderDateTime(), vo.getIsPay());
+				vo.getMemberId(),
+				GlobalService.encryptString(vo.getCardNum()),
+				vo.getFullName(),
+				vo.getExpireYY(),
+				vo.getExpireMM(),
+				vo.getCvc(),
+				vo.getNtdQty(),
+				vo.getCoinQty(),
+				vo.getOrderDateTime(),
+				vo.getIsPay());
 		System.out.println(" ============= 新增GoodsOrder " + num + " 一筆成功 ================");
 		return num;
 	}
@@ -54,7 +66,20 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 	@Override
 	public int update(GoodsOrderVO vo)
 	{
-		return 0;
+		int num = jdbcTemplate.update(UPDATE_STMT,
+				vo.getMemberId(),
+				vo.getCardNum(),
+				vo.getFullName(),
+				vo.getExpireYY(),
+				vo.getExpireMM(),
+				vo.getCvc(),
+				vo.getNtdQty(),
+				vo.getCoinQty(),
+				vo.getOrderDateTime(),
+				vo.getIsPay(),
+				vo.getOrderId());
+		System.out.println(" ============= 更新GoodsOrder " + num + " 一筆成功 ================");
+		return num;
 	}
 
 	@Override
@@ -96,7 +121,7 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 		//============================================================
 		//=======================【Spring】===========================
 		//============================================================
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext(GoodsOrderBeans_Config.class);
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		GoodsOrderDAO dao = (GoodsOrderDAO) context.getBean("goodsOrderDAO");
 		//=========== 【測試】 insert test =============
 //		GoodsOrderVO myvo = new GoodsOrderVO();
@@ -111,7 +136,21 @@ public class GoodsOrderDAO implements GoodsOrderDAO_interface
 //		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 17:18:04"));
 //		myvo.setIsPay(true);
 //		dao.insert(myvo);
-		//============ end of insert test ========
+		//============ end of insert test ========		
+		//=========== 【測試】 更新 =============
+//		GoodsOrderVO myvo = new GoodsOrderVO();
+//		myvo.setOrderId(1);
+//		myvo.setMemberId("782150D8-9957-4114-AD5F-52CE12A9995C");
+//		myvo.setCardNum("4023 1154 3578 9424");
+//		myvo.setFullName("火雲邪神");
+//		myvo.setExpireYY("2017");
+//		myvo.setExpireMM("08");
+//		myvo.setCvc("338");
+//		myvo.setNtdQty(50);
+//		myvo.setCoinQty(500.0);
+//		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-09-21 12:12:12"));
+//		myvo.setIsPay(true);
+//		dao.update(myvo);
 		//=========== 【測試】 依會員id查詢 =============
 //		List<GoodsOrderVO> list = dao.findByMemberId("7DADF962-E537-4559-B2B7-0772EC1A8A4E");
 //		for (GoodsOrderVO vo : list)

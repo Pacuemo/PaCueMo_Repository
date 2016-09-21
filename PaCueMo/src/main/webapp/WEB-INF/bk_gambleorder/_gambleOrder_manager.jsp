@@ -296,24 +296,6 @@
                         <!-- =============================【後臺功能頁籤 開始】============================== -->
                         <!-- ============================================================================== -->
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 球員卡管理 <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 約戰管理 <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -358,15 +340,6 @@
 	                            </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 場地管理 <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
                         <!-- ============================================================================== -->
                         <!-- =============================【後臺功能頁籤 結束】============================== -->
                         <!-- ============================================================================== -->
@@ -398,7 +371,7 @@
 	                </div>
 	                <!-- /.sidebar-collapse -->
 	            </div>
-	            <!-- /.navbar-static-side -->
+	            <!-- /.navbar-static-side --> 
 	        </nav>
 	
 	        <div id="page-wrapper">
@@ -635,7 +608,7 @@
 		    		var tmp = $(this);//暫存 $(this)
 
 					//////////////////////////////////////////////////////
-				    bootbox.dialog({
+				    bootbox.dialog({/*confirm box*/
 							  message: " ※ 注意：刪除資料將無法復原！！！",
 							  title: " -- 系統訊息 -- ",
 							  buttons: {
