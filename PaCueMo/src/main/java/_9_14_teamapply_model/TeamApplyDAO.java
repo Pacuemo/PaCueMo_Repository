@@ -24,6 +24,7 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	private static final String SELECT_BY_MEMBER_APPLYING = "SELECT * FROM TeamApply WHERE memberId = ? AND applystatus = 0";
 	private static final String INSERT = "INSERT INTO TeamApply (teamId, memberId) VALUES (?, ?)";
 	private static final String DELETE = "DELETE FROM TeamApply WHERE teamId = ? and memberId = ?";
+	private static final String DELETE_BY_TEAM = "DELETE FROM TeamApply WHERE teamId = ?";
 	private static final String UPDATE = "UPDATE TeamApply SET applystatus = ? WHERE teamId = ? AND memberId = ?";
 	private static final String CHECK_COUNT = "select count(*) from TeamApply where checked !=1 AND teamId=?";
 	private static final String CHECK_CHANGE = " UPDATE TeamApply SET checked=1 WHERE teamId=?";
@@ -76,6 +77,12 @@ public class TeamApplyDAO implements TeamApplyDAO_I
 	public void delete(Integer teamId, String memberId)
 	{
 		jdbc.update(DELETE, teamId, memberId);
+	}
+
+	@Override
+	public void deleteByTeamId(Integer teamId)
+	{
+		jdbc.update(DELETE_BY_TEAM, teamId);
 	}
 
 	@Override

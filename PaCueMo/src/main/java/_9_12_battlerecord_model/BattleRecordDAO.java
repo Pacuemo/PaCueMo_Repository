@@ -41,6 +41,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	private static final String REPORT_B = "UPDATE BattleRecord set reportB=? where battleId = ?";
 	private static final String UPDATE_RESULT = "UPDATE BattleRecord set result=? where battleId = ?";
 	private static final String DELETE = "DELETE FROM BattleRecord where battleId = ?";
+	private static final String DELETE_BY_TEAM = "DELETE FROM BattleRecord where teamIdA = ? or teamIdB = ?";
 	private static final String GET_ONE = "SELECT * FROM BattleRecord where battleId = ?";
 	private static final String FIND_BY_TEAM_A = "SELECT * FROM BattleRecord where teamIdA = ?";
 	private static final String FIND_BY_TEAM_B = "SELECT * FROM BattleRecord where teamIdB = ?";
@@ -86,7 +87,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	@Override
 	public void reportA(BattleRecordVO battleRecordVO)
 	{
-		jdbc.update(REPORT_A, battleRecordVO.getReportB(), battleRecordVO.getBattleId());
+		jdbc.update(REPORT_A, battleRecordVO.getReportA(), battleRecordVO.getBattleId());
 	}
 
 	/*
@@ -127,6 +128,12 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 		jdbc.update(DELETE, batteleRecordId);
 	}
 
+	@Override
+	public void deleteByTeamId(Integer teamId)
+	{
+		jdbc.update(DELETE_BY_TEAM, teamId, teamId);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#findById(java.lang.Integer)
@@ -144,7 +151,8 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	@Override
 	public List<BattleRecordVO> findByTeamIdA(Integer teamIdA)
 	{
-		return jdbc.query(FIND_BY_TEAM_A, new BattleRecordRowMapper(), teamIdA);
+		List<BattleRecordVO> battleRecordVOs = jdbc.query(FIND_BY_TEAM_A, new BattleRecordRowMapper(), teamIdA);
+		return battleRecordVOs;
 	}
 
 	/*
@@ -242,8 +250,15 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 					continue;
 				}
 				battleRecordVO.setCourtId(1);
-				battleRecordVO.setBattleMode(3);
-				battleRecordVO.setBattleBet(Math.random() * 10000 + 1);
+				if ((Math.random() * 10 + 1) > 5)
+				{
+					battleRecordVO.setBattleMode(5);
+				}
+				else
+				{
+					battleRecordVO.setBattleMode(3);
+				}
+				battleRecordVO.setBattleBet(Math.random() * 10000);
 				battleRecordVO.setBattleDateTime(new Timestamp(System.currentTimeMillis() + (long) (Math.random() * 86400000)));
 				battleRecordVO.setResult((int) (Math.random() * 6 + 1));
 				((BattleRecordDAO) dao).addFakeData(battleRecordVO);

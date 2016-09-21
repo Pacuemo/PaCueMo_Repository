@@ -7,6 +7,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+import _00_config.RootConfig;
+import _9_10_team_model.TeamDAO;
 import _9_12_battlerecord_model.BattleRecordDAO_I;
 import _9_12_battlerecord_model.BattleRecordVO;
 
@@ -15,6 +17,8 @@ public class BattleRecordService
 {
 	@Autowired
 	private BattleRecordDAO_I battleRecordDAO;
+	@Autowired
+	private TeamDAO teamDAO;
 
 	public BattleRecordService()
 	{
@@ -69,12 +73,24 @@ public class BattleRecordService
 
 	public List<BattleRecordVO> findByTeamIdA(Integer teamIdA)
 	{
-		return battleRecordDAO.findByTeamIdA(teamIdA);
+		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdA(teamIdA);
+		for (BattleRecordVO battleRecordVO : battleRecordVOs)
+		{
+			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));
+			battleRecordVO.setTeamBVO(teamDAO.getTeamById(battleRecordVO.getTeamIdB()));
+		}
+		return battleRecordVOs;
 	}
 
 	public List<BattleRecordVO> findByTeamIdB(Integer teamIdB)
 	{
-		return battleRecordDAO.findByTeamIdB(teamIdB);
+		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdB(teamIdB);
+		for (BattleRecordVO battleRecordVO : battleRecordVOs)
+		{
+			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));
+			battleRecordVO.setTeamBVO(teamDAO.getTeamById(battleRecordVO.getTeamIdB()));
+		}
+		return battleRecordVOs;
 	}
 
 	public List<BattleRecordVO> getAll()
@@ -94,7 +110,7 @@ public class BattleRecordService
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(BattleRecordConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		BattleRecordService service = context.getBean(BattleRecordService.class);
 
 		System.out.println(service.getAttendancePercent(4));

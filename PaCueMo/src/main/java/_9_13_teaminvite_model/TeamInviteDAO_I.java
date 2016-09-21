@@ -23,4 +23,6 @@ public interface TeamInviteDAO_I
 
 	int change_checked(int teamId);
 
+	void deleteByTeamId(Integer teamId);
+
 }

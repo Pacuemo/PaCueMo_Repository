@@ -23,6 +23,7 @@ import _12_battlerecord_service.BattleRecordService;
 import _14_teamapply_service.TeamApplyService;
 import _44_playercard_service.PlayercardService;
 import _9_10_team_model.TeamVO;
+import _9_12_battlerecord_model.BattleRecordVO;
 import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberVO;
 
@@ -182,6 +183,10 @@ public class TeamServlet extends HttpServlet
 
 				List<TeamVO> myList = teamService.getMyTeamList(memberId);
 				req.setAttribute("myList", myList);
+				List<BattleRecordVO> battleRecordVOs_A = battleRecordService.findByTeamIdA(teamId);
+				req.setAttribute("battleRecordVOs_A", battleRecordVOs_A);
+				List<BattleRecordVO> battleRecordVOs_B = battleRecordService.findByTeamIdB(teamId);
+				req.setAttribute("battleRecordVOs_B", battleRecordVOs_B);
 
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");
@@ -210,11 +215,9 @@ public class TeamServlet extends HttpServlet
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		Boolean error = false;
-		TeamService teamService = null;
 		TeamVO teamVO = null;
 		try
 		{
-			teamService = context.getBean(TeamService.class);
 			teamVO = new TeamVO();
 
 			String teamName = req.getParameter("teamName");
@@ -246,6 +249,23 @@ public class TeamServlet extends HttpServlet
 			}
 			teamVO.setContent(content);
 
+			String location = null;
+			try
+			{
+				location = req.getParameter("location");
+				if (location.equals(""))
+				{
+					System.out.println("未輸入活動地區: 台北市 (default)");
+					location = "台北市";
+				}
+			}
+			catch (Exception e)
+			{
+				System.out.println("(ERROR) 活動地區: 台北市 (default)");
+				location = "台北市";
+			}
+			teamVO.setLocation("台北市");
+
 			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 			String teamMemberId = memberVO.getMemberId();
 			if (null != teamMemberId && teamMemberId.length() != 0)
@@ -256,6 +276,7 @@ public class TeamServlet extends HttpServlet
 			{
 				error = true;
 			}
+
 			if (!error)
 			{
 				teamService.createTeam(teamVO);
@@ -267,7 +288,7 @@ public class TeamServlet extends HttpServlet
 			}
 			System.out.println("doPost OK");
 			System.out.println("-------------------------------------------------------");
-			req.getRequestDispatcher("/spring/team/createTeamPage").forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + "/spring/team/createTeamPage");
 			return;
 		}
 		catch (Exception e)

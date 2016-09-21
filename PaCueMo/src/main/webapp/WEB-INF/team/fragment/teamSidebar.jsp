@@ -101,7 +101,7 @@
 <div id="dialog-apply" title="社團申請"></div>
 
 
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
+<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css"> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrapAlert.js"></script>
 
@@ -163,11 +163,11 @@
 		    cancelButton: "No"
 		});
 		
-		var dialog;
-		dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
+		var dialog_sidebar;
+		dialog_sidebar = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
 		$("#a_createTeam").on("click", function()	             		
 		{
-			dialog.dialog("open"); 			
+			dialog_sidebar.dialog("open"); 			
 		}); // sidebar dialog end  
 		
 

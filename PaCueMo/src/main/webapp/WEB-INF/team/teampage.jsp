@@ -1,5 +1,8 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>
 <%-- for Struts2 --%>
@@ -7,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ page import="java.util.Date" %>
 <c:url var="home" value="/" scope="request" />
 <%--設定home，之後在script可以用--%>
 
@@ -58,6 +62,19 @@ p.tempstyle {
 
 .left_40 {
 	padding-left: 40px;
+}
+
+.paginationA{
+	
+}
+.paginationB{
+	
+}
+.insideA{
+}
+.insideB{
+}
+.a_reportA{
 }
 </style>
 
@@ -149,6 +166,7 @@ p.tempstyle {
 .mar_0 {
 	margin: 0px;
 }
+
 </style>
 
 </head>
@@ -160,8 +178,8 @@ p.tempstyle {
 	
 <style>
 body {
-    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
-}
+    background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg"); 
+} 
 </style>
 
 	<div class="row" style="margin: 0px">
@@ -296,22 +314,222 @@ body {
 
 	<div class="row">
 		<div class="col-md-12">
-			<hr class="margin-bottom-30">
+			<hr class="margin-bottom-30" style="margin-top: 0px">
 		</div>
 
-		<div class="col-md-5" style="color: white">
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, laboriosam, quod odit quo quos itaque repellat quaerat a ad alias. Vel, nostrum id ab velit veritatis consequatur fugit sequi esse. Maecenas congue dui id posuere fermentum.</p>
+
+<!-- 主約戰紀錄 -->
+		<div class="col-md-5">
 			<div class="row">
-				<div class="col-sm-3">
-					<span class="fa-stack fa-2x margin-vert-30 margin-horiz-40 hidden-xs animate fadeInLeft"> <i class="fa fa-circle fa-stack-2x color-gray-light"></i> <i class="fa fa-cogs fa-stack-1x fa-inverse"></i>
-					</span>
-				</div>
-				<div class="col-sm-9">
-					<h3 class="margin-vert-10">Pellentesque iaculis</h3>
-					<p>Lorem Ipsum is simply dummy text of Lorem the printing and typesettings. Aliquam dictum nulla eu varius porta. Maecenas congue dui id posuere fermentum.</p>
-				</div>
+			<div class="content" style="margin-left: 30px;padding: 20px;background-color:  rgba(255,255,255,0.95);">
+				<table class="table table-hover">
+					  <thead>
+					  <tr>
+				      	<th colspan="2">對戰紀錄</th>
+				      	<th><a id="a_recordA" href="">約戰方</a></th>
+				      	<th><a id="a_recordB" href="">挑戰方</a></th>				      	
+				      </tr>
+					    <tr>
+					      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+					      <th style="padding-top: 8px;padding-bottom: 8px;">對戰隊伍</th>
+					      <th style="padding-top: 8px;padding-bottom: 8px;">模式</th>
+					      <th style="padding-top: 8px;padding-bottom: 8px;">賭注</th>
+					      <th style="padding-top: 8px;padding-bottom: 8px;">日期</th>
+					      <th style="padding-top: 8px;padding-bottom: 8px;">狀態</th>
+					    </tr>
+					  </thead>
+					  
+<!-- 				  這裡開始是 約戰表  -->
+					  <tbody id="tbody_A">
+					  	<c:forEach var="battleRecordVO" items="${requestScope.battleRecordVOs_A}" varStatus="status">
+						  <c:if test="${status.index % 3 == 0}">
+						  	<c:set var="flag" value="on"></c:set>
+					  	  	<fmt:parseNumber var="a" type="number" integerOnly="true" value="${status.index / 3}" />
+						  	<tbody id="insideA_${a}" class="insideA" hidden="hidden">
+						  </c:if>
+						    <tr>
+						      <th hidden="none" scope="row">${battleRecordVO.battleId}</th>
+						      <th scope="row"></th>
+						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVO.teamBVO.teamId}">${battleRecordVO.teamBVO.teamName}</a></td>
+						      <td>${battleRecordVO.battleMode} V ${battleRecordVO.battleMode}</td>
+						      <td>  <c:choose>
+									<c:when test="${battleRecordVO.battleBet == 0}">
+										 &nbsp;&nbsp;&nbsp;&nbsp;-
+									</c:when>
+									<c:otherwise>								
+										${battleRecordVO.battleBet}
+									</c:otherwise>
+									</c:choose>
+							  </td>	
+							  		<jsp:useBean id="dateValue" class="java.util.Date" />
+									<jsp:setProperty name="dateValue" property="time" value="${battleRecordVO.battleDateTime.time}" />
+						      <td>
+								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue}" />
+						      </td>	
+						      <td>
+						      <c:if test="${battleRecordVO.teamAVO.teamHead == LoginOK.memberId}">
+								<c:choose>
+									<c:when test="${battleRecordVO.result == 0}">
+										<jsp:useBean id="now" class="java.util.Date"  />
+										<c:choose>
+											<c:when test="${now.time > battleRecordVO.battleDateTime.time}">
+												<c:choose>
+													<c:when test="${battleRecordVO.reportA == 0}">
+														<a battleId="${battleRecordVO.battleId}" class="a_reportA" href="#">回報</a>													
+													</c:when>
+													<c:otherwise>已回報</c:otherwise>
+												</c:choose>
+											</c:when>
+											<c:otherwise>
+												&nbsp;&nbsp;&nbsp;&nbsp;-
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${battleRecordVO.result == 1}">win</c:when>
+											<c:when test="${battleRecordVO.result == 2}">lose</c:when>
+											<c:when test="${battleRecordVO.result == 3}">平手</c:when>
+											<c:when test="${battleRecordVO.result == 4}">缺席 </c:when>
+											<c:when test="${battleRecordVO.result == 5}">對方缺席</c:when>
+											<c:when test="${battleRecordVO.result == 6}">
+												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
+													<spring:param name="teamId" value="${battleRecordVO.teamIdA }"></spring:param>
+												</spring:url>
+												<a href="${s_settingTeam}">結果不符</a>
+											</c:when>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								</c:if>
+								<c:if test="${battleRecordVO.teamAVO.teamHead != memberVO.memberId}">
+									&nbsp;&nbsp;&nbsp;&nbsp;-
+								</c:if>
+							  </td>	
+						    </tr>
+						  <c:if test="${((status.index -2) > 0) && (status.index - 2) % 3 == 0}">
+						 	 <c:set var="flag" value="off"></c:set>
+						  	</tbody>
+						  </c:if>
+						    <c:if test="${status.last}">
+						    	<c:if test="${flag == 'on'}">
+						    		</tbody>
+						    	</c:if>
+						    	<tbody id="selectpage_A">
+								    <tr>	
+								      <th scope="row"></th>
+								      <th scope="row"></th>
+								      <td colspan="4">
+									  	<c:forEach begin="1" end="${status.count}" varStatus="status2">
+									    	<c:if test="${status2.count % 3 == 0}">
+												<fmt:parseNumber var="i" type="number" integerOnly="true" value="${status2.count / 3}" />
+									      		<a class="paginationA" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${i}</a>
+									      	</c:if>
+									  	</c:forEach>
+								      </td>	
+									</tr>
+								</tbody>
+							</c:if>
+					    </c:forEach>
+					  </tbody>
+<!-- 				  這裡開始是 被約戰表  -->
+					  <tbody id="tbody_B">
+					  	<c:forEach var="battleRecordVOB" items="${requestScope.battleRecordVOs_B}" varStatus="status">
+						  <c:if test="${status.index % 3 == 0}">
+						  	<c:set var="flag2" value="on"></c:set>
+					  	  	<fmt:parseNumber var="a" type="number" integerOnly="true" value="${status.index / 3}" />
+						  	<tbody id="insideB_${a}" class="insideB" hidden="hidden">
+						  </c:if>
+						    <tr>
+						      <th hidden="none" scope="row">${battleRecordVOB.battleId}</th>
+						      <th scope="row"></th>
+						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVO.teamAVO.teamId}">${battleRecordVOB.teamAVO.teamName}</a></td>
+						      <td>${battleRecordVOB.battleMode} V ${battleRecordVOB.battleMode}</td>
+						      <td>  <c:choose>
+									<c:when test="${battleRecordVOB.battleBet == 0}">
+										 &nbsp;&nbsp;&nbsp;&nbsp;-
+									</c:when>
+									<c:otherwise>								
+										${battleRecordVOB.battleBet}
+									</c:otherwise>
+									</c:choose>
+							  </td>	
+							  		<jsp:useBean id="dateValue2" class="java.util.Date" />
+									<jsp:setProperty name="dateValue2" property="time" value="${battleRecordVOB.battleDateTime.time}" />
+						      <td>
+								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue2}" />
+						      </td>	
+						      <td>
+						      <c:if test="${battleRecordVOB.teamBVO.teamHead == LoginOK.memberId}">
+								<c:choose>
+									<c:when test="${battleRecordVOB.result == 0}">
+										<c:choose>
+											<c:when test="${now.time > battleRecordVOB.battleDateTime.time}">
+												<c:choose>
+													<c:when test="${battleRecordVOB.reportB == 0}">
+														<a battleId="${battleRecordVOB.battleId }" class="a_reportB" href="#">回報</a>
+													</c:when>
+													<c:otherwise>已回報</c:otherwise>
+												</c:choose>
+											</c:when>
+											<c:otherwise>
+												&nbsp;&nbsp;&nbsp;&nbsp;-
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${battleRecordVOB.result == 1}">lose</c:when>
+											<c:when test="${battleRecordVOB.result == 2}">win</c:when>
+											<c:when test="${battleRecordVOB.result == 3}">平手</c:when>
+											<c:when test="${battleRecordVOB.result == 4}">對方缺席 </c:when>
+											<c:when test="${battleRecordVOB.result == 5}">缺席</c:when>
+											<c:when test="${battleRecordVOB.result == 6}">
+												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
+													<spring:param name="teamId" value="${battleRecordVOB.teamIdB }"></spring:param>
+												</spring:url>
+												<a href="${s_settingTeam}">結果不符</a>
+											</c:when>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								</c:if>
+								<c:if test="${battleRecordVOB.teamBVO.teamHead != memberVO.memberId}">
+									&nbsp;&nbsp;&nbsp;&nbsp;-
+								</c:if>
+							  </td>	
+						    </tr>
+						  <c:if test="${((status.index -2) > 0) && (status.index - 2) % 3 == 0}">
+						 	 <c:set var="flag2" value="off"></c:set>
+						  	</tbody>
+						  </c:if>
+						    <c:if test="${status.last}">
+						    	<c:if test="${flag2 == 'on'}">
+						    		</tbody>
+						    	</c:if>
+						    	<tbody id="selectpage_B" hidden="hidden">
+								    <tr>	
+								      <th scope="row"></th>
+								      <th scope="row"></th>
+								      <td colspan="4">
+									  	<c:forEach begin="1" end="${status.count}" varStatus="status2">
+									    	<c:if test="${status2.count % 3 == 0}">
+												<fmt:parseNumber var="j" type="number" integerOnly="true" value="${status2.count / 3}" />
+									      		<a  class="paginationB" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${j}</a>
+									      	</c:if>
+									  	</c:forEach>
+								      </td>	
+									</tr>
+								</tbody>
+							</c:if>
+					    </c:forEach>
+					  </tbody>
+				</table>
+			</div>
 			</div>
 		</div>
+		
+		
 		<div class="col-md-2" style="color: white">
 		</div>
 		<div class="col-md-5" style="color: white;padding-right: 50px">
@@ -482,6 +700,143 @@ body {
 			    confirmButton: "Yes",
 			    cancelButton: "No"
 			});
+			
+			// set a_recordA click事件
+			$("#a_recordA").click(function(){
+				event.preventDefault();
+				$("#tbody_A").show(200);
+				$("#insideA_0").show(200);
+				$("#selectpage_A").show(200);
+				$("#tbody_B").hide()
+				$(".insideB").hide();
+				$("#selectpage_B").hide();
+			})
+			// set a_recordB click事件
+			$("#a_recordB").click(function(){
+				event.preventDefault();
+				$("#tbody_B").show(200);
+				$("#insideB_0").show(200);
+				$("#selectpage_B").show(200);
+				$("#tbody_A").hide();
+				$(".insideA").hide();
+				$("#selectpage_A").hide();
+			})
+			// set 顯示分頁
+			$(".paginationA").click(function(){
+				event.preventDefault();
+				$(".insideA").hide();
+				$("#insideA_"+($(this).text()-1)+"").show(200);
+			})
+			$(".paginationB").click(function(){
+				event.preventDefault();
+				$(".insideB").hide();
+				$("#insideB_"+($(this).text()-1)+"").show(200);
+			})
+			
+			{
+				$("#insideA_0").show(200);
+			}
+			
+			//setting confirm reportA
+			var a_battleAId;
+			$(".a_reportA").click(function(event){
+				event.preventDefault();
+				a_battleAId = $(this).attr('battleId')				
+			}).confirm({
+			    title:"回報結果",
+			    text:"這場對戰的結果是你們：",
+			    confirm: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"data" : { "resault" : "win",
+								"battleId" : a_battleAId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    cancel: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"data" : { "resault" : "lose",
+								"battleId" : a_battleAId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    confirmButton: "贏了",
+			    cancelButton: "輸了"
+			});
+
+			//setting confirm reportB
+			var a_battleBId;
+			$(".a_reportB").click(function(event){
+				event.preventDefault();
+				a_battleBId = $(this).attr('battleId')				
+			}).confirm({
+			    title:"回報結果",
+			    text:"這場對戰的結果是你們：",
+			    confirm: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamB", // home 在 head
+						"data" : { "resault" : "win",
+								"battleId" : a_battleBId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    cancel: function(button) {
+			    	$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"data" : { "resault" : "lose",
+								"battleId" : a_battleAId 
+							}, 
+						"dataType" : "text",
+						"success" : function(data)
+						{
+							window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						}, 
+						"error" : function(Error)
+						{
+							window.location.href= "${home}";
+							console.log(Error);
+						} 
+					})
+			    },
+			    confirmButton: "贏了",
+			    cancelButton: "輸了"
+			});
+
 			
 			// End of init
 		});
