@@ -321,7 +321,8 @@
 	                                    <a href="<%=request.getContextPath()%>/spring/goodsOrder/allGoodsOrders"> - 代幣訂單管理 - </a>
 	                                </li>
 	                                <li>
-	                                    <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a>
+	                                    <%-- <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a> --%>
+	                                    <a href="<%=request.getContextPath()%>/spring/gambleOrder/timerSetter"> - 派彩時間設定 - </a>
 	                                </li>
 	                                <li>
 	                                    <a href="tables.jsp"><i class="fa fa-table fa-fw"></i> Tables</a>

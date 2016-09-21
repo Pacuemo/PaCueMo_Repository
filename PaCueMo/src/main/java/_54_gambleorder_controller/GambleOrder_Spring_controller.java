@@ -22,6 +22,16 @@ public class GambleOrder_Spring_controller
 	@Autowired
 	private GambleOrderService gambleOrderSVC;
 
+	//================= 轉交至設定Timer頁面 =======================
+
+	@RequestMapping(value = "timerSetter", method = RequestMethod.GET)
+	public String toTimerSetter()
+	{
+		System.out.println(" ======== 導向頁面至 WEB-INF/_allocateTime_mamager.jsp ======== ");
+		return "bk_gambleorder/_allocateTime_mamager";
+	}
+
+	//===================== 查全部 ============================
 	@RequestMapping(value = "/getAllGambleOrder", method = RequestMethod.GET)
 	public String getAllGambleOrder(HttpServletRequest request, HttpServletResponse response)
 	{
