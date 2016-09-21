@@ -1,7 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
- 
+
 <!DOCTYPE html>
 <html>
   <head> 
@@ -20,7 +20,6 @@
   	 <script type="text/javascript" src="<%=request.getContextPath()%>/_5_gambling/plugins/advertisment/js/modernizr.custom.46884.js"></script>
   </head>
   <body>
-  
 	<jsp:include page="/fragment/top.jsp"/>
 	
 	<!-- ---------------------------------- 【Begin 廣告輪播】 ---------------------------------- -->

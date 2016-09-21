@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
-import _00_initial_service.GlobalService;
+import _00_config.RootConfig;
 import _9_53_goodsorder_model.GoodsOrderDAO;
 import _9_53_goodsorder_model.GoodsOrderDAO_interface;
 import _9_53_goodsorder_model.GoodsOrderVO;
@@ -50,12 +50,17 @@ public class GoodsOrderService
 		return goodsOrderDAO.delete(orderId);
 	}
 
+	public int update(GoodsOrderVO vo)
+	{
+		return goodsOrderDAO.update(vo);
+	}
+
 	public static void main(String[] args)
 	{
 		///////////////////////////////////////
 		/////////////【Spring】////////////////
 		///////////////////////////////////////
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext("_53_goodsorder_service");
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 		GoodsOrderService svc = (GoodsOrderService) context.getBean("goodsService");
 
 		//===========【測試】insert test =============
@@ -71,6 +76,20 @@ public class GoodsOrderService
 //		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-08-14 18:35:54"));
 //		myvo.setIsPay(true);
 //		svc.addGoodsOrder(myvo);
+		//===========【測試】update test =============
+//		GoodsOrderVO myvo = new GoodsOrderVO();
+//		myvo.setOrderId(1);
+//		myvo.setMemberId("19C013C9-ECB4-4D7A-B01E-36DA75FEC687");
+//		myvo.setCardNum("4023 1154 3578 9424");
+//		myvo.setFullName("火雲邪神");
+//		myvo.setExpireYY("2017");
+//		myvo.setExpireMM("08");
+//		myvo.setCvc("338");
+//		myvo.setNtdQty(50);
+//		myvo.setCoinQty(500.0);
+//		myvo.setOrderDateTime(java.sql.Timestamp.valueOf("2016-09-21 12:12:12"));
+//		myvo.setIsPay(true);
+//		svc.update(myvo);
 		//===========【測試】delete test =============
 //		svc.delete(2);
 		//=========【測試】查一筆 getOneGoodsOrder ===================
@@ -86,12 +105,12 @@ public class GoodsOrderService
 //		}
 
 		//===========【測試】查多筆 getAllGoodsOrder test =============
-		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
-		for (GoodsOrderVO vvo : list)
-		{
-			System.out.println(vvo.getFullName() + "   " + vvo.getCvc() + "   " + vvo.getMemberId() + "   "
-					+ vvo.getCardNum() + "   " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()));
-		}
+//		List<GoodsOrderVO> list = svc.getAllGoodsOrder();
+//		for (GoodsOrderVO vvo : list)
+//		{
+//			System.out.println(vvo.getFullName() + "   " + vvo.getCvc() + "   " + vvo.getMemberId() + "   "
+//					+ vvo.getCardNum() + "   " + GlobalService.decryptString(GlobalService.KEY, vvo.getCardNum()));
+//		}
 	}
 
 }

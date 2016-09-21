@@ -278,29 +278,11 @@
 	                            <!-- /input-group -->
 	                        </li>
 	                        <li>
-	                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard - Home</a>
+	                            <a href="index.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - Home</a>
 	                        </li>
 	                        <!-- ============================================================================== -->
 	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
 	                        <!-- ============================================================================== -->
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 球員卡管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 約戰管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
 	                        <li>
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
@@ -347,39 +329,10 @@
 	                            </ul>
 	                            <!-- /.nav-second-level -->
 	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 場地管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
 	                        <!-- ============================================================================== -->
 	                        <!-- =============================【後臺功能頁籤 結束】============================== -->
 	                        <!-- ============================================================================== -->
-	                        <li>
-	                            <a href="#"><i class="fa fa-table fa-fw"></i>以下 Tables、Forms 參考用</a>
-	                        </li>
-	                        <li>
-	                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-	                        </li>
-	                        <li>
-	                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.html">Blank Page</a>
-	                                </li>
-	                                <li>
-	                                    <a href="login.html">Login Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
+
 	                    </ul>
 	                </div>
 	                <!-- /.sidebar-collapse -->
