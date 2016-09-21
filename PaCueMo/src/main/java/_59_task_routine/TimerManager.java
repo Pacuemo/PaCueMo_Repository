@@ -5,10 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 
+import javax.servlet.ServletContext;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 /**
  * java定时任务，每天定时执行任务
@@ -43,8 +45,15 @@ public class TimerManager
 	@POST
 	@Produces("text/plain;charset=UTF-8")
 	@Path("/setAllocateTime")// 設定分派彩金時間(後台功能)
-	public String setPointsTime(@FormParam("hour") Integer hour, @FormParam("min") Integer min, @FormParam("sec") Integer sec)
+	public String setPointsTime(
+			@FormParam("hour") Integer hour,
+			@FormParam("min") Integer min,
+			@FormParam("sec") Integer sec,
+			@Context ServletContext context)
 	{
+		context.setAttribute("timerHH", hour);
+		context.setAttribute("timerMM", min);
+		context.setAttribute("timerSS", sec);
 		timerMain.cancel();// Step1.停止前一次的Timer
 		System.out.println("呼叫RESTful setPointsTime() 傳入的： hour : " + hour + "  min : " + min + " sec : " + sec);
 		this.hour = hour;

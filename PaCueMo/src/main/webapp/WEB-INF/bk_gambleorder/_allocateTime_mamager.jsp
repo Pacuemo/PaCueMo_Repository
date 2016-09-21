@@ -408,11 +408,27 @@
 	
 	<script type="text/javascript">
 		$(function(){		
-			
+// 			alert($('.clock_ul li:eq(0)').text())
+			var liHH = $('.clock_ul li:eq(0)'); 
+			var liMM = $('.clock_ul li:eq(2)'); 
+			var liSS = $('.clock_ul li:eq(4)'); 
+			alert(liHH.text().length +"  "+ liMM.text()  +"  "+ liSS.text())
 			//---------- 載入完成時，設定時鐘初值 = inputBox的值-------------
-			$(".clock_ul li:eq(0)").text('0' + $("#hour").val());
-			$(".clock_ul li:eq(2)").text('0' + $("#min").val());
-			$(".clock_ul li:eq(4)").text('0' + $("#sec").val());
+			if( liHH.text().length < 2 ){
+				liHH.text('0' + "${applicationScope['timerHH']}");
+	      	}else{
+	      		liHH.text("${applicationScope['timerHH']}");
+			}
+			if( liMM.text().length < 2 ){
+				liMM.text('0' + "${applicationScope['timerMM']}");
+			}else{
+				liMM.text("${applicationScope['timerMM']}");
+			}
+			if( liSS.text().length < 2 ){
+				liSS.text('0' + "${applicationScope['timerSS']}");
+			}else{
+				liSS.text("${applicationScope['timerSS']}");
+			}
 			
 			//---------- jQuery 表單驗證 -----------
 			$("#timerForm").validate({
@@ -465,6 +481,7 @@
 								}else{
 									$(".clock_ul li:eq(4)").text( $("#sec").val() );
 								}
+								
 							},
 				      		"error":function(){
 				      			BootstrapAlert.info({ //BootstrapAlert 特效
