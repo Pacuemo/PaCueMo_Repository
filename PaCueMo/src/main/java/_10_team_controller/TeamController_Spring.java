@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
@@ -34,6 +34,8 @@ public class TeamController_Spring
 	private TeamApplyService teamApplyService;
 	@Autowired
 	private StevenFacade stevenFacade;
+	@Autowired
+	private JsonObject jsonObject;
 	@Autowired
 	private Gson gson;
 
@@ -164,11 +166,36 @@ public class TeamController_Spring
 		return "forward:/TeamServlet";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/searchTeam_like", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String searchTeam_like(@RequestParam("teamName") String teamName)
+//	@ResponseBody
+	@RequestMapping(value = "/searchTeamByL_N", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String searchTeamByL_N(String teamName, String location, HttpServletRequest request)
 	{
-		return null;
+		System.out.println("Team_Controller : searchTeamByL_N");
+		if (null == teamName)
+		{
+			teamName = "";
+		}
+		if (null == location)
+		{
+			location = "";
+		}
+
+		List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName(location.trim(), teamName.trim());
+		System.out.println("查詢成功 - 轉換特定Json格式");
+//		JsonObject data = new JsonObject();
+//		JsonArray array = new JsonArray();
+//		JsonObject obj = new JsonObject();
+
+//		for (TeamVO teamVO : teamVOs)
+//		{
+//			obj.addProperty("suggestion", teamVO.getTeamName());
+//			obj.addProperty("url", "1");
+//			array.add(obj);
+//		}
+//		data.add("results", array);
+		request.setAttribute("teamOppVOs", teamVOs);
+		System.out.println("-------------------------------------------------------");
+		return "forward:/spring/battle_rec/introduce";
 	}
 
 //------------------------------------------------------------Page------------------------------------------------------------
