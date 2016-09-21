@@ -3,7 +3,6 @@
 <%@	page import="java.util.List"%>
 <%@ page import="_9_31_court_model.*"%>
 <%@ page import="_31_court_service.*"%>
-<%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
 	List<CourtVO> list;
 	String court = (String) request.getParameter("court");
@@ -30,16 +29,16 @@ div.imgtest {
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>queryCourt</title>
+<title>場地搜尋</title>
 </head>
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
 	<!-- 選擇器&搜尋button -->
 	<div style="margin-left: 100px; margin-right: 100px">
-		<div class="row">
+		<div class="row" style="margin-right: 30px">
 			<div class="col-sm-12" style="margin-bottom: 30px">
-				<h2 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">想去哪打球?</h2>
+				<h1 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;"><strong>想去哪打球?</strong></h1>
 				<hr>
 			</div>
 		</div>
@@ -87,15 +86,17 @@ div.imgtest {
 						<input type="text" class="form-control" placeholder="請輸入名稱" name="court"> <input type="hidden" name="action" value="queryByName">
 					</div>
 					<div class="form-group">
-						<button class="btn btn-danger form-control" type="submit">
-							<img src="image/search.png" style="width: 20px; height: 20px">
-							<div class="fa fa-search" style="font-family: 微軟正黑體;">搜尋</div>
+						<button class="form-control" type="submit" style="color: #2ebd59;">
+							<div class="fa fa-search" style="font-family: 微軟正黑體;">
+								<img src="image/search.png" style="width: 20px; height: 20px; float: left; margin-left: 100px">
+								<span style="float: left; margin-left: 30px"><strong>搜尋</strong></span>
+							</div>
 						</button>
 					</div>
 				</form>
 			</div>
-			<!-- 	場地資料 -->
-			<div class="col-sm-9">
+			<!-- 場地資料 -->
+			<div class="col-sm-9" style="padding-left: 50px">
 				<%@ include file="page1.file"%>
 				<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
 					<div class="row">
@@ -104,16 +105,16 @@ div.imgtest {
 						</div>
 						<div class="col-sm-8">
 							<div style="padding: 10px; width: 400px">
-								<div style="margin-top: 30px">
-									<img src="image/architecture-interior.png" width="20px" height="20px">
-									<h4 style="color: white;">${courtVO.name}</h4>
-									<img src="image/location-alt.png" width="20px" height="20px">
-									<span style="color: white;">${courtVO.courtaddress}</span>
+								<div style="margin-top: 80px">
+									<img src="image/architecture-interior.png" width="20px" height="20px" style="float: left;">
+									<h4 style="color: white; font-family: 微軟正黑體; margin-left: 30px">${courtVO.name}</h4>
+									<img src="image/location-alt.png" width="20px" height="20px" style="float: left; "> <strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.courtaddress}</strong>
 								</div>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
+				<!-- 分頁按鈕 -->
 				<%@ include file="page2.file"%>
 			</div>
 		</div>
