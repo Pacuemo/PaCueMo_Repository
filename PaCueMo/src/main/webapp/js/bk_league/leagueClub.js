@@ -42,14 +42,15 @@ $(function(){
 	
 	
 	$('.delete').click(function(e){
+		var button = $(this);
 		e.preventDefault();
 		$.ajax({
 			type: "GET",
-			url: "deleteLeagueClubVO?",
-			data: [],
+			url: "deleteLeagueClub",
+			data: { leagueId: button.attr("leagudId"), clubId: button.attr("clubId") },
 			dataType: 'json',
 			success: function (message){
-				
+				alert(message);
 			}
 			
 		});

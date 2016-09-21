@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 
 import _22_league_service.LeagueClub_Service;
 import _22_league_service.League_Service;
-import _9_23_league_model.LeagueVO;
 import _9_24_leagueClub_model.LeagueClubVO;
 
 @Controller
@@ -54,10 +53,10 @@ public class LeagueClub_bk_Controller2
 
 	//刪除
 	@ResponseBody
-	@RequestMapping(value = "/addLeague", method = RequestMethod.POST)
-	public String addLeague(@RequestBody LeagueVO leagueVO)
+	@RequestMapping(value = "/deleteLeagueClub", method = RequestMethod.GET)
+	public String addLeague(int leagueId, int clubId)
 	{
-		int success = league_Service.add_League(leagueVO);
+		int success = leagueClub_Service.delete_league_club(leagueId, clubId);
 		Map<String, Integer> message = new HashMap<String, Integer>();
 		message.put("status", success);
 		return gson.toJson(message);
