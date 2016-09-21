@@ -341,8 +341,8 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">定時分派彩金時間設定</h1>
+                    <div class="col-md-4">
+                        <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">分派彩金時間設定</h1>
                         <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------------------------------------------------- -->
                         <!-- --------------------------【每頁不同 開始】-------------------------- -->
@@ -450,9 +450,21 @@
 		 			                hideTimeout: 2300,
 		 			        	});		
 				      			//-------設定時鐘值---------
-				    			$(".clock_ul li:eq(0)").text($("#hour").val());
-				    			$(".clock_ul li:eq(2)").text($("#min").val());
-				    			$(".clock_ul li:eq(4)").text($("#sec").val());
+				      			if( $("#hour").val() < 10 ){
+				      				$(".clock_ul li:eq(0)").text( '0' + $("#hour").val() );
+						      	}else{
+						      		$(".clock_ul li:eq(0)").text( $("#hour").val() );
+								}
+								if( $("#min").val() < 10 ){
+									$(".clock_ul li:eq(2)").text( '0' + $("#min").val() );
+								}else{
+									$(".clock_ul li:eq(2)").text( $("#min").val() );
+								}
+								if( $("#sec").val() < 10 ){
+									$(".clock_ul li:eq(4)").text( '0' + $("#sec").val() );
+								}else{
+									$(".clock_ul li:eq(4)").text( $("#sec").val() );
+								}
 							},
 				      		"error":function(){
 				      			BootstrapAlert.info({ //BootstrapAlert 特效
