@@ -20,6 +20,16 @@
 <!DOCTYPE >
 <html>
 <head>
+<style>
+div.imgtest{
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>queryCourt</title>
 </head>
@@ -28,11 +38,14 @@
 	<jsp:include page="/fragment/sidebar.jsp" />
 	<!-- 選擇器&搜尋button -->
 	<div style="margin-left: 100px; margin-right: 100px">
-		<div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 30px">
+	<div class="row">
+		<div class="col-sm-12" style="margin-bottom: 30px">
 			<h2 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">想去哪打球?</h2>
 			<hr>
 		</div>
-		<div class="col-lg-3 col-md-5 col-sm-4">
+	</div>
+	<div class="row">	
+		<div class="col-sm-3">
 			<form name="county" method="post" action="">
 				<!-- 縣市選擇器 -->
 				<div class="form-group">
@@ -82,22 +95,27 @@
 				</div>
 			</form>
 		</div>
-	</div>
+
 	<!-- 	場地資料 -->
-	<div class="col-lg-7 col-md-6 col-sm-4" style="margin-left: 50px;">
-		<table border="1" style="border-color: white;">
+	<div class="col-sm-9">
 			<%@ include file="page1.file"%>
 			<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
-				<tr>
-					<td><img src="${courtVO.imgUrl}" style="padding: 10px ; width:400px"></td>
-					<td width="500" height="150">
-						<img src="/image/architecture-interior.png">
-						<h4 style="color: white;">${courtVO.name}</h4> <img src="/image/location-alt.png"><span style="color: white;">${courtVO.courtaddress}</span>
-					</td>
-				</tr>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}');">
+					</div>
+				</div>	
+				<div class="col-sm-8">
+					<div style="padding: 10px ; width:400px">
+
+						<h4 style="color: white;">${courtVO.name}</h4> <img src="image/location-alt.png"><span style="color: white;">${courtVO.courtaddress}</span>
+					</div>
+				</div>	
+			</div>
 			</c:forEach>
-		</table>
 		<%@ include file="page2.file"%>
+		</div>
+		</div>
 	</div>
 	<script type="text/javascript">
 		// 		--------------------二階動態段選擇器
