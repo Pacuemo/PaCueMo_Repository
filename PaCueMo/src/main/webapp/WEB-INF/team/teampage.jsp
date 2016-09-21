@@ -292,18 +292,6 @@ body {
 							</h3>
 							<span>${teamMemberVO.playerCardVO.playerNote}</span>
 						</figcaption>
-<!-- 						<ul class="list-inline person-details-icons"> -->
-<!-- 							<li><a href="#"> <i class="fa-lg fa-twitter"></i> -->
-<!-- 							</a></li> -->
-<!-- 							<li><a href="#"> <i class="fa-lg fa-linkedin"></i> -->
-<!-- 							</a></li> -->
-<!-- 							<li><a href="#"> <i class="fa-lg fa-facebook"></i> -->
-<!-- 							</a></li> -->
-<!-- 							<li><a href="#"> <i class="fa-lg fa-dribbble"></i> -->
-<!-- 							</a></li> -->
-<!-- 							<li><a href="#"> <i class="fa-lg fa-google-plus"></i> -->
-<!-- 							</a></li> -->
-<!-- 						</ul> -->
 					</figure>
 				</div>
 
@@ -393,16 +381,16 @@ body {
 											<c:when test="${battleRecordVO.result == 4}">缺席 </c:when>
 											<c:when test="${battleRecordVO.result == 5}">對方缺席</c:when>
 											<c:when test="${battleRecordVO.result == 6}">
-												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
-													<spring:param name="teamId" value="${battleRecordVO.teamIdA }"></spring:param>
-												</spring:url>
-												<a href="${s_settingTeam}">結果不符</a>
+<%-- 												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request"> --%>
+<%-- 													<spring:param name="teamId" value="${battleRecordVO.teamIdA }"></spring:param> --%>
+<%-- 												</spring:url> --%>
+												<a href="#">結果不符</a>
 											</c:when>
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
 								</c:if>
-								<c:if test="${battleRecordVO.teamAVO.teamHead != memberVO.memberId}">
+								<c:if test="${battleRecordVO.teamAVO.teamHead != LoginOK.memberId}">
 									&nbsp;&nbsp;&nbsp;&nbsp;-
 								</c:if>
 							  </td>	
@@ -485,16 +473,16 @@ body {
 											<c:when test="${battleRecordVOB.result == 4}">對方缺席 </c:when>
 											<c:when test="${battleRecordVOB.result == 5}">缺席</c:when>
 											<c:when test="${battleRecordVOB.result == 6}">
-												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
-													<spring:param name="teamId" value="${battleRecordVOB.teamIdB }"></spring:param>
-												</spring:url>
-												<a href="${s_settingTeam}">結果不符</a>
+<%-- 												<spring:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request"> --%>
+<%-- 													<spring:param name="teamId" value="${battleRecordVOB.teamIdB }"></spring:param> --%>
+<%-- 												</spring:url> --%>
+												<a href="#">結果不符</a>
 											</c:when>
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
 								</c:if>
-								<c:if test="${battleRecordVOB.teamBVO.teamHead != memberVO.memberId}">
+								<c:if test="${battleRecordVOB.teamBVO.teamHead != LoginOK.memberId}">
 									&nbsp;&nbsp;&nbsp;&nbsp;-
 								</c:if>
 							  </td>	
@@ -573,7 +561,7 @@ body {
 			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
 		</fieldset>
 		<fieldset>
-			<select id="sidebar_locaation" name="location" required="" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
+			<select id="sidebar_locaation" name="location" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
 					<option disabled="disabled" selected="selected" value="none">活動地區</option>
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
@@ -629,57 +617,6 @@ body {
 	<script type="text/javascript">
 		$(function()
 		{
-// 			$("#join_team").click(function()
-// 			{
-
-// 				$.ajax({ "type" : "post", "url" : "${home}spring/team/joinTeam", // home 在 head
-// 				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
-// 				{
-// 					alert(data);
-// 				}, "error" : function(Error)
-// 				{
-// 					alert("fuck");
-// 					console.log(Error);
-// 				} })
-// 			}) // join team End
-
-// 			$("#abort_team").click(function()
-// 			{
-
-// 				$.ajax({ "type" : "get", "url" : "${home}spring/team/abortTeam", // home 在 head
-// 				"data" : { "memberId" : "${sessionScope.LoginOK.memberId}", "teamId" : "${requestScope.teamVO.teamId}" }, "dataType" : "text", "success" : function(data)
-// 				{
-// 					alert(data);
-// 				}, "error" : function(Error)
-// 				{
-// 					alert("fuck");
-// 					console.log(Error);
-// 				} })
-// 			}) // abort team End
-
-// 			$("#disband_team").click(function()
-// 			{
-
-// 				$.ajax({ 
-// 					"type" : "get", 
-// 					"url" : "${home}spring/team/disbandTeam", // home 在 head
-// 				"data" : { 
-// 					"memberId" : "${sessionScope.LoginOK.memberId}", 
-// 					"teamId" : "${requestScope.teamVO.teamId}" 
-// 						}, 
-// 				"dataType" : "text",
-// 				"success" : function(data)
-// 				{
-// 					alert(data);
-// 				}, 
-// 				"error" : function(Error)
-// 				{
-// 					alert("fuck");
-// 					console.log(Error);
-// 				} 
-// 				})
-// 			}) // disband team End
-
 			//set btn_cancle hover
 			$("#btn_cancle").hover(function(){
 // 				$( this ).fadeOut( 100 );

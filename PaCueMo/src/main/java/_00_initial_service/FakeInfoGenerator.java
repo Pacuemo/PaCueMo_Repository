@@ -1102,12 +1102,11 @@ public class FakeInfoGenerator
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
-//		gambleOrderGenerator();
-
+		gambleOrderGenerator();
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();
-		teammemberGenerator();
+//		teammemberGenerator();
 
 	}
 }
