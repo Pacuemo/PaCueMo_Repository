@@ -437,6 +437,7 @@ input[type='date']{
 	                                        <td><input type='text' name='Groups'  disabled="disabled" value="${LeagueClubVO.groups}"></td>	                                        
 	                                        <td class="center">                            
 	                                        <a class="btn btn-default forUpdate" href="#" role="button">修改</a>
+	                                        <a class="btn btn-default delete" href="#" role="button">刪除</a>
 	                                        <input type="button" class='btn btn-default submitInfo' value="送出" style="display: none">
 	                                        </td>	                                    
 	                                    </tr>	                             

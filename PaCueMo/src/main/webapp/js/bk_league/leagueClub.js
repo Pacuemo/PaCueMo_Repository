@@ -6,6 +6,7 @@ $(function(){
 	$(".forUpdate").click(function(e){		
 		e.preventDefault();
 		$(this).attr('style','display:none')
+		.next().attr('style','display:none')
 		.next().attr('style','display:block')
 		.parent().parent().css('background-color','#ffff99') 
 		.find('input').removeAttr('disabled');
@@ -20,12 +21,7 @@ $(function(){
 		var data={};
 		data["leagueId"]=tds.slice(0).attr('name');
 		data["clubId"]=tds.slice(1).attr('name');
-		data["groups"]=tds.slice(2).find('input').val();
-		console.log(data["leagueId"]);
-		console.log(data["clubId"]);
-		console.log(data["groups"]);
-	
-		
+		data["groups"]=tds.slice(2).find('input').val();	
 		
 		$.ajax({
             type: "POST",
@@ -40,10 +36,24 @@ $(function(){
             	 
              }
             }
+	    });
+				
 	});
-		
-		
-	});
+	
+	
+	$('.delete').click(function(e){
+		e.preventDefault();
+		$.ajax({
+			type: "GET",
+			url: "deleteLeagueClubVO?",
+			data: [],
+			dataType: 'json',
+			success: function (message){
+				
+			}
+			
+		});
+	})
 	
 	
 });

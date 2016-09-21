@@ -52,7 +52,7 @@ public class LeagueClub_bk_Controller2
 		return gson.toJson(message);
 	}
 
-	//新增
+	//刪除
 	@ResponseBody
 	@RequestMapping(value = "/addLeague", method = RequestMethod.POST)
 	public String addLeague(@RequestBody LeagueVO leagueVO)
