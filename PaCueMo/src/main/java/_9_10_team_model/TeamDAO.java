@@ -41,6 +41,7 @@ public class TeamDAO implements TeamDAO_interface
 	private static final String DELETE_TEAM = "DELETE FROM Team where teamId = ?";
 	private static final String UPDATE = "UPDATE Team set teamName=?, createDate=?, teamProp=?, avgRank=?, teamHead=?, content=?, location=? where teamId=?";
 	private static final String UPDATE_AVG = " UPDATE Team SET avgRank=? WHERE teamId=?";
+	private static final String SEARCH_TEAM_BY_NAME_AND_LOCATION = "SELECT * FROM Team WHERE location like ? AND teamName LIKE ?";
 	private static final String GET_OTHER = "SELECT * FROM Team WHERE teamId NOT IN ( " +
 			"SELECT DISTINCT Team.teamId " +
 			"FROM Team JOIN TeamMember AS tm " +
@@ -511,6 +512,12 @@ public class TeamDAO implements TeamDAO_interface
 	public List<TeamVO> getMy(String teamMemberId)
 	{
 		return jdbc.query(GET_MY, new TeamRowMapper(), teamMemberId);
+	}
+
+	@Override
+	public List<TeamVO> searchTeamByLocationAndName(String location, String teamName)
+	{
+		return jdbc.query(SEARCH_TEAM_BY_NAME_AND_LOCATION, new TeamRowMapper(), "%" + location + "%", "%" + teamName + "%");
 	}
 
 	private static final class TeamRowMapper implements RowMapper<TeamVO>

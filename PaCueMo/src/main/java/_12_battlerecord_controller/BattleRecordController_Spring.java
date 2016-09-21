@@ -116,7 +116,7 @@ public class BattleRecordController_Spring
 	}
 
 	@RequestMapping(value = "/letsbattle", method = RequestMethod.GET) //Page
-	public String getLetsBattlePage(HttpSession session, HttpServletRequest request)
+	public String getLetsBattlePage(HttpSession session, HttpServletRequest request, Integer btn_OppTeamId)
 	{
 		System.out.println("BattleRecord_Controller : getLetsBattlePage");
 		MemberVO memberVO = null;
@@ -124,7 +124,9 @@ public class BattleRecordController_Spring
 		{
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
 			List<TeamVO> mineTeamVOs = stevenFacade.find_TeamVOs_With_TeamHead(memberVO.getMemberId());
+			List<TeamVO> oppTeamVOs = stevenFacade.find_TeamVOs_With_TeamHead(memberVO.getMemberId());
 			request.setAttribute("mineTeamVOs", mineTeamVOs);		//Set Att
+			request.setAttribute("oppTeamVOs", oppTeamVOs);			//Set Att
 
 		}
 		catch (Exception e)
@@ -133,6 +135,7 @@ public class BattleRecordController_Spring
 			System.out.println("fuck");
 			return "";
 		}
+		request.setAttribute("oppTeamId", btn_OppTeamId);		//Set Att
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "battle_rec/letsbattle";

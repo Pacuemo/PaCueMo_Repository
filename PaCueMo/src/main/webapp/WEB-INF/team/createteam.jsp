@@ -60,7 +60,12 @@ body {
 				<div class="dropdown col-md-12">
 		<c:choose >
 			<c:when test="${requestScope.myList[0].teamId == null }">
-				<h2 class="h2_tm">您尚未加入任何隊伍</h2>
+				<h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">您尚未加入任何隊伍<span class="caret"></span></h2>
+				<ul class="dropdown-menu animate fadeInDown animated" role="menu" style="width: 400px;margin-left: 40px;padding-top: 10px">
+				<li><div class="left_20" style="text-align: right;">
+						<button id="create-team" style="margin:10px;margin-right: 45px">Create new Team</button>
+					</div></li>
+			   </ul>
 			</c:when>
 			<c:otherwise>
 				<h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">您的隊伍：<span class="caret"></span></h2>
@@ -93,7 +98,7 @@ body {
 						</div>
 					</div>
 					</li>
-			        <li class="divider"></li>
+			        <li class="divider" style="color:gray;"></li>
 				</c:forEach>
 			        <li><div class="left_20" style="text-align: right;">
 						<button id="create-team" style="margin:10px;margin-right: 45px">Create new Team</button>
@@ -128,11 +133,11 @@ body {
 							</div></td></tr>
 						</c:when>
 						<c:when test="${ot_list.teamProp == 1}">
-						<c:set var="flag" value="false"/>
+						<c:set var="flag" value="f"/>
 							<c:forEach var="myTeamApplyVO" items="${requestScope.myTeamApplyVOs }">
 							<c:choose>
 								<c:when test="${ot_list.teamId == myTeamApplyVO.teamId && myTeamApplyVO.applystatus == 0}">
-								<c:set var="flag" value="true"/>
+								<c:set var="flag" value="t"/>
 									<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">		
 											<div class="col-md-6" >
 												<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
@@ -145,23 +150,10 @@ body {
 											</div>
 									</div></td></tr>
 								</c:when>
-								<c:otherwise>
-								<c:set var="flag" value="true"/>
-									<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">		
-											<div class="col-md-6" >
-												<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
-											</div>
-											<div class="col-md-6" >
-												<form action="${pageContext.request.contextPath}/spring/tm_apply/applyTeam" method="get">
-													<button type="submit" class="btn btn-success btn-xs left_20" name="btn_apply" value="${ot_list.teamId }" >申請加入</button>
-													<input type="hidden" name="page" value="first">
-												</form>
-											</div>
-									</div></td></tr>
-								</c:otherwise>
+							
 							</c:choose>
 							</c:forEach>
-							<c:if test="${flag eq false}">
+							<c:if test="${flag == 'f'}">
 							<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">		
 								<div class="col-md-6" >
 									<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
@@ -192,12 +184,8 @@ body {
 			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
 		</fieldset>
 		<fieldset>
-		<div class="col-md-6" style="text-align: center;">
-			活動地區 : 
-		</div>
-		<div class="col-md-6">
-			<select id="locaation" name="locaation" required="" class="form-control valid">
-					<option disabled="disabled" selected="selected" value="all">全部縣市</option>
+			<select id="locaation" name="location" required="" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
+					<option disabled="disabled" selected="selected" value="none">活動地區</option>
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
 					<option value="桃園市">桃園市</option>
@@ -220,9 +208,7 @@ body {
 					<option value="澎湖縣">澎湖縣</option>
 					<option value="金門縣">金門縣</option>
 					<option value="連江縣">連江縣</option>
-			</select>
-		</div>
-			
+			</select>			
 		</fieldset>
 		<fieldset>
 			<div class="div_pri_tm">
@@ -257,7 +243,7 @@ body {
 			</div>
 		</fieldset>
 		<fieldset>
-			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+			<button name="submit" type="submit" id="btn_contact_submit" data-submit="...Sending">Submit</button>
 		</fieldset>
 	</form>
 
@@ -273,15 +259,21 @@ body {
 		{
 			// team dialog
 			var dialog;
-
 			dialog = $("#contact").dialog({ autoOpen : false, height : 400, width : 350, modal : true, draggable : false, resizable : false, });
 
 			//新增事件
 			$("#create-team").on("click", function()
 			{
 				dialog.dialog("open");
-			}); // team dialog end  
-
+			}); 
+			$("#btn_contact_submit").click(function (event)
+			{
+				if($("#locaation").val() == null){
+				event.preventDefault();
+					alert("請選擇活動地區");
+				}else{
+				}
+			});// team dialog end  
 
 
 			//set btn_cancle hover
