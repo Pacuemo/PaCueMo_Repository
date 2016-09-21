@@ -43,6 +43,15 @@ td {
 	margin: 0px;
 	margin-right: 0px;
 }
+
+.prevent_select{
+   -ms-user-select: none; /* IE 10+ */
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+
+}
 </style>
 
 </head>
@@ -126,16 +135,19 @@ body {
 		</div>
 		<div class="col-md-6">
 			<div class="col-md-12">
-				<div class="col-md-9"></div>
-				<div class="col-md-3">
-					<div id="cont_ca9ddef90f63f255a3e37230d88fb6e7">
-						<script type="text/javascript" async src="https://www.theweather.com/wid_loader/ca9ddef90f63f255a3e37230d88fb6e7"></script>
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<div id="div_weather_top" role="button" class="content prevent_select" style="margin: 0px; padding: 0px;height:23px;width:504px;text-align: center;">▼</div>
+				</div>
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<div id="cont_72b8d6f1eb00701f936d70bccb580886" role="" hidden="hidden">
+					<script type="text/javascript" async src="https://www.theweather.com/wid_loader/72b8d6f1eb00701f936d70bccb580886"></script>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<script type="text/javascript">
 		$(function()
@@ -165,8 +177,31 @@ body {
 				})
 				$('#tm_search').suggestionBox().loadSuggestions(data_team);
 			})
-		})
-	</script>
+			var div_weather_body = $('#cont_72b8d6f1eb00701f936d70bccb580886');
+			$("#div_weather_top").hover(function(){
+				$(this).css("background-color","rgba(255,255,255,0.87)");
+			},function(){
+				$(this).css("background-color","rgba(255,255,255,1)");
+			}).click(function(){
+				if( div_weather_body.is(':visible') ) {
+					div_weather_body.hide();
+				}else{
+					div_weather_body.show(200);
+				}
+			}) 
+			
+			div_weather_body.click(function(event){
+				event.preventDefault();
+			})
+			
+			
+			
+			
 
+		// init End
+		});
+		
+
+	</script>
 </body>
 </html>

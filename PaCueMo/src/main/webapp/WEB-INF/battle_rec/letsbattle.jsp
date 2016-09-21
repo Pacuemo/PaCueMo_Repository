@@ -93,7 +93,7 @@ body {
 				<form name="form_battle" method="post" action="" id="form_battle" role="form" novalidate="novalidate">
 
 					<div class="form-group">
-						<div class="col-sm-12 col-md-12" style="padding-left: 0px; padding-bottom: 10px;">
+						<div class="col-sm-12 col-md-12" style="padding-left: 0px; padding-bottom: 10px;padding-right: 0px">
 							<h2 class="col-sm-3 col-md-2 control-label teamName" style="padding-left: 0px;">約戰方：</h2>
 							<div class="col-sm-3 col-md-4">
 								<select id="select_teamA" name="teamIdA" class="form-control">
@@ -125,10 +125,8 @@ body {
 								</c:when>
 								<c:otherwise>
 									<h2 class="col-sm-3 col-md-2 control-label teamName">挑戰方：</h2>
-									<div class="col-sm-3 col-md-4">
-										<select id="select_teamB" class="form-control">
-											<option>老師說的隊</option>
-										</select>
+									<div class="col-sm-3 col-md-4" style="padding-right: 0px;">
+										<input type="text" value="${requestScope.oppTeamVO.teamName}" readonly="readonly" name="oppTeamName" maxlength="10" class="form-control" style="color: black;">
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -282,12 +280,43 @@ body {
 
 
 		</div>
-		<div class="col-md-2">
-			<div class="col-md-2"></div>
-			<div class="col-md-10">
-				<div id="cont_ca9ddef90f63f255a3e37230d88fb6e7">
-					<script type="text/javascript" async src="https://www.theweather.com/wid_loader/ca9ddef90f63f255a3e37230d88fb6e7"></script>
+		
+		<div class="col-md-2">		
+			<div class="row">
+				<c:forEach var="oppteamMemberVO" items="${requestScope.oppTeamVO.teamMemberVOs}">
+				<div id="div_left" class="col-md-12 animate fadeInLeft animated" style="padding-left: 0px;">
+					<c:choose>
+						<c:when test="${oppteamMemberVO.memberVO.memberImgUrl != null}">
+							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/${oppteamMemberVO.memberVO.memberImgUrl }" style="margin-top: 10px;">
+						</c:when>
+						<c:otherwise>
+							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/user.jpg" style="margin-top: 10px;">
+						</c:otherwise>
+					</c:choose>
+					<div class="col-md-4 color_w" style="padding-left: 5px;padding-right: 0px">
+						<h3 class="margin-top-10 margin-bottom-10">${oppteamMemberVO.memberVO.memberFirstName } </h3>
+						<small style="font-size: 100%">&nbsp; - 
+							<c:choose>
+								<c:when test="${oppteamMemberVO.playerCardVO.playerPosition == 'PG'}">
+										控球後衛
+								</c:when>
+								<c:when test="${oppteamMemberVO.playerCardVO.playerPosition == 'SG'}">
+										得分後衛
+								</c:when>
+								<c:when test="${oppteamMemberVO.playerCardVO.playerPosition == 'SF'}">
+										小前鋒
+								</c:when>
+								<c:when test="${oppteamMemberVO.playerCardVO.playerPosition == 'PF'}">
+										大前鋒
+								</c:when>
+								<c:when test="${oppteamMemberVO.playerCardVO.playerPosition == 'C'}">
+										中鋒
+								</c:when>
+							</c:choose>
+						</small>
+					</div>
 				</div>
+			</c:forEach>
 			</div>
 		</div>
 	</div>
