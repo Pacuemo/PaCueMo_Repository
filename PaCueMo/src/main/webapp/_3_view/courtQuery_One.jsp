@@ -5,17 +5,9 @@
 <%@ page import="_31_court_service.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	List<CourtVO> list; 
-	String court = (String) request.getParameter("court");
-	if( court == null){
-		CourtService courtSvc = new CourtService();
-		list = courtSvc.findAll();
-		pageContext.setAttribute("list", list);
-	}else{
-		CourtService courtSvc = new CourtService();
-		list = courtSvc.findByCourtName(court);
-		pageContext.setAttribute("list", list);
-	}
+	CourtService courtSvc = new CourtService();
+	List<CourtVO> list = courtSvc.findAll();
+	pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE >
 <html>
@@ -69,7 +61,7 @@
 					</select>
 				</div>
 			</form>			
-			<form action="CourtServlet.do" name="findByONE" method="post">
+			<form action="" name="findByONE" method="post">
 				<!-- 關鍵字搜尋 -->
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="請輸入名稱" name="court">
@@ -89,7 +81,7 @@
 			<%@ include file="page1.file"%>
 			<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
 				<tr>
-					<td><img src="${courtVO.imgUrl}" style="padding: 10px ; width:400px"></td>
+					<td><img src="${courtVO.imgUrl}" width="400" height="150" style="padding: 10px"></td>
 					<td width="500" height="150">
 						<img src="/image/architecture-interior.png">
 						<h4 style="color: white;">${courtVO.name}</h4> <img src="/image/location-alt.png"><span style="color: white;">${courtVO.courtaddress}</span>
