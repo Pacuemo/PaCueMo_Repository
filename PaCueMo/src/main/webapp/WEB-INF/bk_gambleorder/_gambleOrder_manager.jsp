@@ -635,7 +635,7 @@
 		    		var tmp = $(this);//暫存 $(this)
 
 					//////////////////////////////////////////////////////
-				    bootbox.dialog({
+				    bootbox.dialog({/*confirm box*/
 							  message: " ※ 注意：刪除資料將無法復原！！！",
 							  title: " -- 系統訊息 -- ",
 							  buttons: {
