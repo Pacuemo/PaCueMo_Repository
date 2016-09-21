@@ -16,4 +16,6 @@ public interface LeagueClubDAO_I
 	//刪除
 	int delete_One(LeagueClubVO leagueClubVO);
 
+	int update(LeagueClubVO leagueClubVO);
+
 }

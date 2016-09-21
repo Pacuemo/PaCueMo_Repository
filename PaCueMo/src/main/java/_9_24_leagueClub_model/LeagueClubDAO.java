@@ -30,6 +30,7 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	private final String Add_One_BY_VO = "insert into LeagueClub (leagueId,clubId) values (?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueClub where leagueId=? and clubId =?";
 	private final String Select_fightId_By_ClubId = "select * from LeagueClub where clubId=?";
+	private final String Update_LeagueClub_Group = "UPDATE LeagueClub SET groups=? WHERE leagueId=? and clubId=? ";
 
 	//查詢全部
 	@Override
@@ -59,6 +60,16 @@ public class LeagueClubDAO implements LeagueClubDAO_I
 	public int delete_One(LeagueClubVO leagueClubVO)
 	{
 		return jdbc.update(Delete_One_BY_ID,
+				leagueClubVO.getLeagueId(),
+				leagueClubVO.getClubId());
+	}
+
+//修改
+	@Override
+	public int update(LeagueClubVO leagueClubVO)
+	{
+		return jdbc.update(Update_LeagueClub_Group,
+				leagueClubVO.getGroups(),
 				leagueClubVO.getLeagueId(),
 				leagueClubVO.getClubId());
 	}

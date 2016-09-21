@@ -424,21 +424,17 @@ input[type='date']{
 	                                <thead>
 	                                    <tr>
 	                                        <th>League Name</th>
-	                                        <th>Club Amount</th>
-	                                        <th>Start Date</th>
-	                                        <th>End Date</th>
-	                                        <th>Court Id</th>
+	                                        <th>Club Name</th>
+											<th>Fight Groups</th>
 	                                        <th>Button </th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>	                             
-	                                    <c:forEach items="${leagueVOs}" var="leagueVO">
+	                                    <c:forEach items="${LeagueClubVOs}" var="LeagueClubVO">
 	                                    <tr>          
-	                                        <td><a href="../leagueClubBackStage/getLeagueClub?leagueId=${leagueVO.leagueID}&leagueName=${leagueVO.leagueName}"><span style="display:none">${leagueVO.leagueID}</span><input type='text' name='leagueName'  disabled="disabled" value="${leagueVO.leagueName}" onclick='query()'></a></td>
-	                                        <td><input type='text' name='clubAmount'  disabled="disabled" value="${leagueVO.clubAmount}"></td>
-	                                        <td><input type='date' name='startDate'  disabled="disabled" value="${leagueVO.startDate}"></td>
-	                                        <td class="center"><input type="date" name='endDate'  disabled="disabled"  value="${leagueVO.endDate}"></td>
-	                                        <td class="center"><input type='text' name='placeID'  disabled="disabled" value="${leagueVO.placeID}"></td>
+	                                        <td name="${LeagueClubVO.leagueId}">${leagueName}</td>
+	                                        <td name="${LeagueClubVO.clubId}">${LeagueClubVO.clubVO.clubName}</td>
+	                                        <td><input type='text' name='Groups'  disabled="disabled" value="${LeagueClubVO.groups}"></td>	                                        
 	                                        <td class="center">                            
 	                                        <a class="btn btn-default forUpdate" href="#" role="button">修改</a>
 	                                        <input type="button" class='btn btn-default submitInfo' value="送出" style="display: none">
@@ -448,7 +444,7 @@ input[type='date']{
 	                                  
 	                                </tbody>
 	                            </table>
-	                            <a class="btn btn-primary " id="addLeague" href="#" role="button">新增聯賽</a>
+	                            
 	               
 	                        </div>
 	                        <!-- /.panel-body -->
@@ -483,7 +479,7 @@ input[type='date']{
 	
 	    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	    
-	    <script src="<%=request.getContextPath()%>/js/bk_league/league.js"></script>
+	    <script src="<%=request.getContextPath()%>/js/bk_league/leagueClub.js"></script>
 	    
 	    <script>
 		    $(document).ready(function() {
