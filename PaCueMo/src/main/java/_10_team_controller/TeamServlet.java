@@ -74,9 +74,8 @@ public class TeamServlet extends HttpServlet
 
 		TeamVO teamVO = null;
 		MemberVO memberVO = null;
-		HttpSession session = null;
 		Integer teamId = null;
-
+		HttpSession session = req.getSession();
 		try
 		{
 			teamId = Integer.valueOf(req.getParameter("teamId"));
@@ -88,13 +87,22 @@ public class TeamServlet extends HttpServlet
 			teamId = (Integer) req.getAttribute("teamId");
 			System.out.println("get teamId from attribute success");
 		}
+		try
+		{
+			System.out.println("Try get MemberVO");
+			memberVO = (MemberVO) session.getAttribute("LoginOK");
+			System.out.println("MemberId : " + memberVO.getMemberId() + " || MemberName : " + memberVO.getMemberFirstName());
+		}
+		catch (Exception e)
+		{
+			System.err.println("MemberVO Error");
+			e.printStackTrace();
+		}
 
 		if (null != req.getParameter("teamId") || null != req.getAttribute("teamId"))
 		{
 			try
 			{
-				session = req.getSession();
-				memberVO = (MemberVO) session.getAttribute("LoginOK");
 
 //				teamService = context.getBean(TeamService.class);
 //				battleRecordService = context.getBean(BattleRecordService.class);

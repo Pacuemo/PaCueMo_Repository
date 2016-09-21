@@ -8,6 +8,11 @@
 	padding-left:7px;
 	background-color: #00cc00;
 }
+.list-group-item{
+}
+.agree{
+margin-left:150px 
+}
 </style>
 <%-- <script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <!-- <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> -->
@@ -181,16 +186,6 @@
 		var contextPath="${pageContext.request.contextPath}";
 
 		
-// // 		-----------------團長打開查看申請按鈕------------
-// 		if (memberId == teamHead && $.trim(memberId).length !=0)
-// 		{
-// 			$("#check-apply").attr("style", "display: block");
-// 			check_count();
-// //	 		-----------------社員打開查看申請按鈕------------		
-// 		}else if(memberId!=clubHead){
-// 			$("#club-apply").attr("style", "display: block");
-
-// 		}
 
 		// ---------------------拿到未讀數目------------------
 		function check_count()

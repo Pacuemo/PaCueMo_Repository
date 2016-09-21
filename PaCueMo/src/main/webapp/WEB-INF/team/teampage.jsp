@@ -345,7 +345,7 @@ body {
 						  <c:if test="${status.index % 3 == 0}">
 						  	<c:set var="flag" value="on"></c:set>
 					  	  	<fmt:parseNumber var="a" type="number" integerOnly="true" value="${status.index / 3}" />
-						  	<tbody id="insideA_${a}" class="insideA" hidden="hidden">
+						  	<c:out value='<tbody id="insideA_${a}" class="insideA" hidden="hidden">' escapeXml="false"></c:out>
 						  </c:if>
 						    <tr>
 						      <th hidden="none" scope="row">${battleRecordVO.battleId}</th>
@@ -409,11 +409,11 @@ body {
 						    </tr>
 						  <c:if test="${((status.index -2) > 0) && (status.index - 2) % 3 == 0}">
 						 	 <c:set var="flag" value="off"></c:set>
-						  	</tbody>
+						  	<c:out value="</tbody>" escapeXml="false"></c:out>
 						  </c:if>
 						    <c:if test="${status.last}">
 						    	<c:if test="${flag == 'on'}">
-						    		</tbody>
+						    		<c:out value="</tbody>" escapeXml="false"></c:out>
 						    	</c:if>
 						    	<tbody id="selectpage_A">
 								    <tr>	
@@ -438,7 +438,7 @@ body {
 						  <c:if test="${status.index % 3 == 0}">
 						  	<c:set var="flag2" value="on"></c:set>
 					  	  	<fmt:parseNumber var="a" type="number" integerOnly="true" value="${status.index / 3}" />
-						  	<tbody id="insideB_${a}" class="insideB" hidden="hidden">
+						  <c:out value='<tbody id="insideB_${a}" class="insideB" hidden="hidden">' escapeXml='false'></c:out>	
 						  </c:if>
 						    <tr>
 						      <th hidden="none" scope="row">${battleRecordVOB.battleId}</th>
@@ -501,11 +501,11 @@ body {
 						    </tr>
 						  <c:if test="${((status.index -2) > 0) && (status.index - 2) % 3 == 0}">
 						 	 <c:set var="flag2" value="off"></c:set>
-						  	</tbody>
+						    	<c:out value="</tbody>" escapeXml="false"></c:out>
 						  </c:if>
 						    <c:if test="${status.last}">
 						    	<c:if test="${flag2 == 'on'}">
-						    		</tbody>
+						    		<c:out value="</tbody>" escapeXml="false"></c:out>
 						    	</c:if>
 						    	<tbody id="selectpage_B" hidden="hidden">
 								    <tr>	
@@ -534,17 +534,24 @@ body {
 		</div>
 		<div class="col-md-5" style="color: white;padding-right: 50px">
 			<!-- Progress Bars -->
+			<c:set var="rank" value="71"></c:set>
+			<h3 class="progress-label">
+				評價 <span class="pull-right">
+						<c:choose>
+							<c:when test="${rank <= 30 }">差勁</c:when>
+							<c:when test="${rank <= 70 }">普通</c:when>
+							<c:otherwise>優良</c:otherwise>
+						</c:choose>
+					</span>
+			</h3>
+			<div class="progress progress-sm">
+				<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${rank}%"></div>
+			</div>
 			<h3 class="progress-label">
 				出席 <span class="pull-right">${requestScope.attendancePercent}%</span>
 			</h3>
 			<div class="progress progress-sm">
 				<div class="progress-bar progress-bar-primary" role="progressbar" style="width: ${requestScope.attendancePercent}%"></div>
-			</div>
-			<h3 class="progress-label">
-				評價 <span class="pull-right">82%</span>
-			</h3>
-			<div class="progress progress-sm">
-				<div class="progress-bar progress-bar-primary" role="progressbar" style="width: 82%"></div>
 			</div>
 			<h3 class="progress-label">
 				勝率 <span class="pull-right">${requestScope.teamWPCT}%</span>
@@ -564,6 +571,33 @@ body {
 		</fieldset>
 		<fieldset>
 			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
+		</fieldset>
+		<fieldset>
+			<select id="sidebar_locaation" name="location" required="" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
+					<option disabled="disabled" selected="selected" value="none">活動地區</option>
+					<option value="臺北市">臺北市</option>
+					<option value="新北市">新北市</option>
+					<option value="桃園市">桃園市</option>
+					<option value="基隆市">基隆市</option>
+					<option value="新竹市">新竹市</option>
+					<option value="新竹縣">新竹縣</option>
+					<option value="宜蘭縣">宜蘭縣</option>
+					<option value="苗栗縣">苗栗縣</option>
+					<option value="臺中市">臺中市</option>
+					<option value="彰化縣">彰化縣</option>
+					<option value="南投縣">南投縣</option>
+					<option value="雲林縣">雲林縣</option>
+					<option value="嘉義縣">嘉義縣</option>
+					<option value="嘉義市">嘉義市</option>
+					<option value="臺南市">臺南市</option>
+					<option value="屏東縣">屏東縣</option>
+					<option value="高雄市">高雄市</option>
+					<option value="花蓮縣">花蓮縣</option>
+					<option value="臺東縣">臺東縣</option>
+					<option value="澎湖縣">澎湖縣</option>
+					<option value="金門縣">金門縣</option>
+					<option value="連江縣">連江縣</option>
+			</select>			
 		</fieldset>
 		<fieldset>
 			<div class="div_pri_tm">
@@ -586,7 +620,7 @@ body {
 			</div>
 		</fieldset>
 		<fieldset>
-			<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+			<button name="submit" type="submit" id="btn_sidebar_submit" data-submit="...Sending">Submit</button>
 		</fieldset>
 	</form> 
 	
@@ -668,6 +702,13 @@ body {
 			$("#a_createTeam").on("click", function()	             		
 			{
 				dialog.dialog("open"); 			
+			});$("#btn_sidebar_submit").click(function (event)
+			{
+				if($("#sidebar_locaation").val() == null){
+					event.preventDefault();
+					alert("請選擇活動地區");
+				}else{
+				}
 			}); // sidebar dialog end  
 			
 			
@@ -739,7 +780,7 @@ body {
 			
 			//setting confirm reportA
 			var a_battleAId;
-			$(".a_reportA").click(function(event){
+			$(".a_reportA").click(function(){
 				event.preventDefault();
 				a_battleAId = $(this).attr('battleId')				
 			}).confirm({
@@ -789,7 +830,7 @@ body {
 
 			//setting confirm reportB
 			var a_battleBId;
-			$(".a_reportB").click(function(event){
+			$(".a_reportB").click(function(){
 				event.preventDefault();
 				a_battleBId = $(this).attr('battleId')				
 			}).confirm({
