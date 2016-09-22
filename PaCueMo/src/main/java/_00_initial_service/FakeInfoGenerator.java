@@ -151,7 +151,7 @@ public class FakeInfoGenerator
 				int hand = random.nextInt(2);
 				double height = 150 + (Math.random() * 60);
 				double weight = 40 + (Math.random() * 70);
-				String note = "";
+				String note = " ";
 
 				int a = random.nextInt(21);
 				int b = random.nextInt(21 - a);
@@ -995,12 +995,26 @@ public class FakeInfoGenerator
 
 			for (String fid : friends)
 			{
+				int type1 = random.nextInt(3) + 1;
+				int type2 = 1;
+				if (type1 == 1)
+				{
+					type2 = 1;
+				}
+				else if (type1 == 2)
+				{
+					type2 = 3;
+				}
+				else if (type1 == 3)
+				{
+					type2 = 2;
+				}
 
 				String str = String.format("INSERT INTO dbo.FriendsList( memberId, memberFriendId, memberStatus ) "
-						+ "VALUES ('%s','%s',%s)", myId, fid, 1);
+						+ "VALUES ('%s','%s',%s)", myId, fid, type1);
 
 				String str1 = String.format("INSERT INTO dbo.FriendsList( memberId, memberFriendId, memberStatus ) "
-						+ "VALUES ('%s','%s',%s)", fid, myId, 1);
+						+ "VALUES ('%s','%s',%s)", fid, myId, type2);
 
 				System.out.println(str);
 				System.out.println(str1);
@@ -1095,14 +1109,14 @@ public class FakeInfoGenerator
 //		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-//		friendListGenerator("83FC7025-12AA-43B0-8162-E27226D92C67", 20);
+		friendListGenerator("3362303F-2FD4-4073-A6FD-C02E38F022A8", 20);
 //      club和league部分
 //		clubGenerator();
 
 //		clubmemberGenerator();
 //		fightrecoedGenerator();
 
-		gambleOrderGenerator();
+//		gambleOrderGenerator();
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();
