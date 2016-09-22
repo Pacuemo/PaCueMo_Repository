@@ -26,7 +26,7 @@ public class TimerManager
 	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 時間間隔﹝一天﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	Timer timerMain = null;
+	static Timer timerMain = null;
 	private Integer hour;
 	private Integer min;
 	private Integer sec;
