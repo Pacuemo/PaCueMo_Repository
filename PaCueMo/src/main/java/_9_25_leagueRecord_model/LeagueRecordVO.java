@@ -1,10 +1,12 @@
 package _9_25_leagueRecord_model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import _9_21_club_model.ClubVO;
 import _9_26_fightRecord_model.FightRecordVO;
@@ -19,7 +21,8 @@ public class LeagueRecordVO implements Serializable
 	private int leagueId;
 	private int clubIdA;
 	private int clubIdB;
-	private Date fightDateTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Timestamp fightDateTime;
 	private int rounds;
 	private int scoreA;
 	private int scoreB;
@@ -34,7 +37,7 @@ public class LeagueRecordVO implements Serializable
 
 	}
 
-	public LeagueRecordVO(int leagueId, int clubIdA, int clubIdB, Date fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
+	public LeagueRecordVO(int leagueId, int clubIdA, int clubIdB, Timestamp fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
 	{
 		this.leagueId = leagueId;
 		this.clubIdA = clubIdA;
@@ -54,7 +57,7 @@ public class LeagueRecordVO implements Serializable
 		}
 	}
 
-	public LeagueRecordVO(int fightId, int leagueId, int clubIdA, int clubIdB, Date fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
+	public LeagueRecordVO(int fightId, int leagueId, int clubIdA, int clubIdB, Timestamp fightDateTime, int rounds, int scoreA, int scoreB, String totalTime)
 	{
 		this.fightId = fightId;
 		this.leagueId = leagueId;
@@ -115,12 +118,12 @@ public class LeagueRecordVO implements Serializable
 		this.clubIdB = clubIdB;
 	}
 
-	public Date getFightDateTime()
+	public Timestamp getFightDateTime()
 	{
 		return fightDateTime;
 	}
 
-	public void setFightDateTime(Date fightDateTime)
+	public void setFightDateTime(Timestamp fightDateTime)
 	{
 		this.fightDateTime = fightDateTime;
 	}

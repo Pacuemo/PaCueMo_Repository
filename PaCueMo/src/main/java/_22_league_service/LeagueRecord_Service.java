@@ -45,14 +45,10 @@ public class LeagueRecord_Service
 
 //修改聯賽紀錄(賽程表)
 	@Transactional(rollbackFor = Exception.class)
-	public int update_LeagueRecord(List<LeagueRecordVO> leagueRecordVOs)
+	public int update_LeagueRecord(LeagueRecordVO leagueRecordVO)
 	{
 		int success = 0;
-		for (LeagueRecordVO vo : leagueRecordVOs)
-		{
-			leagueRecordDAO.update_One(vo);
-			success++;
-		}
+		success = leagueRecordDAO.update_One(leagueRecordVO);
 		System.out.println("成功修改聯賽紀錄表       " + success + "  筆-回傳整數       " + success);
 		return success;
 	}
@@ -63,6 +59,13 @@ public class LeagueRecord_Service
 
 		List<LeagueRecordVO> leagueRecords = leagueRecordDAO.find_All(leagueId);
 		System.out.println("成功查詢聯賽紀錄表      " + leagueRecords.size() + "    筆-回傳物件List<LeagueRecordVO>");
+		for (LeagueRecordVO vo : leagueRecords)
+		{
+
+			vo.setClubA(clubDao.findByPK(vo.getClubIdA()));
+			vo.setClubB(clubDao.findByPK(vo.getClubIdB()));
+
+		}
 		return leagueRecords;
 	}
 

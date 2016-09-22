@@ -24,6 +24,7 @@ public class CourtDAO implements CourtDAO_interface
 	private static final String DELETE = "DELETE FROM Court where courtId =?";
 	private static final String UPDATE = "UPDATE Court set name=?, courtaddress=?, imgUrl=?, latitude=?, longitude=?, webUrl=?, phone=? where courtId=?";
 	private static final String GET_BY_NAME = "SELECT * FROM Court WHERE name LIKE ? OR courtaddress LIKE ?";
+	private static final String GET_BY_NAME_ADDRESS = "SELECT * FROM Court WHERE name LIKE ? AND courtaddress LIKE ?";
 
 	@Override
 	public void insert(CourtVO courtVO)
@@ -443,4 +444,97 @@ public class CourtDAO implements CourtDAO_interface
 		}
 		return list2;
 	}
+
+	@Override
+	public List<CourtVO> findByAddress(String city, String name)
+	{
+		List<CourtVO> list3 = new ArrayList<CourtVO>();
+		CourtVO courtVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try
+		{
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_BY_NAME_ADDRESS);
+
+			pstmt.setString(1, "%" + name + "%");
+			pstmt.setString(2, "%" + city + "%");
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next())
+			{
+				courtVO = new CourtVO();
+				courtVO.setCourtId(rs.getInt("courtId"));
+				courtVO.setName(rs.getString("name"));
+				courtVO.setCourtaddress(rs.getString("courtaddress"));
+				courtVO.setImgUrl(rs.getString("imgUrl"));
+				courtVO.setLatitue(rs.getDouble("latitude"));
+				courtVO.setLongitue(rs.getDouble("longitude"));
+				courtVO.setWebUrl(rs.getString("webUrl"));
+				courtVO.setPhone(rs.getString("phone"));
+				list3.add(courtVO);
+			}
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		}
+		catch (SQLException se)
+		{
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}
+		finally
+		{
+			if (rs != null)
+			{
+				try
+				{
+					rs.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null)
+			{
+				try
+				{
+					pstmt.close();
+				}
+				catch (SQLException se)
+				{
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list3;
+	}
+//	public static void main(String[] args)
+//	{
+//		CourtDAO dao = new CourtDAO();
+//		List<CourtVO> list = dao.getAll();
+//		for (CourtVO courtVO : list)
+//		{
+//			System.out.println(courtVO.getLatitue());
+//			System.out.println(courtVO.getLongitue());
+//		}
+//	}
 }

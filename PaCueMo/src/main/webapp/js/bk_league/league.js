@@ -75,7 +75,6 @@ function add()
 	data["startDate"]=tds.slice(2).find('input').val();
 	data["endDate"]=tds.slice(3).find('input').val();
 	data["placeID"]=tds.slice(4).find('input').val();		
-	alert(tds.first().find('input').val());
 	
 	$.ajax({
         type: "POST",
@@ -85,7 +84,7 @@ function add()
         dataType: 'json',
         success: function (message) {
          if(message.status==1){
-        	 window.location.replace('getLeague');
+        	 window.location.replace('league');
         	 
          }
         }

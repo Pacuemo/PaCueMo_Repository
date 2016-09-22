@@ -245,7 +245,7 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //		Integer test = dao.getBattleSetsCountByDate("2016-09-09");
 //		System.out.println("count(*) :  battleSet → " + test + " 筆");
 
-//		----------【teamId】依日期 及 【頁碼】 查詢----------------
+//		----------【teamId】依id 及 【頁碼】 查詢----------------
 
 //		List<BattleSetVO> list = dao.getSetsByIdAndPage(1, 1);
 //		for (BattleSetVO vo : list)
@@ -253,14 +253,14 @@ public class BattleSetDAO implements BattleSetDAO_interface
 //			System.out.println(vo.getBattleDateTime());
 //		}
 //		----------【測試】依日期 及 【頁碼】 查詢----------------
-//		List<BattleSetVO> list = dao.getSetsByDateAndPage("2016-09-06", 1);
+//		List<BattleSetVO> list = dao.getSetsByDateAndPage("2016-09-30", 1);
 //		for (BattleSetVO vo : list)
 //		{
 //			System.out.println(vo.getHomeId() + "   " + vo.getAwayId());
 //		}
 //		----------【測試】依日期查詢----------------
 //		BattleSetDAO dao = new BattleSetDAO();
-//		List<BattleSetVO> mylist = dao.getSetsByDate("2016-09-06");
+//		List<BattleSetVO> mylist = dao.getSetsByDate("2016-09-30");
 //		for (BattleSetVO vo : mylist)
 //		{
 //			System.out.println(vo.getBattleId() + "  " + vo.getHomeId() + " vs " + vo.getAwayId());
