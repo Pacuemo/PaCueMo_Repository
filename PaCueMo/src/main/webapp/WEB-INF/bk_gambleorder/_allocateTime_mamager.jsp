@@ -378,11 +378,11 @@
                     </div><!-- /.col-md-6 -->  
                     <div class="col-md-3"><!-- 時鐘 -->
                         <ul class="clock_ul">
-			                <li id='gg' class="clock_li">00</li>
+			                <li id='gg' class="clock_li">${applicationScope['timerHH']}</li>
 			                <li class="clock_li">:</li>
-			                <li class="clock_li">00</li>
+			                <li class="clock_li">${applicationScope['timerMM']}</li>
 			                <li class="clock_li">:</li>
-			                <li class="clock_li">00</li>
+			                <li class="clock_li">${applicationScope['timerSS']}</li>
 			            </ul>
                     </div>                
                 </div><!-- /.row --> 
@@ -412,22 +412,17 @@
 			var liHH = $('.clock_ul li:eq(0)'); 
 			var liMM = $('.clock_ul li:eq(2)'); 
 			var liSS = $('.clock_ul li:eq(4)'); 
-			alert(liHH.text() +"  "+ liMM.text()  +"  "+ liSS.text())
+			//alert( liHH.text() + "  " + liMM.text()  + "  " + liSS.text() );
+
 			//---------- 載入完成時，設定時鐘初值 = inputBox的值-------------
-			if( liHH.text().length <= 2 ){
-				liHH.text('0' + "${applicationScope['timerHH']}");
-	      	}else{
-	      		liHH.text("${applicationScope['timerHH']}");
+			if( liHH.text().length < 2 ){
+				liHH.text('0' + liHH.text() );
 			}
-			if( liMM.text().length <= 2 ){
-				liMM.text('0' + "${applicationScope['timerMM']}");
-			}else{
-				liMM.text("${applicationScope['timerMM']}");
+			if( liMM.text().length < 2 ){
+				liMM.text('0' + liMM.text() );
 			}
-			if( liSS.text().length <= 2 ){
-				liSS.text('0' + "${applicationScope['timerSS']}");
-			}else{
-				liSS.text("${applicationScope['timerSS']}");
+			if( liSS.text().length < 2 ){
+				liSS.text('0' + liSS.text() );
 			}
 			
 			//---------- jQuery 表單驗證 -----------
