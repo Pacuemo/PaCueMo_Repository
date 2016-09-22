@@ -137,7 +137,7 @@ body {
 			<div class="col-md-12">
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
-					<div id="div_weather_top" role="button" class="content prevent_select" style="margin: 0px; padding: 0px;height:23px;width:504px;text-align: center;">▼</div>
+					<div id="div_weather_top" role="button" class="content prevent_select" style="margin: 0px; padding: 0px;height:23px;width:504px;text-align: center;">顯示天氣</div>
 				</div>
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
@@ -155,28 +155,29 @@ body {
 			var contextPath = "${pageContext.request.contextPath}";
 			var data_team;
 
-			$("#tm_search").change(function(){
-				$.ajax({ 
-					"type" : "get", 
-					"url" : "${home}spring/team/searchTeamByL_N", // home 在 head
-					"data" : { 
-							"location" : "台北市", 
-							"teamName" :$(this).val()
-						}, 
-					"dataType" : "json",
-					"success" : function(data)
-					{
-						data_team = data;
-						alert(data);
-					}, 
-					"error" : function(Error)
-					{
-						alert("fuck");
-						console.log(Error);
-					} 
-				})
-				$('#tm_search').suggestionBox().loadSuggestions(data_team);
-			})
+// 			$("#tm_search").change(function(){
+// 				$.ajax({ 
+// 					"type" : "get", 
+// 					"url" : "${home}spring/team/searchTeamByL_N", // home 在 head
+// 					"data" : { 
+// 							"location" : "", 
+// 							"teamName" :$(this).val()
+// 						}, 
+// 					"dataType" : "json",
+// 					"success" : function(data)
+// 					{
+// 						data_team = data;
+// 						alert(data);
+// 					}, 
+// 					"error" : function(Error)
+// 					{
+// 						alert("fuck");
+// 						console.log(Error);
+// 					} 
+// 				})
+// 				$('#tm_search').suggestionBox().loadSuggestions(data_team);
+// 			})
+
 			var div_weather_body = $('#cont_72b8d6f1eb00701f936d70bccb580886');
 			$("#div_weather_top").hover(function(){
 				$(this).css("background-color","rgba(255,255,255,0.87)");

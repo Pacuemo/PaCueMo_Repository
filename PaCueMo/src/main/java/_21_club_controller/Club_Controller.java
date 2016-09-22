@@ -57,12 +57,20 @@ public class Club_Controller
 		return "club/joinClub";
 	}
 
-	@RequestMapping(value = "/myClub")
-	public String myClub()
+	@RequestMapping(value = "/myClubA", method = RequestMethod.GET)
+	public String myClubA()
 	{
 		System.out.println("轉入/club/MyClub.jsp 個人社團頁面");
 		System.out.println("-------------------------------------------------------");
 		return "club/myClub";
+	}
+
+	@RequestMapping(value = "/myClub", method = RequestMethod.GET)
+	public String myClubB()
+	{
+		System.out.println("轉入/club/MyClub.jsp 個人社團頁面");
+		System.out.println("-------------------------------------------------------");
+		return "forward:/spring/club/login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
@@ -92,7 +100,7 @@ public class Club_Controller
 		clubVO = service.getClub(clubVO.getClubID());
 		System.out.println("重導:/myClub 展現個人社團主頁");
 		System.out.println("-------------------------------------------------------");
-		return "redirect:/spring/club/myClub";
+		return "redirect:/spring/club/myClubA";
 	}
 
 //------------------------註冊----------------------------------
