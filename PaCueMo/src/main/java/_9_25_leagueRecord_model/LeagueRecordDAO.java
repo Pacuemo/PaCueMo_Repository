@@ -35,7 +35,7 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 					rs.getInt("leagueId"),
 					rs.getInt("clubIdA"),
 					rs.getInt("clubIdB"),
-					rs.getDate("fightDateTime"),
+					rs.getTimestamp("fightDateTime"),
 					rs.getInt("rounds"),
 					rs.getInt("scoreA"),
 					rs.getInt("scoreB"),
@@ -76,6 +76,7 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 				VO.getClubIdA(),
 				VO.getClubIdB(),
 				VO.getFightDateTime(),
+				//new SimpleDateFormat('yyyy-mm-dd hh:mm:ss').parse(VO.getFightDateTime());
 				VO.getRounds(),
 				VO.getScoreA(),
 				VO.getScoreB(),
@@ -134,13 +135,14 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 //		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		LeagueRecordVO VO = new LeagueRecordVO(12, 1, 3, 4, new java.sql.Date(sdf.parse("2012-12-31 05:31:32").getTime()), 3, 31, 33, "120分鐘");
+		System.out.println(sdf.parse("2016-09-25T20:30:00"));
+//		LeagueRecordVO VO = new LeagueRecordVO(12, 1, 3, 4, new java.sql.Date(sdf.parse("2012-12-31 05:31:32").getTime()), 3, 31, 33, "120分鐘");
 		//新增
 //		int success = dao.add_One(VO);
 		//刪除
 //		int success = dao.delete_One(13);
 		//修改
-		int success = dao.update_One(VO);
-		System.out.println(success);
+//		int success = dao.update_One(VO);
+//		System.out.println(success);
 	}
 }

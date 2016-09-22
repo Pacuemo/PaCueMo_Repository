@@ -63,6 +63,13 @@ public class LeagueRecord_Service
 
 		List<LeagueRecordVO> leagueRecords = leagueRecordDAO.find_All(leagueId);
 		System.out.println("成功查詢聯賽紀錄表      " + leagueRecords.size() + "    筆-回傳物件List<LeagueRecordVO>");
+		for (LeagueRecordVO vo : leagueRecords)
+		{
+
+			vo.setClubA(clubDao.findByPK(vo.getClubIdA()));
+			vo.setClubB(clubDao.findByPK(vo.getClubIdB()));
+
+		}
 		return leagueRecords;
 	}
 

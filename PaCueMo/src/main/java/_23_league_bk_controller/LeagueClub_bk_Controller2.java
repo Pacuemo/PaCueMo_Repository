@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import _22_league_service.LeagueClub_Service;
+import _22_league_service.LeagueRecord_Service;
 import _22_league_service.League_Service;
 import _9_24_leagueClub_model.LeagueClubVO;
 
@@ -29,6 +30,8 @@ public class LeagueClub_bk_Controller2
 	private Gson gson;
 	@Autowired
 	private LeagueClub_Service leagueClub_Service;
+	@Autowired
+	private LeagueRecord_Service leagueRecord_Service;
 
 //查詢	
 	@RequestMapping(value = "/getLeagueClub", method = RequestMethod.GET)
@@ -36,6 +39,7 @@ public class LeagueClub_bk_Controller2
 	{
 		req.setAttribute("leagueName", leagueName);
 		req.setAttribute("LeagueClubVOs", leagueClub_Service.get_All(leagueId));
+		req.setAttribute("LeagueRecordVOs", leagueRecord_Service.get_All_LeagueReacords(leagueId));
 		return "bk_league/leagueClub";
 	}
 

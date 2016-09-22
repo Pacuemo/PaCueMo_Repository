@@ -190,10 +190,16 @@ div.map {
 			document.county.bolcks.length = manyBlocks[index].length + 1; // 刪除多餘的選項
 			$("#dist").val("x");
 		}
+
 		// 		------------------Google Map		
 		$(function()
 		{
 
+
+
+		$(function(){
+			
+			'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 			$.fn.tinyMapConfigure({
 			// Google Maps API URL
 			'api' : '//maps.googleapis.com/maps/api/js',
@@ -240,9 +246,15 @@ div.map {
 				$(this).text("開啟地圖");
 				$(this).bind("click", addMap)
 			}
+<<<<<<< HEAD
 
 			$("button.map-btn").bind("click", addMap);
 		})
+=======
+			
+			$("button.map-btn").bind("click",addMap);
+		})
+>>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 	</script>
 </body>
 </html>
