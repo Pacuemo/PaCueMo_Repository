@@ -446,7 +446,7 @@ public class CourtDAO implements CourtDAO_interface
 	}
 
 	@Override
-	public List<CourtVO> findByAddress(String city)
+	public List<CourtVO> findByAddress(String city, String name)
 	{
 		List<CourtVO> list3 = new ArrayList<CourtVO>();
 		CourtVO courtVO = null;
@@ -460,7 +460,7 @@ public class CourtDAO implements CourtDAO_interface
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_BY_NAME_ADDRESS);
 
-			pstmt.setString(1, "%" + city + "%");
+			pstmt.setString(1, "%" + name + "%");
 			pstmt.setString(2, "%" + city + "%");
 
 			rs = pstmt.executeQuery();
