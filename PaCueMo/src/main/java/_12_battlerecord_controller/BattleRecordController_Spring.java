@@ -21,6 +21,7 @@ import _12_battlerecord_service.BattleRecordService;
 import _31_court_service.CourtService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
+import _9_31_court_model.CourtVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -43,12 +44,17 @@ public class BattleRecordController_Spring
 	public String getCourtVOs(String address)
 	{
 		System.out.println("BattleRecord_Controller : getCourtVO");
-
+		System.out.println("address" + address);
 		CourtService courtService = new CourtService();
 		System.out.println("回傳場地VOs 格式JSON");
+		List<CourtVO> courtVOs = courtService.findByCourtName(address.trim());
+		for (CourtVO courtVO : courtVOs)
+		{
+			System.out.println(courtVO.getName());
 
+		}
 		System.out.println("-------------------------------------------------------");
-		return gson.toJson(courtService.findByCourtName(address));
+		return gson.toJson(courtService.findByCourtName(address.trim()));
 	}
 
 	@ResponseBody

@@ -160,44 +160,44 @@ body {
 							</div>
 						</div>
 						<div class="col-xs-12">
-								<label class="control-label" style="font-size: 14px">-</label>
+								<label id="label_location" class="control-label" style="font-size: 14px">-</label>
 						</div>
 						<div id="courtId_data" class="bootstrap-date row">
 							<div class="col-xs-4">
-								<select id="courtName" name="courtName" required="" class="form-control valid">
-									<option value="2015">場地名稱</option>
+								<select id="courtName" name="courtName" class="form-control valid">
+									<option value="none">場地名稱</option>
 									<option value="2014">用ajax抓資料</option>
 								</select>
 							</div>
 							<div class="col-xs-4">
-								<select id="courtCity" name="courtCity" required="" class="form-control valid">
-									<option disabled="disabled" selected="selected">全部縣市</option>
-									<option value="2">臺北市</option>
-									<option value="3">新北市</option>
-									<option value="4">桃園市</option>
-									<option value="5">基隆市</option>
-									<option value="6">新竹市</option>
-									<option value="7">新竹縣</option>
-									<option value="8">宜蘭縣</option>
-									<option value="9">苗栗縣</option>
-									<option value="10">臺中市</option>
-									<option value="11">彰化縣</option>
-									<option value="12">南投縣</option>
-									<option value="13">雲林縣</option>
-									<option value="14">嘉義縣</option>
-									<option value="15">嘉義市</option>
-									<option value="16">臺南市</option>
-									<option value="17">屏東縣</option>
-									<option value="18">高雄市</option>
-									<option value="19">花蓮縣</option>
-									<option value="20">臺東縣</option>
-									<option value="21">澎湖縣</option>
-									<option value="22">金門縣</option>
-									<option value="23">連江縣</option></select>
+								<select id="courtCity" name="courtCity"  class="form-control valid"  onchange="renew(this.selectedIndex);">
+									<option disabled="disabled" selected="selected" value="none">選擇縣市</option>
+									<option value="臺北市">臺北市</option>
+									<option value="新北市">新北市</option>
+									<option value="桃園市">桃園市</option>
+									<option value="基隆市">基隆市</option>
+									<option value="新竹市">新竹市</option>
+									<option value="新竹縣">新竹縣</option>
+									<option value="宜蘭縣">宜蘭縣</option>
+									<option value="苗栗縣">苗栗縣</option>
+									<option value="臺中市">臺中市</option>
+									<option value="彰化縣">彰化縣</option>
+									<option value="南投縣">南投縣</option>
+									<option value="雲林縣">雲林縣</option>
+									<option value="嘉義縣">嘉義縣</option>
+									<option value="嘉義市">嘉義市</option>
+									<option value="臺南市">臺南市</option>
+									<option value="屏東縣">屏東縣</option>
+									<option value="高雄市">高雄市</option>
+									<option value="花蓮縣">花蓮縣</option>
+									<option value="臺東縣">臺東縣</option>
+									<option value="澎湖縣">澎湖縣</option>
+									<option value="金門縣">金門縣</option>
+									<option value="連江縣">連江縣</option></select>
 							</div>
 							<div class="col-xs-4">
-								<select id="courtArea" name="courtArea" required="" class="form-control">
-									<option value="0" disabled="disabled" selected="selected">請選擇縣市</option>
+								<select id="courtArea" name="courtArea" class="form-control">
+									<option value="x" disabled="disabled" selected="selected">請選擇縣市</option>
 									
 								</select>
 							</div>
@@ -219,22 +219,35 @@ body {
 						<div id="battleDateTime" class="bootstrap-date row">
 							<div class="col-xs-4">
 <!-- 								點擊後彈出日期選擇器 -->
-								<input type="text" id="battleDate" name="battleDate" readonly="readonly" value="2016-09-15" class="form-control" style="color: black;">
+								<input type="date" id="battleDate" name="battleDate" class="form-control" style="color: black;">
 							</div>
 							<div class="col-xs-4">
-								<select id="battleHr" name="battleHr" required="" class="form-control valid">
-									<option value="1" selected="selected">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">要改成用script寫</option></select>
+								<select id="battleHr" name="battleHr" class="form-control valid">
+									<option value="1" selected="selected">上午  1&nbsp;&nbsp;點</option>
+									<option value="2">上午  2&nbsp;&nbsp;點</option>
+									<option value="3">上午  3&nbsp;&nbsp;點</option>
+									<option value="4">上午  4&nbsp;&nbsp;點</option>
+									<option value="5">上午  5&nbsp;&nbsp;點</option>
+									<option value="6">上午  6&nbsp;&nbsp;點</option>
+									<option value="7">上午  7&nbsp;&nbsp;點</option>
+									<option value="8">上午  8&nbsp;&nbsp;點</option>
+									<option value="9">上午  9&nbsp;&nbsp;點</option>
+									<option value="10">上午  10&nbsp;點</option>
+									<option value="11">上午  11&nbsp;點</option>
+									<option value="12">上午  12&nbsp;點</option>
+									<option value="13">下午  1&nbsp;&nbsp;點</option>
+									<option value="14">下午  2&nbsp;&nbsp;點</option>
+									<option value="15">下午  3&nbsp;&nbsp;點</option>
+									<option value="16">下午  4&nbsp;&nbsp;點</option>
+									<option value="17">下午  5&nbsp;&nbsp;點</option>
+									<option value="18">下午  6&nbsp;&nbsp;點</option>
+									<option value="19">下午  7&nbsp;&nbsp;點</option>
+									<option value="20">下午  8&nbsp;&nbsp;點</option>
+									<option value="21">下午  9&nbsp;&nbsp;點</option>
+									<option value="22">下午  10&nbsp;點</option>
+									<option value="23">下午  11&nbsp;點</option>
+									<option value="24">下午  12&nbsp;點</option>			
+								</select>
 							</div>
 							<div class="col-xs-4">
 								<select id="battleMin" name="battleMin" required="" class="form-control">
@@ -322,9 +335,30 @@ body {
 	</div>
 
 
+<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 
 	<script type="text/javascript">
-		$(function()
+	
+	// 		--------------------二階動態段選擇器
+	manyBlocks = new Array();
+	manyBlocks[1] = [ "中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區" ];
+	manyBlocks[2] = [ "八里區", "三芝區", "三重區", "三峽區", "土城區", "中和區", "五股區", "平溪區", "永和區", "石門區", "石碇區", "汐止區", "坪林區", "林口區", "板橋區", "金山區", "泰山區", "烏來區", "貢寮區", "淡水區", "深坑區", "新店區", "新莊區", "瑞芳區", "萬里區", "樹林區", "雙溪區", "蘆洲區", "鶯歌區" ];
+	manyBlocks[3] = [ "桃園區", "龜山區", "八德區", "大溪區", "蘆竹區", "大園區", "中壢區", "龍潭區", "平鎮區", "楊梅區", "新屋區", "觀音區", "復興區", ];
+	manyBlocks[4] = [ "仁愛區", "中正區", "中山區", "信義區", "安樂區", "暖暖區", "七堵區" ];
+	manyBlocks[5] = [ "東區", "北區", "香山區" ];
+	manyBlocks[6] = [ "竹北市", "竹東鎮", "新埔鎮", "關西鎮", "湖口鄉", "新豐鄉", "峨眉鄉", "寶山鄉", "北埔鄉", "芎林鄉", "橫山鄉", "尖石鄉", "五峰鄉" ];
+
+	function renew(index)
+	{
+		for (var i = 0; i < manyBlocks[index].length; i++)
+			document.form_battle.courtArea.options[i+1] = new Option(manyBlocks[index][i], manyBlocks[index][i]); // 設定新選項
+		document.form_battle.courtArea.length = manyBlocks[index].length+1; // 刪除多餘的選項
+		$("#courtArea").val("x");
+	}
+	
+	var datas;
+		// init start
+		$(function() 
 		{
 			// 
 			var TmVOs = "${requestScope.mineTeamVOs[0].teamMemberVOs[0]}";
@@ -385,7 +419,60 @@ body {
 				})
 			});
 			
+			// chk location		
+			$("#courtCity").change(function(){
+				chk_location_update();			
+			})
+			
+			$("#courtArea").change(function(){
+				chk_location_update();		
+			})
 
+			function chk_location_update(){
+				var city_val;
+				var area_val;
+				var address = "";
+				if($("#courtCity").val()=='none' || $("#courtCity").val() == null){
+					city_val = "";
+				}else{
+					console.log($("#courtCity option:selected").text())
+					address += $("#courtCity option:selected").text();
+				}
+				if($("#courtArea").val() == 'x' || $("#courtArea").val() == null){
+					area_val = "";
+				}else{
+					console.log($("#courtArea option:selected").text())
+					address += $("#courtArea option:selected").text();
+				}
+				
+				// now update courtName
+				$.ajax({ 
+						"type" : "get", 
+						"url" : "${home}spring/battle_rec/getCourtVOs", // home 在 head
+						"data" : { 
+								"address" : address, 
+							}, 
+						"dataType" : "json",
+						"success" : function(data)
+						{
+// 							window.location.href= "${home}spring/team/createTeamPage";
+// 								alert(obj.name);	
+							$("#courtName option").remove();
+							$.each(data,function(i,obj){
+								$("#courtName").append($("<option></option>").attr("value", obj.courtaddress).text(obj.name));
+							});
+							$("#label_location").text("地址 : " + $("#courtName").val());
+						}, 
+						"error" : function(Error)
+						{
+							alert("fuck");
+							console.log(Error);
+						} 
+					})
+			} // chk_location_update() End
+			$("#courtName").change(function(){
+				$("#label_location").text("地址 : " + $(this).val());
+			})
 		});
 	</script>
 </body>
