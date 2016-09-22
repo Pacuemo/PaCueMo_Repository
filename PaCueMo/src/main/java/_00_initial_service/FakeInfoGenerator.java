@@ -1117,6 +1117,9 @@ public class FakeInfoGenerator
 //		fightrecoedGenerator();
 
 //		gambleOrderGenerator();
+
+//		goodsOrderGenerator();
+
 //		goodsOrderGenerator();
 
 //		generator.teamGenerator();
