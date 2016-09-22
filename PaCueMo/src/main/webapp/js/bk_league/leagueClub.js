@@ -2,6 +2,26 @@ $(function(){
 	
 	var contextPath="${pageContext.request.contextPath}";
 	
+	//點選聯賽社團顯示按鈕
+	
+	$("#btn-club").click(function(e)
+	{
+		e.preventDefault();
+		$('#leagueClubInfo').css('display','block');
+		$('#leagueRecordInfo').css('display','none');
+		
+	});
+	//點選聯賽社團顯示按鈕
+	
+	$("#btn-record").click(function(e)
+	{
+		e.preventDefault();
+		$('#leagueClubInfo').css('display','none');
+		$('#leagueRecordInfo').css('display','block');
+		
+	});
+	
+	
 	//點選修改按鈕
 	$(".forUpdate").click(function(e){		
 		e.preventDefault();
@@ -16,7 +36,7 @@ $(function(){
 	$(".submitInfo").click(function(e)
 	{
 		e.preventDefault();
-		var button=$(this); 
+		var button=$(this); //送出按鈕
 		var tds = $(this).parent().parent().children();
 		var data={};
 		data["leagueId"]=tds.slice(0).attr('name');
@@ -31,8 +51,11 @@ $(function(){
             dataType: 'json',
             success: function (message) {
              if(message.status==1){
+            	 BootstrapAlert.success({ title : "Congrat!", message : "成功修改聯賽申請資料" });
             	 tds.parent().css('background-color','').find('input').attr('disabled',true);             	 
-            	 button.css('display','none').prev().css('display','inline-block');
+            	 button.css('display','none')
+            	 .prev().css('display','inline-block')//刪除按鈕
+            	 .prev().css('display','inline-block');//修改按鈕
             	 
              }
             }
@@ -50,11 +73,22 @@ $(function(){
 			data: { leagueId: button.attr("leagudId"), clubId: button.attr("clubId") },
 			dataType: 'json',
 			success: function (message){
-				alert(message);
+				
+				if(message.status==1){
+					
+					BootstrapAlert.success({ title : "Congrat!", message : "成功刪除聯賽申請資料" });
+					button.parent().parent().remove();
+				}
 			}
 			
 		});
 	})
+	
+	
+	$('#submitIRecord').click(function()
+	{
+		console.log($(this).parent().parent().find('input[type=datetime-local]').val());
+	});
 	
 	
 });
