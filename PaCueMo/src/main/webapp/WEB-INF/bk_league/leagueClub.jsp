@@ -55,6 +55,13 @@ input[type='date'] {
 	height: inherit;
 	background-color: inherit;
 }
+
+input[type='time'] {
+	border: 0px;
+	width: inherit;
+	height: inherit;
+	background-color: inherit;
+}
 </style>
 </head>
 
@@ -356,26 +363,28 @@ input[type='date'] {
 								</thead>
 								<tbody>
 									<c:forEach items="${LeagueRecordVOs}" var="LeagueRecordVO">
+										<jsp:useBean id="fightDateTime" class="java.util.Date"/>
+										<jsp:setProperty property="time" name="fightDateTime" value="${LeagueRecordVO.fightDateTime.time}"/>
 										<tr>
-											<td name="">${leagueName}</td>
-											<td name="${LeagueRecordVO.clubIdA}">${LeagueRecordVO.clubA.clubName}</td>
-											<td ><input type="text"  disabled="disabled" value="${LeagueRecordVO.scoreA}"></td>
-											<td name="${LeagueRecordVO.clubIdB}">${LeagueRecordVO.clubB.clubName}</td>
-											<td ><input type="text"  disabled="disabled" value="${LeagueRecordVO.scoreB}"></td>	
-											<fmt:parseDate var="fightDate" value="${LeagueRecordVO.fightDateTime.time}" type="Date"pattern="yyyy-MM-dd"  />										
-											<td><input type="date" disabled="disabled" value="${fightDate}"></td>
-											<fmt:parseDate var="fightTime" value="${LeagueRecordVO.fightDateTime.time}" pattern="HH:mm:ss"  />
-											<td><input type="time" disabled="disabled" value="${fightTime}"></td>
-											<td><input type="text"  disabled="disabled" value="${LeagueRecordVO.rounds}"></td>
-											<td><input type="text"  disabled="disabled" value="${LeagueRecordVO.totalTime}"></td>
-											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default delete" href="#" role="button" leagudId="${LeagueClubVO.leagueId}" clubId="${LeagueClubVO.clubId}">刪除</a> <input type="button" class='btn btn-default' id='submitIRecord' value="送出" style="display: none"></td>
+											<td >${leagueName}</td>
+											<td >${LeagueRecordVO.clubA.clubName}</td>
+											<td ><input type="text" class="scoreA"   disabled="disabled" value="${LeagueRecordVO.scoreA}"></td>
+											<td >${LeagueRecordVO.clubB.clubName}</td>
+											<td ><input type="text"  class="scoreB"  disabled="disabled"  value="${LeagueRecordVO.scoreB}"></td>	
+											<fmt:formatDate var="fightDate" value="${fightDateTime}" type="Date" pattern="yyyy-MM-dd"  />										
+											<td><input type="date" disabled="disabled"  value="${fightDate}"></td>
+											<fmt:formatDate var="fightTime" value="${fightDateTime}" type="Time" pattern="HH:mm:ss"  />
+											<td><input type="time" disabled="disabled"  value="${fightTime}"></td>
+											<td><input type="text"  class="rounds" disabled="disabled"  value="${LeagueRecordVO.rounds}"></td>
+											<td><input type="text" class="totalTime" disabled="disabled"  value="${LeagueRecordVO.totalTime}"></td>
+											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default delete" href="#" role="button" >刪除</a> 
+											<input type="button" class='btn btn-default submitIRecord' value="送出" style="display: none" fightId="${LeagueRecordVO.fightId}" clubIdA="${LeagueRecordVO.clubIdA}" clubIdB="${LeagueRecordVO.clubIdB}"></td>
 										</tr>
 									</c:forEach>
 
 								</tbody>
 							</table>
-
-
+                             <a class="btn btn-default" href="#" role="button"  id="create">新增</a>
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -412,12 +421,23 @@ input[type='date'] {
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	<script src="<%=request.getContextPath()%>/js/bootstrapAlert.js"></script>
+
 	<script src="<%=request.getContextPath()%>/js/bk_league/leagueClub.js"></script>
 
 	<script>
 		$(document).ready(function()
 		{
 			$('#dataTables-example').DataTable({ responsive : true });
+			var leagueClubName=${LeagueclubNames};
+			console.log(leagueClubName);
+
+			$("#create").click(function(e)
+			               	{
+			               		e.preventDefault();
+			               		var tr=$('<tr></tr>');
+			               		
+			               		
+			               	});
 		});
 	</script>
 

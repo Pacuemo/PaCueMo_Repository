@@ -1,9 +1,7 @@
 $(function(){
 	
-	var contextPath="${pageContext.request.contextPath}";
-	
-	//點選聯賽社團顯示按鈕
-	
+
+	//點選聯賽社團顯示按鈕	
 	$("#btn-club").click(function(e)
 	{
 		e.preventDefault();
@@ -85,11 +83,48 @@ $(function(){
 	})
 	
 	
-	$('#submitIRecord').click(function()
+	$('.submitIRecord').click(function(e)
 	{
-		console.log($(this).parent().parent().find('input[type=datetime-local]').val());
+		e.preventDefault();
+		var button=$(this);
+		var tr=$(this).parent().parent();
+		var date=tr.find('input[type=date]').val();
+		var time=tr.find('input[type=time]').val();
+		var winner;
+		var data={};
+		data['fightId']=$(this).attr('fightId');
+		data['clubIdA']=$(this).attr('clubIdA');
+		data['clubIdB']=$(this).attr('clubIdB');
+		data['fightDateTime']=date+" "+time+":00";
+		data['rounds']=tr.find('input[class="rounds"]').val();
+		data['scoreA']=tr.find('input[class="scoreA"]').val();
+		data['scoreB']=tr.find('input[class="scoreB"]').val();
+		data['totalTime']=tr.find('input .totalTime').val();
+		if(data['scoreA']>data['scoreB']){
+			winner=data['clubIdA'];
+		}else{
+			winner=data['clubIdB'];
+		}
+		data['winner']=winner;
+		
+        
+		$.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "updateLeagueRecord",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (message) {
+             if(message.status==1){
+            	 BootstrapAlert.success({ title : "Congrat!", message : "成功修改聯賽場次資料" });
+            	 tr.css('background-color','').find('input').attr('disabled',true);             	 
+            	 button.css('display','none').prev().css('display','inline-block').prev().css('display','inline-block'); 
+             }
+            }
+	     });	
+		
 	});
-	
+		
 	
 });
 
