@@ -137,6 +137,7 @@ div.imgtest {
 			$("#dist").val("x");
 		}
 
+		
 	</script>
 </body>
 </html>
