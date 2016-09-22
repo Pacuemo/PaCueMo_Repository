@@ -47,7 +47,7 @@ div.imgtest {
 				<form name="county" method="post" action="">
 					<!-- 縣市選擇器 -->
 					<div class="form-group">
-						<select class="form-control" onchange="renew(this.selectedIndex);">
+						<select class="form-control" id="city" onchange="renew(this.selectedIndex);">
 							<option disabled="disabled" selected="selected">全部縣市</option>
 							<option value="2">臺北市</option>
 							<option value="3">新北市</option>
@@ -75,8 +75,8 @@ div.imgtest {
 					</div>
 					<!-- 行政區選擇器 -->
 					<div class="form-group">
-						<select class="form-control" name="bolcks">
-							<option disabled="disabled" selected="selected">全部行政區</option>
+						<select class="form-control" id="dist" name="bolcks">
+							<option value="x" disabled="disabled" selected="selected">全部行政區</option>
 						</select>
 					</div>
 				</form>
@@ -132,9 +132,11 @@ div.imgtest {
 		function renew(index)
 		{
 			for (var i = 0; i < manyBlocks[index].length; i++)
-				document.county.bolcks.options[i] = new Option(manyBlocks[index][i], manyBlocks[index][i]); // 設定新選項
-			document.county.bolcks.length = manyBlocks[index].length; // 刪除多餘的選項
+				document.county.bolcks.options[i+1] = new Option(manyBlocks[index][i], manyBlocks[index][i]); // 設定新選項
+			document.county.bolcks.length = manyBlocks[index].length+1; // 刪除多餘的選項
+			$("#dist").val("x");
 		}
+
 	</script>
 </body>
 </html>
