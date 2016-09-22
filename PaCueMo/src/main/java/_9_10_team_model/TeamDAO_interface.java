@@ -33,6 +33,6 @@ public interface TeamDAO_interface
 
 	List<TeamVO> find_TeamVOs_With_TeamHead(String teamHead);
 
-	List<TeamVO> searchTeamByLocationAndName(String teamName, String location);
+	List<TeamVO> searchTeamByLocationAndName(String location, String teamName, String teamHead);
 
 }

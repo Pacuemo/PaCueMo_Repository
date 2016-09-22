@@ -1,5 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>
 <%-- for Struts2 --%>
@@ -80,7 +82,7 @@ body {
 
 				<div class="row">
 					<form accept-charset="utf-8" action="${pageContext.request.contextPath}/spring/team/searchTeamByL_N" class="" method="GET" name="site-search" role="search">
-						<input type="text" id="textbox" value="" name="input_teamName" autocomplete="off" class="" tabindex="10"> <input type="submit" class="" value="Go" tabindex="20">
+						<input type="text" id="textbox" value="" name="teamName" autocomplete="off" class="" tabindex="10"><input type="submit" class="" value="Go" tabindex="20">
 						<div id=""></div>
 					</form>
 				</div>
@@ -189,7 +191,7 @@ body {
 				}else{
 					div_weather_body.show(200);
 				}
-			}) 
+			})
 			
 			div_weather_body.click(function(event){
 				event.preventDefault();

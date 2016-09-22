@@ -168,7 +168,7 @@ public class TeamController_Spring
 
 //	@ResponseBody
 	@RequestMapping(value = "/searchTeamByL_N", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String searchTeamByL_N(String teamName, String location, HttpServletRequest request)
+	public String searchTeamByL_N(String teamName, String location, String teamHead, HttpServletRequest request,HttpSession session)
 	{
 		System.out.println("Team_Controller : searchTeamByL_N");
 		if (null == teamName)
@@ -179,8 +179,8 @@ public class TeamController_Spring
 		{
 			location = "";
 		}
-
-		List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName(location.trim(), teamName.trim());
+		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+		List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName(location.trim(), teamName.trim(), memberVO.getMemberId());
 		System.out.println("查詢成功 - 轉換特定Json格式");
 //		JsonObject data = new JsonObject();
 //		JsonArray array = new JsonArray();

@@ -131,8 +131,8 @@ public class TeamService
 		return teamDAO.find_TeamVOs_With_TeamHead(teamHead);
 	}
 
-	public List<TeamVO> searchTeamByLocationAndName(String location, String teamName)
+	public List<TeamVO> searchTeamByLocationAndName(String location, String teamName, String teamHead)
 	{
-		return teamDAO.searchTeamByLocationAndName(location, teamName);
+		return teamDAO.searchTeamByLocationAndName(location, teamName, teamHead);
 	}
 }
