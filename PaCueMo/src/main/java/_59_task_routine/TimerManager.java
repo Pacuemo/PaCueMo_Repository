@@ -24,20 +24,27 @@ public class TimerManager
 {
 	//時間間隔
 	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 時間間隔﹝一天﹞
-//	private static final long PERIOD_DAY = 10 * 60 * 1000; // 時間間隔﹝十分鐘﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	Timer timerMain = null;;
-	private int hour;
-	private int min;
-	private int sec;
+	Timer timerMain = null;
+	private Integer hour;
+	private Integer min;
+	private Integer sec;
 
 	public TimerManager()
 	{
+
+	}
+
+	public TimerManager(ServletContext context)
+	{
+		System.out.println("設定Timer起始時間 HH : " + (Integer) context.getAttribute("timerHH"));
+		System.out.println("設定Timer起始時間 MM : " + (Integer) context.getAttribute("timerMM"));
+		System.out.println("設定Timer起始時間 SS : " + (Integer) context.getAttribute("timerSS"));
 		//--- 建構子 ---- 設定預設Timer每次Run的時間
-		this.hour = 10; //時(24h)
-		this.min = 24;//分
-		this.sec = 0;//秒
+		this.hour = (Integer) context.getAttribute("timerHH"); // 時(24h)
+		this.min = (Integer) context.getAttribute("timerMM");  // 分
+		this.sec = (Integer) context.getAttribute("timerSS");  // 秒
 		//---------------
 		setTimerTask(this.hour, this.min, this.sec);
 	}
@@ -48,13 +55,13 @@ public class TimerManager
 	public String setPointsTime(
 			@FormParam("hour") Integer hour,
 			@FormParam("min") Integer min,
-			@FormParam("sec") Integer sec,
-			@Context ServletContext context)
+			@FormParam("sec") Integer sec, @Context ServletContext context)
 	{
+		timerMain.cancel();// --------------------------- Step1.停止前一次的Timer
+		//-------【將固定運行時間設定在Servlet起始參數】--------
 		context.setAttribute("timerHH", hour);
 		context.setAttribute("timerMM", min);
 		context.setAttribute("timerSS", sec);
-		timerMain.cancel();// Step1.停止前一次的Timer
 		System.out.println("呼叫RESTful setPointsTime() 傳入的： hour : " + hour + "  min : " + min + " sec : " + sec);
 		this.hour = hour;
 		this.min = min;
