@@ -5,12 +5,44 @@
 <%@ page import="_31_court_service.*"%>
 <%
 	List<CourtVO> list;
-	String court = (String) request.getParameter("court");
-	if (court == null) {
+	String court;
+	String city;
+	
+	
+	if ((city = (String) request.getAttribute("test")) == null) {
+		city = request.getParameter("test");
+		if (city != null)
+			if (city.length() == 0) {
+				city = null;
+			}
+	}
+
+	if ((court = (String) request.getAttribute("court")) == null) {
+		court = request.getParameter("court");
+		if (court != null)
+			if (court.length() == 0) {
+				court = null;
+			}
+	}
+
+
+	if (court == null && city == null) {
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findAll();
 		pageContext.setAttribute("list", list);
-	} else {
+	} else if (court != null && city != null) {
+		CourtService courtSvc = new CourtService();
+		list = courtSvc.findByAddress(city, court);
+		pageContext.setAttribute("list", list);
+	} else if (court != null && city == null) {
+		CourtService courtSvc = new CourtService();
+		list = courtSvc.findByCourtName(court);
+		pageContext.setAttribute("list", list);
+	}else if (court == null && city != null){
+		CourtService courtSvc = new CourtService();
+		list = courtSvc.findByCourtName(city);
+		pageContext.setAttribute("list", list);
+	}else{
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findByCourtName(court);
 		pageContext.setAttribute("list", list);
@@ -27,19 +59,21 @@ div.imgtest {
 	background-position: center center;
 	background-repeat: no-repeat;
 }
-button[type=submit]:hover{
+
+button[type=submit]:hover {
 	background-color: #007500 !important;
 }
-div.row.google{
-	height:500px;
-	width:100%;
+
+div.row.google {
+	height: 500px;
+	width: 100%;
 	padding-left: 15px;
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
-div.map{
-	height:500px;
-	width:100%;
+div.map {
+	height: 500px;
+	width: 100%;
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
@@ -52,7 +86,9 @@ div.map{
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h1 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;"><strong>想去哪打球?</strong></h1>
+				<h1 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;">
+					<strong>想去哪打球?</strong>
+				</h1>
 				<hr>
 			</div>
 		</div>
@@ -61,7 +97,7 @@ div.map{
 				<form name="county" action="CourtServlet.do" method="post">
 					<!-- 縣市選擇器 -->
 					<div class="form-group">
-						<select class="form-control" id="city" onchange="renew(this.selectedIndex);">
+						<select class="form-control" id="city" name="city1" onchange="renew(this.selectedIndex);">
 							<option disabled="disabled" selected="selected">全部縣市</option>
 							<option value="臺北市">臺北市</option>
 							<option value="新北市">新北市</option>
@@ -95,10 +131,12 @@ div.map{
 					</div>
 					<!-- 關鍵字搜尋 -->
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="請輸入名稱" name="court" style="border-radius: 5px;"> <input type="hidden" name="action" value="queryByName">
+						<input type="text" class="form-control" placeholder="請輸入名稱" name="court" style="border-radius: 5px;">
 					</div>
 					<div class="form-group">
-						<button class="form-control" type="submit" style="color: white; border-radius: 5px; background-color: #2ebd59; text-align:center;"><img src="image/search.png" style="display: inline; width: 20px; height: 20px;">搜尋</button>
+						<button class="form-control" type="submit" style="color: white; border-radius: 5px; background-color: #2ebd59; text-align: center;">
+							<img src="image/search.png" style="display: inline; width: 20px; height: 20px;"><strong>搜尋</strong>
+						</button>
 					</div>
 				</form>
 			</div>
@@ -112,14 +150,18 @@ div.map{
 						</div>
 						<div class="col-sm-6">
 							<div style="padding: 10px; width: 400px">
-								<div style="margin-top: 80px">
-									<img src="image/architecture-interior.png" width="20px" height="20px" style="float: left;">
+								<div style="margin-top: 40px">
+									<img src="image/City.png" width="20px" height="20px" style="float: left;">
 									<h4 style="color: white; font-family: 微軟正黑體; margin-left: 30px">${courtVO.name}</h4>
-									<img src="image/location-alt.png" width="20px" height="20px" style="float: left; "> <strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.courtaddress}</strong>
+									<img src="image/Location.png" width="20px" height="20px" style="float: left;">
+									<strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.courtaddress}</strong>
 									<br>
-									<button class="map-btn">開啟地圖</button>
-									<input id="long" type="hidden" value="${courtVO.longitue}">
-									<input id="lat" type="hidden" value="${courtVO.latitue}">
+									<img src="image/Phone.png" width="20px" height="20px" style="float: left;">
+									<strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.phone}</strong>
+									<br>
+									<img src="image/map.png" width="20px" height="20px" style="float: left;">
+									<button class="map-btn" style="margin-left: 10px;">開啟地圖</button>
+									<input id="long" type="hidden" value="${courtVO.longitue}"> <input id="lat" type="hidden" value="${courtVO.latitue}">
 								</div>
 							</div>
 						</div>
@@ -144,70 +186,75 @@ div.map{
 		function renew(index)
 		{
 			for (var i = 0; i < manyBlocks[index].length; i++)
-				document.county.bolcks.options[i+1] = new Option(manyBlocks[index][i], manyBlocks[index][i]); // 設定新選項
-			document.county.bolcks.length = manyBlocks[index].length+1; // 刪除多餘的選項
+				document.county.bolcks.options[i + 1] = new Option(manyBlocks[index][i], manyBlocks[index][i]); // 設定新選項
+			document.county.bolcks.length = manyBlocks[index].length + 1; // 刪除多餘的選項
 			$("#dist").val("x");
 		}
 
+		// 		------------------Google Map		
+		$(function()
+		{
+
+
+
 		$(function(){
 			
+			'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 			$.fn.tinyMapConfigure({
-			    // Google Maps API URL
-			    'api': '//maps.googleapis.com/maps/api/js',
-			    // Google Maps API Version
-			    'v': '3.21',
-			    // Google Maps API Key，預設 null
-			    'key': 'AIzaSyC4JivBSibr0L3cVIfLlgdq6bVZuOMxUuk',
-			    // 使用的地圖語言
-			    'language': 'zh‐TW',
-			    // 載入的函式庫名稱，預設 null
-			    'libraries': 'adsense,drawing,geometry...',
-			    // 使用個人化的地圖，預設 false
-			    'signed_in': true|false,
-			    // MarkerClustererPlus.js 路徑
-			    // 預設 'https://cdn.essoduke.org/js/tinyMap/markerclusterer.js'
-			    // 建議下載至自有主機，避免讀取延遲造成無法使用。
-// 			    'clusterer': 'path/to/markerclusterer.js'
-			    // MarkerWithLabel.js 路徑
-			    // 預設 'https://cdn.essoduke.org/js/tinyMap/markerwithlabel.js'
-			    // 建議下載至自有主機，避免讀取延遲造成無法使用。
-// 			    'withLabel': '/path/to/markerwithlabel.js'
+			// Google Maps API URL
+			'api' : '//maps.googleapis.com/maps/api/js',
+			// Google Maps API Version
+			'v' : '3.21',
+			// Google Maps API Key，預設 null
+			'key' : 'AIzaSyC4JivBSibr0L3cVIfLlgdq6bVZuOMxUuk',
+			// 使用的地圖語言
+			'language' : 'zh‐TW',
+			// 載入的函式庫名稱，預設 null
+			'libraries' : 'adsense,drawing,geometry...',
+			// 使用個人化的地圖，預設 false
+			'signed_in' : true | false,
+			// MarkerClustererPlus.js 路徑
+			// 預設 'https://cdn.essoduke.org/js/tinyMap/markerclusterer.js'
+			// 建議下載至自有主機，避免讀取延遲造成無法使用。
+			// 			    'clusterer': 'path/to/markerclusterer.js'
+			// MarkerWithLabel.js 路徑
+			// 預設 'https://cdn.essoduke.org/js/tinyMap/markerwithlabel.js'
+			// 建議下載至自有主機，避免讀取延遲造成無法使用。
+			// 			    'withLabel': '/path/to/markerwithlabel.js'
 			});
-			
-			function addMap(){
+
+			function addMap()
+			{
 				$(this).parent().parent().parent().parent().after("<div class='row google'><div class='map'></div></div>");
 				var longx = $(this).next().val();
 				var lat = $(this).next().next().val();
 				$("div.map").tinyMap({
-				    // Map center
-				    'center': {
-				        'lat': lat, 
-				        'lng': longx
-				    },
-				    'zoom': 17,
-				    'marker': [
-				               {
-				                   'addr': [lat, longx],
-				                   // 動畫效果
-				                   'animation': 'DROP'
-				               },
-				           ]
-				});
-				
+				// Map center
+				'center' : { 'lat' : lat, 'lng' : longx }, 'zoom' : 17, 'marker' : [ { 'addr' : [ lat, longx ],
+				// 動畫效果
+				'animation' : 'DROP' }, ] });
+
 				$(this).text("關閉地圖");
 				$(this).unbind("click")
-				$(this).bind("click",removeMap)
+				$(this).bind("click", removeMap)
 			}
-			
-			function removeMap(){
+
+			function removeMap()
+			{
 				$(this).parent().parent().parent().parent().next().remove();
 				$(this).unbind("click")
 				$(this).text("開啟地圖");
-				$(this).bind("click",addMap)
+				$(this).bind("click", addMap)
 			}
+<<<<<<< HEAD
+
+			$("button.map-btn").bind("click", addMap);
+		})
+=======
 			
 			$("button.map-btn").bind("click",addMap);
 		})
+>>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 	</script>
 </body>
 </html>

@@ -76,4 +76,9 @@ public class CourtService
 	{
 		return dao.findByCourtName(keyword);
 	}
+
+	public List<CourtVO> findByAddress(String city, String name)
+	{
+		return dao.findByAddress(city, name);
+	}
 }
