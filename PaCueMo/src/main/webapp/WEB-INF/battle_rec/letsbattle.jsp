@@ -164,15 +164,15 @@ body {
 						</div>
 						<div id="courtId_data" class="bootstrap-date row">
 							<div class="col-xs-4">
-								<select id="courtName" name="courtName" required="" class="form-control valid">
-									<option value="2015">場地名稱</option>
+								<select id="courtName" name="courtName" class="form-control valid">
+									<option value="none">場地名稱</option>
 									<option value="2014">用ajax抓資料</option>
 								</select>
 							</div>
 							<div class="col-xs-4">
-								<select id="courtCity" name="courtCity" required="" class="form-control valid">
-									<option disabled="disabled" selected="selected">全部縣市</option>
-									<option value="2">臺北市</option>
+								<select id="courtCity" name="courtCity" = class="form-control valid">
+									<option disabled="disabled" selected="selected" value="none">選擇縣市</option>
+									<option value="2">台北市</option>
 									<option value="3">新北市</option>
 									<option value="4">桃園市</option>
 									<option value="5">基隆市</option>

@@ -137,7 +137,7 @@ body {
 			<div class="col-md-12">
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
-					<div id="div_weather_top" role="button" class="content prevent_select" style="margin: 0px; padding: 0px;height:23px;width:504px;text-align: center;">▼</div>
+					<div id="div_weather_top" role="button" class="content prevent_select" style="margin: 0px; padding: 0px;height:23px;width:504px;text-align: center;">顯示天氣</div>
 				</div>
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
