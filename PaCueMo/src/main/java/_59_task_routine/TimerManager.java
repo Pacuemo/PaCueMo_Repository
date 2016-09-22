@@ -31,7 +31,7 @@ public class TimerManager
 	private Integer min;
 	private Integer sec;
 
-	public TimerManager()
+	public TimerManager()// for RESTful
 	{
 
 	}
