@@ -37,7 +37,7 @@
     background-color: slategrey;
     color:blue;
 	}
-	img {
+	img.index {
     display: block;
     max-width: 90%;
     height: auto;
@@ -60,19 +60,19 @@
 			<div class="row">
 				<div onclick="location.href='${pageContext.request.contextPath}/spring/battle_rec/introduce';" class="col-sm-4">
 				<div class="box">
-				<img src="img/EverythingBasketball_Mark_Large_v01.PNG"/>
+				<img class="index" src="img/EverythingBasketball_Mark_Large_v01.PNG"/>
 				<h1>約戰</h1>
 				</div>
 				</div>
 				<div onclick="location.href='${pageContext.request.contextPath}/spring/league/introduce';" class="col-sm-4">
 				<div class="box">
-				<img src="img/PACUEMO.png"/>
+				<img class="index" src="img/PACUEMO.png"/>
 				<h1>PACUEMO聯賽</h1>
 				</div>
 				</div>
 				<div class="col-sm-4">
 				<div onclick="location.href='${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate';" class="box">
-				<img src="img/nba-logo-transparent-png-logo-download.png"/>
+				<img class="index" src="img/nba-logo-transparent-png-logo-download.png"/>
 				<h1>NBA運彩</h1>
 				</div>
 				</div>

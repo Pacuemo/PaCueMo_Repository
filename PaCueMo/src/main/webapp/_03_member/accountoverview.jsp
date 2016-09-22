@@ -127,12 +127,12 @@
 								<c:choose>
 							        <c:when test="${not empty invite.fbIds[i]}">
 							        <div class="test form-group">
-							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${friends.fbIds[i]}/picture?width=64&amp;height=64" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="https://graph.facebook.com/${invite.fbIds[i]}/picture?width=64&amp;height=64" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
 							        </div>
 							        </c:when>
 							        <c:when test="${not empty invite.imgs[i]}">
 							        <div class="test form-group">
-							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${invite.imgs[i]}" alt="${friends.names[i]}"><font>${invite.names[i]}</font></button>
+							        <button class="form-control-static1 test1" value="${invite.ids[i]}"><img class="user-img img-circle navbar-user-img2" src="${pageContext.request.contextPath}/image/member/${invite.imgs[i]}" alt="${invite.names[i]}"><font>${invite.names[i]}</font></button>
 							        </div>
 							        </c:when>
 							        <c:otherwise>
