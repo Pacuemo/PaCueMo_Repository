@@ -27,6 +27,20 @@ div.imgtest {
 	background-position: center center;
 	background-repeat: no-repeat;
 }
+button[type=submit]:hover{
+	background-color: #007500 !important;
+}
+div.row.google{
+	height:500px;
+	width:100%;
+	padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+div.map{
+	height:500px;
+	width:100%;
+}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>場地搜尋</title>
@@ -35,42 +49,42 @@ div.imgtest {
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
 	<!-- 選擇器&搜尋button -->
-	<div style="margin-left: 100px; margin-right: 100px">
-		<div class="row" style="margin-right: 30px">
-			<div class="col-sm-12" style="margin-bottom: 30px">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
 				<h1 style="color: #2ebd59; text-align: center; font-family: 微軟正黑體;"><strong>想去哪打球?</strong></h1>
 				<hr>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-3">
-				<form name="county" method="post" action="">
+			<div class="col-sm-4">
+				<form name="county" action="CourtServlet.do" method="post">
 					<!-- 縣市選擇器 -->
 					<div class="form-group">
 						<select class="form-control" id="city" onchange="renew(this.selectedIndex);">
 							<option disabled="disabled" selected="selected">全部縣市</option>
-							<option value="2">臺北市</option>
-							<option value="3">新北市</option>
-							<option value="4">桃園市</option>
-							<option value="5">基隆市</option>
-							<option value="6">新竹市</option>
-							<option value="7">新竹縣</option>
-							<option value="8">宜蘭縣</option>
-							<option value="9">苗栗縣</option>
-							<option value="10">臺中市</option>
-							<option value="11">彰化縣</option>
-							<option value="12">南投縣</option>
-							<option value="13">雲林縣</option>
-							<option value="14">嘉義縣</option>
-							<option value="15">嘉義市</option>
-							<option value="16">臺南市</option>
-							<option value="17">屏東縣</option>
-							<option value="18">高雄市</option>
-							<option value="19">花蓮縣</option>
-							<option value="20">臺東縣</option>
-							<option value="21">澎湖縣</option>
-							<option value="22">金門縣</option>
-							<option value="23">連江縣</option>
+							<option value="臺北市">臺北市</option>
+							<option value="新北市">新北市</option>
+							<option value="桃園市">桃園市</option>
+							<option value="基隆市">基隆市</option>
+							<option value="新竹市">新竹市</option>
+							<option value="新竹縣">新竹縣</option>
+							<option value="宜蘭縣">宜蘭縣</option>
+							<option value="苗栗縣">苗栗縣</option>
+							<option value="臺中市">臺中市</option>
+							<option value="彰化縣">彰化縣</option>
+							<option value="南投縣">南投縣</option>
+							<option value="雲林縣">雲林縣</option>
+							<option value="嘉義縣">嘉義縣</option>
+							<option value="嘉義市">嘉義市</option>
+							<option value="臺南市">臺南市</option>
+							<option value="屏東縣">屏東縣</option>
+							<option value="高雄市">高雄市</option>
+							<option value="花蓮縣">花蓮縣</option>
+							<option value="臺東縣">臺東縣</option>
+							<option value="澎湖縣">澎湖縣</option>
+							<option value="金門縣">金門縣</option>
+							<option value="連江縣">連江縣</option>
 						</select>
 					</div>
 					<!-- 行政區選擇器 -->
@@ -79,36 +93,33 @@ div.imgtest {
 							<option value="x" disabled="disabled" selected="selected">全部行政區</option>
 						</select>
 					</div>
-				</form>
-				<form action="CourtServlet.do" name="findByONE" method="post">
 					<!-- 關鍵字搜尋 -->
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="請輸入名稱" name="court"> <input type="hidden" name="action" value="queryByName">
+						<input type="text" class="form-control" placeholder="請輸入名稱" name="court" style="border-radius: 5px;"> <input type="hidden" name="action" value="queryByName">
 					</div>
 					<div class="form-group">
-						<button class="form-control" type="submit" style="color: #2ebd59;">
-							<div class="fa fa-search" style="font-family: 微軟正黑體;">
-								<img src="image/search.png" style="width: 20px; height: 20px; float: left; margin-left: 100px">
-								<span style="float: left; margin-left: 30px"><strong>搜尋</strong></span>
-							</div>
-						</button>
+						<button class="form-control" type="submit" style="color: white; border-radius: 5px; background-color: #2ebd59; text-align:center;"><img src="image/search.png" style="display: inline; width: 20px; height: 20px;">搜尋</button>
 					</div>
 				</form>
 			</div>
 			<!-- 場地資料 -->
-			<div class="col-sm-9" style="padding-left: 50px">
+			<div class="col-sm-8">
 				<%@ include file="page1.file"%>
 				<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}'); margin-bottom: 20px"></div>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-6">
 							<div style="padding: 10px; width: 400px">
 								<div style="margin-top: 80px">
 									<img src="image/architecture-interior.png" width="20px" height="20px" style="float: left;">
 									<h4 style="color: white; font-family: 微軟正黑體; margin-left: 30px">${courtVO.name}</h4>
 									<img src="image/location-alt.png" width="20px" height="20px" style="float: left; "> <strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.courtaddress}</strong>
+									<br>
+									<button class="map-btn">開啟地圖</button>
+									<input id="long" type="hidden" value="${courtVO.longitue}">
+									<input id="lat" type="hidden" value="${courtVO.latitue}">
 								</div>
 							</div>
 						</div>
@@ -119,6 +130,7 @@ div.imgtest {
 			</div>
 		</div>
 	</div>
+	<script src="${pageContext.request.contextPath}/js/jquery.tinyMap.min.js"></script>
 	<script type="text/javascript">
 		// 		--------------------二階動態段選擇器
 		manyBlocks = new Array();
@@ -136,7 +148,68 @@ div.imgtest {
 			document.county.bolcks.length = manyBlocks[index].length+1; // 刪除多餘的選項
 			$("#dist").val("x");
 		}
+		
 
+		
+		$(function(){
+			
+			$.fn.tinyMapConfigure({
+			    // Google Maps API URL
+			    'api': '//maps.googleapis.com/maps/api/js',
+			    // Google Maps API Version
+			    'v': '3.21',
+			    // Google Maps API Key，預設 null
+			    'key': 'AIzaSyC4JivBSibr0L3cVIfLlgdq6bVZuOMxUuk',
+			    // 使用的地圖語言
+			    'language': 'zh‐TW',
+			    // 載入的函式庫名稱，預設 null
+			    'libraries': 'adsense,drawing,geometry...',
+			    // 使用個人化的地圖，預設 false
+			    'signed_in': true|false,
+			    // MarkerClustererPlus.js 路徑
+			    // 預設 'https://cdn.essoduke.org/js/tinyMap/markerclusterer.js'
+			    // 建議下載至自有主機，避免讀取延遲造成無法使用。
+// 			    'clusterer': 'path/to/markerclusterer.js'
+			    // MarkerWithLabel.js 路徑
+			    // 預設 'https://cdn.essoduke.org/js/tinyMap/markerwithlabel.js'
+			    // 建議下載至自有主機，避免讀取延遲造成無法使用。
+// 			    'withLabel': '/path/to/markerwithlabel.js'
+			});
+			
+			function addMap(){
+				$(this).parent().parent().parent().parent().after("<div class='row google'><div class='map'></div></div>");
+				var longx = $(this).next().val();
+				var lat = $(this).next().next().val();
+				$("div.map").tinyMap({
+				    // Map center
+				    'center': {
+				        'lat': lat, 
+				        'lng': longx
+				    },
+				    'zoom': 17,
+				    'marker': [
+				               {
+				                   'addr': [lat, longx],
+				                   // 動畫效果
+				                   'animation': 'DROP'
+				               },
+				           ]
+				});
+				
+				$(this).text("關閉地圖");
+				$(this).unbind("click")
+				$(this).bind("click",removeMap)
+			}
+			
+			function removeMap(){
+				$(this).parent().parent().parent().parent().next().remove();
+				$(this).unbind("click")
+				$(this).text("開啟地圖");
+				$(this).bind("click",addMap)
+			}
+			
+			$("button.map-btn").bind("click",addMap);
+		})
 	</script>
 </body>
 </html>

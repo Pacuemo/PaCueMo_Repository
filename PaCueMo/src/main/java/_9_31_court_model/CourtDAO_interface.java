@@ -15,4 +15,6 @@ public interface CourtDAO_interface
 	public List<CourtVO> findByCourtName(String keyword);
 
 	public List<CourtVO> getAll();
+
+	public List<CourtVO> findByAddress(String city);
 }
