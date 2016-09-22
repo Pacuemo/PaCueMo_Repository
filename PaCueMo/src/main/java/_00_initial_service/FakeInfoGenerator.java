@@ -1109,7 +1109,7 @@ public class FakeInfoGenerator
 //		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-		friendListGenerator("3362303F-2FD4-4073-A6FD-C02E38F022A8", 20);
+		friendListGenerator("476903C9-9720-4504-8BE6-FCEA58E5E38B", 20);
 //      club和league部分
 //		clubGenerator();
 
