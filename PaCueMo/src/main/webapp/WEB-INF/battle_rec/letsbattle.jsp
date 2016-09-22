@@ -1,5 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
@@ -48,8 +50,8 @@ body {
 	
 	<div class="row" style="margin: 0px">
 		<div class="col-md-2">
-			<c:forEach var="teamMemberVO" items="${requestScope.mineTeamVOs[0].teamMemberVOs}">
 				<div id="div_left" class="col-md-12 animate fadeInLeft animated" style="padding-left: 0px;">
+			<c:forEach var="teamMemberVO" items="${requestScope.mineTeamVOs[0].teamMemberVOs}">
 					<c:choose>
 						<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
 							<img class="battle_img img-circle col-md-8" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" style="margin-top: 10px;">
@@ -80,8 +82,8 @@ body {
 							</c:choose>
 						</small>
 					</div>
-				</div>
 			</c:forEach>
+				</div>
 		</div>
 		<div class="col-md-8">
 			<div class="content" style="padding-top: 30px">
@@ -90,61 +92,43 @@ body {
 					<h1 style="font-size: 36px">隊伍約戰</h1>
 				</div>
 
-				<form name="form_battle" method="post" action="" id="form_battle" role="form" novalidate="novalidate">
-
+				<sf:form name="form_battle" method="POST" commandName="battleRecordVO" action="${pageContext.request.contextPath}/spring/battle_rec/createBattleTable" id="form_battle" role="form">
 					<div class="form-group">
 						<div class="col-sm-12 col-md-12" style="padding-left: 0px; padding-bottom: 10px;padding-right: 0px">
 							<h2 class="col-sm-3 col-md-2 control-label teamName" style="padding-left: 0px;">約戰方：</h2>
 							<div class="col-sm-3 col-md-4">
-								<select id="select_teamA" name="teamIdA" class="form-control">
+								<sf:select path="teamIdA" id="select_teamA" class="form-control">
 									<c:forEach var="mineTeamVO" items="${requestScope.mineTeamVOs }" varStatus="status" >
 										<c:choose>
 											<c:when test="${status.first }">
-												<option value="${mineTeamVO.teamId}" selected="selected">${mineTeamVO.teamName}</option>
+												<sf:option value="${mineTeamVO.teamId}" selected="selected">${mineTeamVO.teamName}</sf:option>
 											</c:when>
 											<c:otherwise>
-												<option value="${mineTeamVO.teamId}">${mineTeamVO.teamName}</option>											
+												<sf:option value="${mineTeamVO.teamId}">${mineTeamVO.teamName}</sf:option>											
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-								</select>
-							</div>
-
-							<c:choose>
-								<c:when test="">
-									<label class="col-sm-3 col-md-2 control-label teamName">挑戰方：</label>
-									<div class="col-md-3">
-										<select id="select_teamB" class="form-control" style="margin: 7px;"></select>
-									</div>
-								</c:when>
-								<c:when test="">
-									<label class="col-sm-3 col-md-2 control-label teamName">地點：</label>
-									<div class="col-sm-3 col-md-4">
-										<h2>11</h2>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<h2 class="col-sm-3 col-md-2 control-label teamName">挑戰方：</h2>
-									<div class="col-sm-3 col-md-4" style="padding-right: 0px;">
-										<input type="text" value="${requestScope.oppTeamVO.teamName}" readonly="readonly" name="oppTeamName" maxlength="10" class="form-control" style="color: black;">
-									</div>
-								</c:otherwise>
-							</c:choose>
-
+								</sf:select>
+							</div>			
+								<h2 class="col-sm-3 col-md-2 control-label teamName">挑戰方：</h2>
+								<div class="col-sm-3 col-md-4" style="padding-right: 0px;">
+									<sf:input type="hidden" value="${requestScope.oppTeamVO.teamId}" path="teamIdB"/>
+									<input type="text" value="${requestScope.oppTeamVO.teamName}" readonly="readonly" name="oppTeamName" maxlength="10" class="form-control" style="color: black;">
+								</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="battleMode">對戰模式</label> 
-						<select id="battleMode" name="battleMode" required="" class="form-control">
-							<option value="5" selected="selected">5 vs 5</option>
-							<option value="3">3 vs 3</option>
-						</select>
+						<sf:select id="battleMode" path="battleMode" class="form-control">
+							<sf:option value="5" selected="selected">5 vs 5</sf:option>
+							<sf:option value="3">3 vs 3</sf:option>
+						</sf:select>
 					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="battleBet">賭注</label> 
-						<input type="text" id="battleBet" name="battleBet" maxlength="8" class="form-control">
+						<sf:input type="text" id="battleBet" path="battleBet" maxlength="8" class="form-control"/>
 					</div>
 
 					<div class="form-group">
@@ -164,12 +148,12 @@ body {
 						</div>
 						<div id="courtId_data" class="bootstrap-date row">
 							<div class="col-xs-4">
-								<select id="courtName" name="courtName" class="form-control valid">
+								<select id="courtName" path="courtId" name="courtName" class="form-control valid">
 									<option value="none">場地名稱</option>
-									<option value="2014">用ajax抓資料</option>
 								</select>
 							</div>
 							<div class="col-xs-4">
+								<input id="courtId" type="hidden" >
 								<select id="courtCity" name="courtCity"  class="form-control valid"  onchange="renew(this.selectedIndex);">
 									<option disabled="disabled" selected="selected" value="none">選擇縣市</option>
 									<option value="臺北市">臺北市</option>
@@ -219,31 +203,32 @@ body {
 						<div id="battleDateTime" class="bootstrap-date row">
 							<div class="col-xs-4">
 <!-- 								點擊後彈出日期選擇器 -->
-								<input type="date" id="battleDate" name="battleDate" class="form-control" style="color: black;">
+								<input type="date" value="${requestScope.current_date.date }" id="battleDate" name="battleDate" class="form-control" style="color: black;">
 							</div>
 							<div class="col-xs-4">
-								<select id="battleHr" name="battleHr" class="form-control valid">
-									<option value="1" selected="selected">上午  1&nbsp;&nbsp;點</option>
-									<option value="2">上午  2&nbsp;&nbsp;點</option>
-									<option value="3">上午  3&nbsp;&nbsp;點</option>
-									<option value="4">上午  4&nbsp;&nbsp;點</option>
-									<option value="5">上午  5&nbsp;&nbsp;點</option>
-									<option value="6">上午  6&nbsp;&nbsp;點</option>
-									<option value="7">上午  7&nbsp;&nbsp;點</option>
-									<option value="8">上午  8&nbsp;&nbsp;點</option>
-									<option value="9">上午  9&nbsp;&nbsp;點</option>
+								<select id="battleHr" name="battleHr" class="form-control valid"style="font-family: Consolas">
+									<option value="1">上午  &nbsp;1&nbsp;點</option>
+									<option value="2">上午  &nbsp;2&nbsp;點</option>
+									<option value="3">上午  &nbsp;3&nbsp;點</option>
+									<option value="4">上午  &nbsp;4&nbsp;點</option>
+									<option value="5">上午  &nbsp;5&nbsp;點</option>
+									<option value="6">上午  &nbsp;6&nbsp;點</option>
+									<option value="7">上午  &nbsp;7&nbsp;點</option>
+									<option value="8">上午  &nbsp;8&nbsp;點</option>
+									<option value="9">上午  &nbsp;9&nbsp;點</option>
 									<option value="10">上午  10&nbsp;點</option>
 									<option value="11">上午  11&nbsp;點</option>
 									<option value="12">上午  12&nbsp;點</option>
-									<option value="13">下午  1&nbsp;&nbsp;點</option>
-									<option value="14">下午  2&nbsp;&nbsp;點</option>
-									<option value="15">下午  3&nbsp;&nbsp;點</option>
-									<option value="16">下午  4&nbsp;&nbsp;點</option>
-									<option value="17">下午  5&nbsp;&nbsp;點</option>
-									<option value="18">下午  6&nbsp;&nbsp;點</option>
-									<option value="19">下午  7&nbsp;&nbsp;點</option>
-									<option value="20">下午  8&nbsp;&nbsp;點</option>
-									<option value="21">下午  9&nbsp;&nbsp;點</option>
+									<option disabled="disabled">---------------------------</option>
+									<option value="13">下午  &nbsp;1&nbsp;點</option>
+									<option value="14">下午  &nbsp;2&nbsp;點</option>
+									<option value="15">下午  &nbsp;3&nbsp;點</option>
+									<option value="16">下午  &nbsp;4&nbsp;點</option>
+									<option value="17">下午  &nbsp;5&nbsp;點</option>
+									<option value="18">下午  &nbsp;6&nbsp;點</option>
+									<option value="19">下午  &nbsp;7&nbsp;點</option>
+									<option value="20">下午  &nbsp;8&nbsp;點</option>
+									<option value="21">下午  &nbsp;9&nbsp;點</option>
 									<option value="22">下午  10&nbsp;點</option>
 									<option value="23">下午  11&nbsp;點</option>
 									<option value="24">下午  12&nbsp;點</option>			
@@ -286,7 +271,7 @@ body {
 						<a id="profile_cancel" name="profile[cancel]" class="btn btn-tertiary btn-sm btn-cancel" onclick="history.back()">取消</a>
 					</div>
 					<input type="hidden" id="profile__token" name="profile[_token]" class="form-control" value="7ToZqqdkScbZNNOmX_N7FmDr8k4gwgD584FfdSjC-0A">
-				</form>
+				</sf:form>
 
 			</div>
 
@@ -356,10 +341,17 @@ body {
 		$("#courtArea").val("x");
 	}
 	
-	var datas;
 		// init start
+// 		var d = new Date();
+// 		var s = d.toISOString();
+// 		var n = s.substr(0, 10);
+// 		$('#battleDate').val(n);
+		
+		$("#battleHr option[value='${requestScope.current_date.hr}']").attr('selected','selected');
+		
 		$(function() 
 		{
+		var number_myTeamMember ="${fn:length(requestScope.mineTeamVOs[0].teamMemberVOs)}";
 			// 
 			var TmVOs = "${requestScope.mineTeamVOs[0].teamMemberVOs[0]}";
 // 			alert(TmVOs);
@@ -371,17 +363,14 @@ body {
 					"dataType":"json",
 					"success":function(data){
 						$("#div_left").empty();
-
+						number_myTeamMember = 0;
 						$.each(data.teamMemberVOs, function(index,array) {
 						var img_src;
 						var h3_name;
 						var small_position;
-							console.log(index + " : " + array);
-							
+							number_myTeamMember++; 
 							$.each(this, function(key, value) {	
-								console.log(key + " : " + value);
 								if($.trim(key) == "memberVO"){
-									console.log(key + " : " + value.memberImgUrl);
 									if(value.memberImgUrl != null){
 										img_src = value.memberImgUrl;
 									}else{
@@ -435,13 +424,11 @@ body {
 				if($("#courtCity").val()=='none' || $("#courtCity").val() == null){
 					city_val = "";
 				}else{
-					console.log($("#courtCity option:selected").text())
 					address += $("#courtCity option:selected").text();
 				}
 				if($("#courtArea").val() == 'x' || $("#courtArea").val() == null){
 					area_val = "";
 				}else{
-					console.log($("#courtArea option:selected").text())
 					address += $("#courtArea option:selected").text();
 				}
 				
@@ -459,20 +446,42 @@ body {
 // 								alert(obj.name);	
 							$("#courtName option").remove();
 							$.each(data,function(i,obj){
-								$("#courtName").append($("<option></option>").attr("value", obj.courtaddress).text(obj.name));
+								$("#courtName").append($("<option></option>").attr("value", obj.courtId).attr("data-courtaddress",obj.courtaddress).text(obj.name));
 							});
-							$("#label_location").text("地址 : " + $("#courtName").val());
+							$("#label_location").text("地址 : " + $("#courtName option:selected").attr("data-courtaddress"));
+							$("#input_courtId").val($("#courtName").val());
 						}, 
 						"error" : function(Error)
 						{
-							alert("fuck");
 							console.log(Error);
 						} 
 					})
 			} // chk_location_update() End
 			$("#courtName").change(function(){
-				$("#label_location").text("地址 : " + $(this).val());
+				$("#label_location").text("地址 : " + $("#courtName option:selected").attr("data-courtaddress"));
+				$("#input_courtId").val($("#courtName").val());
 			})
+			
+			$("#submit").click(function(event){
+				var error_msg = "";
+				if(number_myTeamMember < $("#battleMode").val()){
+					error_msg += "隊伍人數不足\n";
+					event.preventDefault();
+				}
+				if("${fn:length(requestScope.oppTeamVO.teamMemberVOs)}" < $("#battleMode").val()){
+					error_msg += "對方隊伍人數不足\n"
+					event.preventDefault();
+				}
+				if("${fn:length(requestScope.oppTeamVO.teamMemberVOs)}" < $("#battleMode").val()){
+					error_msg += "對方隊伍人數不足\n"
+					event.preventDefault();
+				}
+				if(error_msg != ""){
+					alert(error_msg);
+				}
+			})
+			
+		// init End	
 		});
 	</script>
 </body>

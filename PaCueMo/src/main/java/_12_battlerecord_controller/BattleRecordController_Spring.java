@@ -1,12 +1,19 @@
 package _12_battlerecord_controller;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +46,51 @@ public class BattleRecordController_Spring
 	@Autowired
 	private Gson gson;
 
+	@RequestMapping(value = "/createBattleTable", method = RequestMethod.POST)
+	public String updateTeam(@ModelAttribute BattleRecordVO battleRecordVO, HttpSession session, HttpServletRequest request, String battleDate, String battleHr, String battleMin, Integer courtId)
+	{
+		System.out.println("BattleRecord_Controller : createBattleTable");
+		try
+		{
+			String[] date = battleDate.split("/");
+			int year;
+			int month;
+			int day;
+			int hr;
+			int min;
+			try
+			{
+				year = Integer.valueOf(date[0]);
+				month = Integer.valueOf(date[1]);
+				day = Integer.valueOf(date[2]);
+				hr = Integer.valueOf(battleHr);
+				min = Integer.valueOf(battleMin);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("date format error!");
+				return "redirect:/";
+			}
+			GregorianCalendar gCalendar = new GregorianCalendar(year, month, day, hr, min);
+			Date battleDate_util = gCalendar.getTime();
+			Timestamp battleDateTime = new Timestamp(battleDate_util.getTime());
+			battleRecordVO.setBattleDateTime(battleDateTime);
+			battleRecordVO.setCourtId(courtId);
+			battleRecordService.add(battleRecordVO);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "redirect:/";
+		}
+		System.out.println("新增成功");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("forward battle_recintroduce (GET)");
+		return "redirect:/";
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/getCourtVOs", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String getCourtVOs(String address)
@@ -48,11 +100,6 @@ public class BattleRecordController_Spring
 		CourtService courtService = new CourtService();
 		System.out.println("回傳場地VOs 格式JSON");
 		List<CourtVO> courtVOs = courtService.findByCourtName(address.trim());
-		for (CourtVO courtVO : courtVOs)
-		{
-			System.out.println(courtVO.getName());
-
-		}
 		System.out.println("-------------------------------------------------------");
 		return gson.toJson(courtService.findByCourtName(address.trim()));
 	}
@@ -130,10 +177,16 @@ public class BattleRecordController_Spring
 		{
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
 			List<TeamVO> mineTeamVOs = stevenFacade.find_TeamVOs_With_TeamHead(memberVO.getMemberId());
+			Map<String, String> current_date = new HashMap<String, String>();
 			TeamVO oppTeamVO = stevenFacade.getTeamById(btn_OppTeamId);
+			java.util.Date date = new Date();
 			request.setAttribute("mineTeamVOs", mineTeamVOs);		//Set Att
 			request.setAttribute("oppTeamVO", oppTeamVO);			//Set Att
-
+			SimpleDateFormat sdf_date = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf_hr = new SimpleDateFormat("HH");
+			current_date.put("date", sdf_date.format(date));
+			current_date.put("hr", sdf_hr.format(date));
+			request.setAttribute("current_date", current_date);
 		}
 		catch (Exception e)
 		{
