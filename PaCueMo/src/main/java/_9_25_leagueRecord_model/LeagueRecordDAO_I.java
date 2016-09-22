@@ -19,4 +19,6 @@ public interface LeagueRecordDAO_I
 
 	LeagueRecordVO find_One(int fightId);
 
+	LeagueRecordVO find_Last_One();
+
 }
