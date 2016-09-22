@@ -155,28 +155,29 @@ body {
 			var contextPath = "${pageContext.request.contextPath}";
 			var data_team;
 
-			$("#tm_search").change(function(){
-				$.ajax({ 
-					"type" : "get", 
-					"url" : "${home}spring/team/searchTeamByL_N", // home 在 head
-					"data" : { 
-							"location" : "台北市", 
-							"teamName" :$(this).val()
-						}, 
-					"dataType" : "json",
-					"success" : function(data)
-					{
-						data_team = data;
-						alert(data);
-					}, 
-					"error" : function(Error)
-					{
-						alert("fuck");
-						console.log(Error);
-					} 
-				})
-				$('#tm_search').suggestionBox().loadSuggestions(data_team);
-			})
+// 			$("#tm_search").change(function(){
+// 				$.ajax({ 
+// 					"type" : "get", 
+// 					"url" : "${home}spring/team/searchTeamByL_N", // home 在 head
+// 					"data" : { 
+// 							"location" : "", 
+// 							"teamName" :$(this).val()
+// 						}, 
+// 					"dataType" : "json",
+// 					"success" : function(data)
+// 					{
+// 						data_team = data;
+// 						alert(data);
+// 					}, 
+// 					"error" : function(Error)
+// 					{
+// 						alert("fuck");
+// 						console.log(Error);
+// 					} 
+// 				})
+// 				$('#tm_search').suggestionBox().loadSuggestions(data_team);
+// 			})
+
 			var div_weather_body = $('#cont_72b8d6f1eb00701f936d70bccb580886');
 			$("#div_weather_top").hover(function(){
 				$(this).css("background-color","rgba(255,255,255,0.87)");
