@@ -65,8 +65,8 @@ button[type=submit]:hover {
 div.row.google {
 	height: 500px;
 	width: 100%;
-	padding-left: 15px;
 	margin-bottom: 10px;
+	margin-left: 0px;
 }
 
 div.map {
@@ -147,7 +147,7 @@ div.map {
 							<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}'); margin-bottom: 20px"></div>
 						</div>
 						<div class="col-sm-6">
-							<div style="padding: 10px; width: 400px">
+							<div style="padding: 10px;width: 100%;min-height: 250px;">
 								<div style="margin-top: 40px">
 									<img src="image/City.png" width="20px" height="20px" style="float: left;">
 									<h4 style="color: white; font-family: 微軟正黑體; margin-left: 30px">${courtVO.name}</h4>
