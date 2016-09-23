@@ -1,6 +1,7 @@
 package _10_team_controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
@@ -43,6 +44,7 @@ public class TeamServlet extends HttpServlet
 	private TeamApplyService teamApplyService;
 	@Autowired
 	private PlayercardService playercardService;
+
 	@Autowired
 	private StevenFacade stevenFacade;
 
@@ -191,10 +193,29 @@ public class TeamServlet extends HttpServlet
 
 				List<TeamVO> myList = teamService.getMyTeamList(memberId);
 				req.setAttribute("myList", myList);
-				List<BattleRecordVO> battleRecordVOs_A = battleRecordService.findByTeamIdA(teamId);
+				List<BattleRecordVO> battleRecordVOs_A_1 = battleRecordService.findByTeamIdA(teamId);
+				List<BattleRecordVO> battleRecordVOs_A = new ArrayList<>();
+				for (int i = battleRecordVOs_A_1.size() - 1 ; i >= 0 ; i--)
+				{
+					if (battleRecordVOs_A_1.get(i).getBattleStatus() == 1)
+					{
+						battleRecordVOs_A.add(battleRecordVOs_A_1.get(i));
+					}
+				}
 				req.setAttribute("battleRecordVOs_A", battleRecordVOs_A);
-				List<BattleRecordVO> battleRecordVOs_B = battleRecordService.findByTeamIdB(teamId);
+				List<BattleRecordVO> battleRecordVOs_B_1 = battleRecordService.findByTeamIdB(teamId);
+				List<BattleRecordVO> battleRecordVOs_B = new ArrayList<>();
+				for (int i = battleRecordVOs_B_1.size() - 1 ; i >= 0 ; i--)
+				{
+					if (battleRecordVOs_B_1.get(i).getBattleStatus() == 1)
+					{
+						battleRecordVOs_B.add(battleRecordVOs_B_1.get(i));
+					}
+				}
 				req.setAttribute("battleRecordVOs_B", battleRecordVOs_B);
+
+				List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(memberId);
+				req.setAttribute("myFriendVOs", myFriendVOs);
 
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");

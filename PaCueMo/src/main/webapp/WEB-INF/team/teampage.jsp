@@ -307,6 +307,9 @@ body {
 
 
 <!-- 主約戰紀錄 -->
+	<!-- 設定現在時間 -->
+		<jsp:useBean id="now" class="java.util.Date"  /> 
+		
 		<div class="col-md-5">
 			<div class="row">
 			<div class="content" style="margin-left: 30px;padding: 20px;background-color:  rgba(255,255,255,0.95);">
@@ -336,7 +339,6 @@ body {
 						  	<c:out value='<tbody id="insideA_${a}" class="insideA" hidden="hidden">' escapeXml="false"></c:out>
 						  </c:if>
 						    <tr>
-						      <th hidden="none" scope="row">${battleRecordVO.battleId}</th>
 						      <th scope="row"></th>
 						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVO.teamBVO.teamId}">${battleRecordVO.teamBVO.teamName}</a></td>
 						      <td>${battleRecordVO.battleMode} V ${battleRecordVO.battleMode}</td>
@@ -349,16 +351,15 @@ body {
 									</c:otherwise>
 									</c:choose>
 							  </td>	
-							  		<jsp:useBean id="dateValue" class="java.util.Date" />
-									<jsp:setProperty name="dateValue" property="time" value="${battleRecordVO.battleDateTime.time}" />
-						      <td>
+						      <td style="padding-left:0px;padding-right: 0px">
+							  	<jsp:useBean id="dateValue" class="java.util.Date" />
+								<jsp:setProperty name="dateValue" property="time" value="${battleRecordVO.battleDateTime.time}" />
 								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue}" />
 						      </td>	
 						      <td>
 						      <c:if test="${battleRecordVO.teamAVO.teamHead == LoginOK.memberId}">
 								<c:choose>
 									<c:when test="${battleRecordVO.result == 0}">
-										<jsp:useBean id="now" class="java.util.Date"  />
 										<c:choose>
 											<c:when test="${now.time > battleRecordVO.battleDateTime.time}">
 												<c:choose>
@@ -409,8 +410,14 @@ body {
 								      <th scope="row"></th>
 								      <td colspan="4">
 									  	<c:forEach begin="1" end="${status.count}" varStatus="status2">
+									  		<c:set var="a_bottom_flag" value="f"></c:set>
 									    	<c:if test="${status2.count % 3 == 0}">
+									  		<c:set var="a_bottom_flag" value="t"></c:set>
 												<fmt:parseNumber var="i" type="number" integerOnly="true" value="${status2.count / 3}" />
+									      		<a class="paginationA" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${i}</a>
+									      	</c:if>
+									      	<c:if test="${status2.last && a_bottom_flag=='f'}"> 
+									      		<fmt:parseNumber var="i" type="number" integerOnly="true" value="${status2.count / 3 +1}" />
 									      		<a class="paginationA" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${i}</a>
 									      	</c:if>
 									  	</c:forEach>
@@ -441,10 +448,10 @@ body {
 										${battleRecordVOB.battleBet}
 									</c:otherwise>
 									</c:choose>
-							  </td>	
-							  		<jsp:useBean id="dateValue2" class="java.util.Date" />
-									<jsp:setProperty name="dateValue2" property="time" value="${battleRecordVOB.battleDateTime.time}" />
-						      <td>
+							  </td >	
+						      <td style="padding-left:0px;padding-right: 0px">
+							  	<jsp:useBean id="dateValue2" class="java.util.Date" />
+								<jsp:setProperty name="dateValue2" property="time" value="${battleRecordVOB.battleDateTime.time}" />
 								<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateValue2}" />
 						      </td>	
 						      <td>
@@ -501,10 +508,17 @@ body {
 								      <th scope="row"></th>
 								      <td colspan="4">
 									  	<c:forEach begin="1" end="${status.count}" varStatus="status2">
+									  		<c:set var="a_bottom_flag_B" value="f"></c:set>
 									    	<c:if test="${status2.count % 3 == 0}">
+									  		<c:set var="a_bottom_flag_B" value="t"></c:set>
 												<fmt:parseNumber var="j" type="number" integerOnly="true" value="${status2.count / 3}" />
 									      		<a  class="paginationB" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${j}</a>
 									      	</c:if>
+									      	<c:if test="${status2.last && a_bottom_flag_B=='f'}"> 
+									      		<fmt:parseNumber var="j" type="number" integerOnly="true" value="${status2.count / 3 +1}" />
+									      		<a class="paginationB" href="#" style="letter-spacing:0px;margin:0px 5px 0px 0px;">${j}</a>
+									      	</c:if>
+									      	
 									  	</c:forEach>
 								      </td>	
 									</tr>
@@ -704,11 +718,16 @@ body {
 				event.preventDefault();
 				$(".insideA").hide();
 				$("#insideA_"+($(this).text()-1)+"").show(200);
+				$("#tbody_B").hide()
+				$(".insideB").hide();
 			})
 			$(".paginationB").click(function(){
 				event.preventDefault();
 				$(".insideB").hide();
 				$("#insideB_"+($(this).text()-1)+"").show(200);
+				$("#tbody_A").hide();
+				$(".insideA").hide();
+
 			})
 			
 			{
@@ -795,9 +814,9 @@ body {
 			    cancel: function(button) {
 			    	$.ajax({ 
 						"type" : "get", 
-						"url" : "${home}spring/battle_rec/reportTeamA", // home 在 head
+						"url" : "${home}spring/battle_rec/reportTeamB", // home 在 head
 						"data" : { "resault" : "lose",
-								"battleId" : a_battleAId 
+								"battleId" : a_battleBId 
 							}, 
 						"dataType" : "text",
 						"success" : function(data)

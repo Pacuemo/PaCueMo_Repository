@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component;
 import _9_11_teammember_model.TeamMemberDAO_interface;
 import _9_11_teammember_model.TeamMemberVO;
 import _9_41_member_model.MemberDAO_interface_Spring;
+import _9_41_member_model.MemberVO;
 import _9_42_playerCard_model.PlayerCardDAO_interface;
+import _9_43_friendsList_model.FriendsListDAO_interface_Spring;
+import _9_43_friendsList_model.FriendsListVO;
 
 @Component
 public class TeamMemberService
@@ -21,9 +24,24 @@ public class TeamMemberService
 	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
 	private PlayerCardDAO_interface playerCardDAO;
+	@Autowired
+	private FriendsListDAO_interface_Spring friendsListDAO_Spring;
 
 	public TeamMemberService()
 	{
+	}
+
+	public List<MemberVO> wrongWayGetMemberVOs(String memberId)
+	{
+		System.out.println("wrongWayGetMemberVOs : careful use");
+		List<FriendsListVO> friendsListVOs = friendsListDAO_Spring.getAllFriends(memberId);
+		List<MemberVO> memberVOs = new ArrayList<>();
+		for (FriendsListVO friendsListVO : friendsListVOs)
+		{
+			memberVOs.add(memberDAO.findByPrimaryKey(friendsListVO.getMemberFriendId()));
+		}
+		System.out.println("ok");
+		return memberVOs;
 	}
 
 	public void add(TeamMemberVO teamMemberVO)

@@ -98,7 +98,7 @@ body {
 							<h2 class="col-sm-3 col-md-2 control-label teamName" style="padding-left: 0px;">約戰方：</h2>
 							<div class="col-sm-3 col-md-4">
 								<sf:select path="teamIdA" id="select_teamA" class="form-control">
-									<c:forEach var="mineTeamVO" items="${requestScope.mineTeamVOs }" varStatus="status" >
+									<c:forEach var="mineTeamVO" items="${requestScope.mineTeamVOs}" varStatus="status" >
 										<c:choose>
 											<c:when test="${status.first }">
 												<sf:option value="${mineTeamVO.teamId}" selected="selected">${mineTeamVO.teamName}</sf:option>
@@ -153,7 +153,7 @@ body {
 								</select>
 							</div>
 							<div class="col-xs-4">
-								<input id="courtId" type="hidden" >
+								<input id="input_courtId" name="input_courtId" type="hidden" >
 								<select id="courtCity" name="courtCity"  class="form-control valid"  onchange="renew(this.selectedIndex);">
 									<option disabled="disabled" selected="selected" value="none">選擇縣市</option>
 									<option value="臺北市">臺北市</option>

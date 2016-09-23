@@ -11,13 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import _10_Configs.StevenWebScanConfig;
+import _45_websocket_test.WebSocketStompConfig;
 import _50_SpringConfigs.Roger_WebScanConfig;
 
 @Configuration
 @EnableWebMvc
 //加入需要被裝載的控制器位置
-@Import({ StevenWebScanConfig.class, Roger_WebScanConfig.class })
-@ComponentScan({ "_23_league_bk_controller", "_21_club_controller", "_22_league_controller", "_41_login_controller", "_42_register_controller", "_44_playercard_controller" })
+@Import({ StevenWebScanConfig.class, Roger_WebScanConfig.class, WebSocketStompConfig.class })
+@ComponentScan({ "_23_league_bk_controller", "_21_club_controller", "_22_league_controller", "_41_login_controller", "_42_register_controller", "_44_playercard_controller", "_45_websocket_test" })
 public class WebConfig extends WebMvcConfigurerAdapter
 {
 

@@ -2,8 +2,8 @@ package _12_battlerecord_controller;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,17 +47,13 @@ public class BattleRecordController_Spring
 	private Gson gson;
 
 	@RequestMapping(value = "/createBattleTable", method = RequestMethod.POST)
-	public String updateTeam(@ModelAttribute BattleRecordVO battleRecordVO, HttpSession session, HttpServletRequest request, String battleDate, String battleHr, String battleMin, Integer courtId)
+	public String createBattleTable(@ModelAttribute BattleRecordVO battleRecordVO, HttpSession session, HttpServletRequest request, String battleDate, String battleHr, String battleMin, Integer input_courtId)
 	{
 		System.out.println("BattleRecord_Controller : createBattleTable");
 		try
 		{
-			String[] date = battleDate.split("/");
-			int year;
-			int month;
-			int day;
-			int hr;
-			int min;
+			String[] date = battleDate.split("-");
+			int year, month, day, hr, min;
 			try
 			{
 				year = Integer.valueOf(date[0]);
@@ -72,11 +68,15 @@ public class BattleRecordController_Spring
 				System.out.println("date format error!");
 				return "redirect:/";
 			}
-			GregorianCalendar gCalendar = new GregorianCalendar(year, month, day, hr, min);
-			Date battleDate_util = gCalendar.getTime();
-			Timestamp battleDateTime = new Timestamp(battleDate_util.getTime());
+			if (null == battleRecordVO.getBattleBet())
+			{
+				battleRecordVO.setBattleBet(0.0);
+			}
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, (month - 1), day, hr, min);
+			Timestamp battleDateTime = new Timestamp(calendar.getTimeInMillis());
 			battleRecordVO.setBattleDateTime(battleDateTime);
-			battleRecordVO.setCourtId(courtId);
+			battleRecordVO.setCourtId(input_courtId);
 			battleRecordService.add(battleRecordVO);
 		}
 		catch (Exception e)
@@ -85,10 +85,10 @@ public class BattleRecordController_Spring
 			System.out.println("fuck");
 			return "redirect:/";
 		}
-		System.out.println("新增成功");
+		System.out.println("約戰成功");
 		System.out.println("-------------------------------------------------------");
-		System.out.println("forward battle_recintroduce (GET)");
-		return "redirect:/";
+		System.out.println("forward battle_introduce (GET)");
+		return "forward:introduce";
 	}
 
 	@ResponseBody
@@ -109,6 +109,7 @@ public class BattleRecordController_Spring
 	public String reportTeamA(@RequestParam("battleId") Integer battleId, String resault)
 	{
 		System.out.println("BattleRecord_Controller : reportTeamA");
+		System.out.println("battleId : " + battleId);
 		BattleRecordVO battleRecordVO = battleRecordService.findById(battleId);
 		if (resault.equals("win"))
 		{
@@ -129,6 +130,7 @@ public class BattleRecordController_Spring
 	public String reportTeamB(Integer battleId, String resault)
 	{
 		System.out.println("BattleRecord_Controller : reportTeamA");
+		System.out.println("battleId : " + battleId);
 		BattleRecordVO battleRecordVO = battleRecordService.findById(battleId);
 		if (resault.equals("win"))
 		{
@@ -138,7 +140,20 @@ public class BattleRecordController_Spring
 		{
 			battleRecordVO.setReportB(1);
 		}
-		battleRecordService.reportA(battleRecordVO);
+		battleRecordService.reportB(battleRecordVO);
+		System.out.println("BattleRecord_Controller : End");
+		System.out.println("-------------------------------------------------------");
+		return "success";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/replyStatus", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public String replyStatus(Integer battleId, Integer battleStatus)
+	{
+		System.out.println("BattleRecord_Controller : replyStatus");
+		BattleRecordVO battleRecordVO = battleRecordService.findById(battleId);
+		battleRecordVO.setBattleStatus(battleStatus);
+		battleRecordService.accept_Reject(battleRecordVO);
 		System.out.println("BattleRecord_Controller : End");
 		System.out.println("-------------------------------------------------------");
 		return "success";
@@ -161,8 +176,15 @@ public class BattleRecordController_Spring
 		{
 			e.printStackTrace();
 			System.out.println("fuck");
-			return "";
+			return "redirect:/";
 		}
+		if (request.getAttribute("teamOppVOs") == null)
+		{
+			System.out.println("查詢不到teamOppVOs 開始預設");
+			List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName("", "", memberVO.getMemberId());
+			request.setAttribute("teamOppVOs", teamVOs);
+		}
+
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "battle_rec/tmbattle";
@@ -192,7 +214,7 @@ public class BattleRecordController_Spring
 		{
 			e.printStackTrace();
 			System.out.println("fuck");
-			return "";
+			return "redirect:/";
 		}
 //		request.setAttribute("oppTeamId", btn_OppTeamId);		//Set Att
 		System.out.println("成功導入");
