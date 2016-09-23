@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import _32_report_service.ReportService;
+import _9_32_report_model.ReportVO;
+
 @WebServlet("/_3_view/ReportServlet.do")
 public class ReportServlet extends HttpServlet
 {
@@ -43,21 +46,19 @@ public class ReportServlet extends HttpServlet
 					{
 						errorMsgs.add("請選擇問題類型");
 					}
-					if (!errorMsgs.isEmpty())
-					{
-						request.setAttribute("ErrorMsg", errorMsgs);
-						RequestDispatcher failureView = request.getRequestDispatcher("/_3_view/report.jsp");
-						failureView.forward(request, response);
-						return;
-					}
 
 					if (reportContent == null || reportContent.trim().length() == 0)
 					{
 						errorMsgs.add("請輸入內容");
 					}
+
+					ReportVO reportVO = new ReportVO();
+					reportVO.setReportType(Integer.parseInt(reportType));
+					reportVO.setReportContent(reportContent);
+
 					if (!errorMsgs.isEmpty())
 					{
-						request.setAttribute("ErrorMsg", errorMsgs);
+						request.setAttribute("reportVo", reportVO);
 						RequestDispatcher failureView = request.getRequestDispatcher("/_3_view/report.jsp");
 						failureView.forward(request, response);
 						return;
@@ -70,7 +71,6 @@ public class ReportServlet extends HttpServlet
 					successView.forward(request, response);
 					return;
 				}
-
 			}
 			/*************************** 其他可能的錯誤處理 **********************************/
 			catch (Exception e)
@@ -81,11 +81,30 @@ public class ReportServlet extends HttpServlet
 				return;
 			}
 		}
-		if ("delete".equals(action))
-			;
+
+		if ("delete".equals(action)) //後台			
 		{
 			List<String> errorMsgs = new LinkedList<String>();
-			request.setAttribute("", "");
+			request.setAttribute("errorMsgs", errorMsgs);
+
+			try
+			{
+				//接收請求
+				Integer reportId = new Integer(request.getParameter(""));
+				//刪除資料
+				ReportService repSvc = new ReportService();
+				repSvc.delete(reportId);
+				//刪除完成,轉接畫面
+				String url = "";
+				RequestDispatcher successView = request.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(request, response);
+			}
+			catch (Exception e)
+			{
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = request.getRequestDispatcher("");
+				failureView.forward(request, response);
+			}
 		}
 
 	}
