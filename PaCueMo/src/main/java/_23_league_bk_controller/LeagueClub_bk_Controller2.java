@@ -41,16 +41,20 @@ public class LeagueClub_bk_Controller2
 	public String getLeague(int leagueId, String leagueName, HttpServletRequest req)
 	{
 		List<LeagueClubVO> leagueClubs = leagueClub_Service.get_All(leagueId);
-		List<String> leagueclubName = new ArrayList<String>();
+		List<Object> leagueclubs = new ArrayList<Object>();
 
 		for (LeagueClubVO vo : leagueClubs)
 		{
-			leagueclubName.add(vo.getClubVO().getClubName());
+			HashMap<String, Object> leagueclub = new HashMap<String, Object>();
+			leagueclub.put("ClubId", vo.getClubId());
+			leagueclub.put("ClubName", vo.getClubVO().getClubName());
+			leagueclubs.add(leagueclub);
 		}
 		req.setAttribute("leagueName", leagueName);
+		req.setAttribute("leagueId", leagueId);
 		req.setAttribute("LeagueClubVOs", leagueClubs);
 		req.setAttribute("LeagueRecordVOs", leagueRecord_Service.get_All_LeagueReacords(leagueId));
-		req.setAttribute("LeagueclubNames", gson.toJson(leagueclubName));
+		req.setAttribute("LeagueclubNames", gson.toJson(leagueclubs));
 		return "bk_league/leagueClub";
 	}
 
@@ -69,7 +73,7 @@ public class LeagueClub_bk_Controller2
 	//刪除
 	@ResponseBody
 	@RequestMapping(value = "/deleteLeagueClub", method = RequestMethod.GET)
-	public String addLeague(int leagueId, int clubId)
+	public String deleteLeague(int leagueId, int clubId)
 	{
 		int success = leagueClub_Service.delete_league_club(leagueId, clubId);
 		Map<String, Integer> message = new HashMap<String, Integer>();
@@ -79,11 +83,39 @@ public class LeagueClub_bk_Controller2
 
 	//修改
 	@ResponseBody
-	@RequestMapping(value = "/updateLeagueRecord", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateLeagueRecord", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	public String updateLeagueRecord(@RequestBody LeagueRecordVO leagueRecordVO)
 	{
 
+		System.out.println(leagueRecordVO.getFightId());
 		int success = leagueRecord_Service.update_LeagueRecord(leagueRecordVO);
+		Map<String, Integer> message = new HashMap<String, Integer>();
+		message.put("status", success);
+		return gson.toJson(message);
+	}
+
+	//新增聯賽場次對戰
+	@ResponseBody
+	@RequestMapping(value = "/leagueRecordAdd", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	public String leagueRecordAdd(@RequestBody LeagueRecordVO leagueRecordVO)
+	{
+
+		System.out.println(leagueRecordVO.getFightDateTime());
+		int success = leagueRecord_Service.add_LeaguesRecord(leagueRecordVO);
+
+		Map<String, Object> message = new HashMap<String, Object>();
+		message.put("status", success);
+		message.put("leagueRecordVO", leagueRecord_Service.get_Last_One());
+		return gson.toJson(message);
+
+	}
+
+	//刪除
+	@ResponseBody
+	@RequestMapping(value = "/deleteLeagueRecord", method = RequestMethod.GET)
+	public String deleteLeagueRecord(int fightId)
+	{
+		int success = leagueRecord_Service.delete_One_LeagueRecord(fightId);
 		Map<String, Integer> message = new HashMap<String, Integer>();
 		message.put("status", success);
 		return gson.toJson(message);
