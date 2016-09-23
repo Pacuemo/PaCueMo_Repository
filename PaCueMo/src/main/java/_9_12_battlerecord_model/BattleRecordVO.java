@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.stereotype.Component;
 
 import _9_10_team_model.TeamVO;
+import _9_31_court_model.CourtVO;
 
 @Component
 public class BattleRecordVO
@@ -22,6 +23,7 @@ public class BattleRecordVO
 	private Integer reportB;
 	private TeamVO teamAVO;
 	private TeamVO teamBVO;
+	private CourtVO courtVO;
 
 	public BattleRecordVO()
 	{
@@ -173,5 +175,15 @@ public class BattleRecordVO
 	public void setTeamBVO(TeamVO teamBVO)
 	{
 		this.teamBVO = teamBVO;
+	}
+
+	public CourtVO getCourtVO()
+	{
+		return courtVO;
+	}
+
+	public void setCourtVO(CourtVO courtVO)
+	{
+		this.courtVO = courtVO;
 	}
 }

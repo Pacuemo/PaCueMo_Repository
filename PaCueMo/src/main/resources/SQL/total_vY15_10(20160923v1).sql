@@ -245,7 +245,7 @@ CREATE TABLE LeagueRecord
 	leagueId		/*聯賽編號*/		  INT	     NOT NULL FOREIGN KEY REFERENCES league(leagueId) ,
     clubIdA			/*對戰社團編號*/	  INT        NOT NULL FOREIGN KEY REFERENCES club(clubId),
 	clubIdB			/*對戰社團編號*/	  INT        NOT NULL FOREIGN KEY REFERENCES club(clubId),
-	fightDateTime   /*場次時間*/		  DATETIME   NOT NULL,
+	fightDateTime   /*場次時間*/		  DATETIME   ,
 	rounds			/*比賽輪次*/		  INT,
 	scoreA			/*比賽得分*/		  INT,
 	scoreB			/*比賽得分*/		  INT,
