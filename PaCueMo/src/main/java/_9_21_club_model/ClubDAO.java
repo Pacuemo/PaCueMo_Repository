@@ -31,7 +31,7 @@ public class ClubDAO implements ClubDAO_I
 	{
 		return jdbc.update(insert_state,
 				clubVO.getClubName(),
-				clubVO.getClubImageName(),
+				"defaultClub.jpg",
 				clubVO.getClubDate(),
 				clubVO.getClubHead(),
 				clubVO.getClubProp());
