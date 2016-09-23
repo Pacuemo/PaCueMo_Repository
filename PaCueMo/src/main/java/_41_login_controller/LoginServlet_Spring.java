@@ -129,9 +129,19 @@ public class LoginServlet_Spring
 			}
 			if (requestURI == null)
 			{
-				jsonObject.addProperty("status", "true");
-				jsonObject.addProperty("url", "../../index.jsp");
-				return jsonObject.toString();
+				if (mv.getMemberType() == 1)
+				{
+					jsonObject.addProperty("status", "true");
+					jsonObject.addProperty("url", "../../index.jsp");
+					return jsonObject.toString();
+				}
+				else
+				{
+					jsonObject.addProperty("status", "true");
+					jsonObject.addProperty("url", "../../indexBackStage.jsp");
+					return jsonObject.toString();
+				}
+
 			}
 			else
 			{
@@ -144,26 +154,54 @@ public class LoginServlet_Spring
 						session.removeAttribute("requestURI");
 						session.removeAttribute("queryString");
 
-						jsonObject.addProperty("status", "true");
-						jsonObject.addProperty("url", requestURI + "?" + queryString);
-						return jsonObject.toString();
+						if (mv.getMemberType() == 1)
+						{
+							jsonObject.addProperty("status", "true");
+							jsonObject.addProperty("url", requestURI + "?" + queryString);
+							return jsonObject.toString();
+						}
+						else
+						{
+							jsonObject.addProperty("status", "true");
+							jsonObject.addProperty("url", "../../indexBackStage.jsp");
+							return jsonObject.toString();
+						}
 					}
 					else
 					{
 						session.removeAttribute("requestURI");
 						session.removeAttribute("queryString");
 
-						jsonObject.addProperty("status", "true");
-						jsonObject.addProperty("url", requestURI + "?" + queryString);
-						return jsonObject.toString();
+						if (mv.getMemberType() == 1)
+						{
+							jsonObject.addProperty("status", "true");
+							jsonObject.addProperty("url", requestURI + "?" + queryString);
+							return jsonObject.toString();
+						}
+						else
+						{
+							jsonObject.addProperty("status", "true");
+							jsonObject.addProperty("url", "../../indexBackStage.jsp");
+							return jsonObject.toString();
+						}
 					}
 				}
 				else
 				{
 					session.removeAttribute("requestURI");
-					jsonObject.addProperty("status", "true");
-					jsonObject.addProperty("url", requestURI);
-					return jsonObject.toString();
+
+					if (mv.getMemberType() == 1)
+					{
+						jsonObject.addProperty("status", "true");
+						jsonObject.addProperty("url", requestURI);
+						return jsonObject.toString();
+					}
+					else
+					{
+						jsonObject.addProperty("status", "true");
+						jsonObject.addProperty("url", "../../indexBackStage.jsp");
+						return jsonObject.toString();
+					}
 				}
 			}
 
@@ -243,6 +281,7 @@ public class LoginServlet_Spring
 						}
 						else
 						{
+							session.removeAttribute("requestURI");
 							jsonObject.addProperty("status", "true");
 							jsonObject.addProperty("url", requestURI);
 							return jsonObject.toString();

@@ -1,7 +1,7 @@
-﻿                                            <td>${leagueName}</td>
-											<td ><select></select></td>
+﻿                                            <td>LeagueName</td>
+											<td ><select ></select></td>
 											<td ></td>
-											<td >${LeagueRecordVO.clubB.clubName}</td>
+											<td ><select></select></td>
 											<td ></td>																		
 											<td><input type="date" class="date" ></td>
 											<td><input type="time" class="time" ></td>
