@@ -283,24 +283,7 @@
 	                        <!-- ============================================================================== -->
 	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
 	                        <!-- ============================================================================== -->
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
+	   
 	                        <li>
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
