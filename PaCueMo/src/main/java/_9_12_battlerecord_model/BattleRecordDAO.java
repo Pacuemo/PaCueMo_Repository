@@ -45,6 +45,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	private static final String GET_ONE = "SELECT * FROM BattleRecord where battleId = ?";
 	private static final String FIND_BY_TEAM_A = "SELECT * FROM BattleRecord where teamIdA = ?";
 	private static final String FIND_BY_TEAM_B = "SELECT * FROM BattleRecord where teamIdB = ?";
+	private static final String FIND_BY_TEAM_B_STATUS_0 = "SELECT * FROM BattleRecord where teamIdB = ? AND battleStatus = 0";
 	private static final String GET_ALL = "SELECT * FROM BattleRecord";
 	private static final String GET_ABSENCE_PERCENT = "SELECT 100*COUNT(*)/(SELECT COUNT(*) FROM BattleRecord WHERE "
 			+ "(result != 0 and result != 6) AND (teamIdA = ? OR teamIdB =?)) FROM BattleRecord WHERE "
@@ -80,6 +81,12 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 		jdbc.update(ACCEPT, battleStatus, battleId);
 	}
 
+	@Override
+	public void accept_Reject(BattleRecordVO battleRecordVO)
+	{
+		jdbc.update(ACCEPT, battleRecordVO.getBattleStatus(), battleRecordVO.getBattleId());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#reportA(_9_12_battlerecord_model.BattleRecordVO)
@@ -88,6 +95,10 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	public void reportA(BattleRecordVO battleRecordVO)
 	{
 		jdbc.update(REPORT_A, battleRecordVO.getReportA(), battleRecordVO.getBattleId());
+		if (battleRecordVO.getReportA() != 0 && battleRecordVO.getReportB() != 0)
+		{
+			updateResult(battleRecordVO);
+		}
 	}
 
 	/*
@@ -98,6 +109,10 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	public void reportB(BattleRecordVO battleRecordVO)
 	{
 		jdbc.update(REPORT_B, battleRecordVO.getReportB(), battleRecordVO.getBattleId());
+		if (battleRecordVO.getReportA() != 0 && battleRecordVO.getReportB() != 0)
+		{
+			updateResult(battleRecordVO);
+		}
 	}
 
 	//由service 判斷何時該呼叫此方法
@@ -105,12 +120,11 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	 * (non-Javadoc)
 	 * @see _9_12_battlerecord_model.BattleRecordDAO_I#updateResult(_9_12_battlerecord_model.BattleRecordVO)
 	 */
-	@Override
-	public void updateResult(BattleRecordVO battleRecordVO)
+	private void updateResult(BattleRecordVO battleRecordVO)
 	{
 		if (battleRecordVO.getReportA() == battleRecordVO.getReportB())
 		{
-			jdbc.update(UPDATE_RESULT, battleRecordVO.getReportA());
+			jdbc.update(UPDATE_RESULT, battleRecordVO.getReportA(), battleRecordVO.getBattleId());
 		}
 		else
 		{
@@ -163,6 +177,12 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 	public List<BattleRecordVO> findByTeamIdB(Integer teamIdB)
 	{
 		return jdbc.query(FIND_BY_TEAM_B, new BattleRecordRowMapper(), teamIdB);
+	}
+
+	@Override
+	public List<BattleRecordVO> findByTeamIdB_NotDec(Integer teamIdB)
+	{
+		return jdbc.query(FIND_BY_TEAM_B_STATUS_0, new BattleRecordRowMapper(), teamIdB);
 	}
 
 	/*

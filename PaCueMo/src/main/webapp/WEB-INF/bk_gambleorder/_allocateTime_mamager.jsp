@@ -296,18 +296,7 @@
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
+                               	<li><a href="<%=request.getContextPath()%>/spring/leagueBackStage/league"> - 聯賽管理 - </a></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

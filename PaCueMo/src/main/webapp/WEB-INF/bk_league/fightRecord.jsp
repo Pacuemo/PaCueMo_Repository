@@ -39,16 +39,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style type="text/css">
-input[type="text"]  {
+.changeData{
 	border: 0px;
-	width:inherit;
-	height:inherit; 
-	background-color: inherit;
-}
-
-input[type='date']{
-    border: 0px;
-	width:inherit;
+	width:100%;
 	height:inherit; 
 	background-color: inherit;
 }
@@ -386,7 +379,7 @@ input[type='date']{
 	        <div id="page-wrapper">
 	            <div class="row">
 	                <div class="col-lg-12">
-	                    <h1 class="page-header">聯賽管理</h1>
+	                    <h1 class="page-header">聯賽場次資訊</h1>
 	                </div>
 	                <!-- /.col-lg-12 -->
 	            </div>
@@ -395,39 +388,140 @@ input[type='date']{
 	                <div class="col-lg-12">
 	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
-	                            DataTables 
+	                            DataTables Advanced Tables
 	                        </div>
 	                        <!-- /.panel-heading -->
+	                        <h1> ${requestScope.leagueRecordVO.clubA.clubName}</h1>
 	                        <div class="panel-body">
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
-	                                        <th>League Name</th>
-	                                        <th>Club Amount</th>
-	                                        <th>Start Date</th>
-	                                        <th>End Date</th>
-	                                        <th>Court Id</th>
-	                                        <th>Button </th>
+		                                    <th>球員名稱</th>
+								   		    <th>背號</th>
+											<th>位置</th>
+											<th>先發</th>
+											<th>上場時間</th>
+											<th>3PA</th>
+											<th>3PM</th>
+											<th>3PP</th>
+											<th>2PA</th>
+											<th>2PM</th>
+											<th>2PP</th>
+											<th>FTA</th>
+											<th>FTM</th>
+											<th>FTP</th>
+											<th>OR</th>
+											<th>DR</th>
+											<th>TR</th>
+											<th>ASS</th>
+											<th>ST</th>
+											<th>BS</th>
+											<th>TO</th>
+											<th>PF</th>
+											<th>PT</th>
+											<th>button</th>
 	                                    </tr>
 	                                </thead>
-	                                <tbody>	                             
-	                                    <c:forEach items="${leagueVOs}" var="leagueVO">
-	                                    <tr>          
-	                                        <td><a href="../leagueClubBackStage/getLeagueClub?leagueId=${leagueVO.leagueID}&leagueName=${leagueVO.leagueName}"><span style="display:none">${leagueVO.leagueID}</span><input type='text' name='leagueName'  disabled="disabled" value="${leagueVO.leagueName}" onclick='query()'></a></td>
-	                                        <td><input type='text' name='clubAmount'  disabled="disabled" value="${leagueVO.clubAmount}"></td>
-	                                        <td><input type='date' name='startDate'  disabled="disabled" value="${leagueVO.startDate}"></td>
-	                                        <td class="center"><input type="date" name='endDate'  disabled="disabled"  value="${leagueVO.endDate}"></td>
-	                                        <td class="center"><input type='text' name='placeID'  disabled="disabled" value="${leagueVO.placeID}"></td>
-	                                        <td class="center">                            
-	                                        <a class="btn btn-default forUpdate" href="#" role="button">修改</a>
-	                                        <input type="button" class='btn btn-default submitInfo' value="送出" style="display: none">
-	                                        </td>	                                    
-	                                    </tr>	                             
-	                                    </c:forEach>
-	                                  
+	                                <tbody>
+					                        <c:forEach items="${requestScope.fightRecordVOs}" var="fightRecordVO">
+											    <c:if test="${fightRecordVO.clubId == requestScope.leagueRecordVO.clubIdA}">
+												<tr>
+													<td memberId='${fightRecordVO.memberVO.memberId}' clubId='${fightRecordVO.clubId}'>${fightRecordVO.memberVO.memberLastName}${fightRecordVO.memberVO.memberFirstName}</td>
+													<td class='change'>${fightRecordVO.gamePlayer}</td>
+													<td class='change'>${fightRecordVO.position}</td>
+													<td class='change'><c:if test="${fightRecordVO.gameStart}">V</c:if></td>
+													<td class='change'>${fightRecordVO.minPlay}</td>
+													<td class='change'>${fightRecordVO.trePA}</td>
+													<td class='change'>${fightRecordVO.trePM}</td>
+													<td >${fightRecordVO.trePP}%</td>
+													<td class='change'>${fightRecordVO.twoPA}</td>
+													<td class='change'>${fightRecordVO.twoPM}</td>
+													<td >${fightRecordVO.twoPP}%</td>
+													<td class='change'>${fightRecordVO.fta}</td>
+													<td class='change'>${fightRecordVO.fta}</td>
+													<td >${fightRecordVO.ftp}%</td>
+													<td class='change'>${fightRecordVO.ofRep}</td>
+													<td class='change'>${fightRecordVO.deRep}</td>
+													<td>${fightRecordVO.totalRep}</td>
+													<td class='change'>${fightRecordVO.ass}</td>
+													<td class='change'>${fightRecordVO.steal}</td>
+													<td class='change'>${fightRecordVO.block}</td>
+													<td class='change'>${fightRecordVO.turnOver}</td>
+													<td class='change'>${fightRecordVO.fouls}</td>
+													<td class='change'>${fightRecordVO.score}</td>
+													<td><a class="btn btn-default updateRecord" href="#"  role="button">修改</a>
+													        <a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>
+													</td>
+												</tr>
+											</c:if>
+										</c:forEach>	                                   
 	                                </tbody>
 	                            </table>
-	                            <a class="btn btn-primary " id="addLeague" href="#" role="button">新增聯賽</a>
+	                               <h1> ${requestScope.leagueRecordVO.clubB.clubName}</h1>
+	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-examples">
+	                                <thead>
+	                                    <tr>
+		                                    <th>球員名稱</th>
+								   		    <th>背號</th>
+											<th>位置</th>
+											<th>先發</th>
+											<th>上場時間</th>
+											<th>3PA</th>
+											<th>3PM</th>
+											<th>3PP</th>
+											<th>2PA</th>
+											<th>2PM</th>
+											<th>2PP</th>
+											<th>FTA</th>
+											<th>FTM</th>
+											<th>FTP</th>
+											<th>OR</th>
+											<th>DR</th>
+											<th>TR</th>
+											<th>ASS</th>
+											<th>ST</th>
+											<th>BS</th>
+											<th>TO</th>
+											<th>PF</th>
+											<th>PT</th>
+											<th>button</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+					                        <c:forEach items="${requestScope.fightRecordVOs}" var="fightRecordVO">
+											    <c:if test="${fightRecordVO.clubId == requestScope.leagueRecordVO.clubIdB}">
+												<tr>
+													<td memberId='${fightRecordVO.memberVO.memberId}' clubId='${fightRecordVO.clubId}'>${fightRecordVO.memberVO.memberLastName}${fightRecordVO.memberVO.memberFirstName}</td>
+													<td class='change'>${fightRecordVO.gamePlayer}</td>
+													<td class='change'>${fightRecordVO.position}</td>
+													<td class='change'><c:if test="${fightRecordVO.gameStart}">V</c:if></td>
+													<td class='change'>${fightRecordVO.minPlay}</td>
+													<td class='change'>${fightRecordVO.trePA}</td>
+													<td class='change'>${fightRecordVO.trePM}</td>
+													<td >${fightRecordVO.trePP}%</td>
+													<td class='change'>${fightRecordVO.twoPA}</td>
+													<td class='change'>${fightRecordVO.twoPM}</td>
+													<td >${fightRecordVO.twoPP}%</td>
+													<td class='change'>${fightRecordVO.fta}</td>
+													<td class='change'>${fightRecordVO.fta}</td>
+													<td >${fightRecordVO.ftp}%</td>
+													<td class='change'>${fightRecordVO.ofRep}</td>
+													<td class='change'>${fightRecordVO.deRep}</td>
+													<td>${fightRecordVO.totalRep}</td>
+													<td class='change'>${fightRecordVO.ass}</td>
+													<td class='change'>${fightRecordVO.steal}</td>
+													<td class='change'>${fightRecordVO.block}</td>
+													<td class='change'>${fightRecordVO.turnOver}</td>
+													<td class='change'>${fightRecordVO.fouls}</td>
+													<td class='change'>${fightRecordVO.score}</td>
+													<td><a class="btn btn-default updateRecord" href="#" role="button">修改</a>
+													        <a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>
+													</td>
+												</tr>
+											</c:if>
+										</c:forEach>	                                   
+	                                </tbody>
+	                            </table>
 	               
 	                        </div>
 	                        <!-- /.panel-body -->
@@ -459,17 +553,128 @@ input[type='date']{
 	
 	    <!-- Custom Theme JavaScript -->
 	    <script src="<%=request.getContextPath()%>/_99_backstage/dist/js/sb-admin-2.js"></script>
+	    <script src="<%=request.getContextPath()%>/js/bootstrapAlert.js"></script>
 	
 	    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-	    
-	    <script src="<%=request.getContextPath()%>/js/bk_league/league.js"></script>
-	    
 	    <script>
 		    $(document).ready(function() {
 		        $('#dataTables-example').DataTable({
 		            responsive: true
 		        });
+
+		        $('#dataTables-examples').DataTable({
+		            responsive: true
+		        });
+
+		        $('.updateRecord').click(function(e){
+                      e.preventDefault();
+                      $(this).css('display','none').next().css('display','inline-block');
+                      var tr=$(this).parent().parent().css('background-color','rgb(255, 255, 153)');
+                      tr.find('.change').each(function(index,element){
+                    	  var text=$(this).text();
+                    	  $(this).text('').append($('<input type="text" class="changeData" value="'+text+'">'));
+                          });
+			        });
+          
+	              $('.submitRecord').click(function(e){
+                      var button=$(this);    
+	            	  var tr =$(this).parent().parent();
+                      var data={};
+                      var gamePlayer=tr.find('td').eq(1);
+                      var position=tr.find('td').eq(2);
+                      data['fightId']=${fightId};
+                      data['clubId']=tr.find('td').first().attr('clubId');
+                      data['clubMemberId']=tr.find('td').first().attr('memberId');
+                      data['gamePlayer']=gamePlayer.find('input').val();
+                      data['position']=position.find('input').val();
+                      var gameStart=tr.find('td').eq(3);
+                      gameStartVal=gameStart.find('input').val();
+                      if(gameStartVal!=null || $.trim(gameStartVal) !=""){
+                    	  data['gameStart']=true;
+                           }else{
+                          data['gameStart']=false;
+                               };
+                      var minPlay=tr.find('td').eq(4);        
+                      data['minPlay']=minPlay.find('input').val();
+                      var trePA=tr.find('td').eq(5);
+                      data['trePA']=trePA.find('input').val();
+                      var trePM=tr.find('td').eq(6);
+                      data['trePM']=trePM.find('input').val();
+                      var trePP=tr.find('td').eq(7);                     
+                      data['trePP']=(data['trePM']/data['trePA'])*100;
+                      var twoPA=tr.find('td').eq(8);
+                      data['twoPA']=twoPA.find('input').val();
+                      var twoPM=tr.find('td').eq(9);
+                      data['twoPM']=twoPM.find('input').val();
+                      var twoPP=tr.find('td').eq(10);
+                      data['twoPP']=(data['twoPM']/data['twoPA'])*100;
+                      var fta=tr.find('td').eq(11);
+                      data['fta']=fta.find('input').val();
+                      var ftm=tr.find('td').eq(12);
+                      data['ftm']=ftm.find('input').val();
+                      var ftp=tr.find('td').eq(13);
+                      data['ftp']=(data['ftm']/data['fta'])*100;
+                      var ofRep=tr.find('td').eq(14);
+                      data['ofRep']=ofRep.find('input').val();
+                      var deRep=tr.find('td').eq(15);
+                      data['deRep']=deRep.find('input').val();
+                      var totalRep=tr.find('td').eq(16);
+                      data['totalRep']=(data['ofRep']+data['deRep']);
+                      var ass=tr.find('td').eq(17);
+                      data['ass']=ass.find('input').val();
+                      var steal=tr.find('td').eq(18);
+                      data['steal']=steal.find('input').val();
+                      var block=tr.find('td').eq(19);
+                      data['block']=block.find('input').val();
+                      var turnOver=tr.find('td').eq(20);
+                      data['turnOver']=turnOver.find('input').val();
+                      var fouls=tr.find('td').eq(21);
+                      data['fouls']=fouls.find('input').val();
+                      var score=tr.find('td').eq(22);
+                      data['score']=score.find('input').val();
+
+                      $.ajax({
+							type:'POST',
+							url:'updatefightRecord',
+							contentType: "application/json",
+							data: JSON.stringify(data),
+							dataType: 'json',
+							success: function(message){
+								 BootstrapAlert.success({ title : "Congrat!", message : "成功修改一筆球員紀錄" });
+								 gamePlayer.empty().text(message.fightRecordVO.gamePlayer);
+							     position.empty().text(message.fightRecordVO.position);
+							     if(message.fightRecordVO.gameStart==true){
+							     gameStart.empty().text('V');
+							     }else{gameStart.empty().text('')};
+							     minPlay.empty().text(message.fightRecordVO.minPlay);
+							     trePA.empty().text(message.fightRecordVO.trePA);
+							     trePM.empty().text(message.fightRecordVO.trePM);
+							     trePP.empty().text(message.fightRecordVO.trePP);
+							     twoPA.empty().text(message.fightRecordVO.twoPA);
+							     twoPM.empty().text(message.fightRecordVO.twoPM);
+							     twoPP.empty().text(message.fightRecordVO.twoPP);
+							     fta.empty().text(message.fightRecordVO.fta);
+							     ftm.empty().text(message.fightRecordVO.ftm);
+							     ftp.empty().text(message.fightRecordVO.ftp);
+							     ofRep.empty().text(message.fightRecordVO.ofRep);
+							     deRep.empty().text(message.fightRecordVO.deRep);
+							     totalRep.empty().text(message.fightRecordVO.totalRep);
+							     ass.empty().text(message.fightRecordVO.ass);
+							     steal.empty().text(message.fightRecordVO.steal);
+							     block.empty().text(message.fightRecordVO.block);
+							     turnOver.empty().text(message.fightRecordVO.turnOver);
+							     fouls.empty().text(message.fightRecordVO.fouls);
+							     score.empty().text(message.fightRecordVO.score);
+							     button.css('display','none').prev().css('display','inline-block');
+							     tr.css('background-color','');
+	                               
+								}
+                          });
+  
+		              })  
 		    });
+
+
 	    </script>
 	
 	</body>

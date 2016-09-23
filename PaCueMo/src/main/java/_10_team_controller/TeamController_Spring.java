@@ -17,8 +17,10 @@ import com.google.gson.JsonObject;
 import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
+import _12_battlerecord_service.BattleRecordService;
 import _14_teamapply_service.TeamApplyService;
 import _9_10_team_model.TeamVO;
+import _9_12_battlerecord_model.BattleRecordVO;
 import _9_14_teamapply_model.TeamApplyVO;
 import _9_41_member_model.MemberVO;
 
@@ -32,6 +34,8 @@ public class TeamController_Spring
 	private TeamService teamService;
 	@Autowired
 	private TeamApplyService teamApplyService;
+	@Autowired
+	private BattleRecordService battleRecordService;
 	@Autowired
 	private StevenFacade stevenFacade;
 	@Autowired
@@ -93,7 +97,7 @@ public class TeamController_Spring
 		{
 			e.printStackTrace();
 			System.out.println("fuck");
-			return "???";
+			return "redirect:/";
 		}
 		System.out.println("退出成功");
 		System.out.println("-------------------------------------------------------");
@@ -122,7 +126,7 @@ public class TeamController_Spring
 		{
 			e.printStackTrace();
 			System.out.println("fuck");
-			return "???";
+			return "redirect:/";
 		}
 		System.out.println("解散成功");
 		System.out.println("-------------------------------------------------------");
@@ -158,7 +162,7 @@ public class TeamController_Spring
 		{
 			e.printStackTrace();
 			System.out.println("fuck");
-			return "???";
+			return "redirect:/";
 		}
 		System.out.println("修改成功");
 		System.out.println("-------------------------------------------------------");
@@ -168,7 +172,7 @@ public class TeamController_Spring
 
 //	@ResponseBody
 	@RequestMapping(value = "/searchTeamByL_N", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String searchTeamByL_N(String teamName, String location, String teamHead, HttpServletRequest request,HttpSession session)
+	public String searchTeamByL_N(String teamName, String location, String teamHead, HttpServletRequest request, HttpSession session)
 	{
 		System.out.println("Team_Controller : searchTeamByL_N");
 		if (null == teamName)
@@ -181,7 +185,7 @@ public class TeamController_Spring
 		}
 		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 		List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName(location.trim(), teamName.trim(), memberVO.getMemberId());
-		System.out.println("查詢成功 - 轉換特定Json格式");
+//		System.out.println("查詢成功 - 轉換特定Json格式");
 //		JsonObject data = new JsonObject();
 //		JsonArray array = new JsonArray();
 //		JsonObject obj = new JsonObject();
@@ -246,9 +250,55 @@ public class TeamController_Spring
 		List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
 		request.setAttribute("myList", myList);
 
+		List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(memberVO.getMemberId());
+		request.setAttribute("myFriendVOs", myFriendVOs);
+
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "team/teamsetting";
+
+	}
+
+	@RequestMapping(value = "/battleInfo")	// Page
+	public String battleInfo(HttpSession session, HttpServletRequest request, Integer teamId)
+	{
+		try
+		{
+			System.out.println("Team_Controller : battleInfo");
+			request.removeAttribute("teamVO");
+			TeamVO teamVO = stevenFacade.getTeamById(teamId);
+			System.out.println(teamVO.getTeamName());
+			request.setAttribute("teamVO", teamVO);
+
+			System.out.println("Try get battleRecVOs");
+			List<BattleRecordVO> battleRecordVOs = battleRecordService.findByTeamIdB_NotDec(teamVO.getTeamId());
+			System.out.println("get " + battleRecordVOs.size() + " data!");
+			request.setAttribute("battleRecordVOs", battleRecordVOs);
+
+			request.setAttribute("teamId", teamVO.getTeamId());
+			request.setAttribute("teamName", teamVO.getTeamName());
+			request.setAttribute("teamProp", teamVO.getTeamProp());
+			request.setAttribute("teamHead", teamVO.getTeamHead());
+			request.setAttribute("content", teamVO.getContent());
+			request.setAttribute("pageForSideBar", "haveTeamId");
+			request.setAttribute("teamExsist", "Mine");
+
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+			request.setAttribute("myList", myList);
+
+			List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(memberVO.getMemberId());
+			request.setAttribute("myFriendVOs", myFriendVOs);
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "redirect:/";
+		}
+		System.out.println("成功導入");
+		System.out.println("-------------------------------------------------------");
+		return "team/battleInfo";
 
 	}
 

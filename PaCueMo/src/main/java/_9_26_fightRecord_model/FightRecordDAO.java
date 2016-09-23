@@ -22,6 +22,7 @@ public class FightRecordDAO implements FightRecordDAO_I
 	private final String Add_One_BY_VO = "insert into FightRecord values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private final String Delete_One_BY_ID = "delete from FightRecord where fightId =? and clubMemberId=?";
 	private final String Delete_ALL_BY_FightId = "delete from FightRecord where fightId =?";
+	private final String Select_One_By_ClubMemberId = "select * from fightRecord where fightId =? and clubMemberId=?";
 
 	private static final class FightRecordRowMapper implements RowMapper<FightRecordVO>
 	{
@@ -62,6 +63,19 @@ public class FightRecordDAO implements FightRecordDAO_I
 	{
 
 		return jdbc.query(Select_ALL_BY_clubMemberId, new FightRecordRowMapper(), clubMemberId);
+	}
+
+	@Override
+	public FightRecordVO get_One(int fightId, String memberId)
+	{
+		try
+		{
+			return jdbc.queryForObject(Select_One_By_ClubMemberId, new FightRecordRowMapper(), fightId, memberId);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 
 	@Override
