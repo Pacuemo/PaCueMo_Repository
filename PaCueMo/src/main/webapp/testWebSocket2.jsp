@@ -24,9 +24,8 @@
 // 			});
 
 
-			stomp.subscribe("/user/topic/shout",function(incoming){
-				var test = JSON.parse(incoming.body);
-				console.log(test);
+			stomp.subscribe("/user/tw11509/queue/test/test",function(incoming){
+				console.log(incoming);
 			});
 		})
 		

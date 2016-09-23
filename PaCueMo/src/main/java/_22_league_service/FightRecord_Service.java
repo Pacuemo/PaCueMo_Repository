@@ -30,6 +30,13 @@ public class FightRecord_Service
 
 	//------修改單筆聯賽球員紀錄------
 	@Transactional(rollbackFor = Exception.class)
+	public FightRecordVO get_One_fightRecord(int fightId, String memberId)
+	{
+		return fightRecordDao.get_One(fightId, memberId);
+	}
+
+	//------查詢單筆聯賽球員紀錄------
+	@Transactional(rollbackFor = Exception.class)
 	public int update_One_fightRecord(FightRecordVO fRecordVO)
 	{
 		int success = delete_One_fightRecord(fRecordVO.getFightId(), fRecordVO.getClubMemberId());

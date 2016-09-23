@@ -59,7 +59,7 @@ td {
 </head>
 <body>
 	<jsp:include page="/fragment/top.jsp" />
-	<jsp:include page="/fragment/sidebar.jsp" />
+	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
 
 	<style>
 body {
@@ -115,7 +115,7 @@ body {
 								<option value="連江縣">連江縣</option>
 							</select>
 							<c:set var="flag" value="5"></c:set>
-							<c:forEach items="${requestScope.teamOppVOs}" var="teamOppVO" end="4" >
+							<c:forEach items="${requestScope.teamOppVOs}" var="teamOppVO" end="4" varStatus="status">
 									<hr>
 									<div class="row left_div">
 										<div class="col-md-8">

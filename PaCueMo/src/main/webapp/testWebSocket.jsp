@@ -23,10 +23,15 @@
 // 				console.log(test);
 // 			});
 
-			stomp.send("/app/marco",{},payload);
+// 			stomp.send("/app/marco",{},payload);
+			stomp.send("/app/marco",{},"fuck");
 			stomp.subscribe("/topic/shout",function(incoming){
 				var test = JSON.parse(incoming.body);
 				console.log(test);
+			});
+			stomp.subscribe("/queue/test",function(incoming){
+				
+				console.log(incoming);
 			});
 		})
 		

@@ -234,41 +234,57 @@ input[type='time'] {
 						<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
 
-						<!-- ============================================================================== -->
-						<!-- =============================【後臺功能頁籤 開始】============================== -->
-						<!-- ============================================================================== -->
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 球員卡管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="blank.html">Blank Page</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 約戰管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="blank.html">Blank Page</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="blank.html">Blank Page</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="blank.html">Blank Page</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="<%=request.getContextPath()%>/spring/leagueBackStage/league"> - 聯賽管理 - </a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="blank.html">Blank Page</a></li>
-								<li><a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-files-o fa-fw"></i> 場地管理 <span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="blank.html">Blank Page</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<!-- ============================================================================== -->
-						<!-- =============================【後臺功能頁籤 結束】============================== -->
-						<!-- ============================================================================== -->
+	                        <!-- ============================================================================== -->
+	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
+	                        <!-- ============================================================================== -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
+	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href="blank.jsp">Blank Page</a>
+	                                </li>
+	                            </ul>
+	                            <!-- /.nav-second-level -->
+	                        </li>
+	                        <li>
+	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
+	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href="blank.jsp">Blank Page</a>
+	                                </li>
+	                            </ul>
+	                            <!-- /.nav-second-level -->
+	                        </li>
+	                        <li>
+	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
+	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href="<%=request.getContextPath()%>/spring/leagueBackStage/league"> - 聯賽管理 - </a>
+	                                </li>
+	                            </ul>
+	                            <!-- /.nav-second-level -->
+	                        </li>
+	                        <li>
+	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 運彩管理 <span class="fa arrow"></span></a>
+	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                    <%-- <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_gambleOrder_manager.jsp"> - 下注訂單管理 - </a> --%>
+	                                    <a href="<%=request.getContextPath()%>/spring/gambleOrder/getAllGambleOrder"> - 下注訂單管理 - </a>
+	                                </li>
+	                                <li>	                               
+	                                    <a href="<%=request.getContextPath()%>/spring/goodsOrder/allGoodsOrders"> - 代幣訂單管理 - </a>
+	                                </li>
+	                                <li>
+	                                    <%-- <a href="<%=request.getContextPath()%>/_5_gambling_backstage/_allocateTime_mamager.jsp"> - 派彩時間設定 - </a> --%>
+	                                    <a href="<%=request.getContextPath()%>/spring/gambleOrder/timerSetter"> - 派彩時間設定 - </a>
+	                                </li>
+	                            </ul>
+	                            <!-- /.nav-second-level -->
+	                        </li>
+	                        <!-- ============================================================================== -->
+	                        <!-- =============================【後臺功能頁籤 結束】============================== -->
+	                        <!-- ============================================================================== -->
+
 						<li><a href="#"><i class="fa fa-table fa-fw"></i>以下 Tables、Forms 參考用</a></li>
 						<li><a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a></li>
 						<li><a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a></li>
@@ -324,7 +340,7 @@ input[type='time'] {
 											<td name="${LeagueClubVO.leagueId}">${leagueName}</td>
 											<td name="${LeagueClubVO.clubId}">${LeagueClubVO.clubVO.clubName}</td>
 											<td><input type='text' name='Groups' disabled="disabled" value="${LeagueClubVO.groups}"></td>
-											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default delete" href="#" role="button" leagudId="${LeagueClubVO.leagueId}" clubId="${LeagueClubVO.clubId}">刪除</a> <input type="button" class='btn btn-default submitInfo' value="送出" style="display: none"></td>
+											<td class="center"><a class="btn btn-default forUpdateClub" href="#" role="button">修改</a> <a class="btn btn-default delete" href="#" role="button" leagudId="${LeagueClubVO.leagueId}" clubId="${LeagueClubVO.clubId}">刪除</a> <input type="button" class='btn btn-default submitInfo' value="送出" style="display: none"></td>
 										</tr>
 									</c:forEach>
 
@@ -378,7 +394,8 @@ input[type='time'] {
 											<td><input type="text"  class="rounds" disabled="disabled"  value="${LeagueRecordVO.rounds}"></td>
 											<td><input type="text" class="totalTime" disabled="disabled"  value="${LeagueRecordVO.totalTime}"></td>
 											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default deleteRecord" href="#" role="button"  fightId="${LeagueRecordVO.fightId}">刪除</a> 
-											<input type="button" class='btn btn-default submitIRecord' value="送出" style="display: none"  clubIdA="${LeagueRecordVO.clubIdA}" clubIdB="${LeagueRecordVO.clubIdB}"></td>
+											<input type="button" class='btn btn-default submitIRecord' value="送出" style="display: none"  clubIdA="${LeagueRecordVO.clubIdA}" clubIdB="${LeagueRecordVO.clubIdB}">
+											<a class="btn btn-default fightRecord"  href="../fightRecordBackStage/getfightRecord?fightId=${LeagueRecordVO.fightId}" role="button" >場次資料</a></td>
 										</tr>
 									</c:forEach>
 
@@ -562,7 +579,8 @@ input[type='time'] {
 			             if(message.status==1){
 			            	 BootstrapAlert.success({ title : "Congrat!", message : "成功修改聯賽場次資料" });
 			            	 tr.css('background-color','').find('input').attr('disabled',true);             	 
-			            	 button.css('display','none').prev().css('display','inline-block').prev().css('display','inline-block'); 
+			            	 button.css('display','none').next().css('display','inline-block').prev()
+			            	 .prev().css('display','inline-block').prev().css('display','inline-block'); 
 			             }
 			            }
 				     });					

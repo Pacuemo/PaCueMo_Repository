@@ -13,9 +13,6 @@ public interface BattleRecordDAO_I
 
 	void reportB(BattleRecordVO battleRecordVO);
 
-	//由service 判斷何時該呼叫此方法
-	void updateResult(BattleRecordVO battleRecordVO);
-
 	void delete(Integer batteleRecordId);
 
 	BattleRecordVO findById(Integer battleId);
@@ -31,5 +28,9 @@ public interface BattleRecordDAO_I
 	Double getWPCT(Integer teamId);
 
 	void deleteByTeamId(Integer teamId);
+
+	List<BattleRecordVO> findByTeamIdB_NotDec(Integer teamIdB);
+
+	void accept_Reject(BattleRecordVO battleRecordVO);
 
 }

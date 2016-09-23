@@ -13,6 +13,8 @@
 .agree{
 margin-left:150px 
 }
+.sidebar_join{
+}
 </style>
 <%-- <script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 <!-- <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> -->
@@ -45,14 +47,52 @@ margin-left:150px
 					<c:when test="${pageForSideBar == 'haveTeamId' && teamExsist == 'Mine'}">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">隊伍設定<span class="caret"></span></a>
 							<ul class="dropdown-menu ul_a" role="menu" style="margin-left: 80px;">	
-								<li><a href="#">加隊員</a></li>
-								<li><a href="#">發送訊息</a></li>
+								<li>
+									<a id="a_addTeamMember" href="#">加隊員</a>
+									
+									<!-- ====================【加好友 Dialog 開始 】=====================  -->
+										<div id="modify" align="center" style="display: none;">
+											<table class="table table-hover">
+												  <thead>
+												    <tr>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;">姓名</th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												    </tr>
+												  </thead>		
+												  <c:forEach var="memberVO" items="${requestScope.myFriendVOs}" varStatus="sidebar_status">  
+													  <tbody>
+													  	<tr>
+													      <th scope="row"></th>
+													      <td><a href="/PaCueMo/TeamServlet?teamId=1">起司貓</a></td>
+													      <td></td>
+													      <td>  		
+														  </td>	
+													      <td>
+															<button value="${memberVO.memberId}" class="btn btn-success sidebar_join">加入</button>
+													      </td>	
+													    </tr>
+													  </tbody>
+												  </c:forEach>	
+											</table>
+										</div>
+									<!-- ====================【加好友 Dialog 結束 】=====================  -->
+								
+								</li>
+								<li>
+									<s:url  value="/spring/team/battleInfo" var="s_battleInfo"  scope="request">
+										<s:param name="teamId" value="${requestScope.teamVO.teamId }"></s:param>
+									</s:url>
+									<a id="a_settingTeam" href="${s_battleInfo}">約戰訊息</a>
+								</li>
 								<li class="divider"></li>
 								<li>
 									<a id="apply_team" href="${pageContext.request.contextPath}/spring/tm_apply/applyCheck?teamId=${teamVO.teamId}" style="padding-left: 25px;padding-right: 0px;">管理隊伍 <span id="badge" class="badge"></span></a>
 								</li>
 								<li>
-									<s:url value="/spring/team/settingTeamPage" var="s_settingTeam" scope="request">
+									<s:url  value="/spring/team/settingTeamPage" var="s_settingTeam"  scope="request">
 										<s:param name="teamId" value="${requestScope.teamVO.teamId }"></s:param>
 									</s:url>
 									<a id="a_settingTeam" href="${s_settingTeam}">編輯隊伍設定</a>
@@ -62,12 +102,12 @@ margin-left:150px
 								<li><a id="a_createTeam" href="#">建立新隊伍</a></li>
 							</ul>
 						</li>
+	
 					</c:when>
 					<c:when test="${pageForSideBar == 'haveTeamId' && teamExsist == 'Exsist'}">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">隊伍設定 <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu" style="margin-left: 80px;width: 200px">
 								<li><a href="#">加隊員</a></li>
-								<li><a href="#">發送訊息</a></li>
 								<li class="divider"></li>
 								<li><a id="a_createTeam" href="#">建立新隊伍</a></li>
 							</ul>
@@ -86,24 +126,13 @@ margin-left:150px
 			</form>
 			<!-- 搜尋 結束 -->
 
-			<ul class="nav navbar-nav navbar-left">
-				<li><a href="#">Link</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-					</ul></li>
-			</ul>
+			
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
 </div>
 
 <div id="dialog_thx" title="申請用戶"></div>
-<div id="dialog-apply" title="社團申請"></div>
 
 
 <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css"> -->
@@ -180,9 +209,7 @@ margin-left:150px
 
 
 		var memberId = "${LoginOK.memberId}";
-		if("${teamVO != null}"){
-			var teamHead = "${teamVO.teamHead}";
-		}
+		var teamHead = "${teamVO.teamHead}";
 		var contextPath="${pageContext.request.contextPath}";
 
 		
@@ -294,6 +321,53 @@ margin-left:150px
 			check_chage();
 			$("#dialog_thx").dialog("open");
 		});
+		
+		// addTeamMember click
+		$("#a_addTeamMember").click(function(){
+			  
+			var myDialog = $("#modify").dialog({
+					 title  : "好友列表",
+// 			         show   : { effect :'fold' , duration: 200 },
+// 			         hide   : { effect :'clip' , duration: 200 },
+			       //height    : '400',
+			        'width'    : '480',
+			        'resizable':  false,
+			        'position' : { my: "center", at: "center center", of: window },
+			        'open'     : function(){ /*do-nothing*/ },
+			         draggable : false,
+			        'close': function(){
+			        	// do-nothing
+			        }
+				});
+		})
+		// click join
+		$(".sidebar_join").click(function(){
+			var bar_memberId = $(this).val();
+			
+			$.ajax({ 
+				"type" : "post", 
+				"url" : "${home}spring/teamMember/addTeamMember", // home 在 head
+				"data" : { 
+						"memberId" : bar_memberId , 
+						"teamId" : "${requestScope.teamVO.teamId}" 
+					}, 
+				"dataType" : "text",
+				"success" : function(data)
+				{
+					
+				}, 
+				"error" : function(Error)
+				{
+					window.location.href= "${home}";
+					console.log(Error);
+				} 
+			})
+			
+			$(this).attr("hidden","hidden");
+		
+		})
+		
+		// addTeamMember End
 		
 // init End
 	})
