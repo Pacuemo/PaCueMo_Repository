@@ -56,6 +56,7 @@
 	<style>
 body {
 	background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
+	overflow-x: hidden;
 }
 </style>
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>

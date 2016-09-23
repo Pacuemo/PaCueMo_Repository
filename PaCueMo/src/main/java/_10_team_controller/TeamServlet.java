@@ -214,7 +214,7 @@ public class TeamServlet extends HttpServlet
 				}
 				req.setAttribute("battleRecordVOs_B", battleRecordVOs_B);
 
-				List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(memberId);
+				List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(teamId, memberId);
 				req.setAttribute("myFriendVOs", myFriendVOs);
 
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());

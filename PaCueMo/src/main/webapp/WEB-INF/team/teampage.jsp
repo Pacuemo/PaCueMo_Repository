@@ -257,7 +257,7 @@ body {
 						
 						<c:choose>
 							<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">
-								<img class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
+								<img style="" class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/${teamMemberVO.memberVO.memberImgUrl }" alt="image1">
 							</c:when>
 							<c:otherwise>
 								<img class="tmimg img-circle" src="${pageContext.request.contextPath }/image/member/user.jpg" alt="image1">
