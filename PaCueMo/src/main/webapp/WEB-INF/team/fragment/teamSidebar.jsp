@@ -66,7 +66,7 @@ margin-left:150px
 													  <tbody>
 													  	<tr>
 													      <th scope="row"></th>
-													      <td><a href="/PaCueMo/TeamServlet?teamId=1">起司貓</a></td>
+													      <td><a href="/PaCueMo/TeamServlet?teamId=1">${memberVO.memberFirstName }</a></td>
 													      <td></td>
 													      <td>  		
 														  </td>	
@@ -348,7 +348,7 @@ margin-left:150px
 				"type" : "post", 
 				"url" : "${home}spring/teamMember/addTeamMember", // home 在 head
 				"data" : { 
-						"memberId" : bar_memberId , 
+						"teamMemberId" : bar_memberId , 
 						"teamId" : "${requestScope.teamVO.teamId}" 
 					}, 
 				"dataType" : "text",
@@ -358,15 +358,21 @@ margin-left:150px
 				}, 
 				"error" : function(Error)
 				{
-					window.location.href= "${home}";
+// 					window.location.href= "${home}";
 					console.log(Error);
 				} 
 			})
 			
-			$(this).attr("hidden","hidden");
+			$(this).parents("tbody").hide(200);
+			clearTimeout(refresh);
+			setTimeout(refresh,3000); //指定1秒刷新一次
 		
 		})
 		
+		 var refresh = function ()
+		 {
+		      window.location.reload();
+		 }
 		// addTeamMember End
 		
 // init End

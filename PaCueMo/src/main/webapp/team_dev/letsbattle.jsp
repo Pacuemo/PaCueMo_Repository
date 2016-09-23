@@ -56,9 +56,25 @@
 			</div>
 
 
-
+		<button id="gg" ></button>
 		</div>
 	</div>
+<script type="text/javascript">
+$(function(){
 
+ function myrefresh()
+ {
+      window.location.reload();
+ }
+	
+ $("#gg").click(function(){
+	 
+	 setTimeout('myrefresh()',1000); //指定1秒刷新一次
+	
+ })
+	
+	
+})
+</script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import _11_teammember_service.TeamMemberService;
 
@@ -14,6 +15,7 @@ public class TeamMember_Controller
 	@Autowired
 	private TeamMemberService teamMemberService;
 
+	@ResponseBody
 	@RequestMapping(value = "/addTeamMember", method = RequestMethod.POST)
 	public String addTeamMember(Integer teamId, String teamMemberId)
 	{
@@ -31,7 +33,7 @@ public class TeamMember_Controller
 		teamMemberService.add(teamId, teamMemberId);
 		System.out.println("新增成功");
 		System.out.println("-------------------------------------------------------");
-		return "";
+		return "success";
 	}
 
 }
