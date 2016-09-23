@@ -21,10 +21,11 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 	private final String Select_One_BY_FightId = "select * from LeagueRecord where fightId=? ";
 	private final String Select_One_BY_ClubID = "select * from LeagueRecord where leagueId=? and (clubIdA = ? OR clubIdB=?)";
 	private final String Select_ALL_BY_leagueId = "select * from LeagueRecord where leagueId = ? order by fightid desc";
-	private final String Add_One_BY_VO = "insert into LeagueRecord values (?,?,?,?,?,?,?,?)";
+	private final String Add_One_BY_VO = "insert into LeagueRecord values (?,?,?,?,?,?,?,?,?)";
 	private final String Delete_One_BY_ID = "delete from LeagueRecord where fightId =?";
 	private final String Update_One_BY_VO = "update LeagueRecord set clubIdA=?,clubIdB=?,fightDateTime=?,rounds=?,scoreA=?,scoreB=?,totalTime=? where fightId=?";
 	private final String Select_WinCount_By_ID = "SELECT COUNT(*) FROM leagueRecord where winner=?";
+	private final String Select_Last_Data = "SELECT TOP 1 * FROM leagueRecord ORDER BY fightId DESC";
 
 	private static final class LeagueRecordDAORowMapper implements RowMapper<LeagueRecordVO>
 	{
@@ -57,6 +58,19 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 	}
 
 	@Override
+	public LeagueRecordVO find_Last_One()
+	{
+		try
+		{
+			return jdbc.queryForObject(Select_Last_Data, new LeagueRecordDAORowMapper());
+		}
+		catch (DataAccessException E)
+		{
+			return null;
+		}
+	}
+
+	@Override
 	public List<LeagueRecordVO> find_One(int leagueId, int clubId)
 	{
 		return jdbc.query(Select_One_BY_ClubID, new LeagueRecordDAORowMapper(), leagueId, clubId, clubId);
@@ -80,7 +94,8 @@ public class LeagueRecordDAO implements LeagueRecordDAO_I
 				VO.getRounds(),
 				VO.getScoreA(),
 				VO.getScoreB(),
-				VO.getTotalTime());
+				VO.getTotalTime(),
+				VO.getWinner());
 	}
 
 	@Override

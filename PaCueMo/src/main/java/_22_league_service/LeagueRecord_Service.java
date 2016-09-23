@@ -25,15 +25,9 @@ public class LeagueRecord_Service
 
 //新增聯賽紀錄(賽程表)
 	@Transactional(rollbackFor = Exception.class)
-	public int add_LeaguesRecord(List<LeagueRecordVO> leagueRecordVOs)
+	public int add_LeaguesRecord(LeagueRecordVO leagueRecordVO)
 	{
-
-		int success = 0;
-		for (LeagueRecordVO vo : leagueRecordVOs)
-		{
-			leagueRecordDAO.add_One(vo);
-			success++;
-		}
+		int success = leagueRecordDAO.add_One(leagueRecordVO);
 		System.out.println("成功新增聯賽紀錄表       " + success + "  筆-回傳整數       " + success);
 		return success;
 	}
@@ -52,6 +46,12 @@ public class LeagueRecord_Service
 		System.out.println("成功修改聯賽紀錄表       " + success + "  筆-回傳整數       " + success);
 		return success;
 	}
+
+//查詢最後一筆輸入紀錄	
+	public LeagueRecordVO get_Last_One()
+	{
+		return leagueRecordDAO.find_Last_One();
+	};
 
 //查詢所有賽程
 	public List<LeagueRecordVO> get_All_LeagueReacords(int leagueId)

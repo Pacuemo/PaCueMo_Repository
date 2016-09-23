@@ -66,14 +66,11 @@ public class AuthFilter implements Filter
 				else
 				{				//  需要權限，沒有權限
 					HttpSession session = req.getSession();
-					session.setAttribute("requestURI", requestURI);
-					session.setAttribute("queryString", queryString);
 					if (!isRequestedSessionIdValid)
 					{
 						session.setAttribute("timeOut", "使用逾時，請重新登入");
 					}
-					resp.sendRedirect(contextPath);
-					return;
+
 				}
 			}
 			else
