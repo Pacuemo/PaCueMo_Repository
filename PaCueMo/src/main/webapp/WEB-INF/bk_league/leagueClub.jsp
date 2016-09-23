@@ -296,8 +296,8 @@ input[type='time'] {
 				<nav class="navbar navbar-default" style="height: 70px;">
 					<div class="container" style="height: 100%; text-align: center;font-size: 200%; font-weight: bold;">
 						<ul class="nav nav-pills" style="margin-top: 0.5%;">
-							<li role="presentation" style="margin-left: 35%;"><a href="#" id="btn-club">聯賽社團管理</a></li>
-							<li role="presentation"><a href="#" id="btn-record">聯賽場次管理</a></li>	
+							<li role="presentation" style="margin-left: 35%;"><a href="#" id="btn-club" style="color:#262626">聯賽社團管理</a></li>
+							<li role="presentation"><a href="#" id="btn-record" style="color:#bfbfbf">聯賽場次管理</a></li>	
 						</ul>
 					</div>
 				</nav>
@@ -346,7 +346,7 @@ input[type='time'] {
 						<div class="panel-heading">DataTables</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-							<table width="100%" class="table table-striped table-bordered table-hover" >
+							<table width="100%" class="table table-striped table-bordered table-hover"  id='leagueRecordTable'>
 								<thead>
 									<tr>
 										<th>League Name</th>
@@ -377,8 +377,8 @@ input[type='time'] {
 											<td><input type="time" disabled="disabled"  value="${fightTime}"></td>
 											<td><input type="text"  class="rounds" disabled="disabled"  value="${LeagueRecordVO.rounds}"></td>
 											<td><input type="text" class="totalTime" disabled="disabled"  value="${LeagueRecordVO.totalTime}"></td>
-											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default delete" href="#" role="button" >刪除</a> 
-											<input type="button" class='btn btn-default submitIRecord' value="送出" style="display: none" fightId="${LeagueRecordVO.fightId}" clubIdA="${LeagueRecordVO.clubIdA}" clubIdB="${LeagueRecordVO.clubIdB}"></td>
+											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default deleteRecord" href="#" role="button"  fightId="${LeagueRecordVO.fightId}">刪除</a> 
+											<input type="button" class='btn btn-default submitIRecord' value="送出" style="display: none"  clubIdA="${LeagueRecordVO.clubIdA}" clubIdB="${LeagueRecordVO.clubIdB}"></td>
 										</tr>
 									</c:forEach>
 
@@ -428,17 +428,158 @@ input[type='time'] {
 		$(document).ready(function()
 		{
 			$('#dataTables-example').DataTable({ responsive : true });
+            $('.deleteRecord').bind('click',deleteRecord);
+        	$('.submitIRecord').bind('click',submitRecord);
+
 			var leagueClubName=${LeagueclubNames};
-			console.log(leagueClubName);
 
 			$("#create").click(function(e)
 			               	{
 			               		e.preventDefault();
 			               		var tr=$('<tr></tr>');
-			               		
-			               		
+			               		tr.css('background-color','#ffff99').
+			               		append($('<td>${leagueName}</td>'+
+											'<td ><select></select></td>'+
+											'<td ></td>'+
+											'<td ><select></select></td>'+
+											'<td ></td>'	+																	
+											'<td><input type="date" class="date" ></td>'+
+											'<td><input type="time" class="time" ></td>'+
+											'<td><input type="text"  class="rounds"></td>'+
+											'<td></td>'+
+											'<td><input type="button" class="btn btn-default submitData" value="送出" >'+
+											'<input type="button" class="btn btn-default cancel" value="取消" ></td>'));
+								$.each(leagueClubName,function(index,leagueClub){
+									tr.find('select').append($('<option value='+leagueClub.ClubId+'>'+leagueClub.ClubName+'</option>'));									
+									});
+			               		tr.appendTo($('#leagueRecordTable'));
+			               		tr.find('input.cancel').bind('click',cancel).prev().bind('click',submitData);
 			               	});
 		});
+
+		function cancel(){
+            $(this).parent().parent().remove();
+			};
+
+			
+		function submitData(){
+			  var tr=$(this).parent().parent();
+			  var date=tr.find('.date').val();
+			  var time=tr.find('.time').val();
+			  var clubAName=tr.find('select:first').children(':selected').text();
+			  var clubBName=tr.find('select').slice(1).children(':selected').text();
+			  var rounds=tr.find('.rounds').val();
+			  var data={};
+			  data['leagueId']=${leagueId};
+			  data['clubIdA']=tr.find('select:first').val();
+			  data['clubIdB']=tr.find('select').slice(1).val();
+				if(date=="" || time==""){
+
+				}else{
+					data['fightDateTime']=date+" "+time+":00";
+					};
+
+			  data['rounds']=rounds;
+			  $.ajax({
+					type: 'POST',
+					url:'leagueRecordAdd',
+					contentType: "application/json",
+					data: JSON.stringify(data),
+					dataType: 'json',
+					success:function(response){
+						
+					 if(response.status){
+						 BootstrapAlert.success({ title : "Congrat!", message : "成新增一筆聯賽場次資料" });
+						 tr.empty().css('background-color','').append($('<td >${leagueName}</td>'+
+									'<td >'+clubAName+'</td>'+
+									'<td ><input type="text" class="scoreA"   disabled="disabled"></td>'+
+									'<td >'+clubBName+'</td>'+
+									'<td ><input type="text"  class="scoreB"  disabled="disabled"></td>'+										
+									'<td><input type="date" disabled="disabled"  value='+date+'></td>'+
+									'<td><input type="time" disabled="disabled"  value='+time+'></td>'+
+									'<td><input type="text"  class="rounds" disabled="disabled"  value='+rounds+'></td>'+
+									'<td><input type="text" class="totalTime" disabled="disabled"></td>'+
+									'<td><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default deleteRecord" href="#" role="button" fightId='+response.leagueRecordVO.fightId+'>刪除</a>' +
+									'<input type="button" class="btn btn-default submitIRecord" value="送出" style="display: none" '+
+									' clubIdA='+response.leagueRecordVO.clubIdA+' clubIdB='+response.leagueRecordVO.clubIdB+'></td>'));
+							tr.find('a.deleteRecord').bind('click',deleteRecord).next().bind('click',submitRecord).prev().prev().bind('click',updateRecord);
+						 };
+					}
+				  });
+		    };
+
+		    function deleteRecord(){
+				var button = $(this);
+				$.ajax({
+					type: "GET",
+					url: "deleteLeagueRecord",
+					data: { fightId: button.attr("fightId") },
+					dataType: 'json',
+					success: function (message){			
+						if(message.status==1){
+							BootstrapAlert.success({ title : "Congrat!", message : "成功刪除聯賽場次資料" });
+							button.parent().parent().remove();
+						}
+					}
+				});
+			    };
+
+				function submitRecord()
+				{
+
+					var button=$(this);
+					var tr=$(this).parent().parent();
+					var date=tr.find('input[type=date]').val();
+					var time=tr.find('input[type=time]').val();
+					var winner;
+					var data={};
+					data['fightId']=$(this).prev().attr('fightId');
+					data['clubIdA']=$(this).attr('clubIdA');
+					data['clubIdB']=$(this).attr('clubIdB');
+					if(date=="" || time==""){
+
+						}else{
+							data['fightDateTime']=date+" "+time+":00";
+							};
+					data['rounds']=tr.find('input[class="rounds"]').val();
+					data['scoreA']=tr.find('input[class="scoreA"]').val();
+					data['scoreB']=tr.find('input[class="scoreB"]').val();
+					data['totalTime']=tr.find('input[class="totalTime"]').val();
+					if(data['scoreA']>data['scoreB']){
+						winner=data['clubIdA'];
+					}else{
+						winner=data['clubIdB'];
+					}
+					data['winner']=winner;
+					
+					$.ajax({
+			            type: "POST",
+			            contentType: "application/json",
+			            url: "updateLeagueRecord",
+			            data: JSON.stringify(data),
+			            dataType: 'json',
+			            success: function (message) {
+			             if(message.status==1){
+			            	 BootstrapAlert.success({ title : "Congrat!", message : "成功修改聯賽場次資料" });
+			            	 tr.css('background-color','').find('input').attr('disabled',true);             	 
+			            	 button.css('display','none').prev().css('display','inline-block').prev().css('display','inline-block'); 
+			             }
+			            }
+				     });					
+				};
+
+
+				//點選修改按鈕
+				function updateRecord(e)
+				{		
+					e.preventDefault();
+					$(this).attr('style','display:none')
+					.next().attr('style','display:none')
+					.next().attr('style','display:block')
+					.parent().parent().css('background-color','#ffff99') 
+					.find('input').removeAttr('disabled');
+				};
+			
 	</script>
 
 </body>
