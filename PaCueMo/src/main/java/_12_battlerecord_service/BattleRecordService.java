@@ -11,6 +11,7 @@ import _00_config.RootConfig;
 import _9_10_team_model.TeamDAO;
 import _9_12_battlerecord_model.BattleRecordDAO_I;
 import _9_12_battlerecord_model.BattleRecordVO;
+import _9_31_court_model.CourtDAO;
 
 @Component
 public class BattleRecordService
@@ -37,28 +38,16 @@ public class BattleRecordService
 	public void reportA(BattleRecordVO battleRecordVO)
 	{
 		battleRecordDAO.reportA(battleRecordVO);
-		if (battleRecordVO.getReportA() != 0 && battleRecordVO.getReportB() != 0)
-		{
-			updateResult(battleRecordVO);
-		}
 	}
 
 	public void reportB(BattleRecordVO battleRecordVO)
 	{
 		battleRecordDAO.reportB(battleRecordVO);
-		if (battleRecordVO.getReportA() != 0 && battleRecordVO.getReportB() != 0)
-		{
-			updateResult(battleRecordVO);
-		}
 	}
 
-	//service 判斷是否呼叫此方法
-	public void updateResult(BattleRecordVO battleRecordVO)
+	public void accept_Reject(BattleRecordVO battleRecordVO)
 	{
-		if (battleRecordVO.getResult() == 0)
-		{
-			battleRecordDAO.updateResult(battleRecordVO);
-		}
+		battleRecordDAO.accept_Reject(battleRecordVO);
 	}
 
 	public void delete(Integer batteleRecordId)
@@ -89,6 +78,19 @@ public class BattleRecordService
 		{
 			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));
 			battleRecordVO.setTeamBVO(teamDAO.getTeamById(battleRecordVO.getTeamIdB()));
+		}
+		return battleRecordVOs;
+	}
+
+	public List<BattleRecordVO> findByTeamIdB_NotDec(Integer teamIdB)
+	{
+		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdB_NotDec(teamIdB);
+		CourtDAO courtDAO = new CourtDAO();
+		for (BattleRecordVO battleRecordVO : battleRecordVOs)
+		{
+			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));
+			battleRecordVO.setTeamBVO(teamDAO.getTeamById(battleRecordVO.getTeamIdB()));
+			battleRecordVO.setCourtVO(courtDAO.findByPrimaryKey(battleRecordVO.getCourtId()));
 		}
 		return battleRecordVOs;
 	}
