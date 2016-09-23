@@ -7,8 +7,7 @@
 	List<CourtVO> list;
 	String court;
 	String city;
-	
-	
+
 	if ((city = (String) request.getAttribute("test")) == null) {
 		city = request.getParameter("test");
 		if (city != null)
@@ -25,7 +24,6 @@
 			}
 	}
 
-
 	if (court == null && city == null) {
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findAll();
@@ -38,11 +36,11 @@
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findByCourtName(court);
 		pageContext.setAttribute("list", list);
-	}else if (court == null && city != null){
+	} else if (court == null && city != null) {
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findByCourtName(city);
 		pageContext.setAttribute("list", list);
-	}else{
+	} else {
 		CourtService courtSvc = new CourtService();
 		list = courtSvc.findByCourtName(court);
 		pageContext.setAttribute("list", list);
@@ -67,8 +65,8 @@ button[type=submit]:hover {
 div.row.google {
 	height: 500px;
 	width: 100%;
-	padding-left: 15px;
 	margin-bottom: 10px;
+	margin-left: 0px;
 }
 
 div.map {
@@ -149,15 +147,13 @@ div.map {
 							<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}'); margin-bottom: 20px"></div>
 						</div>
 						<div class="col-sm-6">
-							<div style="padding: 10px; width: 400px">
+							<div style="padding: 10px;width: 100%;min-height: 250px;">
 								<div style="margin-top: 40px">
 									<img src="image/City.png" width="20px" height="20px" style="float: left;">
 									<h4 style="color: white; font-family: 微軟正黑體; margin-left: 30px">${courtVO.name}</h4>
-									<img src="image/Location.png" width="20px" height="20px" style="float: left;">
-									<strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.courtaddress}</strong>
+									<img src="image/Location.png" width="20px" height="20px" style="float: left;"> <strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.courtaddress}</strong>
 									<br>
-									<img src="image/Phone.png" width="20px" height="20px" style="float: left;">
-									<strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.phone}</strong>
+									<img src="image/Phone.png" width="20px" height="20px" style="float: left;"> <strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.phone}</strong>
 									<br>
 									<img src="image/map.png" width="20px" height="20px" style="float: left;">
 									<button class="map-btn" style="margin-left: 10px;">開啟地圖</button>
@@ -191,15 +187,9 @@ div.map {
 			$("#dist").val("x");
 		}
 
-		// 		------------------Google Map		
+		// 		------------------Google Map
 		$(function()
 		{
-
-
-
-		$(function(){
-			
-			'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 			$.fn.tinyMapConfigure({
 			// Google Maps API URL
 			'api' : '//maps.googleapis.com/maps/api/js',
@@ -246,15 +236,9 @@ div.map {
 				$(this).text("開啟地圖");
 				$(this).bind("click", addMap)
 			}
-<<<<<<< HEAD
 
 			$("button.map-btn").bind("click", addMap);
 		})
-=======
-			
-			$("button.map-btn").bind("click",addMap);
-		})
->>>>>>> branch 'master' of https://github.com/Pacuemo/PaCueMo_Repository.git
 	</script>
 </body>
 </html>
