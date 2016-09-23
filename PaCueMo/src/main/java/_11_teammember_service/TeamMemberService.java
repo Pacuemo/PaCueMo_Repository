@@ -31,14 +31,26 @@ public class TeamMemberService
 	{
 	}
 
-	public List<MemberVO> wrongWayGetMemberVOs(String memberId)
+	public List<MemberVO> wrongWayGetMemberVOs(Integer teamId, String memberId)
 	{
 		System.out.println("wrongWayGetMemberVOs : careful use");
 		List<FriendsListVO> friendsListVOs = friendsListDAO_Spring.getAllFriends(memberId);
+		List<TeamMemberVO> teamMemberVOs = dao.getOneTeam(teamId);
 		List<MemberVO> memberVOs = new ArrayList<>();
 		for (FriendsListVO friendsListVO : friendsListVOs)
 		{
-			memberVOs.add(memberDAO.findByPrimaryKey(friendsListVO.getMemberFriendId()));
+			boolean flag = false;
+			for (TeamMemberVO teamMemberVO : teamMemberVOs)
+			{
+				if (teamMemberVO.getTeamMemberId().equals(friendsListVO.getMemberFriendId()))
+				{
+					flag = true;
+				}
+			}
+			if (!flag)
+			{
+				memberVOs.add(memberDAO.findByPrimaryKey(friendsListVO.getMemberFriendId()));
+			}
 		}
 		System.out.println("ok");
 		return memberVOs;

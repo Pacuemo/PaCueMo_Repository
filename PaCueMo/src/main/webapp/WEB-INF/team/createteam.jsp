@@ -49,6 +49,7 @@ height: 50px;
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
+    overflow-x: hidden;
 }
 </style>	
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
@@ -114,10 +115,10 @@ body {
 		<div class="col-md-2"></div>
 		<div class="col-md-4">
 		<div class="dropdown col-md-12"> <h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">推薦隊伍：<span class="caret"></span></h2>
-			<ul class="dropdown-menu animate fadeInDown animated" style="width: 340px;margin-left: 40px;padding-top: 10px">
+			<ul class="dropdown-menu animate fadeInDown animated" style="overflow-y:scroll;width: 400px;height:400px;margin-left: 40px;padding-top: 10px">
 			<table class="table table-hover " >
 				<tbody>
-				<c:forEach var="ot_list" items="${requestScope.otherList }" end="6" >
+				<c:forEach var="ot_list" items="${requestScope.otherList }">
 					<c:choose>
 						<c:when test="${ot_list.teamProp == 0}">
 							<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">	

@@ -43,6 +43,7 @@ height: 35%;
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg");
+    overflow-x: hidden;
 }
 </style>
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
@@ -148,7 +149,7 @@ body {
 						</div>
 						<div id="courtId_data" class="bootstrap-date row">
 							<div class="col-xs-4">
-								<select id="courtName" path="courtId" name="courtName" class="form-control valid">
+								<select id="courtName" name="courtName" class="form-control valid">
 									<option value="none">場地名稱</option>
 								</select>
 							</div>
@@ -235,7 +236,7 @@ body {
 								</select>
 							</div>
 							<div class="col-xs-4">
-								<select id="battleMin" name="battleMin" required="" class="form-control">
+								<select id="battleMin" name="battleMin" class="form-control">
 										<option value="00" selected="selected">00</option>
 										<option value="05">05</option>
 										<option value="10">10</option>
@@ -268,7 +269,7 @@ body {
 
 					<div class="row-buttons-bordered" style="margin-top: 20px;">
 						<button type="submit" id="submit" name="submit" class="btn-sm js-gtm-event btn btn-primary">約戰</button>
-						<a id="profile_cancel" name="profile[cancel]" class="btn btn-tertiary btn-sm btn-cancel" onclick="history.back()">取消</a>
+						<a id="profile_cancel" class="btn btn-tertiary btn-sm btn-cancel" onclick="history.back()">取消</a>
 					</div>
 					<input type="hidden" id="profile__token" name="profile[_token]" class="form-control" value="7ToZqqdkScbZNNOmX_N7FmDr8k4gwgD584FfdSjC-0A">
 				</sf:form>
@@ -474,6 +475,10 @@ body {
 				}
 				if("${fn:length(requestScope.oppTeamVO.teamMemberVOs)}" < $("#battleMode").val()){
 					error_msg += "對方隊伍人數不足\n"
+					event.preventDefault();
+				}
+				if($("#courtName").val() == null || $("#courtName").val() == "none"){
+					error_msg += "請選擇場地\n"
 					event.preventDefault();
 				}
 				if(error_msg != ""){

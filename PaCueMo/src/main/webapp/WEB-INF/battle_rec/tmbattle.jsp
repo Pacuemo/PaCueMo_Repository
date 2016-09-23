@@ -54,6 +54,8 @@ td {
    user-select: none;
 
 }
+.div_team{
+}
 </style>
 
 </head>
@@ -64,6 +66,8 @@ td {
 	<style>
 body {
 	background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
+	overflow-x: hidden;
+	
 }
 </style>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -88,10 +92,11 @@ body {
 				</div>
 				<c:choose>
 					<c:when test="${requestScope.teamOppVOs != null }">
-						<div class="row content" style="padding: 10px;padding-bottom:20px; margin-top: 20px;">
-							<span style="text-align: center;">活動地區： </span> <select id="locaation" name="location" class="" contextmenu="123" style="font-size: 14px; padding: 0px; height: 27.53px; margin-bottom: 5px; text-align: center;">
-								<option disabled="disabled" selected="selected" value="none">不限制</option>
-								<option value="台北市">台北市</option>
+						<div class="row content" style="padding: 10px;padding-bottom:0px; margin-top: 20px;margin-bottom: 0px;">
+							<span style="text-align: center;">活動地區： </span> 
+							<select id="select_locaation" name="location" class="" contextmenu="123" style="font-size: 14px; padding: 0px; height: 27.53px; margin-bottom: 5px; text-align: center;">
+								<option selected="selected" value="none">不限制</option>
+								<option value="臺北市">臺北市</option>
 								<option value="新北市">新北市</option>
 								<option value="桃園市">桃園市</option>
 								<option value="基隆市">基隆市</option>
@@ -114,8 +119,11 @@ body {
 								<option value="金門縣">金門縣</option>
 								<option value="連江縣">連江縣</option>
 							</select>
+						</div>
+						<div class="row content" style="padding: 10px;padding-bottom:20px;padding-top:0px; margin-top: 0px;overflow-y:scroll; height: 550px;overflow-x:hidden;">
 							<c:set var="flag" value="5"></c:set>
-							<c:forEach items="${requestScope.teamOppVOs}" var="teamOppVO" end="4" varStatus="status">
+							<c:forEach items="${requestScope.teamOppVOs}" var="teamOppVO" varStatus="status">
+								<div data-location="${teamOppVO.location}" class="div_team">
 									<hr>
 									<div class="row left_div">
 										<div class="col-md-8">
@@ -128,6 +136,7 @@ body {
 											</form>
 										</div>
 									</div>
+								</div>
 							</c:forEach>
 						</div>
 					</c:when>
@@ -198,8 +207,18 @@ body {
 			})
 			
 			
+			$("#select_locaation").change(function(){
+				var data_location = $(this).val();
+				if($(this).val() == null || $(this).val() == "none"){
+					$(".div_team").show(200);
+				}else{
+					$(".div_team").hide();
+					$('.div_team[data-location="'+data_location+'"]').show(200);				
+				}
 			
-			
+				
+				
+			})
 
 		// init End
 		});

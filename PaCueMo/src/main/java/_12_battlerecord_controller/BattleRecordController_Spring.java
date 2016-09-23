@@ -28,7 +28,6 @@ import _12_battlerecord_service.BattleRecordService;
 import _31_court_service.CourtService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
-import _9_31_court_model.CourtVO;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -88,7 +87,7 @@ public class BattleRecordController_Spring
 		System.out.println("約戰成功");
 		System.out.println("-------------------------------------------------------");
 		System.out.println("forward battle_introduce (GET)");
-		return "forward:introduce";
+		return "redirect:introduce";
 	}
 
 	@ResponseBody
@@ -99,7 +98,6 @@ public class BattleRecordController_Spring
 		System.out.println("address" + address);
 		CourtService courtService = new CourtService();
 		System.out.println("回傳場地VOs 格式JSON");
-		List<CourtVO> courtVOs = courtService.findByCourtName(address.trim());
 		System.out.println("-------------------------------------------------------");
 		return gson.toJson(courtService.findByCourtName(address.trim()));
 	}
@@ -184,6 +182,8 @@ public class BattleRecordController_Spring
 			List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName("", "", memberVO.getMemberId());
 			request.setAttribute("teamOppVOs", teamVOs);
 		}
+		List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+		request.setAttribute("myList", myList);
 
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
@@ -209,6 +209,8 @@ public class BattleRecordController_Spring
 			current_date.put("date", sdf_date.format(date));
 			current_date.put("hr", sdf_hr.format(date));
 			request.setAttribute("current_date", current_date);
+			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+			request.setAttribute("myList", myList);
 		}
 		catch (Exception e)
 		{

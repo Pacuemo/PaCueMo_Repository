@@ -250,7 +250,7 @@ public class TeamController_Spring
 		List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
 		request.setAttribute("myList", myList);
 
-		List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(memberVO.getMemberId());
+		List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(teamId, memberVO.getMemberId());
 		request.setAttribute("myFriendVOs", myFriendVOs);
 
 		System.out.println("成功導入");
@@ -287,7 +287,7 @@ public class TeamController_Spring
 			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
 			request.setAttribute("myList", myList);
 
-			List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(memberVO.getMemberId());
+			List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(teamId, memberVO.getMemberId());
 			request.setAttribute("myFriendVOs", myFriendVOs);
 
 		}
