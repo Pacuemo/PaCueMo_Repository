@@ -24,7 +24,7 @@ import _9_25_leagueRecord_model.LeagueRecordVO;
 
 @Controller
 @RequestMapping(value = "/leagueClubBackStage")
-public class LeagueClub_bk_Controller2
+public class LeagueClub_bk_Controller
 {
 
 	@Autowired
