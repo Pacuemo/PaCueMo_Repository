@@ -293,7 +293,7 @@
 	                            <!-- /.nav-second-level -->
 	                        </li>
 	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
+	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
 	                                    <a href="blank.jsp">Blank Page</a>
@@ -302,7 +302,7 @@
 	                            <!-- /.nav-second-level -->
 	                        </li>
 	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
+	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
 	                                    <a href="<%=request.getContextPath()%>/spring/leagueBackStage/league"> - 聯賽管理 - </a>

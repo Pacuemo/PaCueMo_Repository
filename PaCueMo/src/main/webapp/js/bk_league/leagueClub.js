@@ -30,9 +30,19 @@ $(function(){
 		$(this).attr('style','display:none')
 		.next().attr('style','display:none')
 		.next().attr('style','display:block')
+		.next().attr('style','display:none')
 		.parent().parent().css('background-color','#ffff99') 
 		.find('input').removeAttr('disabled');
 	
+	});
+	//點選修改按鈕
+	$(".forUpdateClub").click(function(e){		
+		e.preventDefault();
+		$(this).attr('style','display:none')
+		.next().attr('style','display:none')
+		.next().attr('style','display:block')
+		.parent().parent().css('background-color','#ffff99') 
+		.find('input').removeAttr('disabled');	
 	});
 	//點選送出按鈕
 	$(".submitInfo").click(function(e)

@@ -17,4 +17,6 @@ public interface FightRecordDAO_I
 
 	int delete_ALL(int fightId);
 
+	FightRecordVO get_One(int fightId, String memberId);
+
 }
