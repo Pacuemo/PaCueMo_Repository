@@ -17,14 +17,14 @@
 		var stomp = Stomp.over(sock);
 		var payload = JSON.stringify({"message":"Marco!"});
 		
-		stomp.connect("123","123",function(){
+		stomp.connect("guest","guest",function(){
 // 			stomp.subscribe("/app/marco",function(incoming){
 // 				var test = JSON.parse(incoming.body);
 // 				console.log(test);
 // 			});
 
-			stomp.send("/app/marco",{},payload);
-			stomp.subscribe("/topic/shout",function(incoming){
+
+			stomp.subscribe("/user/topic/shout",function(incoming){
 				var test = JSON.parse(incoming.body);
 				console.log(test);
 			});
