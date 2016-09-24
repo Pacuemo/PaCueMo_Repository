@@ -45,6 +45,12 @@
 	height:inherit; 
 	background-color: inherit;
 }
+.createData{
+	border: 1px solid #e6e600;
+	width:100%;
+	height:inherit; 
+	background-color: inherit;
+}
 </style>
 </head>
 
@@ -371,11 +377,11 @@
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
-		                                    <th>球員名稱</th>
+		                                    <th>球員</th>
 								   		    <th>背號</th>
 											<th>位置</th>
 											<th>先發</th>
-											<th>上場時間</th>
+											<th>上場</th>
 											<th>3PA</th>
 											<th>3PM</th>
 											<th>3PP</th>
@@ -425,22 +431,28 @@
 													<td class='change'>${fightRecordVO.fouls}</td>
 													<td class='change'>${fightRecordVO.score}</td>
 													<td><a class="btn btn-default updateRecord" href="#"  role="button">修改</a>
-													        <a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>
+													         <a class="btn btn-default deleteRecord" href="#" role="button">刪除</a>
+													         <a class="btn btn-default cancelRecord" href="#" style='display: none' role="button">取消</a>
+													        <a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>													         
 													</td>
 												</tr>
 											</c:if>
 										</c:forEach>	                                   
 	                                </tbody>
 	                            </table>
+	                             <a class="btn btn-default clubA create"  href="#"  role="button" clubId="${leagueRecordVO.clubIdA}">新增</a>
+
+
+
 	                               <h1> ${requestScope.leagueRecordVO.clubB.clubName}</h1>
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-examples">
 	                                <thead>
 	                                    <tr>
-		                                    <th>球員名稱</th>
+		                                    <th>球員</th>
 								   		    <th>背號</th>
 											<th>位置</th>
 											<th>先發</th>
-											<th>上場時間</th>
+											<th>上場</th>
 											<th>3PA</th>
 											<th>3PM</th>
 											<th>3PP</th>
@@ -490,14 +502,16 @@
 													<td class='change'>${fightRecordVO.fouls}</td>
 													<td class='change'>${fightRecordVO.score}</td>
 													<td><a class="btn btn-default updateRecord" href="#" role="button">修改</a>
-													        <a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>
+													         <a class="btn btn-default deleteRecord" href="#" role="button">刪除</a>
+													         <a class="btn btn-default cancelRecord" href="#" style='display: none' role="button">取消</a>
+													        <a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>												        
 													</td>
 												</tr>
 											</c:if>
 										</c:forEach>	                                   
 	                                </tbody>
 	                            </table>
-	               
+	                           <a class="btn btn-default clubB create"  href="#"  role="button" clubId="${leagueRecordVO.clubIdB}">新增</a>
 	                        </div>
 	                        <!-- /.panel-body -->
 	                    </div>
@@ -540,16 +554,26 @@
 		        $('#dataTables-examples').DataTable({
 		            responsive: true
 		        });
-
+		        var tds;
 		        $('.updateRecord').click(function(e){
                       e.preventDefault();
-                      $(this).css('display','none').next().css('display','inline-block');
-                      var tr=$(this).parent().parent().css('background-color','rgb(255, 255, 153)');
+                      var tr=$(this).parent().parent();                     
+                    	  tds= tr.children().clone(true);
+                      $(this).css('display','none').next().css('display','none').next().css('display','inline-block').next().css('display','inline-block');
+                      tr.css('background-color','rgb(255, 255, 153)');
                       tr.find('.change').each(function(index,element){
                     	  var text=$(this).text();
                     	  $(this).text('').append($('<input type="text" class="changeData" value="'+text+'">'));
                           });
+     
 			        });
+
+                $('.cancelRecord').click(function(e){
+                    console.log('3');
+                	e.preventDefault();                    	
+                	$(this).parents('tr').empty().append(tds).css('background-color','');
+                    });  
+
           
 	              $('.submitRecord').click(function(e){
                       var button=$(this);    
@@ -640,17 +664,188 @@
 							     turnOver.empty().text(message.fightRecordVO.turnOver);
 							     fouls.empty().text(message.fightRecordVO.fouls);
 							     score.empty().text(message.fightRecordVO.score);
-							     button.css('display','none').prev().css('display','inline-block');
+							     button.css('display','none').prev().css('display','none').prev().css('display','inline-block').prev().css('display','inline-block');
 							     tr.css('background-color','');
 	                               
 								}
                           });
-  
-		              })  
+		              });  
+
+                  $('.create').click(function(e){
+							e.preventDefault();
+							var table;
+							var club;
+							if($(this).hasClass( 'clubA' )){
+								table=$('#dataTables-example');
+								club=$('#clubA').clone(true);
+								}else{
+								table=$('#dataTables-examples');
+								club=$('#clubB').clone(true);
+									}
+							 var tr =$('<tr></tr>').css('background-color','rgb(255, 255, 153)').appendTo(table);
+							for (i = 0; i <24 ; i++) { 
+							    $('<td ><input type="text" class="createData"></td>').appendTo(tr);
+							}
+		                       tr.find('td').first().empty().append(club)
+		                          .nextAll(':eq(6)').empty()
+		                          .nextAll(':eq(2)').empty()
+		                          .nextAll(':eq(2)').empty()
+		                          .nextAll(':eq(2)').empty()
+		                          .nextAll(':last').empty()
+		                          .append($('<a class="btn btn-default submitFightRecord" href="#" role="button" style="background-color:#ccffcc;margin-right:8px;padding:3px 10px">O</a>'))
+		                          .append($('<a class="btn btn-default cancel" href="#" role="button" style="background-color:#ffcccc;padding:3px 10px">X</a>'));
+
+		                          $('.cancel').bind('click',function(e){
+                                      e.preventDefault();
+                                      $(this).parents('tr').remove();
+			                          });
+
+		                          $('.submitFightRecord').bind('click',add);
+                      });
+
+                  $('.deleteRecord').click(function(e){
+                	  e.preventDefault();
+                	  var tr=$(this).parents('tr');
+                	  $.ajax({
+							type:'GET',
+							url:'deletefightRecord',
+							data:{'fightId':${fightId},'memberId':tr.find('td:eq(0)').attr('memberId')},
+							dataType: 'json',
+							success:function(message){
+									if(message.status==1){
+										 BootstrapAlert.success({ title : "Congrat!", message : "成功刪除一筆球員紀錄" });
+										 tr.remove();
+										}								
+								}
+                    	  });
+                      })
+	              
 		    });
 
+		    function add(e){
+			    
+                e.preventDefault();					
+                var button=$(this);    
+          	    var tr =$(this).parent().parent();
+                var data={};
+                data['fightId']=${fightId};
+                var gamePlayer=tr.find('td').eq(1);
+                data['gamePlayer']=gamePlayer.find('input').val();
+                var position=tr.find('td').eq(2);
+                data['position']=position.find('input').val();
+                var clubMemberName=tr.find('td').first();
+                data['clubId']=clubMemberName.find('select').attr('clubId');
+                data['clubMemberId']=clubMemberName.find('option:selected').val();      
+                var clubMemberName1= clubMemberName.find('option:selected').text();                     
+                var gameStart=tr.find('td').eq(3);
+                gameStartVal=gameStart.find('input').val();
+                if(gameStartVal!=null || $.trim(gameStartVal) !=""){
+              	  data['gameStart']=true;
+                     }else{
+                    data['gameStart']=false;
+                         };
+                var minPlay=tr.find('td').eq(4);        
+                data['minPlay']=minPlay.find('input').val();
+                var trePA=tr.find('td').eq(5);
+                data['trePA']=trePA.find('input').val();
+                var trePM=tr.find('td').eq(6);
+                data['trePM']=trePM.find('input').val();
+                var trePP=tr.find('td').eq(7);                     
+                data['trePP']=(data['trePM']/data['trePA'])*100;
+                var twoPA=tr.find('td').eq(8);
+                data['twoPA']=twoPA.find('input').val();
+                var twoPM=tr.find('td').eq(9);
+                data['twoPM']=twoPM.find('input').val();
+                var twoPP=tr.find('td').eq(10);
+                data['twoPP']=(data['twoPM']/data['twoPA'])*100;
+                var fta=tr.find('td').eq(11);
+                data['fta']=fta.find('input').val();
+                var ftm=tr.find('td').eq(12);
+                data['ftm']=ftm.find('input').val();
+                var ftp=tr.find('td').eq(13);
+                data['ftp']=(data['ftm']/data['fta'])*100;
+                var ofRep=tr.find('td').eq(14);
+                data['ofRep']=ofRep.find('input').val();
+                var deRep=tr.find('td').eq(15);
+                data['deRep']=deRep.find('input').val();
+                var totalRep=tr.find('td').eq(16);
+                data['totalRep']=(data['ofRep']+data['deRep']);
+                var ass=tr.find('td').eq(17);
+                data['ass']=ass.find('input').val();
+                var steal=tr.find('td').eq(18);
+                data['steal']=steal.find('input').val();
+                var block=tr.find('td').eq(19);
+                data['block']=block.find('input').val();
+                var turnOver=tr.find('td').eq(20);
+                data['turnOver']=turnOver.find('input').val();
+                var fouls=tr.find('td').eq(21);
+                data['fouls']=fouls.find('input').val();
+                var score=tr.find('td').eq(22);
+                data['score']=score.find('input').val();
 
+
+                $.ajax({
+					type:'POST',
+					url:'submitfightRecord',
+					contentType: "application/json",
+					data: JSON.stringify(data),
+					dataType: 'json',
+					success: function(message){
+						 BootstrapAlert.success({ title : "Congrat!", message : "成功新增一筆球員紀錄" });
+						 clubMemberName.empty().text(clubMemberName1).attr('memberId',message.fightRecordVO.clubMemberId).attr('clubId',message.fightRecordVO.clubId);
+						 gamePlayer.empty().text(message.fightRecordVO.gamePlayer);
+					     position.empty().text(message.fightRecordVO.position).addClass('change');
+					     if(message.fightRecordVO.gameStart==true){
+					     gameStart.empty().text('V').addClass('change');
+					     }else{gameStart.empty().text('')};
+					     minPlay.empty().text(message.fightRecordVO.minPlay).addClass('change');
+					     trePA.empty().text(message.fightRecordVO.trePA).addClass('change');
+					     trePM.empty().text(message.fightRecordVO.trePM).addClass('change');
+					     trePP.empty().text(message.fightRecordVO.trePP);
+					     twoPA.empty().text(message.fightRecordVO.twoPA).addClass('change');
+					     twoPM.empty().text(message.fightRecordVO.twoPM).addClass('change');
+					     twoPP.empty().text(message.fightRecordVO.twoPP);
+					     fta.empty().text(message.fightRecordVO.fta).addClass('change');
+					     ftm.empty().text(message.fightRecordVO.ftm).addClass('change');
+					     ftp.empty().text(message.fightRecordVO.ftp);
+					     ofRep.empty().text(message.fightRecordVO.ofRep).addClass('change');
+					     deRep.empty().text(message.fightRecordVO.deRep).addClass('change');
+					     totalRep.empty().text(message.fightRecordVO.totalRep);
+					     ass.empty().text(message.fightRecordVO.ass).addClass('change');
+					     steal.empty().text(message.fightRecordVO.steal).addClass('change');
+					     block.empty().text(message.fightRecordVO.block).addClass('change');
+					     turnOver.empty().text(message.fightRecordVO.turnOver).addClass('change');
+					     fouls.empty().text(message.fightRecordVO.fouls).addClass('change');
+					     score.empty().text(message.fightRecordVO.score).addClass('change');
+					     var ahrefs=$('#clickButton').find('a').clone(true);
+					     button.parent().empty().append(ahrefs);       
+					     tr.css('background-color','');
+                           
+						}
+                  });
+
+              
+			    }
 	    </script>
-	
+
 	</body>
+
+	 <select id="clubA"  clubId="${clubA.clubID}">
+	<c:forEach items="${clubA.clubmembers}" var="clubMember">
+	<option value="${clubMember.member.memberId}">${clubMember.member.memberLastName}${clubMember.member.memberFirstName}</option>
+	</c:forEach>
+	</select>
+	<select id="clubB" clubId="${clubA.clubID}">
+	<c:forEach items="${clubB.clubmembers}" var="clubMember">
+	<option value="${clubMember.member.memberId}">${clubMember.member.memberLastName}${clubMember.member.memberFirstName}</option>
+	</c:forEach>
+	</select>
+	
+	<div id='clickButton'>
+	<a class="btn btn-default updateRecord" href="#"  role="button">修改</a>
+	<a class="btn btn-default deleteRecord" href="#" role="button">刪除</a>
+	<a class="btn btn-default cancelRecord" href="#" style='display: none' role="button">取消</a>
+	<a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>
+	</div>
+
 </html>

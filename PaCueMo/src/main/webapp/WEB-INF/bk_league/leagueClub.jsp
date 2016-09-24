@@ -383,7 +383,7 @@ input[type='time'] {
 											<td><input type="text" class="totalTime" disabled="disabled"  value="${LeagueRecordVO.totalTime}"></td>
 											<td class="center"><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default deleteRecord" href="#" role="button"  fightId="${LeagueRecordVO.fightId}">刪除</a> 
 											<input type="button" class='btn btn-default submitIRecord' value="送出" style="display: none"  clubIdA="${LeagueRecordVO.clubIdA}" clubIdB="${LeagueRecordVO.clubIdB}">
-											<a class="btn btn-default fightRecord"  href="../fightRecordBackStage/getfightRecord?fightId=${LeagueRecordVO.fightId}" role="button" >場次資料</a></td>
+											<a class="btn btn-default fightRecord"  href="../fightRecordBackStage/getfightRecord?fightId=${LeagueRecordVO.fightId}&clubIdA=${LeagueRecordVO.clubIdA}&clubIdB=${LeagueRecordVO.clubIdB}" role="button" >場次資料</a></td>
 										</tr>
 									</c:forEach>
 

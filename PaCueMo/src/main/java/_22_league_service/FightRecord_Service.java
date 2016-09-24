@@ -48,14 +48,9 @@ public class FightRecord_Service
 
 	//-----新增多筆單場球員紀錄------
 	@Transactional(rollbackFor = Exception.class)
-	public int add_All_fightRecord(List<FightRecordVO> fRecordVOs)
+	public int add_fightRecord(FightRecordVO fRecordVO)
 	{
-		int success = 0;
-		for (FightRecordVO vo : fRecordVOs)
-		{
-			fightRecordDao.add_One(vo);
-			success++;
-		}
+		int success = fightRecordDao.add_One(fRecordVO);
 		System.out.println("成功新增單場球員紀錄         " + success + "    筆-並回傳整數" + success);
 		return success;
 	}
