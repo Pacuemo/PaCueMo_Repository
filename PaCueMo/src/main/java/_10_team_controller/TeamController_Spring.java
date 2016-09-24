@@ -146,7 +146,7 @@ public class TeamController_Spring
 	}
 
 	@RequestMapping(value = "/updateTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
-	public String updateTeam(HttpServletRequest request, Integer teamId, String teamName, Integer teamProp, String content)
+	public String updateTeam(HttpServletRequest request, Integer teamId, String teamName, Integer teamProp, String content, String location)
 	{
 		System.out.println("Team_Controller : updateTeam");
 		try
@@ -155,6 +155,7 @@ public class TeamController_Spring
 			teamVO.setTeamName(teamName);
 			teamVO.setTeamProp(teamProp);
 			teamVO.setContent(content);
+			teamVO.setLocation(location);
 			teamService.update(teamVO);
 			request.setAttribute("teamId", teamVO.getTeamId());
 		}
@@ -233,26 +234,35 @@ public class TeamController_Spring
 	public String settingTeamPage(HttpSession session, HttpServletRequest request, Integer teamId)
 	{
 		System.out.println("Team_Controller : getsettingTeamPage");
-		request.removeAttribute("teamVO");
-		TeamVO teamVO = teamService.getTeamById(teamId);
+		try
+		{
+			request.removeAttribute("teamVO");
+			TeamVO teamVO = teamService.getTeamById(teamId);
 
-		System.out.println(teamVO.getTeamName());
-		request.setAttribute("teamVO", teamVO);
-		request.setAttribute("teamId", teamVO.getTeamId());
-		request.setAttribute("teamName", teamVO.getTeamName());
-		request.setAttribute("teamProp", teamVO.getTeamProp());
-		request.setAttribute("teamHead", teamVO.getTeamHead());
-		request.setAttribute("content", teamVO.getContent());
-		request.setAttribute("pageForSideBar", "haveTeamId");
-		request.setAttribute("teamExsist", "Mine");
+			System.out.println(teamVO.getTeamName());
+			request.setAttribute("teamVO", teamVO);
+			request.setAttribute("teamId", teamVO.getTeamId());
+			request.setAttribute("teamName", teamVO.getTeamName());
+			request.setAttribute("teamProp", teamVO.getTeamProp());
+			request.setAttribute("teamHead", teamVO.getTeamHead());
+			request.setAttribute("location", teamVO.getLocation());
+			request.setAttribute("content", teamVO.getContent());
+			request.setAttribute("pageForSideBar", "haveTeamId");
+			request.setAttribute("teamExsist", "Mine");
 
-		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
-		List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
-		request.setAttribute("myList", myList);
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+			List<TeamVO> myList = teamService.getMyTeamList(memberVO.getMemberId());
+			request.setAttribute("myList", myList);
 
-		List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(teamId, memberVO.getMemberId());
-		request.setAttribute("myFriendVOs", myFriendVOs);
-
+			List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(teamId, memberVO.getMemberId());
+			request.setAttribute("myFriendVOs", myFriendVOs);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("fuck");
+			return "redirect:/";
+		}
 		System.out.println("成功導入");
 		System.out.println("-------------------------------------------------------");
 		return "team/teamsetting";

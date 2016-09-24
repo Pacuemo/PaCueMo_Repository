@@ -50,6 +50,11 @@
 </script>
 </head>
 <body>
+	<c:set target="${requestScope.teamVO}" property="teamId" value="${requestScope.teamId}"/>
+	<c:set target="${requestScope.teamVO}" property="teamName" value="${requestScope.teamName}"/>
+	<c:set target="${requestScope.teamVO}" property="teamProp" value="${requestScope.teamProp}"/>
+	<c:set target="${requestScope.teamVO}" property="teamHead" value="${requestScope.teamHead}"/>
+	<c:set target="${requestScope.teamVO}" property="content" value="${requestScope.content}"/>
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
@@ -62,11 +67,6 @@ body {
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 
-	<c:set target="${requestScope.teamVO}" property="teamId" value="${requestScope.teamId}"/>
-	<c:set target="${requestScope.teamVO}" property="teamName" value="${requestScope.teamName}"/>
-	<c:set target="${requestScope.teamVO}" property="teamProp" value="${requestScope.teamProp}"/>
-	<c:set target="${requestScope.teamVO}" property="teamHead" value="${requestScope.teamHead}"/>
-	<c:set target="${requestScope.teamVO}" property="content" value="${requestScope.content}"/>
 
 
 
@@ -170,6 +170,8 @@ body {
 					"success" : function(data)
 					{
 						window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
+						clearTimeout(refresh);
+						setTimeout(refresh,5000); //指定5秒刷新一次
 					}, 
 					"error" : function(Error)
 					{
@@ -179,6 +181,13 @@ body {
 				})
 			});
 		
+
+			
+			 var refresh = function ()
+			 {
+			      window.location.reload();
+			 }
+				
 
 		// initial end
 		});

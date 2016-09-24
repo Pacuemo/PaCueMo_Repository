@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -37,19 +37,17 @@ public class RootConfig
 {
 
 	@Bean
-	@Profile("prod")
+	@Profile("default")
 	public DataSource dataSource()
 	{
-
-		JndiObjectFactoryBean factoryBean = new JndiObjectFactoryBean();
-		factoryBean.setJndiName(GlobalService.JNDI_DB_NAME);
-		factoryBean.setResourceRef(true);
-		factoryBean.setProxyInterface(javax.sql.DataSource.class);
-		return (DataSource) factoryBean.getObject();
+		final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+		dsLookup.setResourceRef(true);
+		DataSource dataSource = dsLookup.getDataSource("jdbc/MagicJackDS");
+		return dataSource;
 	}
 
 	@Bean
-	@Profile("default")
+	@Profile("dev")
 	public DataSource dataS()
 	{
 

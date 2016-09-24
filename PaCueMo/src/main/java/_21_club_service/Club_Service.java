@@ -99,6 +99,22 @@ public class Club_Service
 		return clubVO;
 	}
 
+	//查詢社團資料
+	public ClubVO getOnlyClub(int clubId)
+	{
+
+		ClubVO clubVO = clubDAO.findByPK(clubId);
+		System.out.println("成功查詢社團:1筆-傳入社團ID");
+		List<ClubMemberVO> clubMemberVOs = clubMemberDAO.getClubAll(clubId);
+		for (ClubMemberVO vo : clubMemberVOs)
+		{
+			vo.setMember(memberDAO.findByPrimaryKey(vo.getClubMemberId()));
+		}
+		clubVO.setClubmembers(clubMemberVOs);
+		System.out.println("成功查詢社團成員: " + clubMemberVOs.size() + " 筆-並放入社團物件中");
+		return clubVO;
+	}
+
 	//退出社團
 	public int delete_clubMember(String memberId)
 	{

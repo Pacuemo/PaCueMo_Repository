@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import _9_10_team_model.TeamDAO_interface;
 import _9_10_team_model.TeamVO;
 import _9_11_teammember_model.TeamMemberDAO_interface;
-import _9_12_battlerecord_model.BattleRecordDAO;
-import _9_13_teaminvite_model.TeamInviteDAO;
-import _9_14_teamapply_model.TeamApplyDAO;
+import _9_12_battlerecord_model.BattleRecordDAO_I;
+import _9_13_teaminvite_model.TeamInviteDAO_I;
+import _9_14_teamapply_model.TeamApplyDAO_I;
 
 @Component
 @Transactional
@@ -27,11 +27,11 @@ public class TeamService
 	@Autowired
 	private TeamMemberDAO_interface teamMemberDAO;
 	@Autowired
-	private BattleRecordDAO battleRecordDAO;
+	private BattleRecordDAO_I battleRecordDAO;
 	@Autowired
-	private TeamInviteDAO teamInviteDAO;
+	private TeamInviteDAO_I teamInviteDAO;
 	@Autowired
-	private TeamApplyDAO teamApplyDAO;
+	private TeamApplyDAO_I teamApplyDAO;
 
 	public TeamService()
 	{
@@ -77,7 +77,9 @@ public class TeamService
 	public TeamVO getTeamById(Integer teamId)
 	{
 		System.out.println("TeamService : getTeamById");
+		System.out.println("TeamId = " + teamId);
 		TeamVO teamVO = teamDAO.getTeamById(teamId);
+
 		System.out.println("TeamService : getTeamById End");
 		return teamVO;
 	}

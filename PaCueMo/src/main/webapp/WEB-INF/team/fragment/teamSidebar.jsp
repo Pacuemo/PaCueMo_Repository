@@ -107,7 +107,38 @@ margin-left:150px
 					<c:when test="${pageForSideBar == 'haveTeamId' && teamExsist == 'Exsist'}">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">隊伍設定 <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu" style="margin-left: 80px;width: 200px">
-								<li><a href="#">加隊員</a></li>
+								<li>
+									<a id="a_addTeamMember" href="#">加隊員</a>
+									<!-- ====================【加好友 Dialog 開始 】=====================  -->
+										<div id="modify" align="center" style="display: none;">
+											<table class="table table-hover">
+												  <thead>
+												    <tr>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;">姓名</th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												      <th style="padding-top: 8px;padding-bottom: 8px;"></th>
+												    </tr>
+												  </thead>		
+												  <c:forEach var="memberVO" items="${requestScope.myFriendVOs}" varStatus="sidebar_status">  
+													  <tbody>
+													  	<tr>
+													      <th scope="row"></th>
+													      <td><a href="/PaCueMo/TeamServlet?teamId=1">${memberVO.memberFirstName }</a></td>
+													      <td></td>
+													      <td>  		
+														  </td>	
+													      <td>
+															<button value="${memberVO.memberId}" class="btn btn-success sidebar_join">加入</button>
+													      </td>	
+													    </tr>
+													  </tbody>
+												  </c:forEach>	
+											</table>
+										</div>
+									<!-- ====================【加好友 Dialog 結束 】=====================  -->
+								</li>
 								<li class="divider"></li>
 								<li><a id="a_createTeam" href="#">建立新隊伍</a></li>
 							</ul>
@@ -365,7 +396,7 @@ margin-left:150px
 			
 			$(this).parents("tbody").hide(200);
 			clearTimeout(refresh);
-			setTimeout(refresh,3000); //指定1秒刷新一次
+			setTimeout(refresh,3000); //指定3秒刷新一次
 		
 		})
 		
