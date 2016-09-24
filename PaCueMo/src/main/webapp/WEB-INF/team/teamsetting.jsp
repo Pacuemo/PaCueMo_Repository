@@ -47,6 +47,12 @@
 </script>
 </head>
 <body>
+<c:set target="${requestScope.teamVO}" property="teamId" value="${requestScope.teamId}"/>
+<c:set target="${requestScope.teamVO}" property="teamName" value="${requestScope.teamName}"/>
+<c:set target="${requestScope.teamVO}" property="teamProp" value="${requestScope.teamProp}"/>
+<c:set target="${requestScope.teamVO}" property="teamHead" value="${requestScope.teamHead}"/>
+<c:set target="${requestScope.teamVO}" property="location" value="${requestScope.location}"/>
+<c:set target="${requestScope.teamVO}" property="content" value="${requestScope.content}"/>
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
@@ -59,11 +65,6 @@ body {
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
 	<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
 
-<c:set target="${requestScope.teamVO}" property="teamId" value="${requestScope.teamId}"/>
-<c:set target="${requestScope.teamVO}" property="teamName" value="${requestScope.teamName}"/>
-<c:set target="${requestScope.teamVO}" property="teamProp" value="${requestScope.teamProp}"/>
-<c:set target="${requestScope.teamVO}" property="teamHead" value="${requestScope.teamHead}"/>
-<c:set target="${requestScope.teamVO}" property="content" value="${requestScope.content}"/>
 	<div class="row" style="padding-left: 30px">
 		<div class="col-md-12">
 			<h2 style="color: white;">
@@ -94,6 +95,40 @@ body {
 								<td class="left_40"><div>
 										<input id="teamName" name="teamName" type="text" tabindex="1" maxlength="10" pattern=".{1,}" value="${requestScope.teamVO.teamName }">
 									</div></td>
+							</tr>
+							<tr>
+								<td colspan="2"><hr></td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr>
+								<th>活動地區</th>
+								<td class="left_40"><div>
+									<select id="select_location" name="location" class="form-control valid" style="">
+										<option selected="selected" value="臺北市">臺北市</option>
+										<option value="新北市">新北市</option>
+										<option value="桃園市">桃園市</option>
+										<option value="基隆市">基隆市</option>
+										<option value="新竹市">新竹市</option>
+										<option value="新竹縣">新竹縣</option>
+										<option value="宜蘭縣">宜蘭縣</option>
+										<option value="苗栗縣">苗栗縣</option>
+										<option value="臺中市">臺中市</option>
+										<option value="彰化縣">彰化縣</option>
+										<option value="南投縣">南投縣</option>
+										<option value="雲林縣">雲林縣</option>
+										<option value="嘉義縣">嘉義縣</option>
+										<option value="嘉義市">嘉義市</option>
+										<option value="臺南市">臺南市</option>
+										<option value="屏東縣">屏東縣</option>
+										<option value="高雄市">高雄市</option>
+										<option value="花蓮縣">花蓮縣</option>
+										<option value="臺東縣">臺東縣</option>
+										<option value="澎湖縣">澎湖縣</option>
+										<option value="金門縣">金門縣</option>
+										<option value="連江縣">連江縣</option>
+									</select>
+								</div></td>
 							</tr>
 							<tr>
 								<td colspan="2"><hr></td>
@@ -174,7 +209,10 @@ body {
 					$("#privacy_3").prop('checked', true);
 					break;
 			}
-
+			
+			var act_location = "${requestScope.location}";
+			$("#select_location option[value='"+act_location+"']").attr('selected', 'selected');
+			
 			// initial end
 		});
 	</script>

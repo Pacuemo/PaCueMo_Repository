@@ -182,7 +182,7 @@ body {
 							</div>
 							<div class="col-xs-4">
 								<select id="courtArea" name="courtArea" class="form-control">
-									<option value="x" disabled="disabled" selected="selected">請選擇縣市</option>
+									<option value="x" disabled="disabled" selected="selected">請選擇鄉、鎮、區</option>
 									
 								</select>
 							</div>

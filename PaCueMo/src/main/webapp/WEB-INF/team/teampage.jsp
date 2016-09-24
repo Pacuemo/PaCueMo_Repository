@@ -438,7 +438,7 @@ body {
 						    <tr>
 						      <th hidden="none" scope="row">${battleRecordVOB.battleId}</th>
 						      <th scope="row"></th>
-						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVO.teamAVO.teamId}">${battleRecordVOB.teamAVO.teamName}</a></td>
+						      <td><a href="${pageContext.request.contextPath }/TeamServlet?teamId=${battleRecordVOB.teamAVO.teamId}">${battleRecordVOB.teamAVO.teamName}</a></td>
 						      <td>${battleRecordVOB.battleMode} V ${battleRecordVOB.battleMode}</td>
 						      <td>  <c:choose>
 									<c:when test="${battleRecordVOB.battleBet == 0}">
