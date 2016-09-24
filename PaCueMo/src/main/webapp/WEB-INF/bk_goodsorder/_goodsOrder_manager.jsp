@@ -476,14 +476,14 @@
 							<td valign="middle" style="background-color:#ADADAD;">&nbsp;</td>
 						</tr>
 						<tr>
-							<th class="bg-primary" scope="row" valign="middle">訂購數量(代幣)</th>
+							<th class="bg-primary" scope="row" valign="middle">訂購數量<br/>(代幣)</th>
 							<td class="bg-primary" valign="middle" style="font-size:large;font-weight:800;color:yellow;">text</td>
 							<td class="bg-primary" valign="middle">
 								<input class="form-control" style="color:red;font-weight:800;" type="text" autocomplete="off" disabled="disabled"/>
 							</td>
 						</tr>		
 						<tr>
-							<th class="bg-primary" scope="row" valign="middle">訂購數量(NTD)</th>
+							<th class="bg-primary" scope="row" valign="middle">訂購數量<br/>(NTD)</th>
 							<td class="bg-primary" valign="middle" style="font-size:large;font-weight:800;color:yellow;">text</td>
 							<td class="bg-primary" valign="middle">
 								<input class="form-control" style="color:red;font-weight:800;" type="text" autocomplete="off"/>
@@ -562,7 +562,7 @@
 		    		$('#modify td:eq(2)').text( mbId );
 		    		$('#modify td:eq(4)').text( carNum );
 		    		$('#modify td:eq(6)').text( fullName );
-		    		$('#modify td:eq(8)').text( expire.substring(5,9) ); // 到期年
+		    		$('#modify td:eq(8)').text( expire.substring(5,10) ); // 到期年
 		    		$('#modify td:eq(10)').text( expire.substring(0,2) );// 到期月
 		    		$('#modify td:eq(12)').text( cvc );
 		    		$('#modify td:eq(14)').text( coinQty );
@@ -577,9 +577,9 @@
 					         show   : { effect :'fold' , duration: 1000 },
 					         hide   : { effect :'clip' , duration: 500 },
 					       //height    : '400',
-					        'width'    : '800',
+					        'width'    : '900',
 					        'resizable':  false,
-					        'zIndex': 99999,
+					       //'zIndex': 99999,
 					        'position' : { my: "center", at: "center", of: window },
 					        'open'     : function(){ /*do-nothing*/ },
 					         buttons   :[
