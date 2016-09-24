@@ -7,6 +7,11 @@ public class NBATeamVO
 	private String teamLogoURL;
 	private String start5URL;
 
+	public NBATeamVO()
+	{
+
+	}
+
 	public Integer getTeamID()
 	{
 		return teamID;

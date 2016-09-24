@@ -11,6 +11,11 @@ public class BattleSetVO
 	private Double homebet;
 	private Double awaybet;
 
+	public BattleSetVO()
+	{
+
+	}
+
 	public Integer getBattleId()
 	{
 		return battleId;

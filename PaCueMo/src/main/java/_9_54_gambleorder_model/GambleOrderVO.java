@@ -12,6 +12,11 @@ public class GambleOrderVO
 	private java.sql.Timestamp betTime;
 	private MemberVO memberVO;// 嵌入 會員
 
+	public GambleOrderVO()
+	{
+
+	}
+
 	public Integer getGambleId()
 	{
 		return gambleId;
