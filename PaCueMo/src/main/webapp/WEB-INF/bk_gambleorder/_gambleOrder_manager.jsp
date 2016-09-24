@@ -42,7 +42,37 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<style type="text/css">
-		.ui-dialog { z-index: 9999 !important ;}/* 確保 dialog 最上層顯示 */
+		.ui-dialog { 
+			z-index: 1000 !important ;
+			background: lightslategrey;
+		}/* 確保 dialog 最上層顯示 */
+		div.ui-dialog-buttonpane{
+			background:lightslategrey;
+		}
+		/* ↓↓↓ for bootbox */
+		div.bootbox-body{
+		    font-size: 30px;
+		    color: red;
+		    font-family: 微軟正黑體;
+		    font-weight: 800;
+		}
+		div.modal-header{
+			background-color:#5A5AAD;
+		}
+		h4.modal-title{
+		    font-size: 25px;
+		    color-rendering: inherit;
+		    font-weight: 800;
+		    font-family: 微軟正黑體;
+		    color: yellow;
+		}
+		/* ↑↑↑ for bootbox */
+		#modify tr{ 
+ 			background: lightblue;
+ 		} 
+ 		#modify  tr:hover{ 
+ 			background: gray;
+ 		} 
 	</style>
 </head>
 
@@ -340,7 +370,7 @@
 	        <div id="page-wrapper">
 	            <div class="row">
 	                <div class="col-lg-12">
-	                    <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">下注訂單管理</h1>
+	                    <h1 class="page-header" style="font-family:微軟正黑體;font-weight:800">會員下注訂單管理</h1>
 	                </div>
 	                <!-- /.col-lg-12 -->
 	            </div>
@@ -356,14 +386,14 @@
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
-	                                        <th>訂單編號</th>
-	                                        <th>會員id</th>
-	                                        <th>會員姓名</th>
-	                                        <th>場次編號</th>
-	                                        <th>主隊下注</th>
-	                                        <th>客隊下注</th>
-	                                        <th>下注時間</th>
-	                                        <th>修改/刪除</th>
+	                                        <th style="background-color:#0066FF;color:white;">訂單編號</th>
+	                                        <th style="background-color:#0066FF;color:white;">會員id</th>
+	                                        <th style="background-color:#0066FF;color:white;">會員姓名</th>
+	                                        <th style="background-color:#0066FF;color:white;">場次編號</th>
+	                                        <th style="background-color:#0066FF;color:white;">主隊下注</th>
+	                                        <th style="background-color:#0066FF;color:white;">客隊下注</th>
+	                                        <th style="background-color:#0066FF;color:white;">下注時間</th>
+	                                        <th style="background-color:#0066FF;color:white;">修改/刪除</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -502,44 +532,69 @@
 				                			'text'  : "確認修改",
 				                			'class' : "btn btn-warning",
 				                			'click' :  function(){
-						            		    		var modify_betHome = $('#modify input:eq(0)').val();// 要修改的下注金額(home)
-						            		    		var modify_betAway = $('#modify input:eq(1)').val();// 要修改的下注金額(away)
-				                						//-------- 到後台更新資料 -----------
-	                									$.ajax({
-															"type":"POST",//傳遞方式				
-									                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/updateOrder",
-									                		"dataType":"text",//Servlet回傳格式
-									                		"data":{ "gambleId" 	   : gambleId ,
-									                				 "modify_betHome"  : modify_betHome  ,
-									                				 "modify_betAway"  : modify_betAway  ,
-									                				 "battleId"        : battleId ,
-									                				 "betTime"         : betTime  ,
-									                				 "mbId"            : mbId
-									                		},
-									       					"success":function(dataText){
-																//alert('ggg ' + dataText);
-												      			BootstrapAlert.success({ //BootstrapAlert 特效
-										 			                title  : "系統訊息",
-										 			                message: "更新成功",
-										 			                hideTimeout: 2500,
-										 			        	});
-												      			//---- 修改 <tr>→<td> 為新金額 ----
-												      			//alert(tmpTr.prop('tagName'));
-												      			tmpTr.children(':nth-child(5)').text( modify_betHome );
-												      			tmpTr.children(':nth-child(6)').text( modify_betAway );
-									       					},
-												      		"error":function(){
-													      			BootstrapAlert.info({ //BootstrapAlert 特效
-											 			                title  : "網路忙線中",
-											 			                message: "請稍候",
-											 			                hideTimeout: 2300,
-											 			        	});
-													        }
-														})
-				                					    //-------- 關閉 dialog --------------
-				                						myDialog.dialog("close");
-				                			 		  }
-								        },
+					            					//////////////////////////////////////////////////////
+					            				    bootbox.dialog({/*confirm box*/
+					            							  title: " -- 系統訊息 -- ",
+					            							  message: " ※ 確認修改此筆訂單嗎?",
+						            				   		  size:'null', //large , null ,small
+					            							  buttons: {
+						            							    danger: {
+						            							      label: "確認",
+						            							      className: "btn-danger",
+						            							      callback: function() {
+						            								      						  					                			
+											            		    		var modify_betHome = $('#modify input:eq(0)').val();// 要修改的下注金額(home)
+											            		    		var modify_betAway = $('#modify input:eq(1)').val();// 要修改的下注金額(away)
+									                						//-------- 到後台更新資料 -----------
+						                									$.ajax({
+																				"type":"POST",//傳遞方式				
+														                		"url" :"<%=request.getContextPath()%>/spring/gambleOrder/updateOrder",
+														                		"dataType":"text",//Servlet回傳格式
+														                		"data":{ "gambleId" 	   : gambleId ,
+														                				 "modify_betHome"  : modify_betHome  ,
+														                				 "modify_betAway"  : modify_betAway  ,
+														                				 "battleId"        : battleId ,
+														                				 "betTime"         : betTime  ,
+														                				 "mbId"            : mbId
+														                		},
+														       					"success":function(dataText){
+																					//alert('ggg ' + dataText);
+																	      			BootstrapAlert.success({ //BootstrapAlert 特效
+															 			                title  : "系統訊息",
+															 			                message: "更新成功",
+															 			                hideTimeout: 2500,
+															 			        	});
+																	      			//---- 修改 <tr>→<td> 為新金額 ----
+																	      			//alert(tmpTr.prop('tagName'));
+																	      			tmpTr.children(':nth-child(5)').text( modify_betHome );
+																	      			tmpTr.children(':nth-child(6)').text( modify_betAway );
+														       					},
+																	      		"error":function(){
+																		      			BootstrapAlert.info({ //BootstrapAlert 特效
+																 			                title  : "網路忙線中",
+																 			                message: "請稍候",
+																 			                hideTimeout: 2300,
+																 			        	});
+																		        }
+																			})
+									                					    //-------- 關閉【修改】dialog --------------
+									                						myDialog.dialog("close");
+			
+						            							      }/*end-of callback: function()*/
+					            							    },
+					            							    main: {
+							            							      label    : "取消",
+							            							      className: "btn-primary",
+							            							      callback : function() {
+							            							    	  /*do-nothing*/
+						            							     	 }
+					            							    }
+					            						 }/*end-of-bootBox's Buttons*/
+					            					});	/*end-of bootbox.dialog*/	    		
+					            					/////////////////////////////////////////////////////
+
+				                			    }/*end-of-【修改】-click*/
+								        }/*end-of-button1*/,
 								        {
 								        	'id'    : 'btnCancel',
 				                			'text'  : "取消",
@@ -548,7 +603,7 @@
 				                				
 				                						myDialog.dialog("close");
 				                			          }
-								        }
+								        }/*end-of-button2*/
 						        ],
 						        'close': function(){
 						        	// do-nothing
@@ -592,7 +647,7 @@
 														case 'del_success':
 															//alert('fuck' + dataText);
 											      			BootstrapAlert.success({ //BootstrapAlert 特效
-									 			                title: "系統訊息",
+									 			                title  : "系統訊息",
 									 			                message: "刪除成功",
 									 			                hideTimeout: 2500,
 									 			        	});
@@ -602,7 +657,7 @@
 														  break;
 														default:
 											      			BootstrapAlert.info({ //BootstrapAlert 特效
-									 			                title: "網路忙線中",
+									 			                title  : "網路忙線中",
 									 			                message: "請稍候",
 									 			                hideTimeout: 2000,
 									 			        	});
@@ -613,11 +668,11 @@
 							      }/*end-of callback: function()*/
 							    },
 							    main: {
-							      label: "取消",
-							      className: "btn-primary",
-							      callback: function() {
-							    	  /*do-nothing*/
-							      }
+								      label: "取消",
+								      className: "btn-primary",
+								      callback: function() {
+								    	  /*do-nothing*/
+								      }
 							    }
 							  }
 					});	/*end-of bootbox.dialog*/	    		
@@ -639,30 +694,30 @@
 		    });
 
 
-		    var bDialog = function(){
+// 		    var bDialog = function(){
 
-		    	bootbox.dialog({
-					  message: " ※ 注意：刪除資料將無法復原！！！",
-					  title: " -- 系統訊息 -- ",
-					  buttons: {
-					    danger: {
-					      label: "確認",
-					      className: "btn-danger",
-					      callback: function() {
-					        /*do-nothing*/
+// 		    	bootbox.dialog({
+// 					  message: " ※ 注意：刪除資料將無法復原！！！",
+// 					  title: " -- 系統訊息 -- ",
+// 					  buttons: {
+// 					    danger: {
+// 					      label: "確認",
+// 					      className: "btn-danger",
+// 					      callback: function() {
+// 					        /*do-nothing*/
 	
-					      }
-					    },
-					    main: {
-					      label: "Click ME!",
-					      className: "btn-primary",
-					      callback: function() {
-					    	  /*do-nothing*/
-					      }
-					    }
-					  }
-					});
-			}
+// 					      }
+// 					    },
+// 					    main: {
+// 					      label: "Click ME!",
+// 					      className: "btn-primary",
+// 					      callback: function() {
+// 					    	  /*do-nothing*/
+// 					      }
+// 					    }
+// 					  }
+// 					});
+// 			}
 	    </script>
 	
 	</body>

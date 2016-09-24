@@ -42,7 +42,38 @@
     <![endif]-->
     
 	<style type="text/css">
-		.ui-dialog { z-index: 1000 !important ;}/* 確保 dialog 最上層顯示 */
+		.ui-dialog { 
+			z-index: 1000 !important ;
+			background: lightslategrey;
+		}/* 確保 dialog 最上層顯示 */
+		div.ui-dialog-buttonpane{
+			background:lightslategrey;
+		}
+		
+		/* ↓↓↓ for bootbox */
+		div.bootbox-body{
+		    font-size: 30px;
+		    color: red;
+		    font-family: 微軟正黑體;
+		    font-weight: 800;
+		}
+		div.modal-header{
+			background-color:#5A5AAD;
+		}
+		h4.modal-title{
+		    font-size: 25px;
+		    color-rendering: inherit;
+		    font-weight: 800;
+		    font-family: 微軟正黑體;
+		    color: yellow;
+		}
+		/* ↑↑↑ for bootbox */
+ 		#modify tr{ 
+ 			background: lightblue;
+ 		} 
+ 		#modify  tr:hover{ 
+ 			background: gray;
+ 		} 
 	</style>
 </head>
 
@@ -355,17 +386,17 @@
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example" style="table-layout: fixed;word-break: break-all;/*防止內容撐開表格*/">
 	                                <thead>
 	                                    <tr>
-	                                        <th>訂單編號</th>
-	                                        <th>會員id</th>
-	                                        <th>信用卡號</th>
-	                                        <th>持卡人姓名</th>
-	                                        <th>到期日</th>
-                 							<th>識別碼</th>
-                 							<th>下訂數量</th>
-                 							<th>款項(NT)</th>
-                 							<th>下訂時間</th>
-                 							<th>付款狀態</th>
-											<th>修改/刪除</th>
+	                                        <th style="background-color:#0066FF;color:white;">訂單編號</th>
+	                                        <th style="background-color:#0066FF;color:white;">會員id</th>
+	                                        <th style="background-color:#0066FF;color:white;">信用卡號</th>
+	                                        <th style="background-color:#0066FF;color:white;">持卡人姓名</th>
+	                                        <th style="background-color:#0066FF;color:white;">到期日</th>
+                 							<th style="background-color:#0066FF;color:white;">識別碼</th>
+                 							<th style="background-color:#0066FF;color:white;">下訂數量</th>
+                 							<th style="background-color:#0066FF;color:white;">款項(NT)</th>
+                 							<th style="background-color:#0066FF;color:white;">下訂時間</th>
+                 							<th style="background-color:#0066FF;color:white;">付款狀態</th>
+											<th style="background-color:#0066FF;color:white;">修改/刪除</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
