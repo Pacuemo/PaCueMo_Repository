@@ -42,7 +42,7 @@
     <![endif]-->
     
 	<style type="text/css">
-		.ui-dialog { z-index: 9999 !important ;}/* 確保 dialog 最上層顯示 */
+		.ui-dialog { z-index: 1000 !important ;}/* 確保 dialog 最上層顯示 */
 	</style>
 </head>
 
@@ -548,7 +548,8 @@
 					       //height    : '400',
 					        'width'    : '800',
 					        'resizable':  false,
-					        'position' : { my: "center", at: "center center", of: window },
+					        'zIndex': 99999,
+					        'position' : { my: "center", at: "center", of: window },
 					        'open'     : function(){ /*do-nothing*/ },
 					         buttons   :[
 							        {
@@ -556,68 +557,94 @@
 			                			'text'  : "確認修改",
 			                			'class' : "btn btn-warning",
 			                			'click' :  function(){
-				                					//alert('e04');
-										                var orderId         =  $('#modify td:eq(0)').text();
-										                var mbId            =  $('#modify td:eq(2)').text();
-										                var cardNum         =  $('#modify td:eq(4)').text();
-										                var fullName        =  $('#modify td:eq(6)').text();
-										                var expireYY        =  $('#modify td:eq(8)').text();
-										                var expireMM        =  $('#modify td:eq(10)').text();
-										                var cvc 	        =  $('#modify td:eq(12)').text();
-					            		    			var modify_coin     =  $('#modify input:eq(0)').val(); // 要修改的下注金額(代幣)										                		    	
-										                var modify_ntd      =  $('#modify input:eq(1)').val(); // 要修改的下注金額(台幣)		
-										                var orderDateTime	=  $('#modify td:eq(18)').text();
-										                var isPay		    =  $('#modify td:eq(20)').text();
 
-										                
-											            var data={ 
-										                	         "orderId"       : orderId ,
-										                	         "memberId"      : mbId    ,
-										                	         "cardNum"       : cardNum  ,
-										                	         "fullName"      : fullName  ,
-										                	         "expireMM"      : expireMM  ,
-										                	         "expireYY"      : expireYY  ,
-										                	         "cvc"     		 : cvc  ,
-										                	         "coinQty"	     : modify_coin  , /* 要更新的點數 */
-										                	         "ntdQty"    	 : modify_ntd  ,  /* 要更新的點數 */
-										                	         "orderDateTime" : orderDateTime  ,
-										                	         "isPay"         : isPay  
-								                				};
-								                		//console.log( JSON.stringify(data) );
-													//===================================
-			                						//-------- 到後台更新資料 -----------
-			                						//===================================
-	             									$.ajax({
-															"type":"POST",//傳遞方式	
-															"contentType": "application/json",			
-									                		"url" :"<%=request.getContextPath()%>/spring/goodsOrder/updateOrder",
-									                		"dataType":"text",//Servlet回傳格式
-															"data" : JSON.stringify(data), //從物件建立 JSON 字串
-									       					"success":function(dataText){
-									       						
-																//alert('ggg ' + dataText);
-												      			BootstrapAlert.success({ //BootstrapAlert 特效
-										 			                title  : "系統訊息",
-										 			                message: "更新成功",
-										 			                hideTimeout: 2500,
-										 			        	});
-// 												      			//---- 修改 <tr>→<td> 為新金額 ----
-												      			//alert('tagName = ' + tmpTr.prop('tagName'));
-												      			tmpTr.children(':nth-child(7)').text( modify_coin );
-												      			tmpTr.children(':nth-child(8)').text( modify_ntd );
-									       					},
-												      		"error":function(){
-												      			BootstrapAlert.info({ //BootstrapAlert 特效
-										 			                title  : "網路忙線中",
-										 			                message: "請稍候",
-										 			                hideTimeout: 2300,
-										 			        	});
-													        }
-														})
-			                					    //-------- 關閉 dialog --------------
-			                						myDialog.dialog("close");
-			                			 		  }
-							        },
+			                				//////////////////////////////////////////////////////
+			            				    bootbox.dialog({/*confirm box*/
+			            							  message: " ※ 確定更新資料嗎?",
+			            							  title: " -- 系統訊息 -- ",			            							
+			            							  buttons: {
+			            							    danger: {
+				            							      label: "確認",
+				            							      className: "btn-danger",
+				            							      callback: function() {
+			            								      
+							                					//alert('e04');
+												                var orderId         =  $('#modify td:eq(0)').text();
+												                var mbId            =  $('#modify td:eq(2)').text();
+												                var cardNum         =  $('#modify td:eq(4)').text();
+												                var fullName        =  $('#modify td:eq(6)').text();
+												                var expireYY        =  $('#modify td:eq(8)').text();
+												                var expireMM        =  $('#modify td:eq(10)').text();
+												                var cvc 	        =  $('#modify td:eq(12)').text();
+							            		    			var modify_coin     =  $('#modify input:eq(0)').val(); // 要修改的下注金額(代幣)										                		    	
+												                var modify_ntd      =  $('#modify input:eq(1)').val(); // 要修改的下注金額(台幣)		
+												                var orderDateTime	=  $('#modify td:eq(18)').text();
+												                var isPay		    =  $('#modify td:eq(20)').text();
+
+													            var data={ 
+												                	         "orderId"       : orderId ,
+												                	         "memberId"      : mbId    ,
+												                	         "cardNum"       : cardNum  ,
+												                	         "fullName"      : fullName  ,
+												                	         "expireMM"      : expireMM  ,
+												                	         "expireYY"      : expireYY  ,
+												                	         "cvc"     		 : cvc  ,
+												                	         "coinQty"	     : modify_coin  , /* 要更新的點數 */
+												                	         "ntdQty"    	 : modify_ntd  ,  /* 要更新的點數 */
+												                	         "orderDateTime" : orderDateTime  ,
+												                	         "isPay"         : isPay  
+										                		};
+										                		//console.log( JSON.stringify(data) );
+																//===================================
+						                						//-------- 到後台更新資料 -----------
+						                						//===================================
+				             									$.ajax({
+																		"type":"POST",//傳遞方式	
+																		"contentType": "application/json",			
+												                		"url" :"<%=request.getContextPath()%>/spring/goodsOrder/updateOrder",
+												                		"dataType":"text",//Servlet回傳格式
+																		"data" : JSON.stringify(data), //從物件建立 JSON 字串
+												       					"success":function(dataText){
+												       						
+																			//alert('ggg ' + dataText);
+															      			BootstrapAlert.success({ //BootstrapAlert 特效
+													 			                title  : "系統訊息",
+													 			                message: "更新成功",
+													 			                hideTimeout: 2500,
+													 			        	});
+			 												      			//---- 修改 <tr>→<td> 為新金額 ----
+															      			//alert('tagName = ' + tmpTr.prop('tagName'));
+															      			tmpTr.children(':nth-child(7)').text( modify_coin );
+															      			tmpTr.children(':nth-child(8)').text( modify_ntd );
+												       					},
+															      		"error":function(){
+															      			BootstrapAlert.info({ //BootstrapAlert 特效
+													 			                title  : "網路忙線中",
+													 			                message: "請稍候",
+													 			                hideTimeout: 2300,
+													 			        	});
+																        }
+																	})
+
+							                					    //-------- 關閉 dialog --------------
+							                						myDialog.dialog("close");
+																	
+			            							      }/*end-of callback: function()*/
+			            							    },
+					            							    main: {
+						            							      label: "取消",
+						            							      className: "btn-primary",
+						            							      callback: function() {
+						            							    	  /*do-nothing*/
+						            							      }
+					            							    }
+				            							  }
+				            					});	/*end-of bootbox.dialog*/	    		
+			            						/////////////////////////////////////////////////////
+
+
+			                			  }
+							        }/*end of Button1*/,
 							        {
 							        	'id'    : 'btnCancel',
 			                			'text'  : "取消",
@@ -626,7 +653,7 @@
 			                				
 			                						myDialog.dialog("close");
 			                			          }
-							        }
+							        }/*end of Button2*/
 					        ],
 					        'close': function(){
 					        	// do-nothing
