@@ -287,13 +287,13 @@ public class TeamServlet extends HttpServlet
 					System.out.println("未輸入活動地區: 台北市 (default)");
 					location = "台北市";
 				}
+				teamVO.setLocation(location);
 			}
 			catch (Exception e)
 			{
 				System.out.println("(ERROR) 活動地區: 台北市 (default)");
 				location = "台北市";
 			}
-			teamVO.setLocation("台北市");
 
 			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 			String teamMemberId = memberVO.getMemberId();
