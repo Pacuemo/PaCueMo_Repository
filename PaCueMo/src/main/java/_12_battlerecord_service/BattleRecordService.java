@@ -2,16 +2,23 @@ package _12_battlerecord_service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 import _00_config.RootConfig;
+import _10_steven_facade.StevenFacade;
 import _9_10_team_model.TeamDAO;
+import _9_10_team_model.TeamVO;
+import _9_11_teammember_model.TeamMemberVO;
 import _9_12_battlerecord_model.BattleRecordDAO_I;
 import _9_12_battlerecord_model.BattleRecordVO;
 import _9_31_court_model.CourtDAO;
+import _9_41_member_model.MemberDAO_interface_Spring;
+import _9_41_member_model.MemberVO;
 
 @Component
 public class BattleRecordService
@@ -20,13 +27,43 @@ public class BattleRecordService
 	private BattleRecordDAO_I battleRecordDAO;
 	@Autowired
 	private TeamDAO teamDAO;
+	@Autowired
+	private MemberDAO_interface_Spring memberDAO;
+	@Autowired
+	private StevenFacade stevenFacade;
 
 	public BattleRecordService()
 	{
 	}
 
+	@Transactional(rollbackOn = Exception.class)
 	public void add(BattleRecordVO battleRecordVO)
 	{
+		TeamVO teamAVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdA());
+		TeamVO teamBVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdB());
+
+		double bet = battleRecordVO.getBattleBet();
+		for (TeamMemberVO teamMemberVO : teamAVO.getTeamMemberVOs())
+		{
+			System.out.println("bet = " + bet + " || TeamA 人數 = " + teamAVO.getTeamMemberVOs().size());
+			double betA = (bet / teamAVO.getTeamMemberVOs().size() * 100 % 1) / 100;
+			System.out.println("betA = " + betA);
+			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
+			double memberPoint = memberVO.getMemberPoint() - betA;
+			memberVO.setMemberPoint(memberPoint);
+			memberDAO.updatePointByPrimaryKey(memberVO);
+		}
+		for (TeamMemberVO teamMemberVO : teamBVO.getTeamMemberVOs())
+		{
+			System.out.println("bet = " + bet + " || TeamB 人數 = " + teamBVO.getTeamMemberVOs().size());
+			double betB = (bet / teamBVO.getTeamMemberVOs().size() * 100 % 1) / 100;
+			System.out.println("betB = " + betB);
+			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
+			double memberPoint = memberVO.getMemberPoint() - betB;
+			memberVO.setMemberPoint(memberPoint);
+			memberDAO.updatePointByPrimaryKey(memberVO);
+		}
+
 		battleRecordDAO.add(battleRecordVO);
 	}
 

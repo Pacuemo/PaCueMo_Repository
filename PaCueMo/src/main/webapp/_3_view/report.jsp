@@ -44,29 +44,29 @@
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/fragment/sidebar.jsp" />
-	<div id="dialog" title="問題回報">
-		<form method="post" action="ReportServlet.do">
-			<table class="tablesize">
-				<tr class="trsize">
-					<td class="title"><label for="reportType">問題類型</label></td>
-					<td class="title"><select required="required" id="reportType" name="reportType">
-							<option disabled="disabled" selected="selected" class="form-control">請選擇</option>
-							<option>場地資訊不符</option>
-							<option>其他</option>
-					</select></td>
-				</tr>
-				<tr class="trsize">
-					<td class="title"><label for="context">內容描述</label></td>
-					<td><textarea required="required" maxlength="500" id="context" class="textsize" name="reportContent"></textarea></td>
-				</tr>
-			</table>
-			<div>
-				<input type="submit" class="button" value="送出">
-				<input type="hidden" name="action" value="">
-				<input type="reset" class="button" value="清除">
-			</div>
-		</form>
-	</div>
+<!-- 	<div id="dialog" title="問題回報"> -->
+<!-- 		<form method="post" action="ReportServlet.do"> -->
+<!-- 			<table class="tablesize"> -->
+<!-- 				<tr class="trsize"> -->
+<!-- 					<td class="title"><label for="reportType">問題類型</label></td> -->
+<!-- 					<td class="title"><select required="required" id="reportType" name="reportType"> -->
+<!-- 							<option disabled="disabled" selected="selected" class="form-control">請選擇</option> -->
+<!-- 							<option>場地資訊不符</option> -->
+<!-- 							<option>其他</option> -->
+<!-- 					</select></td> -->
+<!-- 				</tr> -->
+<!-- 				<tr class="trsize"> -->
+<!-- 					<td class="title"><label for="context">內容描述</label></td> -->
+<!-- 					<td><textarea required="required" maxlength="500" id="context" class="textsize" name="reportContent"></textarea></td> -->
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<!-- 			<div> -->
+<!-- 				<input type="submit" class="button" value="送出"> -->
+<!-- 				<input type="hidden" name="action" value=""> -->
+<!-- 				<input type="reset" class="button" value="清除"> -->
+<!-- 			</div> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
 	<div class="container">
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
@@ -114,10 +114,10 @@
 </div>
 </div>
 	<script>
-		$(function()
-		{
-			$("#dialog").dialog({ autoOpen : true, height : 450, width : 600, show : { effect : "blind", duration : 100 }, position : { my : "center", at : "left+600px top+500px ", of : window } });
-		});
+// 		$(function()
+// 		{
+// 			$("#dialog").dialog({ autoOpen : true, height : 450, width : 600, show : { effect : "blind", duration : 100 }, position : { my : "center", at : "left+600px top+500px ", of : window } });
+// 		});
 	</script>
 </body>
 </html>

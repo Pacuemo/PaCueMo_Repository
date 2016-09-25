@@ -37,7 +37,7 @@ public class TeamService
 	{
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public void createTeam(TeamVO teamVO) throws SQLException
 	{
 		teamDAO.insert(teamVO);

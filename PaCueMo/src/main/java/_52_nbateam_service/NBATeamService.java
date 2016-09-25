@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
@@ -62,7 +61,7 @@ public class NBATeamService
 
 		System.out.println("== 呼叫 NBATeamService 中的 getByTeamNameREST(隊名) ==   查詢隊名字串：" + teamName);
 		NBATeamVO ans = nbaTeamDAO.findByTeamName(teamName);
-		((ConfigurableApplicationContext) context).close();
+//		((ConfigurableApplicationContext) context).close();  // 關閉似乎會連DS一起關閉
 		return ans;
 	}
 
@@ -83,8 +82,8 @@ public class NBATeamService
 		NBATeamService svc = (NBATeamService) context.getBean("nbaTeamService");
 
 		//------------- 測試 getByTeamNameREST --------------
-		NBATeamVO vo = svc.getByTeamNameREST("湖人");
-		System.out.println(vo.getTeamName());
+//		NBATeamVO vo = svc.getByTeamNameREST("湖人");
+//		System.out.println(vo.getTeamName());
 		//-------------------------------------------------------begin 查無資料 org.springframework.dao.EmptyResultDataAccessException
 //		NBATeamService svc = new NBATeamService();
 //		svc.getByTeamName("123");

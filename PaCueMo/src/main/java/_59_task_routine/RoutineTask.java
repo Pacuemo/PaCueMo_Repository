@@ -13,7 +13,6 @@ import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -41,9 +40,9 @@ public class RoutineTask extends TimerTask
 	//--------------------------------------------
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String format1 = "yyyy-MM-dd";
-	private static String flag_isUpdate = "yet_update";
+	static String flag_isUpdate = "yet_update";
 
-	public RoutineTask()
+	public RoutineTask()// for RESTful
 	{
 
 	}
@@ -102,7 +101,7 @@ public class RoutineTask extends TimerTask
 				}
 				finally
 				{
-					((ConfigurableApplicationContext) context).close();
+					//((ConfigurableApplicationContext) context).close();
 					System.out.println(" =========== ApplicationContext 關閉成功 ===========");
 				}
 			}
