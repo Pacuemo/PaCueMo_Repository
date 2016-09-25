@@ -179,6 +179,10 @@ p.tempstyle {
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg"); 
+    margin:0; 
+    padding:0; 
+    -moz-background-size: cover; 
+    background-size: cover; 
 } 
 </style>
 

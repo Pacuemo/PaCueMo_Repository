@@ -179,13 +179,13 @@ body {
 
 	<form id="contact" title="建立新隊伍" action="${pageContext.request.contextPath}/TeamServlet" method="post" style="display:none" >
 		<fieldset>
-			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{2,}">
+			<input placeholder="隊伍名稱" id="teamName" name="teamName" type="text" tabindex="1" required maxlength="10" autofocus pattern=".{1,}">
 		</fieldset>
 		<fieldset>
 			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
 		</fieldset>
 		<fieldset>
-			<select id="locaation" name="location" required="" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
+			<select id="location" name="location" required="" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
 					<option disabled="disabled" selected="selected" value="none">活動地區</option>
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
@@ -269,7 +269,7 @@ body {
 			}); 
 			$("#btn_contact_submit").click(function (event)
 			{
-				if($("#locaation").val() == null){
+				if($("#location").val() == null){
 				event.preventDefault();
 					alert("請選擇活動地區");
 				}else{
