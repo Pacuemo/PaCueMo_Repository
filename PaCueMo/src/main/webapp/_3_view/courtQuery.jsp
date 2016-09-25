@@ -73,6 +73,10 @@ div.map {
 	height: 500px;
 	width: 100%;
 }
+
+map-btn{
+	cursor: pointer;
+}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>場地搜尋</title>
@@ -156,7 +160,7 @@ div.map {
 									<img src="image/Phone.png" width="20px" height="20px" style="float: left;"> <strong style="color: white; font-family: 微軟正黑體; margin-left: 10px;">${courtVO.phone}</strong>
 									<br>
 									<img src="image/map.png" width="20px" height="20px" style="float: left;">
-									<button class="map-btn" style="margin-left: 10px;">開啟地圖</button>
+									<button class="map-btn" style="margin-left: 10px; border-radius: 5px; background-color: #2ebd59; font-family: 微軟正黑體;"><strong>開啟地圖</strong></button>
 									<input id="long" type="hidden" value="${courtVO.longitue}"> <input id="lat" type="hidden" value="${courtVO.latitue}">
 								</div>
 							</div>
