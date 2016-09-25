@@ -368,6 +368,7 @@ $(function(){
                  success: function (message) {
 	                  if(message.status==1){
 			                 	 var chatBoxDiv = $('.chatbox').clone(true).css('display','block').removeClass('chatbox');
+			                 	
                                  var img=chatBoxDiv.find('img:first');
                                  var imgLast=chatBoxDiv.find('img:last');
 				                 	 if($.trim(memberFBId)!=0){
@@ -384,6 +385,7 @@ $(function(){
 				                 .find('.like').attr('chatId',message.chatId); 
 				                 imgLast.next().find('.reply').attr('chatId',message.chatId); 
 				                 $( "#chatHere" ).prepend( chatBoxDiv );
+				                 chatBoxDiv.find('.btn-box-tool').click();
 				                 $('#comment').val('');
 	                     }
                    }
