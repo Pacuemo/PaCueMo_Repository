@@ -129,7 +129,7 @@ body {
 
 					<div class="form-group">
 						<label class="control-label" for="battleBet">賭注</label> 
-						<sf:input type="text" id="battleBet" path="battleBet" maxlength="8" class="form-control"/>
+						<sf:input type="number" id="battleBet" path="battleBet" maxlength="8" class="form-control"/>
 					</div>
 
 					<div class="form-group">
