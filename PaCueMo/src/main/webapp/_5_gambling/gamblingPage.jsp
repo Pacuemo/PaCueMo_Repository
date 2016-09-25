@@ -263,10 +263,10 @@
 					
 					$.ajax({
 						 "type":"POST",//傳遞方式				
-	                <%-- "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
+<%-- 	                	 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
 	               		 "url" :"<%=request.getContextPath()%>" + "/RESTservices"+ "/nbaSvc/" + awayName , /* 呼叫NBATeamService.java的 REST→getByTeamNameREST */
 	               		 "dataType":"json",//Servlet回傳格式
-	               		//data":{"action" : "starting5" , "searchName" : awayName},
+// 	               		 "data":{"action" : "starting5" , "searchName" : awayName},
 	      				 "success":function(dataJson){
 	      					//alert(dataJson.start5URL);
 	      					var url_start5 = dataJson.start5URL;
@@ -289,10 +289,10 @@
 
 					$.ajax({
 						 "type":"POST",//傳遞方式				
-	                <%-- "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
+<%-- 	                	 "url" :"<%=request.getContextPath()%>" + "/_5_gambling"+ "/NbaTeam_Ajax_Servlet.do" , --%>
 	               		 "url" :"<%=request.getContextPath()%>" + "/RESTservices"+ "/nbaSvc/" + homeName , /* 呼叫NBATeamService.java的 REST→getByTeamNameREST */
 	               		 "dataType":"json",//Servlet回傳格式
-	               	   //"data":{"action" : "starting5" , "searchName" : homeName},
+// 	               	     "data":{"action" : "starting5" , "searchName" : homeName},
 	      				 "success":function(dataJson){
 	      					//alert(dataJson.start5URL);
 	      					var url_start5 = dataJson.start5URL;

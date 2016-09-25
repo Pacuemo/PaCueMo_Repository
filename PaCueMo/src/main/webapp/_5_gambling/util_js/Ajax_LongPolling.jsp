@@ -60,14 +60,14 @@
 	       					                   //hideClass: 'zoomOutDown',   // Hide animation class (Uses animate.css)
 	       					                   icon: true,                 // Icon of notification. Leave as is for default icon or set custom string
 	       					                   msg: '-- 本日NBA彩金已分配 --',// Message of notification
-	       					                   img: '<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/photo/kobe.jpg', // Image source string
+	       					                   img: "<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/photo/kobe.jpg", // Image source string
 	       					                   closable: true,             // Make notifications closable
 	       					                   delay: 5000,                // Hide notification after this time (in miliseconds)
 	       					                   delayIndicator: true,       // Show timer indicator
 	       					                   closeOnClick: true,         // Close notifications by clicking on them
 	       					                   width: 600,                 // Width of notification box
 	       					                   //sound: true,              // Sound of notification. Set this false to disable sound. Leave as is for default sound or set custom soud path
-	       					                   soundPath: '<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/sounds/',
+	       					                   soundPath: "<%=request.getContextPath()%>/_5_gambling/plugins/lobibox/dist/sounds/",
 	       					                   sound: 'msn',
 	       					                   position: "top center"    // Place to show notification. Available options: "top left", "top right", "bottom left", "bottom right"       
 	       					               }
@@ -76,7 +76,7 @@
 					      		 },
 					      		 "error":function(){
 						      			BootstrapAlert.info({ //BootstrapAlert 特效
-				 			                title: "Sorry~NBA彩金分配發生例外",
+				 			                title  : "Sorry~NBA彩金分配發生例外",
 				 			                message: "網路忙線中~請稍候 ^___^",
 				 			                hideTimeout: 1800,
 				 			        	});

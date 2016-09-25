@@ -27,6 +27,7 @@ public class TimerManager
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	static Timer timerMain = null;
+	//private static Timer timerReset = new Timer();
 	private Integer hour;
 	private Integer min;
 	private Integer sec;
@@ -82,7 +83,7 @@ public class TimerManager
 	private void setTimerTask(int hour, int min, int sec)
 	{
 		/*** 設定每日 00:00:00 執行方法 ***/
-		Calendar calendar = getCalendarWithTime(hour, min, sec);//【設定每天的幾點執行】時、分、秒  ──  24h制
+		Calendar calendar = this.getCalendarWithTime(hour, min, sec);//【設定每天的幾點執行】時、分、秒  ──  24h制
 		Date dateMain = calendar.getTime(); //第一次執行任務的時間
 
 //		System.out.println("TimerManager ── " + sdf.format(dateMain));
@@ -97,10 +98,12 @@ public class TimerManager
 		/*************** MainTimer *********************/
 		timerMain = new Timer();
 		RoutineTask task = new RoutineTask(); //TimerTask
+		//RoutineTask_Reset taskReset = new RoutineTask_Reset();
 		//============================================================
 		//=== 安排指定的任務在指定的時間開始進行重覆的固定延遲執行 ===
 		//============================================================
 		timerMain.schedule(task, dateMain, PERIOD_DAY); // ※Main Timer
+		//timerReset.schedule(taskReset, this.getCalendarWithTime(0, 0, 0).getTime(), PERIOD_DAY); // ※timerReset
 	}
 
 	// 設定要執行的時間
