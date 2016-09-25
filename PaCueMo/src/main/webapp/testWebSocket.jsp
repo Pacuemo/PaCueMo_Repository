@@ -36,8 +36,48 @@
 		})
 		
 	</script>
+	<style type="text/css">
+	.message {
+	    position: fixed;
+	    right: 20px;
+	    bottom: 0;
+	    height: 25px;
+	    width: 250px;
+	    background-color: gray;
+	    z-index: 300;
+	}
+	.message_list {
+	    position: fixed;
+	    right: 20px;
+	    bottom: 0;
+	    height: 300px;
+	    width: 250px;
+	    background-color: #e8e8e8;
+	    z-index: 400;
+	    display: none;
+	}
+	.message_title {
+	    height: 25px;
+	    width: 250px;
+	    background-color: blue;
+    }
+	</style>
   </head>
   <body>
-      
+     <div class="message">
+     </div> 
+     <div class="message_list">
+     	<div class="message_title"></div>
+     </div>
   </body>
+  <script type="text/javascript">
+  $(function(){
+	  	 $("div.message").click(function(){
+	  		 $("div.message_list").show();
+	  	 })
+	  	 $("div.message_title").click(function(){
+	  		 $("div.message_list").hide();
+	  	 })
+  })
+  </script>
 </html>
