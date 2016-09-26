@@ -138,7 +138,7 @@ public class GoodsOrder_Ajax_Servlet extends HttpServlet
 				 * failureView.forward(req, res);
 				 * return;
 				 */
-				System.out.println("=== GoodsOrder_Servlet.java 發生異常錯誤 L109===");
+				System.out.println("=== GoodsOrder_Servlet.java 發生異常錯誤 L141===");
 			}
 
 		}
