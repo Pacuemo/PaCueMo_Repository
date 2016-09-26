@@ -13,16 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import _00_config.RootConfig;
 import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _12_battlerecord_service.BattleRecordService;
 import _14_teamapply_service.TeamApplyService;
-import _44_playercard_service.PlayercardService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
 import _9_14_teamapply_model.TeamApplyVO;
@@ -33,7 +30,9 @@ public class TeamServlet extends HttpServlet
 {
 
 	private static final long serialVersionUID = 1L;
-	private AnnotationConfigWebApplicationContext context;
+//	private AnnotationConfigWebApplicationContext context;
+//	@Autowired
+//	private ServletContext servletContext;
 	@Autowired
 	private TeamService teamService;
 	@Autowired
@@ -42,8 +41,6 @@ public class TeamServlet extends HttpServlet
 	private BattleRecordService battleRecordService;
 	@Autowired
 	private TeamApplyService teamApplyService;
-	@Autowired
-	private PlayercardService playercardService;
 
 	@Autowired
 	private StevenFacade stevenFacade;
@@ -55,10 +52,10 @@ public class TeamServlet extends HttpServlet
 	@Override
 	public void init() throws ServletException
 	{
-		context = new AnnotationConfigWebApplicationContext();
+//		context = (AnnotationConfigWebApplicationContext) WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
 //		context.scan("");
-		context.register(RootConfig.class);
-		context.refresh();
+//		context.register(RootConfig.class);
+//		context.refresh();
 	}
 
 	public void init(ServletConfig config) throws ServletException
@@ -182,12 +179,6 @@ public class TeamServlet extends HttpServlet
 						req.setAttribute("teamExsist", "Not_Exsist_protect");	//setAtt
 					}
 				}
-
-//				Need to get average rank
-//				for (TeamMemberVO teamMemberVO : teamVO.getTeamMemberVOs())
-//				{
-//					
-//				}
 
 				req.setAttribute("pageForSideBar", "haveTeamId");	 		//setAtt
 
