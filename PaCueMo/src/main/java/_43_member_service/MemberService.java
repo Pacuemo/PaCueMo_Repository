@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import _9_41_member_model.MemberDAO;
 import _9_41_member_model.MemberDAO_interface;
 import _9_41_member_model.MemberVO;
@@ -11,6 +13,7 @@ import _9_43_friendsList_model.FriendsListDAO;
 import _9_43_friendsList_model.FriendsListDAO_interface;
 import _9_43_friendsList_model.FriendsListVO;
 
+@Component
 public class MemberService
 {
 	private MemberDAO_interface dao;
