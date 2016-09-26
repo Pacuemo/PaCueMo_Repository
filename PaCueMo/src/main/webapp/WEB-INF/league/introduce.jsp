@@ -21,6 +21,11 @@
   <body>
     <jsp:include page="/fragment/top.jsp"/>
    <jsp:include page="sidebar.jsp"/>
-       <h1 id="G"  >別再抱大腿啦</h1>
+<style>
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/LeagueChampions.jpg');
+width:100%;
+}
+</style>
   </body>
 </html>
