@@ -43,6 +43,7 @@ public class RootConfig
 		final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
 		dsLookup.setResourceRef(true);
 		DataSource dataSource = dsLookup.getDataSource("jdbc/MagicJackDS");
+		int abc = 0;
 		return dataSource;
 	}
 
