@@ -120,16 +120,16 @@ body {
 								<option value="連江縣">連江縣</option>
 							</select>
 						</div>
-						<div class="row content" style="padding: 10px;padding-bottom:20px;padding-top:0px; margin-top: 0px;overflow-y:scroll; height: 550px;overflow-x:hidden;">
+						<div class="row content" style="padding: 10px;padding-bottom:20px;padding-top:0px; margin-top: 0px;overflow-y:scroll; height: 400px;overflow-x:hidden;">
 							<c:set var="flag" value="5"></c:set>
 							<c:forEach items="${requestScope.teamOppVOs}" var="teamOppVO" varStatus="status">
 								<div data-location="${teamOppVO.location}" class="div_team">
-									<hr>
+									<hr style="margin-top: 0px">
 									<div class="row left_div">
-										<div class="col-md-8">
+										<div class="col-md-7">
 											<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${teamOppVO.teamId}" class="left_20">${teamOppVO.teamName}</a>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-5">
 											<form action="${pageContext.request.contextPath}/spring/battle_rec/letsbattle" method="get">
 												<button type="submit" class="btn btn-warning btn-xs" style="background-color: #F2A359;" name="btn_OppTeamId" value="${teamOppVO.teamId }">發出約戰</button>
 												<input type="hidden" name="page" value="first">

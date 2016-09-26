@@ -37,17 +37,19 @@ public class RootConfig
 {
 
 	@Bean
-	@Profile("default")
+	@Profile("prod")
 	public DataSource dataSource()
 	{
+
 		final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
 		dsLookup.setResourceRef(true);
 		DataSource dataSource = dsLookup.getDataSource("jdbc/MagicJackDS");
 		return dataSource;
+
 	}
 
 	@Bean
-	@Profile("dev")
+	@Profile("default")
 	public DataSource dataS()
 	{
 
