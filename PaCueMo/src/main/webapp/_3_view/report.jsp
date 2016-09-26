@@ -67,57 +67,71 @@
 <!-- 			</div> -->
 <!-- 		</form> -->
 <!-- 	</div> -->
-	<div class="container">
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingOne">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
+	<div id="dialog" title="test">
+		<div>
+		<ul style="list-style-type: none;">
+			<li><img alt="" src="image/City.png" id="test1"></li>
+			<li><img alt="" src="image/map.png" id="test2"></li>
+		</ul>
+		</div>
+	</div>
+<!-- 	<div class="container"> -->
+<!-- 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> -->
+<!--   <div class="panel panel-default"> -->
+<!--     <div class="panel-heading" role="tab" id="headingOne"> -->
+<!--       <h4 class="panel-title"> -->
+<!--         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
+<!--           Collapsible Group Item #1 -->
+<!--         </a> -->
+<!--       </h4> -->
+<!--     </div> -->
+<!--     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> -->
+<!--       <div class="panel-body"> -->
         
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingTwo">
-      <h4 class="panel-title">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-      <div class="panel-body">
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="panel panel-default"> -->
+<!--     <div class="panel-heading" role="tab" id="headingTwo"> -->
+<!--       <h4 class="panel-title"> -->
+<!--         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> -->
+<!--           Collapsible Group Item #2 -->
+<!--         </a> -->
+<!--       </h4> -->
+<!--     </div> -->
+<!--     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo"> -->
+<!--       <div class="panel-body"> -->
         
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingThree">
-      <h4 class="panel-title">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      <div class="panel-body">        
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="panel panel-default"> -->
+<!--     <div class="panel-heading" role="tab" id="headingThree"> -->
+<!--       <h4 class="panel-title"> -->
+<!--         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> -->
+<!--           Collapsible Group Item #3 -->
+<!--         </a> -->
+<!--       </h4> -->
+<!--     </div> -->
+<!--     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree"> -->
+<!--       <div class="panel-body">         -->
       
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+<!-- </div> -->
 	<script>
-// 		$(function()
-// 		{
-// 			$("#dialog").dialog({ autoOpen : true, height : 450, width : 600, show : { effect : "blind", duration : 100 }, position : { my : "center", at : "left+600px top+500px ", of : window } });
-// 		});
+		$(function()
+		{
+			$("#dialog").dialog({ autoOpen : true, height : 550, width : 800, show : { effect : "blind", duration : 100 }, position : { my : "center", at : "left+600px top+500px ", of : window } });
+		});
+		
+		function addform()
+		{
+			$(this).parent().parent().parent().parent().after("<div class='row google'><div class='map'></div></div>");
+			
+		}
 	</script>
 </body>
 </html>

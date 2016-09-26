@@ -473,10 +473,6 @@ body {
 					error_msg += "對方隊伍人數不足\n"
 					event.preventDefault();
 				}
-				if("${fn:length(requestScope.oppTeamVO.teamMemberVOs)}" < $("#battleMode").val()){
-					error_msg += "對方隊伍人數不足\n"
-					event.preventDefault();
-				}
 				if($("#courtName").val() == null || $("#courtName").val() == "none"){
 					error_msg += "請選擇場地\n"
 					event.preventDefault();

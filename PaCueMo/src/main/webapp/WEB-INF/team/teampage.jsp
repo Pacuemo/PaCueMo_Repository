@@ -167,6 +167,12 @@ p.tempstyle {
 	margin: 0px;
 }
 
+/* .img_main{  */
+/*  	position:absolute;  */
+/*      -moz-background-size: cover;   */
+/*      background-size: cover;   */
+/*      z-index: -1;  */
+/* }  */
 </style>
 
 </head>
@@ -174,8 +180,8 @@ p.tempstyle {
 
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="fragment/teamSidebar.jsp" />
-<%-- 	<%@include file="fragment/teamSidebar.jsp"%> --%>
-	
+<%-- 	<%@include file="fragment/teamSidebar.js"%> --%>
+<%-- 	<img alt="" src="${pageContext.request.contextPath }/image/team/nba_cup.jpg"> --%>
 <style>
 body {
     background-image: url("${pageContext.request.contextPath }/image/team/nba_cup.jpg"); 
@@ -183,7 +189,8 @@ body {
     padding:0; 
     -moz-background-size: cover; 
     background-size: cover; 
-} 
+
+}
 </style>
 
 	<div class="row" style="margin: 0px">

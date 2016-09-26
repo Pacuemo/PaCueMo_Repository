@@ -28,6 +28,7 @@ import _12_battlerecord_service.BattleRecordService;
 import _31_court_service.CourtService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
+import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -42,6 +43,8 @@ public class BattleRecordController_Spring
 	private TeamService teamService;
 	@Autowired
 	private BattleRecordService battleRecordService;
+	@Autowired
+	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
 	private Gson gson;
 
@@ -77,6 +80,11 @@ public class BattleRecordController_Spring
 			battleRecordVO.setBattleDateTime(battleDateTime);
 			battleRecordVO.setCourtId(input_courtId);
 			battleRecordService.add(battleRecordVO);
+
+			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+			memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
+
+			session.setAttribute("LoginOK", memberVO);
 		}
 		catch (Exception e)
 		{

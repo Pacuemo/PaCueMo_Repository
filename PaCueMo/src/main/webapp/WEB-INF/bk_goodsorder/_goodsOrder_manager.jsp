@@ -326,15 +326,6 @@
                         <!-- =============================【後臺功能頁籤 開始】============================ -->
                         <!-- ============================================================================== -->
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                      	        <li><a href="<%=request.getContextPath()%>/spring/leagueBackStage/league"> - 聯賽管理 - </a></li>
@@ -389,7 +380,7 @@
 	                                        <th style="background-color:#0066FF;color:white;">訂單編號</th>
 	                                        <th style="background-color:#0066FF;color:white;">會員id</th>
 	                                        <th style="background-color:#0066FF;color:white;">信用卡號</th>
-	                                        <th style="background-color:#0066FF;color:white;">持卡人姓名</th>
+	                                        <th style="background-color:#0066FF;color:white;font-size:12px;">持卡人姓名</th>
 	                                        <th style="background-color:#0066FF;color:white;">到期日</th>
                  							<th style="background-color:#0066FF;color:white;">識別碼</th>
                  							<th style="background-color:#0066FF;color:white;">下訂數量</th>
@@ -544,7 +535,7 @@
 		    		var inputCoin = $('#modify input:eq(0)');
 		    		var inputNtd  = $('#modify input:eq(1)');
 		    		inputCoin.val(coinQty); // 修改代幣textbox預設值
-		    		inputNtd.val( inputCoin.val()/100 ); // 修改台幣textbox預設值
+		    		inputNtd.val( inputCoin.val() /100 ); // 修改台幣textbox預設值
 		     
 // 					console.log( 'orderId' 			, orderId );
 // 					console.log( 'mbId' 			, mbId );

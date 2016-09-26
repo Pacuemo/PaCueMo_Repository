@@ -13,19 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import _00_config.RootConfig;
 import _10_steven_facade.StevenFacade;
 import _10_team_service.TeamService;
 import _11_teammember_service.TeamMemberService;
 import _12_battlerecord_service.BattleRecordService;
 import _14_teamapply_service.TeamApplyService;
-import _44_playercard_service.PlayercardService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
 import _9_14_teamapply_model.TeamApplyVO;
+import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 
 @WebServlet("/TeamServlet")
@@ -33,7 +31,9 @@ public class TeamServlet extends HttpServlet
 {
 
 	private static final long serialVersionUID = 1L;
-	private AnnotationConfigWebApplicationContext context;
+//	private AnnotationConfigWebApplicationContext context;
+//	@Autowired
+//	private ServletContext servletContext;
 	@Autowired
 	private TeamService teamService;
 	@Autowired
@@ -43,7 +43,7 @@ public class TeamServlet extends HttpServlet
 	@Autowired
 	private TeamApplyService teamApplyService;
 	@Autowired
-	private PlayercardService playercardService;
+	private MemberDAO_interface_Spring memberDAO;
 
 	@Autowired
 	private StevenFacade stevenFacade;
@@ -55,10 +55,10 @@ public class TeamServlet extends HttpServlet
 	@Override
 	public void init() throws ServletException
 	{
-		context = new AnnotationConfigWebApplicationContext();
+//		context = (AnnotationConfigWebApplicationContext) WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
 //		context.scan("");
-		context.register(RootConfig.class);
-		context.refresh();
+//		context.register(RootConfig.class);
+//		context.refresh();
 	}
 
 	public void init(ServletConfig config) throws ServletException
@@ -93,6 +93,12 @@ public class TeamServlet extends HttpServlet
 		{
 			System.out.println("Try get MemberVO");
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
+//---------------------------------------------------------------------------------------------------------
+//			set session LoginOK for memberPoint
+			memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
+			session.setAttribute("LoginOK", memberVO);
+//---------------------------------------------------------------------------------------------------------
+
 			System.out.println("MemberId : " + memberVO.getMemberId() + " || MemberName : " + memberVO.getMemberFirstName());
 		}
 		catch (Exception e)
@@ -182,12 +188,6 @@ public class TeamServlet extends HttpServlet
 						req.setAttribute("teamExsist", "Not_Exsist_protect");	//setAtt
 					}
 				}
-
-//				Need to get average rank
-//				for (TeamMemberVO teamMemberVO : teamVO.getTeamMemberVOs())
-//				{
-//					
-//				}
 
 				req.setAttribute("pageForSideBar", "haveTeamId");	 		//setAtt
 
