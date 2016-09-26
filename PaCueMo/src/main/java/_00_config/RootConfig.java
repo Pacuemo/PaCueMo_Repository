@@ -37,7 +37,7 @@ public class RootConfig
 {
 
 	@Bean
-	@Profile("prod")
+	@Profile("default")
 	public DataSource dataSource()
 	{
 
@@ -49,7 +49,7 @@ public class RootConfig
 	}
 
 	@Bean
-	@Profile("default")
+	@Profile("dev")
 	public DataSource dataS()
 	{
 
