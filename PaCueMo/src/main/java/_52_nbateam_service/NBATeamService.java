@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -23,6 +24,7 @@ import _9_52_nbateam_model.NBATeamVO;
 @Path("/")
 public class NBATeamService
 {
+	@Autowired
 	private NBATeamDAO_interface nbaTeamDAO;
 
 	public NBATeamService()

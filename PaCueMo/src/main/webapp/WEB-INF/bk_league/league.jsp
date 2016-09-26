@@ -304,24 +304,7 @@ input[type='date']{
 	                        <!-- ============================================================================== -->
 	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
 	                        <!-- ============================================================================== -->
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
+
 	                        <li>
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
@@ -377,12 +360,12 @@ input[type='date']{
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
-	                                        <th>League Name</th>
-	                                        <th>Club Amount</th>
-	                                        <th>Start Date</th>
-	                                        <th>End Date</th>
-	                                        <th>Court Id</th>
-	                                        <th>Button </th>
+	                                        <th style="background-color:#0066FF;color:white">League Name</th>
+	                                        <th style="background-color:#0066FF;color:white">Club Amount</th>
+	                                        <th style="background-color:#0066FF;color:white">Start Date</th>
+	                                        <th style="background-color:#0066FF;color:white">End Date</th>
+	                                        <th style="background-color:#0066FF;color:white">Court Id</th>
+	                                        <th style="background-color:#0066FF;color:white">Button </th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>	                             

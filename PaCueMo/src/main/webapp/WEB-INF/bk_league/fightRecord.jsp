@@ -304,24 +304,6 @@
 	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
 	                        <!-- ============================================================================== -->
 	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
-	                        <li>
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
@@ -377,30 +359,30 @@
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 	                                <thead>
 	                                    <tr>
-		                                    <th>球員</th>
-								   		    <th>背號</th>
-											<th>位置</th>
-											<th>先發</th>
-											<th>上場</th>
-											<th>3PA</th>
-											<th>3PM</th>
-											<th>3PP</th>
-											<th>2PA</th>
-											<th>2PM</th>
-											<th>2PP</th>
-											<th>FTA</th>
-											<th>FTM</th>
-											<th>FTP</th>
-											<th>OR</th>
-											<th>DR</th>
-											<th>TR</th>
-											<th>ASS</th>
-											<th>ST</th>
-											<th>BS</th>
-											<th>TO</th>
-											<th>PF</th>
-											<th>PT</th>
-											<th>button</th>
+		                                    <th style="background-color:#0066FF;color:white;">球員</th>
+								   		    <th style="background-color:#0066FF;color:white;">背號</th>
+											<th style="background-color:#0066FF;color:white;">位置</th>
+											<th style="background-color:#0066FF;color:white;">先發</th>
+											<th style="background-color:#0066FF;color:white;">上場</th>
+											<th style="background-color:#0066FF;color:white;">3PA</th>
+											<th style="background-color:#0066FF;color:white;">3PM</th>
+											<th style="background-color:#0066FF;color:white;">3PP</th>
+											<th style="background-color:#0066FF;color:white;">2PA</th>
+											<th style="background-color:#0066FF;color:white;">2PM</th>
+											<th style="background-color:#0066FF;color:white;">2PP</th>
+											<th style="background-color:#0066FF;color:white;">FTA</th>
+											<th style="background-color:#0066FF;color:white;">FTM</th>
+											<th style="background-color:#0066FF;color:white;">FTP</th>
+											<th style="background-color:#0066FF;color:white;">OR</th>
+											<th style="background-color:#0066FF;color:white;">DR</th>
+											<th style="background-color:#0066FF;color:white;">TR</th>
+											<th style="background-color:#0066FF;color:white;">ASS</th>
+											<th style="background-color:#0066FF;color:white;">ST</th>
+											<th style="background-color:#0066FF;color:white;">BS</th>
+											<th style="background-color:#0066FF;color:white;">TO</th>
+											<th style="background-color:#0066FF;color:white;">PF</th>
+											<th style="background-color:#0066FF;color:white;">PT</th>
+											<th style="background-color:#0066FF;color:white;width:100px">button</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -448,30 +430,30 @@
 	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-examples">
 	                                <thead>
 	                                    <tr>
-		                                    <th>球員</th>
-								   		    <th>背號</th>
-											<th>位置</th>
-											<th>先發</th>
-											<th>上場</th>
-											<th>3PA</th>
-											<th>3PM</th>
-											<th>3PP</th>
-											<th>2PA</th>
-											<th>2PM</th>
-											<th>2PP</th>
-											<th>FTA</th>
-											<th>FTM</th>
-											<th>FTP</th>
-											<th>OR</th>
-											<th>DR</th>
-											<th>TR</th>
-											<th>ASS</th>
-											<th>ST</th>
-											<th>BS</th>
-											<th>TO</th>
-											<th>PF</th>
-											<th>PT</th>
-											<th>button</th>
+		                                    <th style="background-color:#0066FF;color:white">球員</th>
+								   		    <th style="background-color:#0066FF;color:white">背號</th>
+											<th style="background-color:#0066FF;color:white">位置</th>
+											<th style="background-color:#0066FF;color:white">先發</th>
+											<th style="background-color:#0066FF;color:white">上場</th>
+											<th style="background-color:#0066FF;color:white">3PA</th>
+											<th style="background-color:#0066FF;color:white">3PM</th>
+											<th style="background-color:#0066FF;color:white">3PP</th>
+											<th style="background-color:#0066FF;color:white">2PA</th>
+											<th style="background-color:#0066FF;color:white">2PM</th>
+											<th style="background-color:#0066FF;color:white">2PP</th>
+											<th style="background-color:#0066FF;color:white">FTA</th>
+											<th style="background-color:#0066FF;color:white">FTM</th>
+											<th style="background-color:#0066FF;color:white">FTP</th>
+											<th style="background-color:#0066FF;color:white">OR</th>
+											<th style="background-color:#0066FF;color:white">DR</th>
+											<th style="background-color:#0066FF;color:white">TR</th>
+											<th style="background-color:#0066FF;color:white">ASS</th>
+											<th style="background-color:#0066FF;color:white">ST</th>
+											<th style="background-color:#0066FF;color:white">BS</th>
+											<th style="background-color:#0066FF;color:white">TO</th>
+											<th style="background-color:#0066FF;color:white">PF</th>
+											<th style="background-color:#0066FF;color:white">PT</th>
+											<th style="background-color:#0066FF;color:white;width:100px">button</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -829,7 +811,7 @@
 	    </script>
 
 	</body>
-
+<div style="display:none">
 	 <select id="clubA"  clubId="${clubA.clubID}">
 	<c:forEach items="${clubA.clubmembers}" var="clubMember">
 	<option value="${clubMember.member.memberId}">${clubMember.member.memberLastName}${clubMember.member.memberFirstName}</option>
@@ -847,5 +829,5 @@
 	<a class="btn btn-default cancelRecord" href="#" style='display: none' role="button">取消</a>
 	<a class="btn btn-default submitRecord" href="#" style='display: none' role="button">送出</a>
 	</div>
-
+</div>
 </html>

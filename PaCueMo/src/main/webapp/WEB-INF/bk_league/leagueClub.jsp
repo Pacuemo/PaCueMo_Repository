@@ -237,24 +237,7 @@ input[type='time'] {
 	                        <!-- ============================================================================== -->
 	                        <!-- =============================【後臺功能頁籤 開始】============================== -->
 	                        <!-- ============================================================================== -->
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 隊伍管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
-	                        <li>
-	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 社團管理 <span class="fa arrow"></span></a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                    <a href="blank.jsp">Blank Page</a>
-	                                </li>
-	                            </ul>
-	                            <!-- /.nav-second-level -->
-	                        </li>
+
 	                        <li>
 	                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 聯賽管理 <span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
@@ -316,10 +299,10 @@ input[type='time'] {
 							<table width="100%" class="table table-striped table-bordered table-hover" >
 								<thead>
 									<tr>
-										<th>League Name</th>
-										<th>Club Name</th>
-										<th>Fight Groups</th>
-										<th>Button</th>
+										<th style="background-color:#0066FF;color:white">League Name</th>
+										<th style="background-color:#0066FF;color:white">Club Name</th>
+										<th style="background-color:#0066FF;color:white">Fight Groups</th>
+										<th style="background-color:#0066FF;color:white">Button</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -350,19 +333,19 @@ input[type='time'] {
 						<div class="panel-heading">DataTables</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-							<table width="100%" class="table table-striped table-bordered table-hover"  id='leagueRecordTable'>
+							<table width="100%" class="table table-striped table-bordered table-hover"  id='leagueRecordTable' >
 								<thead>
 									<tr>
-										<th>League Name</th>
-										<th>Club A(主)</th>
-										<th>Score A(主)</th>
-										<th>Club B(客)</th>
-										<th>Score B(客)</th>
-										<th>BattleTime(天)</th>
-										<th>BattleTime(時)</th>
-										<th>Round</th>
-										<th>Total Time</th>
-										<th>Button</th>
+										<th style="background-color:#0066FF;color:white">League Name</th>
+										<th style="background-color:#0066FF;color:white">Club A(主)</th>
+										<th style="background-color:#0066FF;color:white">Score A(主)</th>
+										<th style="background-color:#0066FF;color:white">Club B(客)</th>
+										<th style="background-color:#0066FF;color:white">Score B(客)</th>
+										<th style="background-color:#0066FF;color:white">BattleTime(天)</th>
+										<th style="background-color:#0066FF;color:white">BattleTime(時)</th>
+										<th style="background-color:#0066FF;color:white">Round</th>
+										<th style="background-color:#0066FF;color:white">Total Time</th>
+										<th style="background-color:#0066FF;color:white;width:18%">Button</th>
 									</tr>
 								</thead>
 								<tbody>

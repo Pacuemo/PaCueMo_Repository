@@ -120,6 +120,8 @@ padding-left:10px;
 color:#e6e6e6;
 font-size: 90%;
 }
+
+
 	</style>
 	<script>
 		  <%--insert JScript here--%>
@@ -127,11 +129,19 @@ font-size: 90%;
 	</script>
   </head>
   <body>
-  
+    
   	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
-	<jsp:include page="MessageNavBar.jsp" />
-	
+	<jsp:include page="MessageNavBar.jsp" />	
+<style>
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/Kobe.png');
+ background-size:100%;
+
+
+}
+</style>	
+	 <div class="backGround">
         <div class="col-md-6 col-md-offset-3" style="margin-top:100px;">
 
 		<div class="form-group">
@@ -140,7 +150,7 @@ font-size: 90%;
 		<div style="text-align: right">
          <a class="myButton" href="#" role="button">發佈</a>
          </div>
-	</div>
+	   </div>
          
         <!-- /.col -->
         <div class="col-md-6 col-md-offset-3"  id="chatHere" style="margin-top:40px;margin-bottom:100px ">
@@ -227,10 +237,11 @@ font-size: 90%;
             <!-- /.box-footer -->
           </div>
           <!-- /.box -->
-</c:forEach>	 	
+            </c:forEach>	 	
+
         </div>
         <!-- /.col -->
-
+      </div>  
 <script src="${pageContext.request.contextPath}/dist/js/app.min.js"></script>
 <script>
 $(function(){

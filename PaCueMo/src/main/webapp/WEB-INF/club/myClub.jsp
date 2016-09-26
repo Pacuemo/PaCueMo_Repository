@@ -26,7 +26,12 @@
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
 	<jsp:include page="MyClubNavBar.jsp" />
-
+<style>
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/Lin.jpg');
+background-size:100%; 
+}
+</style>
 <!-- ----------------社團簡介------------------ -->
 	<div class="col-lg-6 col-lg-offset-3" style="margin-top: 100px">
 		<table style="width: 100%; background-color: #1a1a1a">
