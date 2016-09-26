@@ -170,7 +170,7 @@ body {
 					"success" : function(data)
 					{
 						clearTimeout(refresh);
-						setTimeout(refresh,5000); //指定5秒跳轉
+						setTimeout(refresh,3000); //指定5秒跳轉
 // 						window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
 					}, 
 					"error" : function(Error)

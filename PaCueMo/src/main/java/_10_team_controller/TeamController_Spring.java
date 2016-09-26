@@ -22,6 +22,7 @@ import _14_teamapply_service.TeamApplyService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
 import _9_14_teamapply_model.TeamApplyVO;
+import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 
 @Controller
@@ -36,6 +37,8 @@ public class TeamController_Spring
 	private TeamApplyService teamApplyService;
 	@Autowired
 	private BattleRecordService battleRecordService;
+	@Autowired
+	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
 	private StevenFacade stevenFacade;
 	@Autowired
@@ -221,6 +224,10 @@ public class TeamController_Spring
 		List<TeamApplyVO> myTeamApplyVOs = teamApplyService.getTeamApplyVOsById(memberVO.getMemberId());
 		request.setAttribute("myTeamApplyVOs", myTeamApplyVOs);
 		request.setAttribute("pageForSideBar", "createteam");
+
+		memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
+		session.setAttribute("LoginOK", memberVO);
+
 //		for (TeamApplyVO teamApplyVO : myTeamApplyVOs)
 //		{
 //			System.out.println(teamApplyVO.getTeamId());

@@ -80,11 +80,6 @@ public class BattleRecordController_Spring
 			battleRecordVO.setBattleDateTime(battleDateTime);
 			battleRecordVO.setCourtId(input_courtId);
 			battleRecordService.add(battleRecordVO);
-
-			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
-			memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
-
-			session.setAttribute("LoginOK", memberVO);
 		}
 		catch (Exception e)
 		{
@@ -154,12 +149,17 @@ public class BattleRecordController_Spring
 
 	@ResponseBody
 	@RequestMapping(value = "/replyStatus", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String replyStatus(Integer battleId, Integer battleStatus)
+	public String replyStatus(Integer battleId, Integer battleStatus, HttpSession session)
 	{
 		System.out.println("BattleRecord_Controller : replyStatus");
 		BattleRecordVO battleRecordVO = battleRecordService.findById(battleId);
 		battleRecordVO.setBattleStatus(battleStatus);
 		battleRecordService.accept_Reject(battleRecordVO);
+
+		MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
+		memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
+		session.setAttribute("LoginOK", memberVO);
+
 		System.out.println("BattleRecord_Controller : End");
 		System.out.println("-------------------------------------------------------");
 		return "success";
@@ -176,6 +176,9 @@ public class BattleRecordController_Spring
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
 			List<TeamVO> mineTeamIdList = teamService.find_TeamVOs_With_TeamHead(memberVO.getMemberId());
 			request.setAttribute("mineTeamVOList", mineTeamIdList);
+
+			memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
+			session.setAttribute("LoginOK", memberVO);
 
 		}
 		catch (Exception e)

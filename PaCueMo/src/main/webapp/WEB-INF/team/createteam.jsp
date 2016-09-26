@@ -59,7 +59,7 @@ body {
 		<div class="col-md-6" >
 
 				<div class="dropdown col-md-12">
-		<c:choose >
+		<c:choose>
 			<c:when test="${requestScope.myList[0].teamId == null }">
 				<h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">您尚未加入任何隊伍<span class="caret"></span></h2>
 				<ul class="dropdown-menu animate fadeInDown animated" role="menu" style="width: 400px;margin-left: 40px;padding-top: 10px">
@@ -79,11 +79,11 @@ body {
 						</div>
 						<div class="col-md-6" >
 						<c:set var="flag" value="N"></c:set>
-						<c:forEach var="mineTeamId" items="${requestScope.mineTeamIdList }">
+						<c:forEach var="mineTeamId" items="${requestScope.mineTeamIdList}">
 						<c:choose>
 							<c:when test="${my_list.teamId == mineTeamId}">
 <%-- 								<form action="${pageContext.request.contextPath}/spring/team/disbandTeam" method="get"> --%>
-									<button class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId }" >解散</button>
+									<button class="btn btn-success btn-xs left_20" name="btn_disband" value="${my_list.teamId}" >解散</button>
 <!-- 									<input type="hidden" name="page" value="first"> -->
 									<c:set var="flag" value="Y"></c:set>
 <!-- 								</form> -->
@@ -92,7 +92,7 @@ body {
 						</c:forEach>
 							<c:if test="${flag == 'N'}">
 								<form action="${pageContext.request.contextPath}/spring/team/abortTeam" method="get">
-									<button type="submit" class="btn btn-success btn-xs left_20" name="btn_abort" value="${my_list.teamId }" >退出</button>
+									<button type="submit" class="btn btn-success btn-xs left_20" name="btn_abort" value="${my_list.teamId}" >退出</button>
 									<input type="hidden" name="page" value="first">
 								</form>
 							</c:if>

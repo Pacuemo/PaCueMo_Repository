@@ -36,39 +36,8 @@ public class BattleRecordService
 	{
 	}
 
-	@Transactional(rollbackOn = Exception.class)
 	public void add(BattleRecordVO battleRecordVO)
 	{
-		System.out.println("BattleRecordService : add start");
-		TeamVO teamAVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdA());
-		TeamVO teamBVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdB());
-
-		double bet = battleRecordVO.getBattleBet();
-		for (TeamMemberVO teamMemberVO : teamAVO.getTeamMemberVOs())
-		{
-			System.out.println("bet = " + bet + " || TeamA 人數 = " + teamAVO.getTeamMemberVOs().size());
-			double betA = (bet / teamAVO.getTeamMemberVOs().size() * 100);
-			betA = (Math.round(betA) / 100);
-
-			System.out.println("betA = " + betA);
-			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
-			double memberPoint = memberVO.getMemberPoint() - betA;
-			memberVO.setMemberPoint(memberPoint);
-			memberDAO.updatePointByPrimaryKey(memberVO);
-		}
-		for (TeamMemberVO teamMemberVO : teamBVO.getTeamMemberVOs())
-		{
-			System.out.println("bet = " + bet + " || TeamB 人數 = " + teamBVO.getTeamMemberVOs().size());
-			double betB = (bet / teamBVO.getTeamMemberVOs().size() * 100);
-			betB = (Math.round(betB) / 100);
-			System.out.println("betB = " + betB);
-			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
-			double memberPoint = memberVO.getMemberPoint() - betB;
-			memberVO.setMemberPoint(memberPoint);
-			memberDAO.updatePointByPrimaryKey(memberVO);
-		}
-
-		System.out.println("BattleRecordService : add success");
 		battleRecordDAO.add(battleRecordVO);
 	}
 
@@ -87,9 +56,41 @@ public class BattleRecordService
 		battleRecordDAO.reportB(battleRecordVO);
 	}
 
+	@Transactional(rollbackOn = Exception.class)
 	public void accept_Reject(BattleRecordVO battleRecordVO)
 	{
+		System.out.println("BattleRecordService : accept_Reject start");
+
 		battleRecordDAO.accept_Reject(battleRecordVO);
+
+		TeamVO teamAVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdA());
+		TeamVO teamBVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdB());
+
+		double bet = battleRecordVO.getBattleBet();
+		for (TeamMemberVO teamMemberVO : teamAVO.getTeamMemberVOs())
+		{
+			System.out.println("bet = " + bet + " || TeamA 人數 = " + teamAVO.getTeamMemberVOs().size());
+			double betA = (bet / teamAVO.getTeamMemberVOs().size() * 100);
+			betA = (Math.round(betA) / 100);
+			System.out.println("betA = " + betA);
+			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
+			double memberPoint = memberVO.getMemberPoint() - betA;
+			memberVO.setMemberPoint(memberPoint);
+			memberDAO.updatePointByPrimaryKey(memberVO);
+		}
+		for (TeamMemberVO teamMemberVO : teamBVO.getTeamMemberVOs())
+		{
+			System.out.println("bet = " + bet + " || TeamB 人數 = " + teamBVO.getTeamMemberVOs().size());
+			double betB = (bet / teamBVO.getTeamMemberVOs().size() * 100);
+			betB = (Math.round(betB) / 100);
+			System.out.println("betB = " + betB);
+			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
+			double memberPoint = memberVO.getMemberPoint() - betB;
+			memberVO.setMemberPoint(memberPoint);
+			memberDAO.updatePointByPrimaryKey(memberVO);
+		}
+
+		System.out.println("BattleRecordService : accept_Reject success");
 	}
 
 	public void delete(Integer batteleRecordId)
