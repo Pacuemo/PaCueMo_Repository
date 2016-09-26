@@ -39,6 +39,7 @@ public class BattleRecordService
 	@Transactional(rollbackOn = Exception.class)
 	public void add(BattleRecordVO battleRecordVO)
 	{
+		System.out.println("BattleRecordService : add start");
 		TeamVO teamAVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdA());
 		TeamVO teamBVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdB());
 
@@ -64,6 +65,7 @@ public class BattleRecordService
 			memberDAO.updatePointByPrimaryKey(memberVO);
 		}
 
+		System.out.println("BattleRecordService : add success");
 		battleRecordDAO.add(battleRecordVO);
 	}
 
