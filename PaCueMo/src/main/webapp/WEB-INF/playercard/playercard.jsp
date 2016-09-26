@@ -43,7 +43,7 @@
 	   						</div>
 	   						<c:choose>
 						        <c:when test="${not empty Info.memberFBId }">
-						        <div class="user-link"> <img class="user-img img-circle" src="https://graph.facebook.com/${Info.memberFBId }/picture?width=80&amp;height=80" alt="${Info.memberFirstName}"> </div>
+						        <div class="user-link"> <img class="user-img img-circle" src="https://graph.facebook.com/${Info.memberFBId}/picture?width=80&amp;height=80" alt="${Info.memberFirstName}"> </div>
 						        </c:when>
 						        <c:when test="${not empty Info.memberImgUrl }">
 						        <div class="user-link"> <img class="user-img img-circle" style="height:80px;width:80px" src="${pageContext.request.contextPath}/image/member/${Info.memberImgUrl}" alt="${Info.memberFirstName}"></div>
@@ -159,7 +159,7 @@
 	   						</div>
 	   						<c:choose>
 						        <c:when test="${not empty Info.memberFBId }">
-						        <div class="user-link"> <img class="user-img img-circle" src="https://graph.facebook.com/${LoginOK.memberFBId }/picture?width=80&amp;height=80" alt="${Info.memberFirstName}"> </div>
+						        <div class="user-link"> <img class="user-img img-circle" src="https://graph.facebook.com/${Info.memberFBId }/picture?width=80&amp;height=80" alt="${Info.memberFirstName}"> </div>
 						        </c:when>
 						        <c:when test="${not empty Info.memberImgUrl }">
 						        <div class="user-link"> <img class="user-img img-circle" style="height:80px;width:80px" src="${pageContext.request.contextPath}/image/member/${Info.memberImgUrl}" alt="${Info.memberFirstName}"></div>
