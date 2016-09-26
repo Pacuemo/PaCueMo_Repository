@@ -20,9 +20,11 @@ import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Component;
 
+import _00_config.RootConfig;
 import _9_41_member_model.MemberVO;
 
 @Component
@@ -1092,7 +1094,7 @@ public class FakeInfoGenerator
 			String[] sqls = sql.split(",");
 			int number = Integer.valueOf(sqls[4]);
 
-			String newSQL = sqls[0] + "," + sqls[1] + "," + sqls[2] + "," + sqls[3] + ",'" + memberIds.get(number) + "'," + sqls[5] + "," + sqls[6] + ";";
+			String newSQL = sqls[0] + "," + sqls[1] + "," + sqls[2] + "," + sqls[3] + ",'" + memberIds.get(number - 1) + "'," + sqls[5] + "," + sqls[6] + ";";
 			System.out.println(newSQL);
 		}
 	}
@@ -1105,11 +1107,11 @@ public class FakeInfoGenerator
 		 * Step3 : 在本程式中執行你的方法，將SSMS NEWID() 生成的 memberId 換掉原本的 INSERT 指令
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
-//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
-//		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
 //		playercardGenerator();
-		friendListGenerator("476903C9-9720-4504-8BE6-FCEA58E5E38B", 20);
+//		friendListGenerator("476903C9-9720-4504-8BE6-FCEA58E5E38B", 20);
 //      club和league部分
 //		clubGenerator();
 
@@ -1122,7 +1124,7 @@ public class FakeInfoGenerator
 
 //		goodsOrderGenerator();
 
-//		generator.teamGenerator();
+		generator.teamGenerator();
 //		teammemberGenerator();
 
 	}

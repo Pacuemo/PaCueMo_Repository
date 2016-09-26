@@ -71,7 +71,7 @@ body {
 			<c:otherwise>
 				<h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">您的隊伍：<span class="caret"></span></h2>
 			        <ul class="dropdown-menu animate fadeInDown animated" role="menu" style="width: 400px;margin-left: 40px;padding-top: 10px">
-			          <c:forEach var="my_list" items="${requestScope.myList }">
+			          <c:forEach var="my_list" items="${requestScope.myList }" varStatus="status_main">
 			        <li class="row left_div">
 			        <div class="col-md-12">
 						<div class="col-md-6" >
@@ -99,7 +99,8 @@ body {
 						</div>
 					</div>
 					</li>
-			        <li class="divider" style="color:gray;"></li>
+			        <li class="divider"></li>
+			        <c:if test="${status_main.count == 2 }"><li class="divider"></li></c:if>
 				</c:forEach>
 			        <li><div class="left_20" style="text-align: right;">
 						<button id="create-team" style="margin:10px;margin-right: 45px">Create new Team</button>
