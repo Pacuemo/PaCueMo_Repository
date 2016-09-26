@@ -47,7 +47,9 @@ public class BattleRecordService
 		for (TeamMemberVO teamMemberVO : teamAVO.getTeamMemberVOs())
 		{
 			System.out.println("bet = " + bet + " || TeamA 人數 = " + teamAVO.getTeamMemberVOs().size());
-			double betA = (bet / teamAVO.getTeamMemberVOs().size() * 100 % 1) / 100;
+			double betA = (bet / teamAVO.getTeamMemberVOs().size() * 100);
+			betA = (Math.round(betA) / 100);
+
 			System.out.println("betA = " + betA);
 			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
 			double memberPoint = memberVO.getMemberPoint() - betA;
@@ -57,7 +59,8 @@ public class BattleRecordService
 		for (TeamMemberVO teamMemberVO : teamBVO.getTeamMemberVOs())
 		{
 			System.out.println("bet = " + bet + " || TeamB 人數 = " + teamBVO.getTeamMemberVOs().size());
-			double betB = (bet / teamBVO.getTeamMemberVOs().size() * 100 % 1) / 100;
+			double betB = (bet / teamBVO.getTeamMemberVOs().size() * 100);
+			betB = (Math.round(betB) / 100);
 			System.out.println("betB = " + betB);
 			MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
 			double memberPoint = memberVO.getMemberPoint() - betB;

@@ -243,7 +243,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 		try
 		{
 			int i = 1;
-			while (i <= 200)
+			while (i <= 100)
 			{
 				BattleRecordVO battleRecordVO = new BattleRecordVO();
 				battleRecordVO = new BattleRecordVO();
