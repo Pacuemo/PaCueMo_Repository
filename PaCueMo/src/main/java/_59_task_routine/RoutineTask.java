@@ -13,10 +13,9 @@ import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import _00_config.RootConfig;
 import _50_gambling_facade.GamblingFacade;
 import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
@@ -57,6 +56,9 @@ public class RoutineTask extends TimerTask
 		//distributPointTask();// 定時分派賭金(點數)的task
 	}
 
+	@Context
+	private javax.servlet.ServletContext servletContext;// RESTful 取得servletContext
+
 	@GET /* 前端Ajax_LongPolling.js持續監控本方法，當每日執行時間一到，flag_isUpdate=="start_Update" ，進行更新動作 */
 	@Produces("text/plain;charset=UTF-8")
 	public String distributPointTask(@Context HttpServletRequest request)// 定時分派賭金(點數)的task→RESTful service，由前端ajax持續監控
@@ -66,7 +68,8 @@ public class RoutineTask extends TimerTask
 			if ("start_Update".equals(flag_isUpdate))
 			{
 				//----------------------------------------------------------------
-				ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+				//ApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+				ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 				RoutineTask routineTask = (RoutineTask) context.getBean("taskRoutine");
 				System.out.println(" ****** 執行當前的時間 " + sdf.format(Calendar.getInstance().getTime()) + " ****** ");
 				try
