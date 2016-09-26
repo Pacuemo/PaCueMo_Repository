@@ -544,7 +544,7 @@
 		    		var inputCoin = $('#modify input:eq(0)');
 		    		var inputNtd  = $('#modify input:eq(1)');
 		    		inputCoin.val(coinQty); // 修改代幣textbox預設值
-		    		inputNtd.val( inputCoin.val()/100 ); // 修改台幣textbox預設值
+		    		inputNtd.val( inputCoin.val() /100 ); // 修改台幣textbox預設值
 		     
 // 					console.log( 'orderId' 			, orderId );
 // 					console.log( 'mbId' 			, mbId );
