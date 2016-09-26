@@ -51,7 +51,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 			+ "(result != 0 and result != 6) AND (teamIdA = ? OR teamIdB =?)) FROM BattleRecord WHERE "
 			+ "(teamIdA = ? AND result = 4) OR (teamIdB = ? AND result = 5)";
 	private static final String GET_WPCT = "SELECT 100*COUNT(*)/(SELECT COUNT(*) FROM BattleRecord WHERE "
-			+ "(result = 1 OR result = 2 OR result = 3) AND (teamIdA = ? OR teamIdB = ?)) FROM BattleRecord WHERE "
+			+ "(result = 1 OR result = 2) AND (teamIdA = ? OR teamIdB = ?)) FROM BattleRecord WHERE "
 			+ "(teamIdA = ? AND result = 1) OR (teamIdB = ? AND result = 2)";
 
 	/*
@@ -243,7 +243,7 @@ public class BattleRecordDAO implements BattleRecordDAO_I
 		try
 		{
 			int i = 1;
-			while (i <= 200)
+			while (i <= 100)
 			{
 				BattleRecordVO battleRecordVO = new BattleRecordVO();
 				battleRecordVO = new BattleRecordVO();

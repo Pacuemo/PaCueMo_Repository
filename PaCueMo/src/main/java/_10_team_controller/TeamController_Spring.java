@@ -74,13 +74,13 @@ public class TeamController_Spring
 		if (page.equals("main"))
 		{
 			System.out.println("forward main");
-			request.setAttribute("teamId", btn_join);	//set Att
-			return "forward:/TeamServlet";
+//			request.setAttribute("teamId", btn_join);	//set Att
+			return "redirect:/TeamServlet?teamId=" + btn_join;
 		}
 		else
 		{
 			System.out.println("forward ctp");
-			return "forward:createTeamPage";
+			return "redirect:createTeamPage";
 		}
 	}
 

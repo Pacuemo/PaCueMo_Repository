@@ -23,6 +23,7 @@ import _14_teamapply_service.TeamApplyService;
 import _9_10_team_model.TeamVO;
 import _9_12_battlerecord_model.BattleRecordVO;
 import _9_14_teamapply_model.TeamApplyVO;
+import _9_41_member_model.MemberDAO_interface_Spring;
 import _9_41_member_model.MemberVO;
 
 @WebServlet("/TeamServlet")
@@ -41,6 +42,8 @@ public class TeamServlet extends HttpServlet
 	private BattleRecordService battleRecordService;
 	@Autowired
 	private TeamApplyService teamApplyService;
+	@Autowired
+	private MemberDAO_interface_Spring memberDAO;
 
 	@Autowired
 	private StevenFacade stevenFacade;
@@ -90,6 +93,12 @@ public class TeamServlet extends HttpServlet
 		{
 			System.out.println("Try get MemberVO");
 			memberVO = (MemberVO) session.getAttribute("LoginOK");
+//---------------------------------------------------------------------------------------------------------
+//			set session LoginOK for memberPoint
+			memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
+			session.setAttribute("LoginOK", memberVO);
+//---------------------------------------------------------------------------------------------------------
+
 			System.out.println("MemberId : " + memberVO.getMemberId() + " || MemberName : " + memberVO.getMemberFirstName());
 		}
 		catch (Exception e)

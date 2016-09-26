@@ -75,7 +75,7 @@
         <li class="alternate sidepanel-item-small"> <a href="${pageContext.request.contextPath}/spring/login/Signin" id="header-login-link" class="user-link " style="animation-delay: 102ms;"> <span class="user-text navbar-user-text">登入</span> </a> </li>
         </c:if>
         <c:if test="${not empty LoginOK }">
-        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="">點數餘額：${LoginOK.memberPoint}點</a></li>
+        <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="#" class="pointFold">點數餘額：${LoginOK.memberPoint}點</a></li>
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_03_member/overview.do" id="nav-link-account" > 帳戶 </a> </li>
         <li class="alternate sidepanel-item-small hidden-md hidden-lg "> <a href="${pageContext.request.contextPath}/_41_login_controller/logout.do" id="nav-link-log out" > 登出 </a> </li>
         <li class="hidden-xs hidden-sm dropdown"> <a href="" class="user-link dropdown-toggle" data-toggle="dropdown">

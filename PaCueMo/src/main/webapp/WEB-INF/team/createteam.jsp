@@ -100,7 +100,7 @@ body {
 					</div>
 					</li>
 			        <li class="divider"></li>
-			        <c:if test="${status_main.count == 2 }"><li class="divider"></li></c:if>
+<%-- 			        <c:if test="${status_main.count == 2 }"><li class="divider"></li></c:if> --%>
 				</c:forEach>
 			        <li><div class="left_20" style="text-align: right;">
 						<button id="create-team" style="margin:10px;margin-right: 45px">Create new Team</button>
