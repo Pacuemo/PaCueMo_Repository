@@ -169,9 +169,9 @@ body {
 					"dataType" : "text",
 					"success" : function(data)
 					{
-						window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
 						clearTimeout(refresh);
-						setTimeout(refresh,5000); //指定5秒刷新一次
+						setTimeout(refresh,5000); //指定5秒跳轉
+// 						window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
 					}, 
 					"error" : function(Error)
 					{
@@ -179,13 +179,14 @@ body {
 						console.log(Error);
 					} 
 				})
+				$(this).parents("tbody").hide(200);
 			});
 		
 
 			
 			 var refresh = function ()
 			 {
-			      window.location.reload();
+				 window.location.href= "${home}TeamServlet?teamId=${teamVO.teamId}";
 			 }
 				
 
