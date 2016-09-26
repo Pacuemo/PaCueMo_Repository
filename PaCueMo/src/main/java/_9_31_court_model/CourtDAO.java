@@ -1,15 +1,20 @@
 package _9_31_court_model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import _00_initial_service.GlobalService;
 
+@Component
 public class CourtDAO implements CourtDAO_interface
 {
 
@@ -17,6 +22,15 @@ public class CourtDAO implements CourtDAO_interface
 	String url = GlobalService.DB_URL;
 	String userid = GlobalService.USERID;
 	String passwd = GlobalService.PASSWORD;
+
+	@Autowired
+	private DataSource dataSource;
+
+	public CourtDAO(DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+
+	};
 
 	private static final String INSERT_STMT = "INSERT INTO Court (name, courtaddress, imgUrl, latitude, longitude, webUrl, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT courtId, name, courtaddress, imgUrl, latitude, longitude, webUrl, phone FROM Court order by courtId";
@@ -29,13 +43,16 @@ public class CourtDAO implements CourtDAO_interface
 	@Override
 	public void insert(CourtVO courtVO)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, courtVO.getName());
@@ -48,54 +65,57 @@ public class CourtDAO implements CourtDAO_interface
 
 			pstmt.executeUpdate();
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		finally
+//		{
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
 
 	}
 
 	@Override
 	public void update(CourtVO courtVO)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, courtVO.getName());
@@ -109,95 +129,98 @@ public class CourtDAO implements CourtDAO_interface
 
 			pstmt.executeUpdate();
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		finally
+//		{
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
 
 	}
 
 	@Override
 	public void delete(Integer courtId)
 	{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, courtId);
 
 			pstmt.executeUpdate();
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		finally
+//		{
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
 
 	}
 
@@ -205,14 +228,18 @@ public class CourtDAO implements CourtDAO_interface
 	public CourtVO findByPrimaryKey(Integer courtId)
 	{
 		CourtVO courtVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, courtId);
@@ -232,52 +259,52 @@ public class CourtDAO implements CourtDAO_interface
 				courtVO.setPhone(rs.getString("phone"));
 			}
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		finally
+//		{
+//			if (rs != null)
+//			{
+//				try
+//				{
+//					rs.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
 		return courtVO;
 	}
 
@@ -287,14 +314,18 @@ public class CourtDAO implements CourtDAO_interface
 	{
 		List<CourtVO> list = new ArrayList<CourtVO>();
 		CourtVO courtVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -313,52 +344,52 @@ public class CourtDAO implements CourtDAO_interface
 			}
 
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace();
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace();
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace();
-				}
-			}
-		}
+//		finally
+//		{
+//			if (rs != null)
+//			{
+//				try
+//				{
+//					rs.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace();
+//				}
+//			}
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace();
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace();
+//				}
+//			}
+//		}
 		return list;
 	}
 
@@ -367,14 +398,18 @@ public class CourtDAO implements CourtDAO_interface
 	{
 		List<CourtVO> list2 = new ArrayList<CourtVO>();
 		CourtVO courtVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(GET_BY_NAME);
 
 			pstmt.setString(1, "%" + keyword + "%");
@@ -396,52 +431,52 @@ public class CourtDAO implements CourtDAO_interface
 				list2.add(courtVO);
 			}
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		finally
+//		{
+//			if (rs != null)
+//			{
+//				try
+//				{
+//					rs.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
 		return list2;
 	}
 
@@ -450,14 +485,18 @@ public class CourtDAO implements CourtDAO_interface
 	{
 		List<CourtVO> list3 = new ArrayList<CourtVO>();
 		CourtVO courtVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
 		try
 		{
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = null;
 			pstmt = con.prepareStatement(GET_BY_NAME_ADDRESS);
 
 			pstmt.setString(1, "%" + name + "%");
@@ -479,52 +518,52 @@ public class CourtDAO implements CourtDAO_interface
 				list3.add(courtVO);
 			}
 		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		}
+//		catch (ClassNotFoundException e)
+//		{
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		}
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		}
-		finally
-		{
-			if (rs != null)
-			{
-				try
-				{
-					rs.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null)
-			{
-				try
-				{
-					pstmt.close();
-				}
-				catch (SQLException se)
-				{
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null)
-			{
-				try
-				{
-					con.close();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+//		finally
+//		{
+//			if (rs != null)
+//			{
+//				try
+//				{
+//					rs.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null)
+//			{
+//				try
+//				{
+//					pstmt.close();
+//				}
+//				catch (SQLException se)
+//				{
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null)
+//			{
+//				try
+//				{
+//					con.close();
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
 		return list3;
 	}
 //	public static void main(String[] args)

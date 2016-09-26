@@ -3,11 +3,15 @@
 <%@	page import="java.util.List"%>
 <%@ page import="_9_31_court_model.*"%>
 <%@ page import="_31_court_service.*"%>
+<%@	page import="org.springframework.context.ApplicationContext"%>
+<%@	page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%
 	List<CourtVO> list;
 	String court;
 	String city;
-
+	ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+	CourtService courtSvc = context.getBean(CourtService.class);
+	
 	if ((city = (String) request.getAttribute("test")) == null) {
 		city = request.getParameter("test");
 		if (city != null)
@@ -25,23 +29,22 @@
 	}
 
 	if (court == null && city == null) {
-		CourtService courtSvc = new CourtService();
 		list = courtSvc.findAll();
 		pageContext.setAttribute("list", list);
 	} else if (court != null && city != null) {
-		CourtService courtSvc = new CourtService();
+
 		list = courtSvc.findByAddress(city, court);
 		pageContext.setAttribute("list", list);
 	} else if (court != null && city == null) {
-		CourtService courtSvc = new CourtService();
+
 		list = courtSvc.findByCourtName(court);
 		pageContext.setAttribute("list", list);
 	} else if (court == null && city != null) {
-		CourtService courtSvc = new CourtService();
+
 		list = courtSvc.findByCourtName(city);
 		pageContext.setAttribute("list", list);
 	} else {
-		CourtService courtSvc = new CourtService();
+
 		list = courtSvc.findByCourtName(court);
 		pageContext.setAttribute("list", list);
 	}

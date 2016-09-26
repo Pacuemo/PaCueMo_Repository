@@ -11,7 +11,7 @@ import _9_10_team_model.TeamDAO_interface;
 import _9_11_teammember_model.TeamMemberDAO_interface;
 import _9_14_teamapply_model.TeamApplyDAO_I;
 import _9_14_teamapply_model.TeamApplyVO;
-import _9_41_member_model.MemberDAO_interface;
+import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Component
 public class TeamApplyService
@@ -22,7 +22,7 @@ public class TeamApplyService
 	@Autowired
 	private TeamMemberDAO_interface teamMemberDAO;
 	@Autowired
-	private MemberDAO_interface memberDAO;
+	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
 	private TeamApplyDAO_I teamApplyDAO;
 

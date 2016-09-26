@@ -22,7 +22,7 @@ import _9_27_clubApply_model.ClubApplyDAO_I;
 import _9_27_clubApply_model.ClubApplyVO;
 import _9_28_clubInvite_model.ClubInviteDAO_I;
 import _9_28_clubInvite_model.ClubInviteVO;
-import _9_41_member_model.MemberDAO_interface;
+import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Component
 @Transactional
@@ -37,7 +37,7 @@ public class Club_Service
 	@Autowired
 	private ClubMemberDAO_I clubMemberDAO;
 	@Autowired
-	private MemberDAO_interface memberDAO;
+	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
 	private ClubApplyDAO_I clubApplyDAO;
 	@Autowired
