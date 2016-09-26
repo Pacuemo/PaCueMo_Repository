@@ -389,7 +389,7 @@
 	                                        <th style="background-color:#0066FF;color:white;">訂單編號</th>
 	                                        <th style="background-color:#0066FF;color:white;">會員id</th>
 	                                        <th style="background-color:#0066FF;color:white;">信用卡號</th>
-	                                        <th style="background-color:#0066FF;color:white;">持卡人姓名</th>
+	                                        <th style="background-color:#0066FF;color:white;font-size:12px;">持卡人姓名</th>
 	                                        <th style="background-color:#0066FF;color:white;">到期日</th>
                  							<th style="background-color:#0066FF;color:white;">識別碼</th>
                  							<th style="background-color:#0066FF;color:white;">下訂數量</th>
