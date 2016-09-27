@@ -10,7 +10,7 @@
 <c:url var="home" value="/" scope="request" /> <%--設定home，之後在script可以用--%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
-<title>PACUEMO League</title>
+<title>PACUEMO Team</title>
 <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 
 <link href="${pageContext.request.contextPath }/css/team/addteam.css" rel="stylesheet">

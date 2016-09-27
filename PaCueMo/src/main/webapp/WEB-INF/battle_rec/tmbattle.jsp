@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <c:url var="home" value="/" scope="request" />
 <%--設定home，之後在script可以用--%>
-<title>PACUEMO League</title>
+<title>PACUEMO Battle</title>
 <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 <style>
 .h2_tm {

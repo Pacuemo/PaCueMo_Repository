@@ -9,7 +9,7 @@
 <c:url var="home" value="/" scope="request" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
-<title>PACUEMO League</title>
+<title>PACUEMO Battle</title>
 <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/animate.css">
 
