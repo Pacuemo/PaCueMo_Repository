@@ -67,7 +67,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>
-	                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	                <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">PaCueMo</a>
 	            </div>
 	            <!-- /.navbar-header -->
 	
@@ -296,7 +296,7 @@
 	                            <!-- /input-group -->
 	                        </li>
 	                        <li>
-	                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+	                            <a href="<%=request.getContextPath()%>/indexBackStage.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - HOME</a>
 	                        </li>
 	                       
 	                       
