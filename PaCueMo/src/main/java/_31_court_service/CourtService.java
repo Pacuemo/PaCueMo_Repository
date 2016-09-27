@@ -2,18 +2,26 @@ package _31_court_service;
 
 import java.util.List;
 
-import _9_31_court_model.CourtDAO;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import _9_31_court_model.CourtDAO_interface;
 import _9_31_court_model.CourtVO;
 
+@Component
 public class CourtService
 {
+	@Autowired
 	private CourtDAO_interface dao;
+	@Autowired
+	private DataSource dataSource;
 
-	public CourtService()
-	{
-		dao = new CourtDAO();
-	}
+//	public CourtService()
+//	{
+//		dao = new CourtDAO();
+//	}
 
 	public void insert(Integer courtId, String name, String courtaddress, String imgUrl, Double latitue, Double longitue, String webUrl, String phone)
 	{

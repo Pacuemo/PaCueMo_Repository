@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import _9_26_fightRecord_model.FightRecordDAO;
 import _9_26_fightRecord_model.FightRecordVO;
-import _9_41_member_model.MemberDAO_interface;
+import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Component
 @Transactional
@@ -17,7 +17,7 @@ public class FightRecord_Service
 	@Autowired
 	private FightRecordDAO fightRecordDao;
 	@Autowired
-	private MemberDAO_interface memberDao;
+	private MemberDAO_interface_Spring memberDao;
 	//聯賽-----------------------------------------------------------------------------------------------------------------------------------	
 
 	//------刪除單場聯賽球員紀錄--------

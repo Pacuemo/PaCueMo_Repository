@@ -34,6 +34,7 @@ $(function(){
             dataType: 'json',
             success: function (message) {
              if(message.status==1){
+            	 BootstrapAlert.success({ title : "Congrat!", message : "成功修改一筆聯賽紀錄" });
             	 tds.parent().css('background-color','').find('input').attr('disabled',true);             	 
             	 button.css('display','none').prev().css('display','inline-block');
             	 
@@ -84,6 +85,7 @@ function add()
         dataType: 'json',
         success: function (message) {
          if(message.status==1){
+        	 BootstrapAlert.success({ title : "Congrat!", message : "成功新增一筆聯賽紀錄" });
         	 window.location.replace('league');
         	 
          }

@@ -12,8 +12,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
+    <title>PACUEMO BackStage</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
     <!-- Bootstrap Core CSS -->
     <link href="<%=request.getContextPath()%>/_99_backstage/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -67,7 +67,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>
-	                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	                <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">PaCueMo</a>
 	            </div>
 	            <!-- /.navbar-header -->
 	
@@ -296,7 +296,7 @@
 	                            <!-- /input-group -->
 	                        </li>
 	                        <li>
-	                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+	                            <a href="<%=request.getContextPath()%>/indexBackStage.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - HOME</a>
 	                        </li>
 	                       
 	                       

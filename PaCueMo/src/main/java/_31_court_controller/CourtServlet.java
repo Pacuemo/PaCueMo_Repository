@@ -25,6 +25,7 @@ public class CourtServlet extends HttpServlet
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
 		System.out.println("call the post");
 		request.setCharacterEncoding("UTF-8");
 //		List<CourtVO> list = null;
