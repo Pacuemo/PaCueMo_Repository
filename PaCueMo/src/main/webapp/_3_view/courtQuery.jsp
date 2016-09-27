@@ -84,7 +84,8 @@ map-btn {
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>場地搜尋</title>
+<title>PACUEMO Court</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 </head>
 <body>
 	<jsp:include page="/fragment/top.jsp" />
