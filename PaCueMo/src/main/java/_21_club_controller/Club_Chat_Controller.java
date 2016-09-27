@@ -32,7 +32,7 @@ public class Club_Chat_Controller
 	public String getAll(int clubId, String memberId, HttpServletRequest request)
 	{
 		request.setAttribute("clubChats", clubChat_Service.get_All_ClubChat_By_ClubId(clubId, memberId));
-		return "/club/Message";
+		return "/club/MessageWebSocket";
 	}
 
 //新增劉言
@@ -60,7 +60,7 @@ public class Club_Chat_Controller
 		return gson.toJson(message);
 	}
 
-	//新增message
+	//新增喜歡
 	@ResponseBody
 	@RequestMapping(value = "/addChatLike", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	public String addChatLike(@RequestBody ChatLikeVO chatLikeVO)

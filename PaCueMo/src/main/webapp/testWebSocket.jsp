@@ -60,17 +60,7 @@
 			});
 			
 			
-			stomp.subscribe("/user/${LoginOK.memberId}/queue/chat",function(incoming){
-			var test = JSON.parse(incoming.body);
-			var id = test.memberId;
-			var name = test.memberName;
-			var message = test.message;
-			register_popup(id, name);
-			var chatbox = $(document.body).find("#"+id);
-			chatbox.find(".popup-messages").append("<div class='received'><p>"+message+"</p></div>")
-			
-			})
-		})
+
 		
 	</script>
 	<style type="text/css">

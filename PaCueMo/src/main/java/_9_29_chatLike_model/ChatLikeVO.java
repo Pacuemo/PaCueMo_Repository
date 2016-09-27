@@ -13,6 +13,7 @@ public class ChatLikeVO implements Serializable
 	private int chatId;
 	private String memberName;
 	private String memberId;
+	private int clubId;
 
 	public ChatLikeVO()
 	{
@@ -55,6 +56,16 @@ public class ChatLikeVO implements Serializable
 	public void setMemberId(String memberId)
 	{
 		this.memberId = memberId;
+	}
+
+	public int getClubId()
+	{
+		return clubId;
+	}
+
+	public void setClubId(int clubId)
+	{
+		this.clubId = clubId;
 	}
 
 }

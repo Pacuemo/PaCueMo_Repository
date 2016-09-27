@@ -19,6 +19,7 @@ public class MessageVO implements Serializable
 	private String memberFBId;
 	private String content;
 	private Timestamp chatDateTime;
+	private int clubId;
 
 	public MessageVO()
 	{
@@ -116,6 +117,16 @@ public class MessageVO implements Serializable
 	public void setChatDateTime(Timestamp chatDateTime)
 	{
 		this.chatDateTime = chatDateTime;
+	}
+
+	public int getClubId()
+	{
+		return clubId;
+	}
+
+	public void setClubId(int clubId)
+	{
+		this.clubId = clubId;
 	}
 
 }

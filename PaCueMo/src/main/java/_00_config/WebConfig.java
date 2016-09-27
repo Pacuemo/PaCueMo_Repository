@@ -18,7 +18,7 @@ import _50_SpringConfigs.Roger_WebScanConfig;
 @EnableWebMvc
 //加入需要被裝載的控制器位置
 @Import({ StevenWebScanConfig.class, Roger_WebScanConfig.class, WebSocketStompConfig.class })
-@ComponentScan({ "_23_league_bk_controller", "_21_club_controller", "_22_league_controller", "_41_login_controller", "_42_register_controller", "_44_playercard_controller", "_45_websocket_test" })
+@ComponentScan({ "_23_league_bk_controller", "_21_club_controller", "_22_league_controller", "_41_login_controller", "_42_register_controller", "_44_playercard_controller", "_45_websocket_test", "_21_clubChat_WebSocketController" })
 public class WebConfig extends WebMvcConfigurerAdapter
 {
 
