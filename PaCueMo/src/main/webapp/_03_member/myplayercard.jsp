@@ -5,6 +5,7 @@
 <html>
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/playercard.css">

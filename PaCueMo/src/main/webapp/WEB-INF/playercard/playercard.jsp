@@ -6,6 +6,7 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
     <title>${Info.memberLastName}${Info.memberFirstName}的個人小檔案</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/member.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/playercardfriend.css">
@@ -14,6 +15,11 @@
     .ui-widget {
    		z-index:1000000 !important; /* The default is 100. !important overrides the default. */
 	}	
+	.info {
+	    position: relative;
+	    bottom: 150px;
+	    left: -400px;
+	}
     </style>
   </head>
   <body>
@@ -31,7 +37,7 @@
 				<div class="row">
 				    <div class="col-sm-12 col-md-12">
 	   					<div class="row">
-	   					<div class="col-sm-12 col-sm-6">
+	   					<div class="col-sm-12 col-md-6 col-sm-8">
 	   					<div class="well card profile" id="">
 	   						<div class="playercard">
 	   						<font class="name">${Info.memberLastName}${Info.memberFirstName}</font>
@@ -67,7 +73,7 @@
 						    <div id="container"></div>
 	   					</div>
 	   					</div>
-	   					<div class="col-sm-12 col-sm-6">
+	   					<div class="col-sm-12 col-md-6 col-sm-4">
 	   						<div class="well card profile" id="">
 							<h3 class="text-primary1">好友狀態</h3>
 							<c:choose>
@@ -147,7 +153,7 @@
 				<div class="row">
 				    <div class="col-sm-12 col-md-12">
 	   					<div class="row">
-	   					<div class="col-sm-12 col-sm-6">
+	   					<div class="col-sm-12 col-md-6 col-sm-8">
 	   					<div class="well card profile" style="height:200px" id="">
 	   						<div class="playercard">
 	   						<font class="name">${Info.memberLastName}${Info.memberFirstName}</font>
@@ -173,7 +179,7 @@
 	   						<h1 style="text-align: center;color: red;">他還沒有球員卡喔!!!</h1>
 	   					</div>
 	   					</div>
-	   					<div class="col-sm-12 col-sm-6">
+	   					<div class="col-sm-12 col-md-6 col-sm-4">
 	   						<div class="well card profile" id="">
 							<h3 class="text-primary1">好友狀態</h3>
 							<c:choose>
@@ -336,7 +342,8 @@
 			var guid = $(this).val();
 			location.href = "Playercard/friends/delete?guid="+guid;
 		})	
-	})
+	});
 	</script>
+    <jsp:include page="websocket.jsp" />
   </body>
 </html>

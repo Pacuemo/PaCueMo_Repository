@@ -17,9 +17,9 @@ import javax.xml.bind.DatatypeConverter;
 public class GlobalService
 {
 	public static final int RECORDS_PER_PAGE = 3;
-	public static final String HOST = "pacuemo.database.windows.net";
-	public static final String USERID = "magicjack";
-	public static final String PASSWORD = "Qweasdzxc123";
+	public static final String HOST = "127.0.0.1";
+	public static final String USERID = "sa";
+	public static final String PASSWORD = "sa123456";
 	public static final String SYSTEM_NAME = "PaCueMo";
 	public static final String JNDI_DB_NAME = "java:comp/env/jdbc/MagicJackDS";
 	public static final int IMAGE_FILENAME_LENGTH = 20;
