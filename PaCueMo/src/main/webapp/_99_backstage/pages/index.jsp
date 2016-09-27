@@ -11,7 +11,8 @@
 	    <meta name="description" content="">
 	    <meta name="author" content="">
 	
-	    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>PACUEMO BackStage</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 	
 	    <!-- Bootstrap Core CSS -->
 	    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

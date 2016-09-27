@@ -69,7 +69,7 @@ input[type='date']{
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>
-	                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	               <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">PaCueMo</a>
 	            </div>
 	            <!-- /.navbar-header -->
 	
@@ -298,7 +298,7 @@ input[type='date']{
 	                            <!-- /input-group -->
 	                        </li>
 	                        <li>
-	                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+	                           <a href="<%=request.getContextPath()%>/indexBackStage.jsp"><i class="fa fa-dashboard fa-fw"></i> Dashboard - HOME</a>
 	                        </li>
 	                       
 	                       
@@ -421,8 +421,8 @@ input[type='date']{
 	
 	    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	    
+	    <script src="<%=request.getContextPath()%>/js/bootstrapAlert.js"></script>
 	    <script src="<%=request.getContextPath()%>/js/bk_league/league.js"></script>
-	    
 	    <script>
 		    $(document).ready(function() {
 		        $('#dataTables-example').DataTable({
