@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>Pacuemo</title>
+<title>PACUEMO</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 
 <jsp:include page="/fragment/top.jsp" />
 <style>
@@ -47,10 +48,10 @@
 	}
 </style>
 <body>
-<div style="background-image:url('image/background/indexBackGround.jpg');width:100%;height:100%;position:absolute"></div>
+<div style="background-image:url('image/background/indexBackGround2.jpg');width:100%;height:100%;position:absolute"></div>
 <div class="container-fluid" style="background-color:black; min-width:300px">
 	<div class="row">
-		<div class="col-lg-7" style="margin-top:10%">
+		<div class="col-lg-7" style="margin-top:12%">
 			<h1 class="slogan hidden-xs"></h1>
 			<h1 class="slogan1 hidden-xs"></h1>
 			<br class ="hidden-xs">
