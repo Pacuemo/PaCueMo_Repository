@@ -17,9 +17,8 @@ import _9_24_leagueClub_model.LeagueClubVO;
 import _9_25_leagueRecord_model.LeagueRecordDAO_I;
 import _9_25_leagueRecord_model.LeagueRecordVO;
 import _9_26_fightRecord_model.FightRecordDAO_I;
-import _9_31_court_model.CourtDAO;
 import _9_31_court_model.CourtDAO_interface;
-import _9_41_member_model.MemberDAO_interface;
+import _9_41_member_model.MemberDAO_interface_Spring;
 
 @Component
 @Transactional
@@ -36,8 +35,9 @@ public class League_Service
 	@Autowired
 	private FightRecordDAO_I fightRecordDao;
 	@Autowired
-	private MemberDAO_interface memberDao;
-	private CourtDAO_interface courtDao = new CourtDAO();
+	private MemberDAO_interface_Spring memberDao;
+	@Autowired
+	private CourtDAO_interface courtDao;
 
 //---------------查詢全部聯賽-------------
 

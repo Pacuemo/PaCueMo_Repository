@@ -31,6 +31,8 @@ public class BattleRecordService
 	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
 	private StevenFacade stevenFacade;
+	@Autowired
+	private CourtDAO courtDAO;
 
 	public BattleRecordService()
 	{
@@ -128,7 +130,7 @@ public class BattleRecordService
 	public List<BattleRecordVO> findByTeamIdB_NotDec(Integer teamIdB)
 	{
 		List<BattleRecordVO> battleRecordVOs = battleRecordDAO.findByTeamIdB_NotDec(teamIdB);
-		CourtDAO courtDAO = new CourtDAO();
+
 		for (BattleRecordVO battleRecordVO : battleRecordVOs)
 		{
 			battleRecordVO.setTeamAVO(teamDAO.getTeamById(battleRecordVO.getTeamIdA()));

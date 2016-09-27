@@ -11,7 +11,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PACUEMO Club</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 <style>
 form {
 	margin: 0px auto;
@@ -55,6 +56,13 @@ label {
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
+	
+<style>
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/LinSanity.jpg');
+width:100%;
+}
+</style>
 	<div class="col-lg-8 col-lg-offset-2" style="margin-top: 100px">
 		<div class="col-md-6">
 			<h1 class="title">新增社團</h1>

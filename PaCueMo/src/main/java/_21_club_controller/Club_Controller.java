@@ -132,7 +132,7 @@ public class Club_Controller
 			session.setAttribute("MyClub", clubVO);
 			System.out.println("轉入/club/success.jsp 新增社團成功");
 			System.out.println("-------------------------------------------------------");
-			return "/club/success";
+			return "redirect:/spring/club/login";
 		}
 		else
 		{
@@ -145,9 +145,19 @@ public class Club_Controller
 //-----------------------退出社團-------------------------------
 	@ResponseBody
 	@RequestMapping(value = "deleteClubmember", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String deleteClubmember(@RequestParam("memberId") String memberId, HttpServletRequest request)
+	public String deleteClubmember(String memberId, String clubHeadId, int clubId, HttpServletRequest request)
 	{
 		int success = service.delete_clubMember(memberId);
+		System.out.println(memberId);
+		System.out.println(clubHeadId);
+		if (memberId.equals(clubHeadId))
+		{
+			System.out.println("---------------------------------------------");
+			System.out.println("刪除社團");
+			System.out.println("---------------------------------------------");
+			service.deleteClub(clubId);
+
+		}
 		Map<String, Integer> message = new HashMap<String, Integer>();
 		message.put("status", success);
 		return gson.toJson(message);

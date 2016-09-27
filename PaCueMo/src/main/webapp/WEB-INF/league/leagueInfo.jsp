@@ -10,7 +10,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+   <title>PACUEMO League</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 <link href="/css/heroic-features.css" rel="stylesheet">
 <style>
 </style>
@@ -25,14 +26,20 @@
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
+	<style>
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/champsclec.jpg');
+background-size:100%; 
+}
+</style>
 	<div id="info">
 		<div class="row text-center">
 			<c:forEach items="${requestScope.leagues}" var="leagueVO">
 
 				<div class="col-md-3 col-sm-6 hero-feature" style="margin: 50px 30px">
-					<div class="thumbnail">
-						<img src="../../img/PACUEMO.png" style="width: 150px; height: 150px" alt="">
-						<div class="caption">
+					<div class="thumbnail" style="background-color:rgba(13, 13, 13,0.6)">
+						<img src="../../img/PACUEMO.png" style="width: 150px; height: 150px;margin-top: 30px" alt="">
+						<div class="caption" style="color:wheat">
 							<h3>${leagueVO.leagueName}</h3>
 							<p>社團上限: ${leagueVO.clubAmount}</p>
 							<p>${leagueVO.startDate}~${leagueVO.endDate}</p>

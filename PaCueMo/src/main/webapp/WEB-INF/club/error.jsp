@@ -8,7 +8,8 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>PACUEMO Club</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
     <style>
 		  <%--insert css here--%>
 		  <%--@import url('');--%>
