@@ -7,7 +7,8 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>PACUEMO Club</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
       <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminLTE.min.css">
         <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
