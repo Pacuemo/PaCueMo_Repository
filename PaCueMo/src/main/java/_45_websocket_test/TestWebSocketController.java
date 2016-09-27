@@ -3,7 +3,6 @@ package _45_websocket_test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
@@ -25,7 +24,7 @@ public class TestWebSocketController
 	private Gson gson;
 
 	@MessageMapping("/friendslist")
-	@SendToUser("/queue/fd")
+//	@SendToUser("/queue/fd")
 	public String friendList(String key)
 	{
 		messaging.convertAndSendToUser(key, "/queue/fd", gson.toJson(ms.showAllFriends(key)));
@@ -34,7 +33,7 @@ public class TestWebSocketController
 	}
 
 	@MessageMapping("/chat")
-	@SendToUser("/queue/chat")
+//	@SendToUser("/queue/chat")
 	public ChatVO chat(ChatVO chatVO)
 	{
 		System.out.println(chatVO.getMemberId());
