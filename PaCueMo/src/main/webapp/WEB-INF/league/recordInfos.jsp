@@ -9,19 +9,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+   <title>PACUEMO League</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <style>
 .Mytable {
-	background-color: white;
+	background-color: rgba(255, 255, 255,0.6);
 	width: 98%
 }
 
 .Myth {
 	color: white;
 	text-align: center;
-	background-color: #4CAF50;
+	background-color: rgba(0, 102, 204,0.6);
 }
 
 tr {
@@ -29,7 +29,7 @@ tr {
 }
 
 tr:hover {
-	background-color: #00BBFF
+	background-color: rgba(128, 128, 128,0.6)
 }
 
 td {
@@ -58,7 +58,12 @@ h1 {
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
-
+	<style>
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/clevc.jpg');
+background-size:100%; 
+}
+</style>
 
 	<div class="row">
 		<div class="col-lg-6 col-lg-offset-2" style="width: 1200px;">

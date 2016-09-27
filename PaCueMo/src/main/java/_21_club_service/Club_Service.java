@@ -121,6 +121,12 @@ public class Club_Service
 		return clubMemberDAO.delete(memberId);
 	}
 
+	//退出社團
+	public int deleteClub(int clubId)
+	{
+		return clubDAO.delete(clubId);
+	}
+
 	//get社團資訊by clubMemberID
 	public ClubVO getClub_byMemberId(String memberId)
 	{
