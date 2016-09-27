@@ -1,27 +1,33 @@
 package _9_11_teammember_model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import _00_initial_service.GlobalService;
-
 @Repository("TeamMemberDAO")
 public class TeamMemberDAO implements TeamMemberDAO_interface
 {
+	@Autowired
+	private DataSource dataSource;
 	private JdbcOperations jdbc;
 
 	public TeamMemberDAO()
 	{
+	}
+
+	public TeamMemberDAO(DataSource dataSource)
+	{
+		this.dataSource = dataSource;
 	}
 
 	@Autowired
@@ -70,8 +76,11 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(INSERT);
 
 			pstmt.setInt(1, teamMemberVO.getTeamId());
@@ -122,8 +131,11 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, teamMemberVO.getTeamMemberId());
@@ -175,8 +187,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
 
 			pstmt = con.prepareStatement(DELETE_ONE);
 			pstmt.setInt(1, teamId);
@@ -184,10 +198,6 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 			pstmt.executeUpdate();
 		}
 		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
@@ -238,8 +248,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(GET_ONE);
 			pstmt.setInt(1, teamId);
 			pstmt.setString(2, teamMemberId);
@@ -253,10 +265,6 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 			}
 		}
 		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
@@ -324,8 +332,10 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 
@@ -341,10 +351,6 @@ public class TeamMemberDAO implements TeamMemberDAO_interface
 		catch (SQLException e)
 		{
 			throw new RuntimeException("A database error occured. " + e.getMessage());
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
 		}
 		finally
 		{

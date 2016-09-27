@@ -1,7 +1,6 @@
 package _9_10_team_model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,21 +9,29 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import _00_initial_service.GlobalService;
 import _9_11_teammember_model.TeamMemberVO;
 
 @Repository("TeamDAO")
 public class TeamDAO implements TeamDAO_interface
 {
+	@Autowired
+	private DataSource dataSource;
 	private JdbcOperations jdbc;
 
 	public TeamDAO()
 	{
+	}
+
+	public TeamDAO(DataSource dataSource)
+	{
+		this.dataSource = dataSource;
 	}
 
 	@Autowired
@@ -55,9 +62,9 @@ public class TeamDAO implements TeamDAO_interface
 
 	private static final String GET_TEAM_MEMBERS = "SELECT teamId,teamMemberId,joinDate FROM TeamMember where teamId = ?";
 	private static final String INSERT_TeamMember_LEADER = "INSERT INTO TeamMember (teamId,teamMemberId) VALUES (?, ?)";
-	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
 	private static final String SELECT_TEAM_MEMBERS = "SELECT teamMemberId FROM TeamMember where teamId=?";
 
+//	private static final String DELETE_TEAM_MEMBERS = "DELETE FROM TeamMember where teamId = ?";
 //	private static final String SELECT_ = "SELECT ranking FROM PlayerRecord where teamId=?"; PlayerRecordDAO 之後會有總平均? 拿來用就好
 
 	public static void main(String[] args)
@@ -115,8 +122,9 @@ public class TeamDAO implements TeamDAO_interface
 		PreparedStatement pstmt = null;
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+			con = dataSource.getConnection();
 
 			con.setAutoCommit(false);
 			// 先新增隊伍
@@ -190,8 +198,11 @@ public class TeamDAO implements TeamDAO_interface
 		PreparedStatement pstmt = null;
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, teamVO.getTeamName());
@@ -271,8 +282,11 @@ public class TeamDAO implements TeamDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 
@@ -293,10 +307,6 @@ public class TeamDAO implements TeamDAO_interface
 		catch (SQLException se)
 		{
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
 		}
 		finally
 		{
@@ -353,8 +363,11 @@ public class TeamDAO implements TeamDAO_interface
 
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
+
 			pstmt = con.prepareStatement(GET_TEAM_MEMBERS);
 			pstmt.setInt(1, teamId);
 			rs = pstmt.executeQuery();
@@ -371,10 +384,6 @@ public class TeamDAO implements TeamDAO_interface
 		catch (SQLException e)
 		{
 			throw new RuntimeException("A database error occured. " + e.getMessage());
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
 		}
 		finally
 		{
@@ -429,8 +438,10 @@ public class TeamDAO implements TeamDAO_interface
 		List<String> teamMemberIdList = new ArrayList<>();
 		try
 		{
-			Class.forName(GlobalService.DRIVER_NAME);
-			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+//			Class.forName(GlobalService.DRIVER_NAME);
+//			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
+			con = dataSource.getConnection();
 
 			con.setAutoCommit(false);
 			// 先查詢team所有成員
@@ -446,7 +457,7 @@ public class TeamDAO implements TeamDAO_interface
 			pstmt.setInt(1, teamId);
 			pstmt.executeUpdate();
 
-			Double avgRank = null; // 注入這裡
+			Double avgRank = 0D; // 注入這裡
 			// 把平均評分 update 到team table
 			pstmt = con.prepareStatement(UPDATE_AVG);
 			pstmt.setDouble(1, avgRank); // not finished
@@ -470,10 +481,6 @@ public class TeamDAO implements TeamDAO_interface
 				}
 			}
 			throw new RuntimeException("A database error occured. " + e.getMessage());
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
 		}
 		finally
 		{

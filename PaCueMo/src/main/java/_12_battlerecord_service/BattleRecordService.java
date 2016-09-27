@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import _00_config.RootConfig;
 import _10_steven_facade.StevenFacade;
-import _9_10_team_model.TeamDAO;
+import _9_10_team_model.TeamDAO_interface;
 import _9_10_team_model.TeamVO;
 import _9_11_teammember_model.TeamMemberVO;
 import _9_12_battlerecord_model.BattleRecordDAO_I;
@@ -26,7 +26,7 @@ public class BattleRecordService
 	@Autowired
 	private BattleRecordDAO_I battleRecordDAO;
 	@Autowired
-	private TeamDAO teamDAO;
+	private TeamDAO_interface teamDAO;
 	@Autowired
 	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
