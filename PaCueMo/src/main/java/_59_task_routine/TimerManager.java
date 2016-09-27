@@ -3,6 +3,7 @@ package _59_task_routine;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.Timer;
 
 import javax.servlet.ServletContext;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.Context;
 @Path("/TimerManager")
 public class TimerManager
 {
+
 	//時間間隔
 	private static final long PERIOD_DAY = 24 * 60 * 60 * 1000; // 時間間隔﹝一天﹞
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -34,11 +36,12 @@ public class TimerManager
 
 	public TimerManager()// for RESTful
 	{
-
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
 	}
 
 	public TimerManager(ServletContext context)
 	{
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
 		System.out.println("設定Timer起始時間 HH : " + (Integer) context.getAttribute("timerHH"));
 		System.out.println("設定Timer起始時間 MM : " + (Integer) context.getAttribute("timerMM"));
 		System.out.println("設定Timer起始時間 SS : " + (Integer) context.getAttribute("timerSS"));
