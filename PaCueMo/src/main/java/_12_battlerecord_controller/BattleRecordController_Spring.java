@@ -46,6 +46,8 @@ public class BattleRecordController_Spring
 	@Autowired
 	private MemberDAO_interface_Spring memberDAO;
 	@Autowired
+	private CourtService courtService;
+	@Autowired
 	private Gson gson;
 
 	@RequestMapping(value = "/createBattleTable", method = RequestMethod.POST)
@@ -99,7 +101,6 @@ public class BattleRecordController_Spring
 	{
 		System.out.println("BattleRecord_Controller : getCourtVO");
 		System.out.println("address" + address);
-		CourtService courtService = new CourtService();
 		System.out.println("回傳場地VOs 格式JSON");
 		System.out.println("-------------------------------------------------------");
 		return gson.toJson(courtService.findByCourtName(address.trim()));
