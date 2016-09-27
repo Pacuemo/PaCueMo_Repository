@@ -7,7 +7,8 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
+    <title>修改密碼</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reboot.bb8df22e.css">
   </head>
 <body class="m-tw l-zh_HANT page-password-reset  p-password-reset  is-loggedout reboot  ">

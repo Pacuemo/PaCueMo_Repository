@@ -82,9 +82,11 @@ div.map {
 map-btn {
 	cursor: pointer;
 }
+
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>場地搜尋</title>
+<title>PACUEMO Court</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 </head>
 <body>
 	<jsp:include page="/fragment/top.jsp" />
@@ -93,6 +95,13 @@ map-btn {
 body {
 	background-image:
 		url("${pageContext.request.contextPath }/_3_view/image/los_angeles_california_evening_playground_V2.png");
+}
+.info{
+background-color: rgba(0, 0, 0,0.4);
+margin-top: 20px
+}
+.info:hover{
+background-color: rgba(0, 0, 0,0.2)
 }
 </style>
 	<!-- 選擇器&搜尋button -->
@@ -157,9 +166,9 @@ body {
 			<div class="col-sm-8">
 				<%@ include file="page1.file"%>
 				<c:forEach var="courtVO" items="${list}" begin="<%=pageIndex %>" end="<%=pageIndex+rowsPerPage-1 %>">
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="box">
+					<div class="row info" >
+						<div class="col-sm-6" >
+							<div class="box" style="margin-top:20px">
 								<div class="imgtest" style="width: 100%; height: 250px; background-image: url('${courtVO.imgUrl}'); margin-bottom: 20px"></div>
 							</div>
 						</div>

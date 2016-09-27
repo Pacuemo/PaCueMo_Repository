@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-<title>帳戶 - Pacuemo</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
+<title>朋友列表 - Pacuemo</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/member.css">
 </head>
 <body>

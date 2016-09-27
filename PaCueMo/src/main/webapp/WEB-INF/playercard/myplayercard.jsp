@@ -6,6 +6,7 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="UTF-8">
+    <link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
     <title>我的球員卡</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/playercard.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.min.css">

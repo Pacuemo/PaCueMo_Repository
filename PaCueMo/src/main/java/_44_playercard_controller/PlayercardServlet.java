@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,8 @@ public class PlayercardServlet
 	private LoginService_Spring ls;
 	@Autowired
 	private MemberService_Spring ms;
+	@Autowired
+	private SimpMessagingTemplate messaging;
 	@Autowired
 	private Gson gson;
 
@@ -160,6 +163,7 @@ public class PlayercardServlet
 		friend.setMemberStatus(2);
 		if (ps.inviteFriend(me, friend) == 1)
 		{
+			messaging.convertAndSendToUser(friendId, "/queue/updateStatus", "reload");
 			return "redirect:../../Playercard?guid=" + friendId;
 		}
 		return "playercard/error";
@@ -172,6 +176,7 @@ public class PlayercardServlet
 		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
 		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
 		{
+			messaging.convertAndSendToUser(friendId, "/queue/updateStatus", "reload");
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
 		return "playercard/error";
@@ -193,6 +198,7 @@ public class PlayercardServlet
 
 		if (ps.agreeInvite(me, friend) == 1)
 		{
+			messaging.convertAndSendToUser(friend.getMemberId(), "/queue/updateStatus", "reload");
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
 		return "playercard/error";
@@ -205,6 +211,7 @@ public class PlayercardServlet
 		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
 		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
 		{
+			messaging.convertAndSendToUser(friendId, "/queue/updateStatus", "reload");
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
 		return "playercard/error";
