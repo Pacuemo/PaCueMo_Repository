@@ -15,7 +15,8 @@
 <%--設定home，之後在script可以用--%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>PaCueMo</title>
+<title>PACUEMO League</title>
+<link rel="icon" href="${pageContext.request.contextPath}/image/PACUEMOicon.png" type="image/x-icon" />
 <meta charset="utf-8" />
 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
 <%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css"> --%>
