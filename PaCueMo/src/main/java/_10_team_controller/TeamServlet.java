@@ -217,6 +217,12 @@ public class TeamServlet extends HttpServlet
 				List<MemberVO> myFriendVOs = teamMemberService.wrongWayGetMemberVOs(teamId, memberId);
 				req.setAttribute("myFriendVOs", myFriendVOs);
 
+				if (session.getAttribute("flag_addTeam") != null)
+				{
+					System.out.println("session flag_addTeam 存在! 現在移除");
+					session.removeAttribute("flag_addTeam");
+				}
+
 				System.out.println("隊伍名稱是: " + teamVO.getTeamName());
 				System.out.println("Servlet GET End");
 				System.out.println("-------------------------------------------------------");
