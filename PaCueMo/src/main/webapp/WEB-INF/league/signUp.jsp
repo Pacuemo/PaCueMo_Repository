@@ -14,20 +14,24 @@
 </style>
 <script>
 	
-<%--insert JScript here--%>
-	
-<%--<script src=""></script>--%>
+
 	
 </script>
 </head>
 <body>
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="sidebar.jsp" />
+<style>	
+body{
+background-image: url('${pageContext.request.contextPath}/image/background/Bradley-Beal.jpg');
+width:100%;
+}
+</style>
 	<!-- --------------------社團分組------------------------ -->
 	<div id="team" class="col-lg-8 col-lg-offset-2" style="display: block">
-		<div class="row" style="margin-top: 100px;border-bottom: 1px solid white">
+		<div class="row" style="margin-top: 100px;border-bottom: 2px solid white">
 			<div class="col-md-8">
-			<h1 style="color: white; font-weight: bold ;text-align: justify; ;margin:0px 0px">參加社團 </h1>			
+			<h1 style="color: white; font-weight: bold ;text-align: justify;margin:0px 0px;color:white;">參加社團 </h1>			
 			</div>
 			<div class="col-md-4" style="text-align: right">			
 			<c:if test="${LoginOK.memberId eq MyClub.clubHead }">
@@ -48,7 +52,7 @@
 			</div>			
 			<div id="groups" class="row" style="margin-top: 100px; margin-bottom: 200px;">
 
-				<div class="col-md-8 col-md-offset-2"  style="border: 1px solid grey;">
+				<div class="col-md-8 col-md-offset-2"  style="border: 1px solid grey;background-color: rgba(13, 13, 13,0.6)">
 					<h3 style="color: white">Group</h3>
 					<table>
 
@@ -64,7 +68,6 @@
 									<h4>
 										<a href="${searchClub}" style="color: white">${leagueClubVO.clubVO.clubName}</a>
 									</h4>
-									<h6>${status.index%5}</h6>
 								</div></td>
 							<c:if test="${status.index%5==4}">
 								</tr>
