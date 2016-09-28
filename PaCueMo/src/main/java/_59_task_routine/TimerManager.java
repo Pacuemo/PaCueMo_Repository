@@ -121,6 +121,7 @@ public class TimerManager
 	public Calendar getCalendarWithTime(int hh, int mm, int ss)
 	{
 		Calendar calendar = Calendar.getInstance();
+//		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		calendar.set(Calendar.HOUR_OF_DAY, hh);
 		calendar.set(Calendar.MINUTE, mm);
 		calendar.set(Calendar.SECOND, ss);
@@ -131,6 +132,7 @@ public class TimerManager
 	public Date addDay(Date date, int num)
 	{
 		Calendar startDT = Calendar.getInstance();
+//		Calendar startDT = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		startDT.setTime(date);
 		startDT.add(Calendar.DAY_OF_MONTH, num);
 		return startDT.getTime();
