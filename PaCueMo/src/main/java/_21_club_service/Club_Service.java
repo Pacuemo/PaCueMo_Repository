@@ -1,7 +1,6 @@
 package _21_club_service;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import _00_config.RootConfig;
-import _22_league_service.LeagueClub_Service;
-import _22_league_service.LeagueRecord_Service;
 import _9_21_club_model.ClubDAO_I;
 import _9_21_club_model.ClubVO;
 import _9_22_clubMember_model.ClubMemberDAO_I;
 import _9_22_clubMember_model.ClubMemberVO;
-import _9_24_leagueClub_model.LeagueClubVO;
+import _9_25_leagueRecord_model.LeagueRecordDAO_I;
 import _9_25_leagueRecord_model.LeagueRecordVO;
 import _9_27_clubApply_model.ClubApplyDAO_I;
 import _9_27_clubApply_model.ClubApplyVO;
@@ -29,9 +26,7 @@ import _9_41_member_model.MemberDAO_interface_Spring;
 public class Club_Service
 {
 	@Autowired
-	private LeagueRecord_Service leagueRecordService;
-	@Autowired
-	private LeagueClub_Service LeagueClub_Service;
+	private LeagueRecordDAO_I LeagueRecordDAO;
 	@Autowired
 	private ClubDAO_I clubDAO;
 	@Autowired
@@ -86,13 +81,12 @@ public class Club_Service
 		}
 		clubVO.setClubmembers(clubMemberVOs);
 		System.out.println("成功查詢社團成員: " + clubMemberVOs.size() + " 筆-並放入社團物件中");
-		List<LeagueClubVO> leagueClubVOs = LeagueClub_Service.get_All_By_ClubId(clubId);
-		List<LeagueRecordVO> leagueRecordVOs = new ArrayList<LeagueRecordVO>();
-		for (LeagueClubVO VO : leagueClubVOs)
+		List<LeagueRecordVO> leagueRecordVOs = LeagueRecordDAO.find_ALL_BY_ClubID(clubId);
+		for (LeagueRecordVO leagueRecordVO : leagueRecordVOs)
 		{
+			leagueRecordVO.setClubA(clubDAO.findByPK(leagueRecordVO.getClubIdA()));
 
-			leagueRecordVOs.addAll(leagueRecordService.get_One_LeagueRecord(VO.getLeagueId(), VO.getClubId()));
-
+			leagueRecordVO.setClubB(clubDAO.findByPK(leagueRecordVO.getClubIdB()));
 		}
 		clubVO.setLeagueRecordVOs(leagueRecordVOs);
 		System.out.println("回傳1筆社團VO");
@@ -133,13 +127,23 @@ public class Club_Service
 		ClubMemberVO clubMemberVO = clubMemberDAO.findByPK(memberId);
 		System.out.println("成功查詢社團成員:1筆-傳入社團成員Id");
 		ClubVO clubVO = getClub(clubMemberVO.getClubId());
-		List<ClubMemberVO> clubMembers = clubMemberDAO.getClubAll(clubVO.getClubID());
-		for (ClubMemberVO vo : clubMembers)
+		System.out.println("成功查詢社團:1筆-傳入社團成員VO內的社團ID");
+		System.out.println("回傳1筆社團VO");
+		List<ClubMemberVO> clubMemberVOs = clubMemberDAO.getClubAll(clubVO.getClubID());
+		for (ClubMemberVO vo : clubMemberVOs)
 		{
 			vo.setMember(memberDAO.findByPrimaryKey(vo.getClubMemberId()));
 		}
-		clubVO.setClubmembers(clubMembers);
-		System.out.println("成功查詢社團:1筆-傳入社團成員VO內的社團ID");
+		clubVO.setClubmembers(clubMemberVOs);
+		System.out.println("成功查詢社團成員: " + clubMemberVOs.size() + " 筆-並放入社團物件中");
+		List<LeagueRecordVO> leagueRecordVOs = LeagueRecordDAO.find_ALL_BY_ClubID(clubVO.getClubID());
+		for (LeagueRecordVO leagueRecordVO : leagueRecordVOs)
+		{
+			leagueRecordVO.setClubA(clubDAO.findByPK(leagueRecordVO.getClubIdA()));
+
+			leagueRecordVO.setClubB(clubDAO.findByPK(leagueRecordVO.getClubIdB()));
+		}
+		clubVO.setLeagueRecordVOs(leagueRecordVOs);
 		System.out.println("回傳1筆社團VO");
 		return clubVO;
 	}
@@ -370,9 +374,8 @@ public class Club_Service
 
 //		}
 
-		List<ClubApplyVO> s = service.get_All_memberId("83FC7025-12AA-43B0-8162-E27226D92C67");
-		System.out.println(s);
-
+		ClubVO clubVO = service.getClub_byMemberId("9f9fde57-21be-435d-b6c5-0909efdaad92");
+		System.out.println(clubVO.getClubID());
 	}
 
 }

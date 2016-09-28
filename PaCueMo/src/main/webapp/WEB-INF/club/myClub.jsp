@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>
@@ -106,11 +107,19 @@ background-size:100%;
 					<div class="col-md-12" style="display: block;">
 						<table style="width: 100%; border: 1px solid grey; margin-bottom: 30px;background-color: rgba(13, 13, 13,0.6)">
 							<tr>
-								<td style="width: 10%; background-color: black; color: white; text-align: center; font-size: 30px"><c:choose>
+								<td style="width: 15%; background-color: black; color: white; text-align: center; font-size: 20px;padding:0px 3px'">
+								<c:choose>
 										<c:when test="${leagueRecordVO.winner==ClubVO.clubID}">WIN</c:when>
+										<c:when test="${leagueRecordVO.winner==0}">
+										<jsp:useBean id="fightDate" class="java.util.Date"/>
+										<jsp:setProperty property="time" name="fightDate" value="${leagueRecordVO.fightDateTime.time}"/>
+										<fmt:formatDate type="both"  dateStyle="short" timeStyle="short"  value="${fightDate}" />
+										</c:when>
 										<c:otherwise>LOSE</c:otherwise>
 									</c:choose></td>
-								<td style="width: 70%;"><c:if test="${leagueRecordVO.scoreB>leagueRecordVO.scoreA}">
+								<c:choose>
+								<c:when test="${leagueRecordVO.scoreB>leagueRecordVO.scoreA}">
+								<td style="width: 70%;">
 										<table style="width: 100%">
 											<tr>
 												<td style="width: 20%; color: white; opacity: 0.4"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
@@ -125,7 +134,13 @@ background-size:100%;
 												<td colspan="2" style="text-align: center; color: white"><h4>${leagueRecordVO.scoreB}</h4></td>
 											</tr>
 										</table>
-									</c:if> <c:if test="${leagueRecordVO.scoreA>leagueRecordVO.scoreB}">
+										</td>
+								         <td style="width: 15%;border-left:1px solid white"><p style="text-align: center">
+										 <a href="${query}" class="btn btn-primary" style="background-color: black">查詢</a>
+									</p></td>
+									</c:when> 
+									<c:when test="${leagueRecordVO.scoreA>leagueRecordVO.scoreB}">
+										<td style="width: 70%;">
 										<table style="width: 100%">
 											<tr>
 												<td style="width: 20%; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
@@ -140,10 +155,33 @@ background-size:100%;
 												<td colspan="2" style="text-align: center; color: white; opacity: 0.4"><h4>${leagueRecordVO.scoreB}</h4></td>
 											</tr>
 										</table>
-									</c:if></td>
-								<td style="width: 20%;border-left:1px solid white"><p style="text-align: center">
+										</td>
+								           <td style="width: 15%;border-left:1px solid white"><p style="text-align: center">
 										<a href="${query}" class="btn btn-primary" style="background-color: black">查詢</a>
-									</p></td>
+									        </p></td>
+									</c:when> 
+	                                <c:otherwise>
+										<td style="width: 70%;">
+										<table style="width: 100%">
+											<tr>
+												<td style="width: 20%; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
+												<td style="width: 25%;"><a href="${searchClubA}"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-right: 50px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 10%;"><img src="${pageContext.request.contextPath}/image/vs/VS4.gif  " class="img-circle" style="width: 80px; height: 80px;"></td>
+												<td style="width: 25%; text-align: right; "><a href="${searchClubB}"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 20%; text-align: right; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubB.clubName}</h4></td>
+											</tr>
+											<tr>
+												<td colspan="2" style="text-align: center; color: white"><h4></h4></td>
+												<td></td>
+												<td colspan="2" style="text-align: center; color: white;"><h4></h4></td>
+											</tr>
+										</table>
+										</td>
+								           <td style="width: 15%;border-left:1px solid white"><p style="text-align: center">
+										<a href="#" class="btn btn-primary" style="background-color: black">備戰</a>
+									        </p></td>
+									</c:otherwise> 
+								</c:choose>
 							</tr>
 						</table>
 					</div>
@@ -158,13 +196,14 @@ background-size:100%;
 				社團成員
 			</h1>
 			<table class="col-lg-12">
+			<c:set var="memberNumber"  value="${0}"/>
 			<c:forEach items="${sessionScope.MyClub.clubmembers}"  var="clubmemberVO">
 				<tr style="border-bottom: 1px solid grey; color:white;background-color: rgba(13, 13, 13,0.6)">
                             <td style="width:25%" ><img class="img-circle" style="width:100px;height:100px;margin-bottom: 30px;margin-top: 30px;margin-left:60px" src="../../image/member/${clubmemberVO.member.memberImgUrl}" alt=""></td>
                             <td style="width:15%" ><span style="color:#0099cc">姓名</span><br/><br/>${clubmemberVO.member.memberLastName}${clubmemberVO.member.memberFirstName}</td>
                             <td style="width:35%" ><span style="color:#0099cc">E-Mail</span><br/><br/>${clubmemberVO.member.memberMail}</td>
                             <td style="width:25%" ><span style="color:#0099cc">加入日期</span><br/><br/>${clubmemberVO.joinDate}</td>
-       
+             <c:set var="memberNumber"  value="${memberNumber+1}"/>
                     <tr>
 			</c:forEach>
 			</table>
@@ -190,23 +229,46 @@ background-size:100%;
 			$("#deleteClubMember").click(function(event)
 			         			{
 			         				event.preventDefault();
-			         				$.ajax({ url : $(this).attr("href"), type : 'get', success : function(message)
-			         				{
+			         				if('${MyClub.clubHead}'!='${LoginOK.memberId}'){
+						         				$.ajax({ url : $(this).attr("href"), type : 'get', success : 
+							         				      function(message){
+			
+									         					switch (message.status) {
+									         						case 1:
+									         							window.location.replace("introduce");		         							
+									         							break;
+									         						
+									         						default:
+									         							BootstrapAlert.alert({ title : "Sorry!", message : "退出社團失敗" });
+									         					     	break;
+									         					}
+						         				           }   
+						         				})
+			         				}
+			         				else{
+                                               if(${memberNumber}<2){
+			                                            	   $.ajax({ url : $(this).attr("href"), type : 'get', success : 
+										         				      function(message){
+						
+												         					switch (message.status) {
+												         						case 1:
+												         							window.location.replace("introduce");		         							
+												         							break;
+												         						
+												         						default:
+												         							BootstrapAlert.alert({ title : "Sorry!", message : "退出社團失敗" });
+												         					     	break;
+												         					}
+									         				           }   
+									         				})
+                                                  }else{
 
-			         					switch (message.status) {
-			         						case 1:
-			         							BootstrapAlert.success({ title : "Congrat!", message : "成功退出社團" });	
-			         							window.location.replace("introduce");		         							
-			         							break;
-			         						
-			         						default:
-			         							BootstrapAlert.alert({ title : "Sorry!", message : "退出社團失敗" });
-			         					     	break;
-			         					}
+                                                	  BootstrapAlert.alert({ title : "Sorry!", message : "社團內還有人  解散社團失敗" });
 
-			         				} })
+                                                      }
+				         				}
 			         			});
-		})
+		});
 	</script>
 </body>
 </html>

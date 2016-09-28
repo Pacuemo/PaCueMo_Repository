@@ -81,4 +81,7 @@ width:100%;
 	</div>
 	<!-- --------------------社團分組------------------------	 -->
 </body>
+<script type="text/javascript">
+console.log(${'MyClub.clubHead'});
+</script>
 </html>

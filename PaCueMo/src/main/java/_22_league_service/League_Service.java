@@ -59,8 +59,8 @@ public class League_Service
 	{
 		LeagueVO leagueVO = leagueDao.findOne(leagueId);
 		System.out.println("成功查詢聯賽:  1    筆-傳入值為聯賽Id");
-		leagueVO.setCourtVO(courtDao.findByPrimaryKey(leagueVO.getPlaceID()));
-		System.out.println("並成功加入:  1    筆場地VO至聯賽VO");
+//		leagueVO.setCourtVO(courtDao.findByPrimaryKey(leagueVO.getPlaceID()));
+//		System.out.println("並成功加入:  1    筆場地VO至聯賽VO");
 		List<LeagueClubVO> leagueClubs = leagueClubDao.find_ALL(leagueId);
 		System.out.println("並成功查詢該聯賽參予聯賽社團VO:   " + leagueClubs.size());
 		for (LeagueClubVO vo : leagueClubs)
