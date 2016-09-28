@@ -8,8 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 
-import _43_member_service.MemberService;
-import _9_43_friendsList_model.FriendsListDAO_interface_Spring;
+import _43_member_service.MemberService_Spring;
 import _9_44_chat_model.ChatVO;
 
 @Controller
@@ -18,9 +17,7 @@ public class TestWebSocketController
 	@Autowired
 	private SimpMessagingTemplate messaging;
 	@Autowired
-	private FriendsListDAO_interface_Spring dao;
-	@Autowired
-	private MemberService ms;
+	private MemberService_Spring ms;
 	@Autowired
 	private Gson gson;
 
@@ -28,6 +25,7 @@ public class TestWebSocketController
 //	@SendToUser("/queue/fd")
 	public String friendList(String key)
 	{
+		System.out.println("get chat friends list");
 		messaging.convertAndSendToUser(key, "/queue/fd", gson.toJson(ms.showAllFriends(key)));
 		return null;
 
