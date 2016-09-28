@@ -18,7 +18,6 @@
 // 			});
 
 // 			stomp.send("/app/marco",{},payload);
-			stomp.send("/app/friendslist",{},'${LoginOK.memberId}');
 // 			stomp.subscribe("/topic/friendslist",function(incoming){
 // 				var test = JSON.parse(incoming.body);
 // 				console.log(test);
@@ -66,11 +65,13 @@
 			
 			})
 			
-			stomp.subscribe("/user/${LoginOK.memberId}/queue/updateStatus",function(incoming){
+			stomp.subscribe("/user/${LoginOK.memberId}/queue/updateStatus/${Info.memberId}",function(incoming){
 				if(incoming.body.trim() == "reload"){
 					window.location.reload(true);
 				}
 			})
+			
+	        stomp.send("/app/friendslist",{},'${LoginOK.memberId}');
 		})
 		
 	</script>
@@ -146,6 +147,7 @@
                 background-color: rgb(237, 239, 244);
                 width: 300px;
                 border: 1px solid rgba(29, 49, 91, .3);
+                z-index:1000;
             }
             
             .popup-box .popup-head
@@ -156,6 +158,7 @@
                 font-weight: bold;
                 font-size: 14px;
                 clear: both;
+                z-index:1000;
             }
             
             .popup-box .popup-head .popup-head-left

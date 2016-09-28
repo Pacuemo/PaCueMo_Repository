@@ -163,7 +163,7 @@ public class PlayercardServlet
 		friend.setMemberStatus(2);
 		if (ps.inviteFriend(me, friend) == 1)
 		{
-			messaging.convertAndSendToUser(friendId, "/queue/updateStatus", "reload");
+			messaging.convertAndSendToUser(friendId, "/queue/updateStatus/" + mv.getMemberId(), "reload");
 			return "redirect:../../Playercard?guid=" + friendId;
 		}
 		return "playercard/error";
@@ -176,7 +176,7 @@ public class PlayercardServlet
 		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
 		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
 		{
-			messaging.convertAndSendToUser(friendId, "/queue/updateStatus", "reload");
+			messaging.convertAndSendToUser(friendId, "/queue/updateStatus/" + mv.getMemberId(), "reload");
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
 		return "playercard/error";
@@ -198,7 +198,7 @@ public class PlayercardServlet
 
 		if (ps.agreeInvite(me, friend) == 1)
 		{
-			messaging.convertAndSendToUser(friend.getMemberId(), "/queue/updateStatus", "reload");
+			messaging.convertAndSendToUser(friend.getMemberId(), "/queue/updateStatus/" + me.getMemberId(), "reload");
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
 		return "playercard/error";
@@ -211,7 +211,7 @@ public class PlayercardServlet
 		MemberVO mv = (MemberVO) session.getAttribute("LoginOK");
 		if (ms.deleteFriend(mv.getMemberId(), friendId) == 1)
 		{
-			messaging.convertAndSendToUser(friendId, "/queue/updateStatus", "reload");
+			messaging.convertAndSendToUser(friendId, "/queue/updateStatus/" + mv.getMemberId(), "reload");
 			return "redirect:../../Playercard?guid=" + friendId.trim();
 		}
 		return "playercard/error";
