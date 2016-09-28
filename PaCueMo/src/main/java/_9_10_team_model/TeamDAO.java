@@ -124,6 +124,7 @@ public class TeamDAO implements TeamDAO_interface
 		{
 //			Class.forName(GlobalService.DRIVER_NAME);
 //			con = DriverManager.getConnection(GlobalService.DB_URL, GlobalService.USERID, GlobalService.PASSWORD);
+
 			con = dataSource.getConnection();
 
 			con.setAutoCommit(false);

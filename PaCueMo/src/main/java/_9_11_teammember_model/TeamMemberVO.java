@@ -8,8 +8,10 @@ import _9_41_member_model.MemberVO;
 import _9_42_playerCard_model.PlayerCardVO;
 
 @Component
-public class TeamMemberVO
+public class TeamMemberVO implements java.io.Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private Integer teamId;
 	private String teamMemberId;
 	private Date joinDate;
