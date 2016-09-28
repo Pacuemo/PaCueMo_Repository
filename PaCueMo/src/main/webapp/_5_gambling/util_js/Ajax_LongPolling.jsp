@@ -33,8 +33,7 @@
 	            success: function (data, textStatus) {
 	                //$("#state").append("[state: " + textStatus + ", data: { " + data + "} ]<br/>");
 	                
-	                if (textStatus == "success") { // 請求成功
-	                
+	                if (textStatus == "success") { // 請求成功	                
 	                	if(data == "start_Update"){
 
 							//----------------【取得session中memberId】------------------
