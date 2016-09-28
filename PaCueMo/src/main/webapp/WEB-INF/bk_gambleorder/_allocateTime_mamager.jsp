@@ -351,7 +351,7 @@
                     </div><!-- /.col-md-6 -->  
                     <div class="col-md-3"><!-- 時鐘 -->
                         <ul class="clock_ul">
-			                <li id='gg' class="clock_li">${applicationScope['timerHH']}</li>
+			                <li id='gg' class="clock_li">${applicationScope['timerHH'] + applicationScope['timeDiff']}</li>
 			                <li class="clock_li">:</li>
 			                <li class="clock_li">${applicationScope['timerMM']}</li>
 			                <li class="clock_li">:</li>
@@ -426,8 +426,9 @@
 									"min" :min,
 									"sec" :sec
 							},
-							"success":function(data){
+							success:function(data){
 								//alert('fuck');
+								//alert(data);
 				      			BootstrapAlert.success({ //BootstrapAlert 特效
 		 			                title: "設定成功",
 		 			                message: "設定分派彩金時間為：" + hour + " 時 " + min + " 分 " + sec + " 秒 ",
@@ -451,7 +452,7 @@
 								}
 								
 							},
-				      		"error":function(){
+				      		error:function(){
 				      			BootstrapAlert.info({ //BootstrapAlert 特效
 		 			                title: "網路忙線中",
 		 			                message: "請稍候",

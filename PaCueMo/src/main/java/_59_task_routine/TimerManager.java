@@ -36,12 +36,12 @@ public class TimerManager
 
 	public TimerManager()// for RESTful
 	{
-		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
+//		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
 	}
 
 	public TimerManager(ServletContext context)
 	{
-		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
+//		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
 		System.out.println("設定Timer起始時間 HH : " + (Integer) context.getAttribute("timerHH"));
 		System.out.println("設定Timer起始時間 MM : " + (Integer) context.getAttribute("timerMM"));
 		System.out.println("設定Timer起始時間 SS : " + (Integer) context.getAttribute("timerSS"));
@@ -61,11 +61,18 @@ public class TimerManager
 			@FormParam("min") Integer min,
 			@FormParam("sec") Integer sec, @Context ServletContext context)
 	{
+//		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));// 設定server端的時區
 		timerMain.cancel();// --------------------------- Step1.停止前一次的Timer
+		Integer zone1 = TimeZone.getTimeZone("Asia/Taipei").getRawOffset();
+		Integer zone2 = TimeZone.getTimeZone(TimeZone.getDefault().getID()).getRawOffset();
+		Integer timeDiff = Math.abs(zone1 - zone2) / (1000 * 60 * 60);// 兩地時間差(hour)
+		hour = (hour - timeDiff < 0) ? ((hour - timeDiff) + 24) : (hour - timeDiff);
+
 		//-------【將固定運行時間設定在Servlet起始參數】--------
 		context.setAttribute("timerHH", hour);
 		context.setAttribute("timerMM", min);
 		context.setAttribute("timerSS", sec);
+		context.setAttribute("timeDiff", timeDiff);
 		System.out.println("呼叫RESTful setPointsTime() 傳入的： hour : " + hour + "  min : " + min + " sec : " + sec);
 		this.hour = hour;
 		this.min = min;
@@ -73,6 +80,7 @@ public class TimerManager
 		//------------------------------
 		try
 		{
+			System.out.println("  timeDiff: " + timeDiff.toString() + "  hour: " + hour);
 			setTimerTask(hour, min, sec);
 			return "success";
 		}
