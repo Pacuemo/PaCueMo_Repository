@@ -60,7 +60,7 @@ h1 {
 	<jsp:include page="sidebar.jsp" />
 	<style>
 body{
-background-image: url('${pageContext.request.contextPath}/image/background/clevc.jpg');
+background-image: url('${pageContext.request.contextPath}/image/background/Spurs.jpg');
 background-size:100%; 
 }
 </style>

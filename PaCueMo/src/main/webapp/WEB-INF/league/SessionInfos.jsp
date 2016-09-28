@@ -26,7 +26,7 @@
 	<jsp:include page="navBar.jsp" />
 	<style>
 body{
-background-image: url('${pageContext.request.contextPath}/image/background/warriorOpacity.jpg');
+background-image: url('${pageContext.request.contextPath}/image/background/KyrieIrving.jpg');
 width:100%;
 }
 </style>

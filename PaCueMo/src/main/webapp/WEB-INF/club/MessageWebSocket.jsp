@@ -135,7 +135,7 @@ font-size: 90%;
 	<jsp:include page="MessageNavBar.jsp" />	
 <style>
 body{
-background-image: url('${pageContext.request.contextPath}/image/background/Kobe.png');
+background-image: url('${pageContext.request.contextPath}/image/background/Kobe.jpg');
  background-size:100%;
 
 
