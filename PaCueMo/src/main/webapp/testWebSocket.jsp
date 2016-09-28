@@ -28,6 +28,10 @@
 // 				var test = JSON.parse(incoming.body);
 // 				console.log(test);
 // 			});
+			  stomp.subscribe("/queue/test",function(incoming){
+					$("#photo").attr("src",incoming.body);
+  			  })
+			
 			stomp.subscribe("/user/${LoginOK.memberId}/queue/fd",function(incoming){
 				var test = JSON.parse(incoming.body);
 				console.log(test);
@@ -57,7 +61,8 @@
 					$("div.message_list").append(box);
 					
 				})
-			});
+			})
+		})
 			
 			
 
@@ -205,6 +210,9 @@
 	</style>
   </head>
   <body>
+  	 <input type="file" id="test"/>
+  	 <img id="photo"/>
+  	 <div id="button" style="height:20px;width:100px;background-color:red"></div>
      <div class="message">聊天室
      </div> 
      <div class="message_title">
@@ -215,6 +223,19 @@
      </div>
   </body>
   <script type="text/javascript">
+  $("#button").bind("click",function(){
+	  alert("yes")
+	  var reader = new FileReader();
+	  var file = document.getElementById("test").files[0];
+	  reader.readAsDataURL(file)
+	  reader.onload = function(e){
+		  alert(e.target.result);
+		  stomp.send("/app/image",{},e.target.result); 
+	  };
+	  
+	  
+  })
+  
   $(function(){
 	  	 $("div.message").click(function(){
 	  		 $("div.message_list").show();
