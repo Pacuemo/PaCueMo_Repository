@@ -65,6 +65,7 @@ public class TeamController_Spring
 		{
 			MemberVO memberVO = (MemberVO) session.getAttribute("LoginOK");
 			teamMemberService.add(btn_join, memberVO.getMemberId());
+			session.setAttribute("flag_addTeam", "t");
 		}
 		catch (Exception e)
 		{
@@ -107,13 +108,13 @@ public class TeamController_Spring
 		if (page.equals("main"))
 		{
 			System.out.println("forward main");
-			request.setAttribute("teamId", btn_abort);	//set Att
-			return "forward:/TeamServlet";
+//			request.setAttribute("teamId", btn_abort);	//set Att
+			return "redirect:/TeamServlet?teamId=" + btn_abort;
 		}
 		else
 		{
 			System.out.println("forward ctp");
-			return "forward:createTeamPage";
+			return "redirect:createTeamPage";
 		}
 	}
 
@@ -145,7 +146,7 @@ public class TeamController_Spring
 //			return "forward:createTeamPage";
 //		}
 		System.out.println("forward ctp");
-		return "forward:createTeamPage";
+		return "redirect:createTeamPage";
 	}
 
 	@RequestMapping(value = "/updateTeam", method = RequestMethod.GET, produces = "text/plain ; charset=UTF-8")
@@ -160,7 +161,7 @@ public class TeamController_Spring
 			teamVO.setContent(content);
 			teamVO.setLocation(location);
 			teamService.update(teamVO);
-			request.setAttribute("teamId", teamVO.getTeamId());
+//			request.setAttribute("teamId", teamId);
 		}
 		catch (Exception e)
 		{
@@ -171,7 +172,7 @@ public class TeamController_Spring
 		System.out.println("修改成功");
 		System.out.println("-------------------------------------------------------");
 		System.out.println("forward TeamPage (GET)");
-		return "forward:/TeamServlet";
+		return "redirect:/TeamServlet?teamId=" + teamId;
 	}
 
 //	@ResponseBody
@@ -224,6 +225,15 @@ public class TeamController_Spring
 		List<TeamApplyVO> myTeamApplyVOs = teamApplyService.getTeamApplyVOsById(memberVO.getMemberId());
 		request.setAttribute("myTeamApplyVOs", myTeamApplyVOs);
 		request.setAttribute("pageForSideBar", "createteam");
+
+		request.setAttribute("flag_addTeam", "f");
+		if (session.getAttribute("flag_addTeam") != null)
+		{
+			System.out.println("session flag_addTeam 存在! 現在移除");
+			session.removeAttribute("flag_addTeam");
+			System.out.println("設定 request flag_addTeam!");
+			request.setAttribute("flag_addTeam", "t");
+		}
 
 		memberVO.setMemberPoint(memberDAO.findByPrimaryKey(memberVO.getMemberId()).getMemberPoint());
 		session.setAttribute("LoginOK", memberVO);

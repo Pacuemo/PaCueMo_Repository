@@ -121,10 +121,10 @@ body {
 								<option value="連江縣">連江縣</option>
 							</select>
 						</div>
-						<div class="row content" style="padding: 10px;padding-bottom:20px;padding-top:0px; margin-top: 0px;overflow-y:scroll; height: 400px;overflow-x:hidden;">
+<!-- 						<div class="row content" style="padding: 10px;padding-bottom:20px;padding-top:0px; margin-top: 0px;overflow-y:scroll; height: 400px;overflow-x:hidden;"> -->
 							<c:set var="flag" value="5"></c:set>
 							<c:forEach items="${requestScope.teamOppVOs}" var="teamOppVO" varStatus="status">
-								<div data-location="${teamOppVO.location}" class="div_team">
+								<div data-location="${teamOppVO.location}" class="row content div_team" style="padding: 10px;padding-bottom:20px;padding-top:0px; margin-top: 0px;">
 									<hr style="margin-top: 0px">
 									<div class="row left_div">
 										<div class="col-md-7">
@@ -139,7 +139,7 @@ body {
 									</div>
 								</div>
 							</c:forEach>
-						</div>
+<!-- 						</div> -->
 					</c:when>
 				</c:choose>
 			</div>
