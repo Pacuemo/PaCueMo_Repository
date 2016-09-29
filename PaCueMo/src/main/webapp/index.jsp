@@ -47,11 +47,11 @@
     padding: 10px;
 	}
 </style>
-<body >
+<body style="overflow-y: hidden;">
 <div style="position: fixed;top:0px;left:0px; z-index: -2; width: 100%; height: 100%;">
  <iframe frameborder="0" height="100%" width="100%"  src="https://www.youtube.com/embed/n6S1JoCSVNU?autoplay=1&controls=0&showinfo=0&autohide=1&loop=1&playlist=n6S1JoCSVNU"></iframe>
 </div>
-<div class="container-fluid" style="min-width:300px;background-color:rgba(0, 0, 0,0.6) ">
+<div class="container-fluid" style="min-width:300px;background-color:rgba(0, 0, 0,0.6);">
 	<div class="row" style="height:100%;margin-top: 20%;margin-left: 40%">
 	<div><img src="img/PACUEMO_LOGO (2).png" style="width:300px"/></div>
 		<div class="col-lg-7" style="margin-top:12%">
