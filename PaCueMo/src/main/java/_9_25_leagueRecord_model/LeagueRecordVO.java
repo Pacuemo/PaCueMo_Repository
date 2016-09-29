@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import _9_21_club_model.ClubVO;
 import _9_26_fightRecord_model.FightRecordVO;
 
@@ -21,7 +19,6 @@ public class LeagueRecordVO implements Serializable
 	private int leagueId;
 	private int clubIdA;
 	private int clubIdB;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp fightDateTime;
 	private int rounds;
 	private int scoreA;

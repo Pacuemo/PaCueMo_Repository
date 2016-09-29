@@ -49,7 +49,7 @@
 </style>
 <body >
 <div style="position: fixed;top:0px;left:0px; z-index: -2; width: 100%; height: 100%;">
- <iframe frameborder="0" height="100%" width="100%"  src="https://www.youtube.com/embed/n6S1JoCSVNU?autoplay=1&controls=0&showinfo=0&autohide=1&loop=1"  loop="1"></iframe>
+ <iframe frameborder="0" height="100%" width="100%"  src="https://www.youtube.com/embed/n6S1JoCSVNU?autoplay=1&controls=0&showinfo=0&autohide=1&loop=1&playlist=n6S1JoCSVNU"></iframe>
 </div>
 <div class="container-fluid" style="min-width:300px;background-color:rgba(0, 0, 0,0.6) ">
 	<div class="row" style="height:100%;margin-top: 20%;margin-left: 40%">
@@ -89,6 +89,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+
 $(function(){
 	$('#text').attr('disabled',true);
 })

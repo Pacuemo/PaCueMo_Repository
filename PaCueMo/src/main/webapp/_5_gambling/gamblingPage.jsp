@@ -54,8 +54,21 @@
   <body>
   <jsp:include page="/fragment/top.jsp"/>
   <jsp:include page="/_5_gambling/sidebar.jsp"/>
-  <div style="background:rgba(0%, 0%, 0%, 0.6);width: 100%;height: 100%">
-  <div style="background-image:url('<%=request.getContextPath()%>/img/388829-basketball-wallpaper.jpg');width:100%;height:100%;position:absolute;top:0;left:0;z-index:-100"></div>
+  <style>
+  body{
+  		background-image: url("${pageContext.request.contextPath}/img/388829-basketball-wallpaper.jpg");	
+  		margin:0; 
+    	padding:0; 
+   		-moz-background-size: cover; 
+   		background-size: cover; 
+  		z-index: -2
+  		
+  }
+  </style>
+  <div style="background:rgba(0%, 0%, 0%, 0.6);width: 100%;height: 100%;z-index: -1 ; position: fixed;">
+  </div>
+  <div style="width: 100%;height: 100%;">
+<%--   <div style="background-image:url('<%=request.getContextPath()%>/img/388829-basketball-wallpaper.jpg');width:100%;height:100%;position:absolute;top:0;left:0;z-index:-100"></div> --%>
        <div class="container">
        		<div class="row">
        			<div class="col-md-2"></div>       	

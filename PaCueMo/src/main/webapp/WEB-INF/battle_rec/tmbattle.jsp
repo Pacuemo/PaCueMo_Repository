@@ -61,14 +61,21 @@ td {
 
 </head>
 <body>
+<div style="background-color:rgba(0,0,0,0.25); position: fixed;top:0px;left:0px; z-index: -1; width: 100%; height: 100%;">
+</div>
+
 	<jsp:include page="/fragment/top.jsp" />
 	<jsp:include page="/WEB-INF/team/fragment/teamSidebar.jsp" />
 
 	<style>
 body {
-	background-image: url("${pageContext.request.contextPath }/image/team/nike_basketball__europe.jpg");
+	background-image: url("${pageContext.request.contextPath }/image/team/derrick_rose_basketball_chicago_bulls_2.jpg");
 	overflow-x: hidden;
-	
+	margin:0; 
+    padding:0; 
+    -moz-background-size: cover; 
+    background-size: cover; 
+	z-index: -2
 }
 </style>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -78,7 +85,7 @@ body {
 			<div class="col-md-12">
 				<div class="col-md-1"></div>
 				<div class="col-md-11">
-					<h2 style="margin-left: 5px">搜尋隊伍</h2>
+					<h2 style="margin-left: 5px; color: white;font-size:36; font-weight:600 ;">搜尋隊伍</h2>
 				</div>
 			</div>
 

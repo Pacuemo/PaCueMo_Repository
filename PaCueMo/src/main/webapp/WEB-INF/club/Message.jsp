@@ -138,8 +138,6 @@ font-size: 90%;
 body{
 background-image: url('${pageContext.request.contextPath}/image/background/Kobe.jpg'');
  background-size:100%;
-
-
 }
 </style>	
 	 <div class="backGround">
