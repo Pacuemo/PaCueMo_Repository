@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%--use JSTL Standard Syntax--%>
 <%--<%@ taglib prefix="s" uri="/struts-tags"%>--%>
@@ -95,41 +96,76 @@ width:100%;
 				<div class="col-sm-8 col-lg-8 col-md-8  col-lg-offset-2 Round${leagueRecordVO.rounds}" style="display: none;">
 					<table style="width: 100%; border: 1px solid grey; margin-bottom: 30px;background-color: rgba(13, 13, 13,0.6)">
 						<tr>
-							<td style="width: 10%; background-color: black; color: white; text-align: center">${leagueRecordVO.fightDateTime}</td>
-							<td style="width: 70%;"><c:if test="${leagueRecordVO.scoreA<leagueRecordVO.scoreB}">
-									<table style="width: 100%">
-										<tr>
-											<td style="width: 20%; color: white; opacity: 0.4"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
-											<td style="width: 25%; opacity: 0.4"><a href="${searchClubA}"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-right: 50px; margin-left: 50px;border:4px solid white"/></a></td>
-											<td style="width: 10%;"><img src="${pageContext.request.contextPath}/image/vs/VS4.gif  " class="img-circle" style="width: 80px; height: 80px;"></td>
-											<td style="width: 25%; text-align: right"><a href="${searchClubB}"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-left: 50px;border:4px solid white"/></a></td>
-											<td style="width: 20%; text-align: right; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubB.clubName}</h4></td>
-										</tr>
-										<tr>
-											<td colspan="2" style="text-align: center; color: white; opacity: 0.8"><h4>${leagueRecordVO.scoreA}</h4></td>
-											<td></td>
-											<td colspan="2" style="text-align: center; color: white"><h4>${leagueRecordVO.scoreB}</h4></td>
-										</tr>
-									</table>
-								</c:if> <c:if test="${leagueRecordVO.scoreA>leagueRecordVO.scoreB}">
-									<table style="width: 100%">
-										<tr>
-											<td style="width: 20%; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
-											<td style="width: 25%;"><a href="${searchClubA}"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-right: 50px; margin-left: 50px;border:4px solid white"/></a></td>
-											<td style="width: 10%;"><img src="${pageContext.request.contextPath}/image/vs/VS4.gif  " class="img-circle" style="width: 80px; height: 80px;"></td>
-											<td style="width: 25%; text-align: right; opacity: 0.4"><a href="${searchClubB}"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-left: 50px;border:4px solid white"/></a></td>
-											<td style="width: 20%; text-align: right; color: white; opacity: 0.4"><h4 style="text-align: center">${leagueRecordVO.clubB.clubName}</h4></td>
-										</tr>
-										<tr>
-											<td colspan="2" style="text-align: center; color: white"><h4>${leagueRecordVO.scoreA}</h4></td>
-											<td></td>
-											<td colspan="2" style="text-align: center; color: white; opacity: 0.8"><h4>${leagueRecordVO.scoreB}</h4></td>
-										</tr>
-									</table>
-								</c:if></td>
-							<td style="width: 20%;border-left:1px solid white"><p style="text-align: center">
-									<a href="${query}" class="btn btn-primary" style="background-color: black">查詢</a>
-								</p></td>
+							<td style="width: 15%; background-color: black; color: white; text-align: center;padding:0px 3px">
+							    <jsp:useBean id="fightDate" class="java.util.Date"/>
+								<jsp:setProperty property="time" name="fightDate" value="${leagueRecordVO.fightDateTime.time}"/>
+								<fmt:formatDate type="both"  dateStyle="short" timeStyle="short"  value="${fightDate}" />
+							</td>
+							<c:choose>
+								<c:when test="${leagueRecordVO.scoreB>leagueRecordVO.scoreA}">
+								<td style="width: 70%;">
+										<table style="width: 100%">
+											<tr>
+												<td style="width: 20%; color: white; opacity: 0.4"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
+												<td style="width: 25%; opacity: 0.4"><a href="${searchClubA}"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-right: 50px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 10%;"><img src="${pageContext.request.contextPath}/image/vs/VS4.gif  " class="img-circle" style="width: 80px; height: 80px;"></td>
+												<td style="width: 25%; text-align: right"><a href="${searchClubB}"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 20%; text-align: right; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubB.clubName}</h4></td>
+											</tr>
+											<tr>
+												<td colspan="2" style="text-align: center; color: white; opacity: 0.4"><h4>${leagueRecordVO.scoreA}</h4></td>
+												<td></td>
+												<td colspan="2" style="text-align: center; color: white"><h4>${leagueRecordVO.scoreB}</h4></td>
+											</tr>
+										</table>
+										</td>
+								         <td style="width: 15%;border-left:1px solid white"><p style="text-align: center">
+										 <a href="${query}" class="btn btn-primary" style="background-color: black">查詢</a>
+									</p></td>
+									</c:when> 
+									<c:when test="${leagueRecordVO.scoreA>leagueRecordVO.scoreB}">
+										<td style="width: 70%;">
+										<table style="width: 100%">
+											<tr>
+												<td style="width: 20%; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
+												<td style="width: 25%;"><a href="${searchClubA}"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-right: 50px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 10%;"><img src="${pageContext.request.contextPath}/image/vs/VS4.gif  " class="img-circle" style="width: 80px; height: 80px;"></td>
+												<td style="width: 25%; text-align: right; opacity: 0.4"><a href="${searchClubB}"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 20%; text-align: right; color: white;opacity: 0.4"><h4 style="text-align: center">${leagueRecordVO.clubB.clubName}</h4></td>
+											</tr>
+											<tr>
+												<td colspan="2" style="text-align: center; color: white"><h4>${leagueRecordVO.scoreA}</h4></td>
+												<td></td>
+												<td colspan="2" style="text-align: center; color: white; opacity: 0.4"><h4>${leagueRecordVO.scoreB}</h4></td>
+											</tr>
+										</table>
+										</td>
+								           <td style="width: 15%;border-left:1px solid white"><p style="text-align: center">
+										<a href="${query}" class="btn btn-primary" style="background-color: black">查詢</a>
+									        </p></td>
+									</c:when> 
+	                                <c:otherwise>
+										<td style="width: 70%;">
+										<table style="width: 100%">
+											<tr>
+												<td style="width: 20%; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubA.clubName}</h4></td>
+												<td style="width: 25%;"><a href="${searchClubA}"><img src="../../image/club/${leagueRecordVO.clubA.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-right: 50px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 10%;"><img src="${pageContext.request.contextPath}/image/vs/VS4.gif  " class="img-circle" style="width: 80px; height: 80px;"></td>
+												<td style="width: 25%; text-align: right; "><a href="${searchClubB}"><img src="../../image/club/${leagueRecordVO.clubB.clubImageName}" alt="" class="img-circle" style="width: 130px; height: 130px; margin-top: 30px; margin-bottom: 30px; margin-left: 50px;border:4px solid white" /></a></td>
+												<td style="width: 20%; text-align: right; color: white;"><h4 style="text-align: center">${leagueRecordVO.clubB.clubName}</h4></td>
+											</tr>
+											<tr>
+												<td colspan="2" style="text-align: center; color: white"><h4></h4></td>
+												<td></td>
+												<td colspan="2" style="text-align: center; color: white;"><h4></h4></td>
+											</tr>
+										</table>
+										</td>
+								           <td style="width: 15%;border-left:1px solid white"><p style="text-align: center">
+										<a href="#" class="btn btn-primary" style="background-color: black">備戰</a>
+									        </p></td>
+									</c:otherwise> 
+								</c:choose>
 						</tr>
 					</table>
 				</div>

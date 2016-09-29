@@ -17,8 +17,8 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 
 	private JdbcOperations jdbc;
 	private static final String INSERT_STMT = "INSERT dbo.Member( memberId, memberFirstName ,memberLastName ,memberPassword ,memberBirthday ,memberPhone ,memberMail,"
-			+ " memberPoint ,memberHaveCard ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
-			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+			+ " memberPoint ,memberHaveCard ,memberType, memberImgUrl,memberRgDateTime, memberMailStatus, member2StepVerify"
+			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 	private static final String INSERT_STMT_fb = "INSERT dbo.Member( memberId, memberFirstName ,memberLastName ,memberBirthday ,memberPhone ,memberMail,"
 			+ " memberPoint ,memberHaveCard ,memberFBId ,memberType ,memberRgDateTime, memberMailStatus, member2StepVerify"
 			+ ") VALUES ( NEWID(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
@@ -56,6 +56,7 @@ public class MemberDAO_Spring implements MemberDAO_interface_Spring
 				1000.0,
 				false,
 				1,
+				"user.jpg",
 				new Timestamp(System.currentTimeMillis()),
 				false,
 				false);

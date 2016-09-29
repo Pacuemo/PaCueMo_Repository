@@ -51,9 +51,13 @@ public class LeagueRecordVO implements Serializable
 		{
 			this.winner = clubIdA;
 		}
-		else
+		else if (scoreA < scoreB)
 		{
 			this.winner = clubIdB;
+		}
+		else
+		{
+
 		}
 	}
 
@@ -72,9 +76,13 @@ public class LeagueRecordVO implements Serializable
 		{
 			this.winner = clubIdA;
 		}
-		else
+		else if (scoreA < scoreB)
 		{
 			this.winner = clubIdB;
+		}
+		else
+		{
+
 		}
 	}
 

@@ -131,7 +131,7 @@ public class BattleRecordController_Spring
 	@RequestMapping(value = "/reportTeamB", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String reportTeamB(Integer battleId, String resault)
 	{
-		System.out.println("BattleRecord_Controller : reportTeamA");
+		System.out.println("BattleRecord_Controller : reportTeamB");
 		System.out.println("battleId : " + battleId);
 		BattleRecordVO battleRecordVO = battleRecordService.findById(battleId);
 		if (resault.equals("win"))
