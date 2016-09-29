@@ -20,6 +20,16 @@
 <!--         url="jdbc:sqlserver://pacuemo.database.windows.net:1433;database=MagicJack_main"  -->
 <!--         username="magicjack" -->
 <!--         password="Qweasdzxc123" /> -->
+        
+        
+<!--              <Resource  -->
+<!--         name="jdbc/MagicJackDS"  -->
+<!--         type="javax.sql.DataSource"  -->
+<!--         auth="Container"  -->
+<!--         driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"  -->
+<!--         url="jdbc:sqlserver://magicjackryan.database.windows.net:1433;database=MagicJack_main"  -->
+<!--         username="ryan" -->
+<!--         password="Qweasdzxc123" /> -->
 
 
 </Context>

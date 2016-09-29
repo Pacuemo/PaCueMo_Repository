@@ -10,7 +10,7 @@
 <title>帳戶 - Pacuemo</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_03_member/css/member.css">
 </head>
-<body>
+<body style="font-family: 微軟正黑體;">
 <jsp:include page="/fragment/top.jsp" />
 <jsp:include page="/_03_member/fragment/sidebar.jsp" />
 <div class="container container-content">
