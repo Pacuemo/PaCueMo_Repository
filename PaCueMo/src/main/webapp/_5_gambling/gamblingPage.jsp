@@ -54,6 +54,8 @@
   <body>
   <jsp:include page="/fragment/top.jsp"/>
   <jsp:include page="/_5_gambling/sidebar.jsp"/>
+  <div style="background:rgba(0%, 0%, 0%, 0.6);width: 100%;height: 100%">
+  <div style="background-image:url('<%=request.getContextPath()%>/img/388829-basketball-wallpaper.jpg');width:100%;height:100%;position:absolute;top:0;left:0;z-index:-100"></div>
        <div class="container">
        		<div class="row">
        			<div class="col-md-2"></div>       	
@@ -114,7 +116,7 @@
        		 
        	   </div>
        </div>
-
+	</div>
     	<!-- ====================================================================== -->
 		<!-- =======================【下注 dialog 開始】=========================== -->
 		<!-- ====================================================================== -->
@@ -259,7 +261,7 @@
        			
        			$("#tableDiv > table > tbody > tr:nth-child(odd) td:first-child").click(function(){ //點擊左邊(away)隊徽時
 
-					var awayName = $(this).parent("tr").next('tr').find('h4').eq(0).text();
+       				var awayName = $(this).parent("tr").next('tr').find('h4').eq(0).text();
 					
 					$.ajax({
 						 "type":"POST",//傳遞方式				
