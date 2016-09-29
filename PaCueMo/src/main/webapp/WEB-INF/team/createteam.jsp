@@ -26,6 +26,8 @@
 .h2_tm {
 	padding-left: 20px;
 	color: white;
+	font-size:42px;
+	font-weight:600 ;
 }
 
 .left_20{
