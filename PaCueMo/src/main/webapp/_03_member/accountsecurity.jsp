@@ -15,7 +15,7 @@
 	}	
 </style>
 </head>
-<body>
+<body style="font-family: 微軟正黑體;">
 <jsp:include page="/fragment/top.jsp" />
 <jsp:include page="/_03_member/fragment/sidebar.jsp" />
 <div class="container container-content">

@@ -21,7 +21,7 @@
 	}
     </style>
   </head>
-  <body>
+  <body style="font-family: 微軟正黑體;">
   <jsp:include page="/fragment/top.jsp" />
   <jsp:include page="sidebar.jsp" />
   <c:if test="${Info.memberHaveCard == true }">
