@@ -94,7 +94,7 @@ map-btn {
 <style>
 body {
 	background-image:
-		url("${pageContext.request.contextPath }/_3_view/image/los_angeles_california_evening_playground_V2.png");
+		url("${pageContext.request.contextPath }/_3_view/image/los_angeles_california_evening_playground.jpg");
 }
 .info{
 background-color: rgba(0, 0, 0,0.4);
