@@ -490,7 +490,8 @@ input[type='time'] {
 									'<td><input type="text" class="totalTime" disabled="disabled"></td>'+
 									'<td><a class="btn btn-default forUpdate" href="#" role="button">修改</a> <a class="btn btn-default deleteRecord" href="#" role="button" fightId='+response.leagueRecordVO.fightId+'>刪除</a>' +
 									'<input type="button" class="btn btn-default submitIRecord" value="送出" style="display: none" '+
-									' clubIdA='+response.leagueRecordVO.clubIdA+' clubIdB='+response.leagueRecordVO.clubIdB+'></td>'));
+									' clubIdA='+response.leagueRecordVO.clubIdA+' clubIdB='+response.leagueRecordVO.clubIdB+'>'+
+									'<a class="btn btn-default fightRecord"  href="../fightRecordBackStage/getfightRecord?fightId='+response.leagueRecordVO.fightId+'&clubIdA='+response.leagueRecordVO.clubIdA+'&clubIdB='+response.leagueRecordVO.clubIdB+'" role="button" >場次資料</a>'+'</td>'));
 							tr.find('a.deleteRecord').bind('click',deleteRecord).next().bind('click',submitRecord).prev().prev().bind('click',updateRecord);
 						 };
 					}
@@ -520,6 +521,8 @@ input[type='time'] {
 					var tr=$(this).parent().parent();
 					var date=tr.find('input[type=date]').val();
 					var time=tr.find('input[type=time]').val();
+					var d = new Date(date+" "+time+":00");
+					
 					var winner;
 					var data={};
 					data['fightId']=$(this).prev().attr('fightId');
@@ -528,7 +531,7 @@ input[type='time'] {
 					if(date=="" || time==""){
 
 						}else{
-							data['fightDateTime']=date+" "+time+":00";
+							data['fightDateTime']=d;
 							};
 					data['rounds']=tr.find('input[class="rounds"]').val();
 					data['scoreA']=tr.find('input[class="scoreA"]').val();
