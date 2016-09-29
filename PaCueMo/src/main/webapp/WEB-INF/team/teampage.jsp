@@ -156,7 +156,7 @@ p.tempstyle {
 }
 
 .tmimg {
-	width: auto;
+	width: 100%;
 	height: auto;
 }
 
@@ -265,7 +265,7 @@ body {
 		<div class="col-sm-10 col-md-10 animate fadeInLeft animated">
 			<c:forEach var="teamMemberVO" items="${requestScope.teamVO.teamMemberVOs}" begin="0">
 				<div class="col-xs-12 col-sm-4 col-md-2 person-details margin-bottom-30 fadeIn animated">
-					<figure style="background-color:  rgba(255,255,255,0.95);min-height: 405.8px;">
+					<figure style="background-color:  rgba(255,255,255,0.95);min-height: 360.8px;">
 						
 						<c:choose>
 							<c:when test="${teamMemberVO.memberVO.memberImgUrl != null}">

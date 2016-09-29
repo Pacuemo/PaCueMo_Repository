@@ -55,7 +55,7 @@ div.container.detail{
 
 </style>
 </head>
-<body>
+<body style="font-family: 微軟正黑體;">
 <jsp:include page="/fragment/top.jsp" />
 <jsp:include page="/_03_member/fragment/sidebar.jsp" />
 <div class="container container-content detail">
@@ -80,7 +80,7 @@ div.container.detail{
 		   				</tr>
 		   				</tbody>
 		   				</table>
-		   				<table class="gamble">
+		   				<table class="gamble" style="display:none">
 		   				<thead>
 		   				<tr>
 		   				<th>下注編號</th><th>下注時間</th><th></th><th>下注場次</th><th></th><th>比賽時間</th><th>主隊(單位：點)</th><th>客隊(單位：點)</th>

@@ -16,7 +16,7 @@
 	}	
     </style>
   </head>
-  <body>
+  <body style="background-image: url('../../image/background/earth__day_and_night_from_space-wallpaper-1920x1080.jpg'); overflow-x: hidden; overflow-y: hidden; font-family: 微軟正黑體;">
   <jsp:include page="/fragment/top.jsp" />
   <jsp:include page="sidebar.jsp" />
   <c:if test="${LoginOK.memberHaveCard == true }">
@@ -438,7 +438,16 @@
 	            categories: ['力量', '體力', '敏捷', '智力','感知', '魅力'],
 	            tickmarkPlacement: 'off',
 	            lineColor: '#d0d0d0',
-	            lineWidth: 0
+	            lineWidth: 0,
+	            labels: {
+	            	style: {
+	            	    color: '#FFDC35',
+	            	    fontSize: "18px",
+	            	    fontWeight: "700",
+	            	    fontFamily: "Courier new"
+	            	} 
+
+	            },
 	        },
 
 	        yAxis: {
@@ -475,7 +484,7 @@
 	            		enabled: false
 	        		}
 	   			 }
-			}		
+			}
 
 	    });
 	});
