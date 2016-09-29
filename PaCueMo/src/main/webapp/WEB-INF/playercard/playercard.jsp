@@ -16,9 +16,8 @@
    		z-index:1000000 !important; /* The default is 100. !important overrides the default. */
 	}	
 	.info {
-	    position: relative;
-	    bottom: 150px;
-	    left: -400px;
+	position: relative;
+    left: 0px;
 	}
     </style>
   </head>
@@ -59,16 +58,19 @@
 						        </c:otherwise>
 						    </c:choose>
 						    <div class="info">
-							<span class="position"> ${Playercard.playerPosition}</span>
-							<span class="height">${Playercard.playerHeight}</span>
-							<span class="weight">${Playercard.playerWeight}</span>
-							<c:if test="${Playercard.playerHand == true}">
-							<span class="hand">Left</span>
-							</c:if>
-							<c:if test="${Playercard.playerHand == false}">
-							<span class="hand">Right</span>
-							</c:if>
-							<span class="note">${Playercard.playerNote}</span>
+						    <table>
+						    <tr><td class="title">position</td><td class="title">height</td><td class="title">weight</td><td class="title">hand</td></tr>
+								<tr><td class="context">${Playercard.playerPosition}</td><td class="context">${Playercard.playerHeight}</td><td class="context">${Playercard.playerWeight}</td>
+								<c:if test="${Playercard.playerHand == true}"> 
+								<td class="context">Left</td>
+								</c:if>
+								<c:if test="${Playercard.playerHand == false}">
+								<td class="context">Right</td>
+								</c:if>
+								</tr>
+								<tr><td class="title" colspan="4">note</td></tr>
+								<tr><td class="context" colspan="4">${Playercard.playerNote}</td></tr>
+						    </table>
 							</div>
 						    <div id="container"></div>
 	   					</div>
