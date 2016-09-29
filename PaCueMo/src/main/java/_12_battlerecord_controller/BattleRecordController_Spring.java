@@ -131,7 +131,7 @@ public class BattleRecordController_Spring
 	@RequestMapping(value = "/reportTeamB", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String reportTeamB(Integer battleId, String resault)
 	{
-		System.out.println("BattleRecord_Controller : reportTeamA");
+		System.out.println("BattleRecord_Controller : reportTeamB");
 		System.out.println("battleId : " + battleId);
 		BattleRecordVO battleRecordVO = battleRecordService.findById(battleId);
 		if (resault.equals("win"))
@@ -143,6 +143,7 @@ public class BattleRecordController_Spring
 			battleRecordVO.setReportB(1);
 		}
 		battleRecordService.reportB(battleRecordVO);
+
 		System.out.println("BattleRecord_Controller : End");
 		System.out.println("-------------------------------------------------------");
 		return "success";
@@ -190,7 +191,7 @@ public class BattleRecordController_Spring
 		}
 		if (request.getAttribute("teamOppVOs") == null)
 		{
-			System.out.println("查詢不到teamOppVOs 開始預設");
+			System.out.println("沒有查詢 teamOppVOs 開始預設");
 			List<TeamVO> teamVOs = teamService.searchTeamByLocationAndName("", "", memberVO.getMemberId());
 			request.setAttribute("teamOppVOs", teamVOs);
 		}

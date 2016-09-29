@@ -47,10 +47,13 @@
     padding: 10px;
 	}
 </style>
-<body>
-<div style="background-image:url('image/background/indexBackGround2.jpg');width:100%;height:100%;position:absolute"></div>
-<div class="container-fluid" style="background-color:black; min-width:300px">
-	<div class="row">
+<body >
+<div style="position: fixed;top:0px;left:0px; z-index: -2; width: 100%; height: 100%;">
+ <iframe frameborder="0" height="100%" width="100%"  src="https://www.youtube.com/embed/n6S1JoCSVNU?autoplay=1&controls=0&showinfo=0&autohide=1&loop=1"  loop="1"></iframe>
+</div>
+<div class="container-fluid" style="min-width:300px;background-color:rgba(0, 0, 0,0.6) ">
+	<div class="row" style="height:100%;margin-top: 20%;margin-left: 40%">
+	<div><img src="img/PACUEMO_LOGO (2).png" style="width:300px"/></div>
 		<div class="col-lg-7" style="margin-top:12%">
 			<h1 class="slogan hidden-xs"></h1>
 			<h1 class="slogan1 hidden-xs"></h1>
@@ -60,24 +63,24 @@
 			<br class ="hidden-xs">
 			<br class ="hidden-xs">
 			<div class="row">
-				<div onclick="location.href='${pageContext.request.contextPath}/spring/battle_rec/introduce';" class="col-sm-4 col-xs-12">
-				<div class="box" ">
-				<img class="index" src="img/EverythingBasketball_Mark_Large_v01.PNG"/>
-				<h1>約戰</h1>
-				</div>
-				</div>
-				<div onclick="location.href='${pageContext.request.contextPath}/spring/league/introduce';" class="col-sm-4 col-xs-12">
-				<div class="box" >
-				<img class="index" src="img/PACUEMO.png"/>
-				<h1>聯賽</h1>
-				</div>
-				</div>
-				<div class="col-sm-4 col-xs-12">
-				<div onclick="location.href='${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate';" class="box" >
-				<img class="index" src="img/nba-logo-transparent-png-logo-download.png"/>
-				<h1>NBA運彩</h1>
-				</div>
-				</div>
+<%-- 				<div onclick="location.href='${pageContext.request.contextPath}/spring/battle_rec/introduce';" class="col-sm-4 col-xs-12"> --%>
+<!-- 				<div class="box" "> -->
+<!-- 				<img class="index" src="img/EverythingBasketball_Mark_Large_v01.PNG"/> -->
+<!-- 				<h1>約戰</h1> -->
+<!-- 				</div> -->
+<!-- 				</div> -->
+<%-- 				<div onclick="location.href='${pageContext.request.contextPath}/spring/league/introduce';" class="col-sm-4 col-xs-12"> --%>
+<!-- 				<div class="box" > -->
+<!-- 				<img class="index" src="img/PACUEMO.png"/> -->
+<!-- 				<h1>聯賽</h1> -->
+<!-- 				</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-sm-4 col-xs-12"> -->
+<%-- 				<div onclick="location.href='${pageContext.request.contextPath}/_5_gambling/BattleSet_Servlet.do?action=queryByDate';" class="box" > --%>
+<!-- 				<img class="index" src="img/nba-logo-transparent-png-logo-download.png"/> -->
+<!-- 				<h1>NBA運彩</h1> -->
+<!-- 				</div> -->
+<!-- 				</div> -->
 			</div>
 		</div>
 		<div class="col-lg-5">

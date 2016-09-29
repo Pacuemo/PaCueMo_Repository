@@ -21,4 +21,6 @@ public interface LeagueRecordDAO_I
 
 	LeagueRecordVO find_Last_One();
 
+	List<LeagueRecordVO> find_ALL_BY_ClubID(int clubId);
+
 }

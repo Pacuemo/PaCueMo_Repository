@@ -94,10 +94,8 @@ public class Club_Controller
 		int lose = clubVO.getLeagueRecordVOs().size() - win;
 		winCount.put("win", win);
 		winCount.put("lose", lose);
-		System.out.println(win);
 		session.setAttribute("MywinCount", winCount);
 		session.setAttribute("MyClub", clubVO);
-		clubVO = service.getClub(clubVO.getClubID());
 		System.out.println("重導:/myClub 展現個人社團主頁");
 		System.out.println("-------------------------------------------------------");
 		return "redirect:/spring/club/myClubA";
@@ -145,7 +143,7 @@ public class Club_Controller
 //-----------------------退出社團-------------------------------
 	@ResponseBody
 	@RequestMapping(value = "deleteClubmember", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String deleteClubmember(String memberId, String clubHeadId, int clubId, HttpServletRequest request)
+	public String deleteClubmember(String memberId, String clubHeadId, int clubId, HttpServletRequest request, HttpSession session)
 	{
 		int success = service.delete_clubMember(memberId);
 		System.out.println(memberId);
@@ -158,6 +156,7 @@ public class Club_Controller
 			service.deleteClub(clubId);
 
 		}
+		session.removeAttribute("MyClub");
 		Map<String, Integer> message = new HashMap<String, Integer>();
 		message.put("status", success);
 		return gson.toJson(message);

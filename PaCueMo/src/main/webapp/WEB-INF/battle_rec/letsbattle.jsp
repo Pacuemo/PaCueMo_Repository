@@ -209,18 +209,18 @@ body {
 							</div>
 							<div class="col-xs-4">
 								<select id="battleHr" name="battleHr" class="form-control valid"style="font-family: Consolas">
-									<option value="1">上午  &nbsp;1&nbsp;點</option>
-									<option value="2">上午  &nbsp;2&nbsp;點</option>
-									<option value="3">上午  &nbsp;3&nbsp;點</option>
-									<option value="4">上午  &nbsp;4&nbsp;點</option>
-									<option value="5">上午  &nbsp;5&nbsp;點</option>
-									<option value="6">上午  &nbsp;6&nbsp;點</option>
-									<option value="7">上午  &nbsp;7&nbsp;點</option>
-									<option value="8">上午  &nbsp;8&nbsp;點</option>
-									<option value="9">上午  &nbsp;9&nbsp;點</option>
+									<option value="01">上午  &nbsp;1&nbsp;點</option>
+									<option value="02">上午  &nbsp;2&nbsp;點</option>
+									<option value="03">上午  &nbsp;3&nbsp;點</option>
+									<option value="04">上午  &nbsp;4&nbsp;點</option>
+									<option value="05">上午  &nbsp;5&nbsp;點</option>
+									<option value="06">上午  &nbsp;6&nbsp;點</option>
+									<option value="07">上午  &nbsp;7&nbsp;點</option>
+									<option value="08">上午  &nbsp;8&nbsp;點</option>
+									<option value="09">上午  &nbsp;9&nbsp;點</option>
 									<option value="10">上午  10&nbsp;點</option>
 									<option value="11">上午  11&nbsp;點</option>
-									<option value="12">上午  12&nbsp;點</option>
+									<option value="00">上午  12&nbsp;點</option>
 									<option disabled="disabled">---------------------------</option>
 									<option value="13">下午  &nbsp;1&nbsp;點</option>
 									<option value="14">下午  &nbsp;2&nbsp;點</option>
@@ -233,7 +233,7 @@ body {
 									<option value="21">下午  &nbsp;9&nbsp;點</option>
 									<option value="22">下午  10&nbsp;點</option>
 									<option value="23">下午  11&nbsp;點</option>
-									<option value="24">下午  12&nbsp;點</option>			
+									<option value="12">下午  12&nbsp;點</option>			
 								</select>
 							</div>
 							<div class="col-xs-4">
@@ -349,7 +349,8 @@ body {
 // 		var n = s.substr(0, 10);
 // 		$('#battleDate').val(n);
 		
-		$("#battleHr option[value='${requestScope.current_date.hr}']").attr('selected','selected');
+		var hr_v = "${requestScope.current_date.hr}";
+		$("#battleHr option[value='" + hr_v + "']").attr('selected','selected');
 		
 		$(function() 
 		{

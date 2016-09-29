@@ -54,7 +54,8 @@ body {
 }
 </style>	
 <%-- 	<script src="${pageContext.request.contextPath }/js/jquery-3.1.0.min.js"></script> --%>
-<%-- 	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script> --%>
+	<script src="<%=request.getContextPath()%>/_5_gambling/plugins/boostrapAlert/js/bootstrapAlert.min.js"></script>
+	<script src="${pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 
 	<div class="row" style="margin: 0px">
 		<div class="col-md-6" >
@@ -117,13 +118,13 @@ body {
 		<div class="col-md-2"></div>
 		<div class="col-md-4">
 		<div class="dropdown col-md-12"> <h2 class="h2_tm dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">推薦隊伍：<span class="caret"></span></h2>
-			<ul class="dropdown-menu animate fadeInDown animated" style="overflow-y:scroll;width: 400px;height:400px;margin-left: 40px;padding-top: 10px">
+			<ul class="dropdown-menu animate fadeInDown animated" style="width: 400px;margin-left: 40px;padding-top: 10px">
 			<table class="table table-hover " >
 				<tbody>
-				<c:forEach var="ot_list" items="${requestScope.otherList }">
+				<c:forEach var="ot_list" items="${requestScope.otherList }" end="4">
 					<c:choose>
 						<c:when test="${ot_list.teamProp == 0}">
-							<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">	
+							<tr><td class="text-success" style="border-bottom:1pt solid #F5F3BB;"><div class="row">
 									<div class="col-md-6" >
 										<a href="${pageContext.request.contextPath }/TeamServlet?teamId=${ot_list.teamId}">${ot_list.teamName }</a>
 									</div>
@@ -187,7 +188,7 @@ body {
 			<input placeholder="隊伍簡介" name="content" type="text" tabindex="2">
 		</fieldset>
 		<fieldset>
-			<select id="location" name="location" required="" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
+			<select id="location" name="location" class="form-control valid" contextmenu="123" style="font-size:14px;padding: 10px; margin-bottom: 5px">
 					<option disabled="disabled" selected="selected" value="none">活動地區</option>
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
@@ -311,7 +312,7 @@ body {
 						}, 
 						"error" : function(Error)
 						{
-							alert("fuck");
+							window.location.href= "${home}";
 							console.log(Error);
 						} 
 					})
@@ -321,7 +322,17 @@ body {
 			    confirmButton: "Yes",
 			    cancelButton: "No"
 			});
-			
+
+			var flag_add_v = "${requestScope.flag_addTeam}";
+			if(flag_add_v == 't')
+			{
+// 				alert("flag_add_v : " + flag_add_v);
+				BootstrapAlert.success({ //BootstrapAlert 特效
+		                title: "成功加入隊伍！",
+	// 	                message: "喔耶?!",
+		                hideTimeout: 1800,
+		        });
+			}
 			
 			// initial end
 		});

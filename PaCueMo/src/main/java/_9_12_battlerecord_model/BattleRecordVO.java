@@ -8,8 +8,13 @@ import _9_10_team_model.TeamVO;
 import _9_31_court_model.CourtVO;
 
 @Component
-public class BattleRecordVO
+public class BattleRecordVO implements java.io.Serializable
+
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer battleId;
 	private Integer teamIdA;
 	private Integer teamIdB;

@@ -51,11 +51,63 @@ public class BattleRecordService
 	public void reportA(BattleRecordVO battleRecordVO)
 	{
 		battleRecordDAO.reportA(battleRecordVO);
+		chkResult(battleRecordVO);
 	}
 
 	public void reportB(BattleRecordVO battleRecordVO)
 	{
 		battleRecordDAO.reportB(battleRecordVO);
+		chkResult(battleRecordVO);
+	}
+
+	public void chkResult(BattleRecordVO battleRecordVO)
+	{
+		System.out.println("BattleRecordService : chkResult");
+		battleRecordVO = battleRecordDAO.findById(battleRecordVO.getBattleId());
+		try
+		{
+			System.out.println("result = " + battleRecordVO.getResult());
+			if (battleRecordVO.getResult() == 1)
+			{
+				System.out.println("BattleRecordService : chkResult TeamA win");
+				TeamVO teamAVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdA());
+				double bet = battleRecordVO.getBattleBet() * 2;
+				for (TeamMemberVO teamMemberVO : teamAVO.getTeamMemberVOs())
+				{
+					System.out.println("2*bet = " + bet + " || TeamA 人數 = " + teamAVO.getTeamMemberVOs().size());
+					double betA = (bet / teamAVO.getTeamMemberVOs().size() * 100);
+					betA = (Math.round(betA) / 100);
+					System.out.println("發放點數(每人) = " + betA);
+					MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
+					double memberPoint = memberVO.getMemberPoint() + betA;
+					memberVO.setMemberPoint(memberPoint);
+					memberDAO.updatePointByPrimaryKey(memberVO);
+				}
+
+			}
+			else if (battleRecordVO.getResult() == 2)
+			{
+				System.out.println("BattleRecordService : chkResult TeamB win");
+				TeamVO teamBVO = stevenFacade.getTeamById(battleRecordVO.getTeamIdB());
+				double bet = battleRecordVO.getBattleBet() * 2;
+				for (TeamMemberVO teamMemberVO : teamBVO.getTeamMemberVOs())
+				{
+					System.out.println("bet = " + bet + " || TeamB 人數 = " + teamBVO.getTeamMemberVOs().size());
+					double betB = (bet / teamBVO.getTeamMemberVOs().size() * 100);
+					betB = (Math.round(betB) / 100);
+					System.out.println("發放點數 = " + betB);
+					MemberVO memberVO = memberDAO.findByPrimaryKey(teamMemberVO.getTeamMemberId());
+					double memberPoint = memberVO.getMemberPoint() + betB;
+					memberVO.setMemberPoint(memberPoint);
+					memberDAO.updatePointByPrimaryKey(memberVO);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("WTF GG 幹幹幹");
+		}
 	}
 
 	@Transactional(rollbackOn = Exception.class)
