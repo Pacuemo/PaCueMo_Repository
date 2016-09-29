@@ -62,8 +62,11 @@ public class BattleRecordService
 
 	public void chkResult(BattleRecordVO battleRecordVO)
 	{
+		System.out.println("BattleRecordService : chkResult");
+		battleRecordVO = battleRecordDAO.findById(battleRecordVO.getBattleId());
 		try
 		{
+			System.out.println("result = " + battleRecordVO.getResult());
 			if (battleRecordVO.getResult() == 1)
 			{
 				System.out.println("BattleRecordService : chkResult TeamA win");
