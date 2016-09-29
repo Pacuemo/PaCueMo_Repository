@@ -48,8 +48,10 @@
 	}
 </style>
 <body>
-<div style="background-image:url('image/background/indexBackGround2.jpg');width:100%;height:100%;position:absolute"></div>
-<div class="container-fluid" style="background-color:black; min-width:300px">
+<div style="position: fixed;top:0px;left:0px; z-index: -2; width: 100%; height: 100%">
+ <iframe frameborder="0" height="100%" width="100%"  src="https://www.youtube.com/embed/-JqAOu2u-eI?autoplay=1&controls=0&showinfo=0&autohide=1"  allowfullscreen></iframe>
+</div>
+<div class="container-fluid" style="min-width:300px">
 	<div class="row">
 		<div class="col-lg-7" style="margin-top:12%">
 			<h1 class="slogan hidden-xs"></h1>
