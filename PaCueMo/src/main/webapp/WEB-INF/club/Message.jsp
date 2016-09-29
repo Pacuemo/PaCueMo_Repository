@@ -136,10 +136,12 @@ font-size: 90%;
 	<jsp:include page="MessageNavBar.jsp" />	
 <style>
 body{
-background-image: url('${pageContext.request.contextPath}/image/background/Kobe.jpg'');
- background-size:100%;
+        background-image: url('${pageContext.request.contextPath}/image/background/Kobe.jpg');     
+   		background-size: 100%;  
+   		background-repeat-y: inherit !important;  		
 }
 </style>	
+
 	 <div class="backGround">
         <div class="col-md-6 col-md-offset-3" style="margin-top:100px;">
 
