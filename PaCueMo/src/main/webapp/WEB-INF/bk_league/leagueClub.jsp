@@ -455,6 +455,8 @@ input[type='time'] {
 			  var tr=$(this).parent().parent();
 			  var date=tr.find('.date').val();
 			  var time=tr.find('.time').val();
+				var d = new Date(date+" "+time+":00");
+				console.log(d);
 			  var clubAName=tr.find('select:first').children(':selected').text();
 			  var clubBName=tr.find('select').slice(1).children(':selected').text();
 			  var rounds=tr.find('.rounds').val();
@@ -466,6 +468,7 @@ input[type='time'] {
 
 				}else{
 					data['fightDateTime']=date+" "+time+":00";
+					data['fightDateTime']=d;
 					};
 
 			  data['rounds']=rounds;
@@ -522,7 +525,7 @@ input[type='time'] {
 					var date=tr.find('input[type=date]').val();
 					var time=tr.find('input[type=time]').val();
 					var d = new Date(date+" "+time+":00");
-					
+					console.log(d);
 					var winner;
 					var data={};
 					data['fightId']=$(this).prev().attr('fightId');
@@ -531,6 +534,7 @@ input[type='time'] {
 					if(date=="" || time==""){
 
 						}else{
+// 							data['fightDateTime']=date+" "+time+":00";
 							data['fightDateTime']=d;
 							};
 					data['rounds']=tr.find('input[class="rounds"]').val();

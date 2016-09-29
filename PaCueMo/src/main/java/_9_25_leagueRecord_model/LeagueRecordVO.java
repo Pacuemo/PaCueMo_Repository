@@ -19,6 +19,7 @@ public class LeagueRecordVO implements Serializable
 	private int leagueId;
 	private int clubIdA;
 	private int clubIdB;
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
 	private Timestamp fightDateTime;
 	private int rounds;
 	private int scoreA;
