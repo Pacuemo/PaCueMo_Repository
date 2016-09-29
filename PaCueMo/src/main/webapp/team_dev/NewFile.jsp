@@ -12,34 +12,7 @@
 </head>
 <body>
 
-  <div id="users">
-    <input class="search" placeholder="Search" />
-    <button class="sort" data-sort="name">
-      Sort by name
-    </button>
-    <ul class="list">
-      <li data-id="1">
-        <a href="https://twitter.com/javve" class="link name">Jonny Stromberg</a>
-        <p class="born timestamp" data-timestamp="12345">1986</p>
-        <img class="image" src="luke.jpeg">
-      </li>
-      <li data-id="2">
-        <a href="https://twitter.com/arnklint" class="link name">Jonas Arnklint</a>
-        <p class="born timestamp" data-timestamp="23456">1985</p>
-        <img class="image" src="darth.jpeg">
-      </li>
-      <li data-id="3">
-        <a href="https://twitter.com/martinaelm" class="link name">Martina Elm</a>
-        <p class="born timestamp" data-timestamp="34567">1986</p>
-        <img class="image" src="rey.jpeg">
-      </li>
-      <li data-id="4">
-        <a href="https://twitter.com/GLindqvist" class="link name">Gustaf Lindqvist</a>
-        <p class="born timestamp" data-timestamp="45678">1983</p>
-        <img class="image" src="boba.jpeg">
-      </li>
-    </ul>
-  </div>
+<img src="http://qr-official.line.me/L/8jlgOkH75B.png">
 
   <script>
     var options = {
