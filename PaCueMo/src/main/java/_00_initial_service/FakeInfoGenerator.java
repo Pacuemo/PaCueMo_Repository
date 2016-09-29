@@ -1111,8 +1111,8 @@ public class FakeInfoGenerator
 //		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
 //		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
-		playercardGenerator();
-//		friendListGenerator("476903c9-9720-4504-8be6-fcea58e5e38b", 20);
+//		playercardGenerator();
+		friendListGenerator("665D8845-4DAF-4625-9453-1570FCF2ACCF", 20);
 //      club和league部分
 //		clubGenerator();
 
