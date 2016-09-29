@@ -20,11 +20,9 @@ import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Component;
 
-import _00_config.RootConfig;
 import _9_41_member_model.MemberVO;
 
 @Component
@@ -52,6 +50,9 @@ public class FakeInfoGenerator
 	static String userid = GlobalService.USERID;
 	static String passwd = GlobalService.PASSWORD;
 	static List<String> list;
+	static String[] comment = { "左手只是輔助!!!", "我是天才！", "教練！我想打籃球……", "直到最後都不能放棄希望，現在放棄的話，比賽就結束了。", "稱霸全國。",
+					"就算是以後不能走路了也不要緊，這是好不容易才抓到的機會！", "我們也有「輸」的時候，這是很難得的經驗。", "現在就要贏!", "不需要道歉啦，大白痴。我們是隊友耶。",
+					"我聽從天命的指示，然後盡我的人事。", "能夠打贏我的人，祇有我自己。", "開心的打球吧!", "就算一個人贏了也沒意義吧。", "危機不是會...讓人熱血沸騰嗎?", "人生的選擇是對是錯，沒有人知道。" };
 
 	public static String[] cutName(String nameLine)
 	{
@@ -153,7 +154,7 @@ public class FakeInfoGenerator
 				int hand = random.nextInt(2);
 				double height = 150 + (Math.random() * 60);
 				double weight = 40 + (Math.random() * 70);
-				String note = " ";
+				String note = comment[random.nextInt(comment.length)];
 
 				int a = random.nextInt(21);
 				int b = random.nextInt(21 - a);
@@ -1107,11 +1108,11 @@ public class FakeInfoGenerator
 		 * Step3 : 在本程式中執行你的方法，將SSMS NEWID() 生成的 memberId 換掉原本的 INSERT 指令
 		 * Step4 : 以Console產生的INSERT貼到SSMS中塞入假資料到DB
 		 */
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
-		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
+//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(RootConfig.class);
+//		FakeInfoGenerator generator = context.getBean(FakeInfoGenerator.class);
 //		memberGenerator(); //--->產生會員
-//		playercardGenerator();
-//		friendListGenerator("476903C9-9720-4504-8BE6-FCEA58E5E38B", 20);
+		playercardGenerator();
+//		friendListGenerator("476903c9-9720-4504-8be6-fcea58e5e38b", 20);
 //      club和league部分
 //		clubGenerator();
 
@@ -1124,7 +1125,7 @@ public class FakeInfoGenerator
 
 //		goodsOrderGenerator();
 
-		generator.teamGenerator();
+//		generator.teamGenerator();
 //		teammemberGenerator();
 
 	}
