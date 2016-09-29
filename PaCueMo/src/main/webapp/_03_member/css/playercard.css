@@ -321,7 +321,7 @@ img.player {
     top: -150px;
     width: auto;
     max-width: 500px;
-    left: -100px;
+    left: -200px;
 }
 
 @media (min-width: 992px){
@@ -434,13 +434,46 @@ span.position::before, span.height::before, span.weight::before, span.hand::befo
 
 .info {
     position: relative;
-    bottom: 900px;
-    left: -250px;
+    bottom: 950px;
+    left: 60px;
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+	.info {
+    position: initial;
+    bottom: 0;
+    left: 0;
+	}
+}
+@media (max-width: 767px){
+	.info {
+    position: initial;
+    bottom: 0;
+    left: 0;
+ 	}
 }
 
 button#btn-update-playercard {
     position: relative;
     top: -60px;
     float: right;
+}
+
+td.title {
+    background-color: #d4cece;
+    border: 2px solid #15213c;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    font-weight: 500;
+}
+
+td.context {
+    background-color: #fffcfc;
+    border: 2px solid #15213c;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    font-weight: 300;
 }
 
