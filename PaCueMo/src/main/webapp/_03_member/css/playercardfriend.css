@@ -309,7 +309,7 @@ div.user-link {
 
 div#container {
     position: relative;
-    top: -55px;
+    top: -100px;
     width: 400px;
 }
 
@@ -435,4 +435,23 @@ span.position::before, span.height::before, span.weight::before, span.hand::befo
     bottom: 150px;
     left: -375px;
 }
+
+td.title {
+    background-color: #d4cece;
+    border: 2px solid #15213c;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    font-weight: 500;
+}
+
+td.context {
+    background-color: #fffcfc;
+    border: 2px solid #15213c;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    font-weight: 300;
+}
+
 
